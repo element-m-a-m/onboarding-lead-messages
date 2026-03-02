@@ -3,33 +3,29 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>אלמנט — חוברת תבניות וואטסאפ</title>
+<title>אלמנט — חוברת תבניות וואטסאפ v5.4</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800&display=swap">
 <style>
 :root{--bg:#f8f9fa;--surface:#fff;--text:#1a1a1a;--text2:#666;--accent:#25D366;--accent2:#128C7E;--border:#e2e8f0;--hdr:#1a1a2e;
---c-trigger:#e8f5e9;--c-trigger-b:#66bb6a;--c-decision:#fff8e1;--c-decision-b:#ffa726;--c-action:#e3f2fd;--c-action-b:#42a5f5;--c-template:#f3e5f5;--c-template-b:#ab47bc;--c-ghost:#ffebee;--c-ghost-b:#ef5350;--c-end:#e0f2f1;--c-end-b:#26a69a;
+--c-trigger:#e8f5e9;--c-trigger-b:#66bb6a;--c-decision:#fff8e1;--c-decision-b:#ffa726;--c-action:#e3f2fd;--c-action-b:#42a5f5;
+--c-template:#f3e5f5;--c-template-b:#ab47bc;--c-ghost:#ffebee;--c-ghost-b:#ef5350;--c-end:#e0f2f1;--c-end-b:#26a69a;
+--c-timing:#fff3e0;--c-timing-b:#ff9800;
 --lane-adult:#d81b60;--lane-parent:#1565c0;--lane-adult-bg:#fce4ec;--lane-adult-b:#e91e63;--lane-parent-bg:#e3f2fd;--lane-parent-b:#42a5f5}
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Heebo',sans-serif;background:var(--bg);color:var(--text);line-height:1.5;font-size:11px}
-
-.page-header{background:var(--hdr);color:#fff;padding:20px 18px 16px;text-align:center}
+.page-header{background:var(--hdr);color:#fff;padding:18px;text-align:center}
 .page-header h1{font-size:20px;font-weight:800}
 .page-header .sub{font-size:11px;font-weight:300;opacity:.8}
 .page-header .ver{font-size:9px;opacity:.5;margin-top:3px}
-
 .search-bar{position:sticky;top:0;z-index:100;background:#fff;border-bottom:1px solid var(--border);padding:6px 16px;display:flex;align-items:center;gap:8px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
 .search-bar input{flex:1;font-family:'Heebo',sans-serif;font-size:11px;padding:5px 10px;border:1.5px solid var(--border);border-radius:6px;outline:none;direction:rtl}
 .search-bar input:focus{border-color:var(--accent)}
 #searchCount{font-size:9px;color:var(--text2);white-space:nowrap}
-
 .nav-tabs{display:flex;gap:3px;padding:6px 16px;background:#f1f5f9;border-bottom:1px solid var(--border);overflow-x:auto}
 .nav-tabs a{text-decoration:none;padding:3px 8px;border-radius:5px;font-size:9.5px;font-weight:500;color:var(--text2);white-space:nowrap;background:#fff;border:1px solid var(--border)}
 .nav-tabs a:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
-
 .container{max-width:960px;margin:0 auto;padding:16px}
 h2{font-size:14px;font-weight:700;color:var(--hdr);margin-top:28px;margin-bottom:8px;padding-bottom:3px;border-bottom:2px solid var(--accent);display:inline-block}
-h3{font-size:12px;font-weight:600;margin-top:16px;margin-bottom:6px}
-
 .instructions{background:#f0f4ff;border:1px solid #c7d2de;border-radius:8px;padding:10px 14px;margin:0 0 20px;font-size:10px}
 .instructions h3{margin:0 0 4px;color:#4338ca;font-size:11px}
 .instructions ul{list-style:none;padding:0}
@@ -41,24 +37,19 @@ h3{font-size:12px;font-weight:600;margin-top:16px;margin-bottom:6px}
 .canvas-wrapper{position:relative;background:#f5f6f8;border:1.5px solid var(--border);border-radius:10px;overflow:hidden;margin:8px 0 16px;height:700px;cursor:grab;user-select:none}
 .canvas-wrapper:active{cursor:grabbing}
 .canvas-wrapper.node-dragging{cursor:grabbing}
-.canvas-wrapper.arrow-mode{cursor:crosshair}
 .canvas-grid{position:absolute;inset:0;pointer-events:none;z-index:0;background-image:radial-gradient(circle,rgba(0,0,0,.07) .7px,transparent .7px);background-size:20px 20px}
-
-.canvas-toolbar{position:absolute;top:8px;left:8px;z-index:20;display:flex;flex-direction:column;gap:4px}
-.canvas-toolbar button{width:30px;height:30px;border:1px solid var(--border);border-radius:6px;background:#fff;font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 3px rgba(0,0,0,.1);transition:background .15s}
+.canvas-toolbar{position:absolute;top:8px;left:8px;z-index:20;display:flex;flex-direction:column;gap:3px}
+.canvas-toolbar button{width:28px;height:28px;border:1px solid var(--border);border-radius:6px;background:#fff;font-size:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 3px rgba(0,0,0,.1);transition:background .15s}
 .canvas-toolbar button:hover{background:#e8e8e8}
 .canvas-toolbar button.active{background:var(--accent);color:#fff;border-color:var(--accent)}
-.canvas-toolbar .sep{height:1px;background:var(--border);margin:2px 0}
-
-.canvas-info{position:absolute;bottom:8px;left:8px;z-index:20;background:rgba(255,255,255,.92);border-radius:5px;padding:3px 8px;font-size:8.5px;color:var(--text2);border:1px solid var(--border)}
+.canvas-toolbar button:disabled{opacity:.35;cursor:default}
+.canvas-toolbar .sep{height:1px;background:var(--border);margin:1px 0}
+.canvas-info{position:absolute;bottom:8px;left:8px;z-index:20;background:rgba(255,255,255,.92);border-radius:5px;padding:3px 8px;font-size:8px;color:var(--text2);border:1px solid var(--border)}
 .save-toast{position:absolute;top:8px;right:50%;transform:translateX(50%);z-index:25;background:#065f46;color:#ecfdf5;padding:3px 12px;border-radius:5px;font-size:9px;font-weight:600;opacity:0;transition:opacity .3s;pointer-events:none}
 .save-toast.show{opacity:1}
-
-/* Minimap */
 .minimap{position:absolute;bottom:8px;right:8px;z-index:20;width:150px;height:90px;background:rgba(255,255,255,.92);border:1px solid var(--border);border-radius:6px;overflow:hidden;box-shadow:0 2px 6px rgba(0,0,0,.1)}
 .minimap-viewport{position:absolute;border:1.5px solid var(--accent);background:rgba(37,211,102,.08);pointer-events:none;border-radius:2px}
 .minimap canvas{width:100%;height:100%}
-
 .canvas-scroll{position:absolute;inset:0;overflow:auto}
 .canvas-inner{position:relative;transform-origin:0 0}
 .canvas-svg{position:absolute;top:0;left:0;z-index:2}
@@ -69,6 +60,7 @@ h3{font-size:12px;font-weight:600;margin-top:16px;margin-bottom:6px}
 .fnode:hover{box-shadow:0 3px 12px rgba(0,0,0,.15);z-index:40}
 .fnode.highlight{box-shadow:0 0 0 3px var(--accent),0 4px 16px rgba(37,211,102,.3)!important;z-index:45}
 .fnode.search-glow{box-shadow:0 0 0 2.5px #fbbf24,0 0 12px rgba(251,191,36,.4)!important;z-index:42}
+.fnode.selected-node{box-shadow:0 0 0 2.5px #3b82f6,0 0 10px rgba(59,130,246,.3)!important;z-index:48}
 .fnode-trigger{background:var(--c-trigger);border:1.5px dashed var(--c-trigger-b);border-radius:16px;color:#2e7d32}
 .fnode-decision{background:transparent;border:none;padding:8px 18px;color:#e65100;font-weight:600}
 .fnode-decision::before{content:'';position:absolute;inset:-1px;border:1.5px solid var(--c-decision-b);clip-path:polygon(12% 0%,88% 0%,100% 50%,88% 100%,12% 100%,0% 50%);background:var(--c-decision);z-index:-1;border-radius:0}
@@ -76,48 +68,46 @@ h3{font-size:12px;font-weight:600;margin-top:16px;margin-bottom:6px}
 .fnode-template{background:var(--c-template);border:1.5px solid var(--c-template-b);border-radius:6px;color:#6a1b9a;font-weight:600;cursor:pointer}
 .fnode-template:hover{transform:scale(1.03)}
 .fnode-ghost{background:var(--c-ghost);border:1.5px dashed var(--c-ghost-b);border-radius:6px;color:#c62828;font-weight:600;cursor:pointer}
-.fnode-ghost:hover{transform:scale(1.03)}
 .fnode-end{background:var(--c-end);border:1.5px solid var(--c-end-b);border-radius:16px;color:#00695c;font-weight:600}
-
-/* Lane coloring — adult (warm) vs parent (cool) */
+/* Timing node — distinct alarm-clock style */
+.fnode-timing{background:var(--c-timing);border:2px solid var(--c-timing-b);border-radius:20px;color:#e65100;font-weight:600;font-size:9px;border-style:dotted}
+/* Lane colors */
 .fnode-template.lane-adult,.fnode-action.lane-adult{background:var(--lane-adult-bg)!important;border-color:var(--lane-adult-b)!important;color:#880e4f!important}
 .fnode-template.lane-parent,.fnode-action.lane-parent{background:var(--lane-parent-bg)!important;border-color:var(--lane-parent-b)!important;color:#0d47a1!important}
-.fnode-trigger.lane-adult{border-color:var(--lane-adult-b)!important;background:#fce4ec!important;color:#880e4f!important}
-.fnode-trigger.lane-parent{border-color:var(--lane-parent-b)!important;background:#e3f2fd!important;color:#0d47a1!important}
-.fnode-decision.lane-adult::before{border-color:var(--lane-adult-b)!important;background:#fce4ec!important}
-.fnode-decision.lane-parent::before{border-color:var(--lane-parent-b)!important;background:#e3f2fd!important}
 
 /* ClickUp badges */
-.cu-badge{position:absolute;top:-8px;left:-4px;font-size:6.5px;color:#fff;padding:1px 5px;border-radius:3px;white-space:nowrap;pointer-events:none;opacity:.85;font-weight:600;letter-spacing:.3px;box-shadow:0 1px 3px rgba(0,0,0,.2)}
-
+.cu-badge{position:absolute;top:-8px;left:-4px;font-size:6.5px;color:#fff;padding:1px 5px;border-radius:3px;white-space:nowrap;pointer-events:none;opacity:.85;font-weight:600;box-shadow:0 1px 3px rgba(0,0,0,.2)}
 /* Edge labels */
 .edge-label{position:absolute;font-size:8px;color:var(--text2);font-weight:600;background:rgba(245,246,248,.92);padding:1px 5px;border-radius:3px;white-space:nowrap;pointer-events:none;z-index:5}
-
-/* === ANCHOR POINTS === */
-.anchor-point{position:absolute;width:10px;height:10px;border-radius:50%;background:#fff;border:2px solid var(--accent);cursor:crosshair;z-index:55;opacity:0;transition:opacity .15s;transform:translate(-50%,-50%)}
+/* Anchor points */
+.anchor-point{position:absolute;width:10px;height:10px;border-radius:50%;background:#fff;border:2px solid var(--accent);cursor:crosshair;z-index:55;opacity:0;transition:opacity .12s;transform:translate(-50%,-50%)}
 .fnode:hover .anchor-point,.fnode.show-anchors .anchor-point{opacity:1}
 .anchor-point:hover{background:var(--accent);transform:translate(-50%,-50%) scale(1.3)}
 .anchor-point.active{background:var(--accent);opacity:1!important}
-
-/* === ARROW TOOLBAR (floating) === */
+/* Edge endpoint handles (for rebinding) */
+.edge-handle{position:absolute;width:12px;height:12px;border-radius:50%;background:#3b82f6;border:2px solid #fff;cursor:grab;z-index:58;transform:translate(-50%,-50%);box-shadow:0 1px 4px rgba(0,0,0,.3);display:none}
+.edge-handle.visible{display:block}
+/* Arrow toolbar */
 .arrow-toolbar{position:absolute;z-index:60;background:#fff;border:1px solid var(--border);border-radius:6px;padding:2px;display:flex;gap:2px;box-shadow:0 4px 12px rgba(0,0,0,.15);opacity:0;pointer-events:none;transition:opacity .15s}
 .arrow-toolbar.visible{opacity:1;pointer-events:auto}
 .arrow-toolbar button{width:24px;height:24px;border:none;border-radius:4px;background:transparent;cursor:pointer;font-size:12px;display:flex;align-items:center;justify-content:center}
 .arrow-toolbar button:hover{background:#f0f0f0}
 .arrow-toolbar button.danger:hover{background:#fee2e2;color:#dc2626}
-
-/* === LEGEND === */
+/* Add-node dialog */
+.add-dialog{position:absolute;z-index:65;background:#fff;border:1px solid var(--border);border-radius:8px;padding:8px;box-shadow:0 8px 24px rgba(0,0,0,.2);display:none;min-width:120px}
+.add-dialog.visible{display:block}
+.add-dialog button{display:block;width:100%;text-align:right;padding:4px 8px;border:none;background:none;cursor:pointer;font-family:'Heebo',sans-serif;font-size:10px;border-radius:4px}
+.add-dialog button:hover{background:#f0f4ff}
+/* Legend */
 .flow-legend{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px;padding:6px 10px;background:#f8f9fa;border-radius:5px;border:1px solid var(--border);font-size:8.5px}
 .legend-item{display:flex;align-items:center;gap:3px}
 .lg-trigger{width:18px;height:11px;background:var(--c-trigger);border:1px dashed var(--c-trigger-b);border-radius:6px}
 .lg-decision{width:18px;height:11px;background:var(--c-decision);border:1px solid var(--c-decision-b);clip-path:polygon(15% 0%,85% 0%,100% 50%,85% 100%,15% 100%,0% 50%)}
-.lg-action{width:18px;height:11px;background:var(--c-action);border:1px solid var(--c-action-b);border-radius:2px;border-right:2px solid var(--c-action-b)}
+.lg-action{width:18px;height:11px;background:var(--c-action);border:1px solid var(--c-action-b);border-radius:2px}
 .lg-template{width:18px;height:11px;background:var(--c-template);border:1px solid var(--c-template-b);border-radius:4px}
 .lg-ghost{width:18px;height:11px;background:var(--c-ghost);border:1px dashed var(--c-ghost-b);border-radius:4px}
-.lg-adult{width:18px;height:11px;background:var(--lane-adult-bg);border:1px solid var(--lane-adult-b);border-radius:4px}
-.lg-parent{width:18px;height:11px;background:var(--lane-parent-bg);border:1px solid var(--lane-parent-b);border-radius:4px}
-
-/* === TOOLTIP === */
+.lg-timing{width:18px;height:11px;background:var(--c-timing);border:1.5px dotted var(--c-timing-b);border-radius:6px}
+/* Tooltip */
 #tooltip{position:fixed;z-index:9999;pointer-events:none;opacity:0;transition:opacity .15s;max-width:300px;width:300px;background:#1a1a2e;color:#e0e0e0;border:1.5px solid var(--c-template-b);border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,.35);font-size:8pt;line-height:1.55;direction:rtl;text-align:right;overflow:hidden}
 #tooltip.visible{opacity:1;pointer-events:auto}
 #tooltip .tt-header{display:flex;justify-content:space-between;align-items:center;padding:6px 10px;background:rgba(171,71,188,.2);border-bottom:1px solid rgba(171,71,188,.3)}
@@ -125,8 +115,7 @@ h3{font-size:12px;font-weight:600;margin-top:16px;margin-bottom:6px}
 #tooltip .tt-copy{background:var(--accent);color:#fff;border:none;border-radius:4px;padding:2px 8px;font-size:8px;font-family:'Heebo',sans-serif;cursor:pointer}
 #tooltip .tt-body{padding:8px 10px;white-space:pre-wrap;font-size:8pt;color:#ddd}
 #tooltip .tt-body .ph{background:rgba(254,243,199,.2);color:#fbbf24;padding:0 2px;border-radius:2px;font-weight:600}
-
-/* === TEMPLATE CARDS & REST === */
+/* Template cards */
 .section-divider{margin:24px 0 8px;padding:8px 12px;background:var(--hdr);color:#fff;border-radius:6px;font-size:12px;font-weight:700;display:flex;align-items:center;gap:6px;scroll-margin-top:80px}
 .gnum{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;background:#fff;color:var(--hdr);font-weight:800;font-size:10px}
 .template-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;margin:10px 0;overflow:hidden;box-shadow:0 1px 2px rgba(0,0,0,.03);scroll-margin-top:80px}
@@ -152,7 +141,6 @@ h3{font-size:12px;font-weight:600;margin-top:16px;margin-bottom:6px}
 .ref-table{width:100%;border-collapse:collapse;margin:8px 0 20px;font-size:9.5px}
 .ref-table th{background:var(--hdr);color:#fff;padding:5px 7px;text-align:right;font-weight:600}
 .ref-table td{padding:4px 7px;border-bottom:1px solid var(--border)}
-.ref-table tr:hover td{background:#f5f5f5}
 .tlink{color:var(--accent2);font-weight:600;cursor:pointer;text-decoration:underline}
 .links-table{width:100%;border-collapse:collapse;margin:6px 0;font-size:9.5px}
 .links-table th{background:#f1f5f9;padding:5px 7px;text-align:right;font-weight:600;border-bottom:1.5px solid var(--border)}
@@ -168,14 +156,14 @@ h3{font-size:12px;font-weight:600;margin-top:16px;margin-bottom:6px}
 .back-top{position:fixed;bottom:14px;left:14px;background:var(--hdr);color:#fff;border:none;border-radius:50%;width:32px;height:32px;font-size:14px;cursor:pointer;box-shadow:0 2px 6px rgba(0,0,0,.2);opacity:0;transition:opacity .3s;z-index:50}
 .back-top.visible{opacity:1}
 @media(max-width:640px){#tooltip{max-width:260px;width:260px}.canvas-wrapper{height:500px}}
-@media print{.search-bar,.nav-tabs,.back-top,.cbtn,#tooltip,.canvas-toolbar,.minimap,.canvas-info,.save-toast,.arrow-toolbar{display:none!important}.template-card{break-inside:avoid}}
+@media print{.search-bar,.nav-tabs,.back-top,.cbtn,#tooltip,.canvas-toolbar,.minimap,.canvas-info,.save-toast,.arrow-toolbar,.add-dialog{display:none!important}.template-card{break-inside:avoid}}
 </style>
 </head>
 <body>
 <div class="page-header">
 <h1>אלמנט — חוברת תבניות וואטסאפ</h1>
 <div class="sub">Element — WhatsApp Templates Playbook</div>
-<div class="ver">גרסה 5.3 | מרץ 2026</div>
+<div class="ver">גרסה 5.4 | מרץ 2026</div>
 </div>
 <div class="search-bar"><span>🔍</span><input type="text" id="searchInput" placeholder="חיפוש..." oninput="filterTemplates()"><span id="searchCount"></span></div>
 <div class="nav-tabs">
@@ -186,29 +174,27 @@ h3{font-size:12px;font-weight:600;margin-top:16px;margin-bottom:6px}
 <button onclick="flipSelectedEdge()" title="הפוך כיוון">🔄</button>
 <button class="danger" onclick="deleteSelectedEdge()" title="מחק חץ">🗑️</button>
 </div>
+<div class="add-dialog" id="addDialog"></div>
 <div class="container">
 <div class="instructions">
 <h3>📌 הוראות שימוש</h3>
 <ul>
 <li>הודעות בשם <strong>״צוות אלמנט״</strong> בלשון רבים</li>
 <li><span class="placeholder">[סוגריים]</span> = להחליף בפרטים</li>
-<li>בחרו: <strong>מבוגר/ת</strong> או <strong>הורה</strong></li>
-<li>אחרי שליחה: <strong>עדכנו ClickUp</strong></li>
-<li><strong>לחצו בועת הודעה</strong> להעתקה | <strong>העבירו עכבר על תבנית סגולה</strong> בתרשים לתצוגה מהירה</li>
-<li>🖱️ <strong>גררו צמתים</strong> לסדר | <strong>גלגלת</strong> לזום | <strong>גררו מנקודת עיגון</strong> ליצירת חץ חדש | <strong>לחצו חץ</strong> להפיכה/מחיקה</li>
+<li>🖱️ <strong>גררו צמתים</strong> | <strong>גלגלת</strong> לזום | <strong>גררו מנקודת עיגון</strong> ליצירת חץ | <strong>לחצו חץ</strong> להפיכה/מחיקה</li>
+<li>↶↷ <strong>Ctrl+Z</strong> חזרה | <strong>Ctrl+Y</strong> קדימה | <strong>Del</strong> מחק אלמנט נבחר</li>
 </ul>
 </div>
 <div id="flowcharts">
-<h2>📊 תרשים זרימה מאוחד — מליד ועד הרשמה</h2>
+<h2>📊 תרשים זרימה — מליד ועד הרשמה</h2>
 <div class="flow-legend">
 <div class="legend-item"><div class="lg-trigger"></div> טריגר</div>
 <div class="legend-item"><div class="lg-decision"></div> החלטה</div>
 <div class="legend-item"><div class="lg-action"></div> פעולה</div>
 <div class="legend-item"><div class="lg-template"></div> תבנית</div>
-<div class="legend-item"><div class="lg-ghost"></div> ליד נעלם</div>
-<div class="legend-item"><div class="lg-adult"></div> מסלול מבוגר</div>
-<div class="legend-item"><div class="lg-parent"></div> מסלול הורה</div>
-<div class="legend-item" style="margin-right:auto;color:var(--text2)">💾 נשמר</div>
+<div class="legend-item"><div class="lg-ghost"></div> נעלם</div>
+<div class="legend-item"><div class="lg-timing"></div> תזמון</div>
+<div class="legend-item" style="margin-right:auto;color:var(--text2)">💾 אוטומטי</div>
 </div>
 <div class="canvas-wrapper" id="canvasWrapper">
   <div class="canvas-grid"></div>
@@ -218,11 +204,15 @@ h3{font-size:12px;font-weight:600;margin-top:16px;margin-bottom:6px}
     <button onclick="canvasReset()" title="אפס תצוגה">⟲</button>
     <button onclick="canvasFitAll()" title="הצג הכל">☐</button>
     <div class="sep"></div>
+    <button onclick="doUndo()" id="undoBtn" title="↶ Ctrl+Z" disabled>↶</button>
+    <button onclick="doRedo()" id="redoBtn" title="↷ Ctrl+Y" disabled>↷</button>
+    <div class="sep"></div>
     <button onclick="toggleSnap()" id="snapBtn" class="active" title="הצמד לרשת">⊞</button>
-    <button onclick="resetPositions()" title="אפס מיקומים וחיצים">↺</button>
+    <button onclick="showAddMenu(event)" title="הוסף אלמנט">✚</button>
+    <button onclick="resetPositions()" title="אפס הכל">↺</button>
   </div>
   <div class="save-toast" id="saveToast">💾 נשמר</div>
-  <div class="canvas-info" id="canvasInfo">גרור רקע | גלגלת=זום | גרור צמתים | נק׳ עיגון=חץ חדש | לחץ חץ=עריכה</div>
+  <div class="canvas-info" id="canvasInfo">גרור רקע | גלגלת=זום | Ctrl+Z/Y | Del למחיקה</div>
   <div class="minimap" id="minimap"><canvas id="minimapCanvas"></canvas><div class="minimap-viewport" id="minimapViewport"></div></div>
   <div class="canvas-scroll" id="canvasScroll">
     <div class="canvas-inner" id="canvasInner">
@@ -231,35 +221,10 @@ h3{font-size:12px;font-weight:600;margin-top:16px;margin-bottom:6px}
   </div>
 </div>
 </div>
+
 <div class="no-results" id="noResults"><div style="font-size:28px">🔍</div><p>לא נמצאו תבניות.</p></div>
 
-<!-- ========== QUICK REF ========== -->
-<h2>טבלת מצבים</h2>
-<table class="ref-table"><thead><tr><th>מצב</th><th>#</th><th>ClickUp</th></tr></thead><tbody>
-<tr><td>ווידג׳ט — שנחזור</td><td><span class="tlink" onclick="goTo('t1')">#1</span></td><td>→ CONSIDERING</td></tr>
-<tr><td>וואטסאפ/טלפון/מייל (מבוגר)</td><td><span class="tlink" onclick="goTo('t2')">#2</span></td><td>NEW LEADS</td></tr>
-<tr><td>וואטסאפ/טלפון/מייל (הורה)</td><td><span class="tlink" onclick="goTo('t3')">#3</span></td><td>NEW LEADS</td></tr>
-<tr><td>פרטי היכרות (מבוגר)</td><td><span class="tlink" onclick="goTo('t4')">#4</span></td><td>→ CONSIDERING</td></tr>
-<tr><td>פרטי היכרות (הורה)</td><td><span class="tlink" onclick="goTo('t5')">#5</span></td><td>→ CONSIDERING</td></tr>
-<tr><td>אישור — לחימה</td><td><span class="tlink" onclick="goTo('t6a')">#6a</span></td><td>→ PURCHASED</td></tr>
-<tr><td>אישור — מובמנט/כוח</td><td><span class="tlink" onclick="goTo('t6b')">#6b</span></td><td>→ PURCHASED</td></tr>
-<tr><td>אישור — הורה</td><td><span class="tlink" onclick="goTo('t7')">#7</span></td><td>→ PURCHASED</td></tr>
-<tr><td>טופס בריאות</td><td><span class="tlink" onclick="goTo('t8')">#8</span></td><td>—</td></tr>
-<tr><td>תזכורת</td><td><span class="tlink" onclick="goTo('t9')">#9</span></td><td>—</td></tr>
-<tr><td>מעקב שיעור 1</td><td><span class="tlink" onclick="goTo('t10')">#10</span></td><td>→ MADE 1ST</td></tr>
-<tr><td>ערך שיעור 2</td><td><span class="tlink" onclick="goTo('t11')">#11</span></td><td>→ MADE 2ND</td></tr>
-<tr><td>הרשמה — מבוגר</td><td><span class="tlink" onclick="goTo('t12')">#12</span></td><td>→ MADE 3RD</td></tr>
-<tr><td>הרשמה — הורה</td><td><span class="tlink" onclick="goTo('t13')">#13</span></td><td>→ MADE 3RD</td></tr>
-<tr><td>ברוכים הבאים — מבוגר</td><td><span class="tlink" onclick="goTo('t14')">#14</span></td><td>→ ENROLLED</td></tr>
-<tr><td>ברוכים הבאים — הורה</td><td><span class="tlink" onclick="goTo('t15')">#15</span></td><td>→ ENROLLED</td></tr>
-<tr><td>חבר מביא חבר</td><td><span class="tlink" onclick="goTo('t16')">#16</span></td><td>—</td></tr>
-<tr><td>נעלם — לפני שיעור 1</td><td><span class="tlink" onclick="goTo('t17a')">#17a</span></td><td>—</td></tr>
-<tr><td>נעלם — באמצע</td><td><span class="tlink" onclick="goTo('t17b')">#17b</span></td><td>—</td></tr>
-<tr><td>מתלבט</td><td><span class="tlink" onclick="goTo('t18')">#18</span></td><td>→ NOT READY</td></tr>
-<tr><td>ווידג׳ט — לא שילם</td><td><span class="tlink" onclick="goTo('t19')">#19</span></td><td>—</td></tr>
-</tbody></table>
-
-<!-- ========== TEMPLATE CARDS ========== -->
+<!-- ===== GROUP 1: FIRST RESPONSE ===== -->
 <div class="section-divider" id="group1"><span class="gnum">1</span> תגובה ראשונה</div>
 
 <div class="template-card" id="t1" data-search="ווידג'ט חזרה callback תגובה ראשונה"><div class="template-header"><span class="tnum-badge">#1</span><span class="ttitle">ווידג׳ט — ביקש שנחזור</span><span class="tbadge">🟢</span></div><div class="template-meta"><span>⏰ ביקש ״שנחזור אליו״</span><span>📋 → CONSIDERING</span></div><div class="template-body">
@@ -269,17 +234,15 @@ h3{font-size:12px;font-weight:600;margin-top:16px;margin-bottom:6px}
 
 ראינו שהתעניינתם ב<span class="placeholder">[שם הקבוצה]</span>.
 יש לכם שאלות? נשמח לספר עוד ולתאם שיעור היכרות 🙏</div>
-<div class="note"><strong>💡</strong> השם + קבוצה מופיעים בהודעת הווידג׳ט. אפשר גם לצלצל.</div>
 </div></div>
 
-<div class="template-card" id="t2" data-search="וואטסאפ ישיר מבוגר בוגר טלפון מייל"><div class="template-header"><span class="tnum-badge">#2</span><span class="ttitle">פנייה ישירה (מבוגר/ת)</span><span class="tbadge">🟢</span></div><div class="template-meta"><span>⏰ WA / טלפון / מייל / רשתות</span><span>📋 NEW LEADS</span></div><div class="template-body">
+<div class="template-card" id="t2" data-search="וואטסאפ ישיר מבוגר טלפון מייל"><div class="template-header"><span class="tnum-badge">#2</span><span class="ttitle">פנייה ישירה (מבוגר/ת)</span><span class="tbadge">🟢</span></div><div class="template-meta"><span>⏰ WA / טלפון / מייל / רשתות</span><span>📋 NEW LEADS</span></div><div class="template-body">
 <div class="message" onclick="copyMsg(this)"><button class="cbtn">📋 העתק</button>היי <span class="placeholder">[שם]</span> 👋
 תודה שפניתם אלינו!
 כאן צוות אלמנט — אומנויות לחימה ותנועה בחולון.
 נשמח להכיר ולשמוע מה מעניין אתכם 🙏
 
 מה חיפשתם? אומנויות לחימה, שיעורי תנועה, אימוני כוח וגמישות — או שאולי עדיין בשלב של להבין מה מתאים?</div>
-<div class="note"><strong>💡</strong> אם הפנייה בטלפון — אותו תוכן, בעל פה. אם במייל/רשתות — העתיקו ושלחו בערוץ שבו פנו אליכם.</div>
 </div></div>
 
 <div class="template-card" id="t3" data-search="וואטסאפ ישיר הורה ילד טלפון מייל"><div class="template-header"><span class="tnum-badge">#3</span><span class="ttitle">פנייה ישירה (הורה)</span><span class="tbadge">🟢</span></div><div class="template-meta"><span>⏰ WA / טלפון / מייל / רשתות</span><span>📋 NEW LEADS (+ שם ילד + גיל)</span></div><div class="template-body">
@@ -290,13 +253,24 @@ h3{font-size:12px;font-weight:600;margin-top:16px;margin-bottom:6px}
 נשמח לשמוע קצת על הילד/ה — מה הגיל, ומה חיפשתם? אנחנו מלמדים אומנויות לחימה לילדים ונוער מגיל 6, עם דגש על בטיחות, כושר, התפתחות אישית ובניית ביטחון עצמי 💪</div>
 </div></div>
 
-<div class="section-divider" id="group2"><span class="gnum">2</span> פרטי היכרות + תשלום</div>
-<div class="template-card" id="t4" data-search="היכרות תשלום מבוגר לחימה מובמנט כוח 38 16"><div class="template-header"><span class="tnum-badge">#4</span><span class="ttitle">פרטי היכרות (מבוגר/ת)</span><span class="tbadge">🔵</span></div><div class="template-meta"><span>⏰ הליד מעוניין</span><span>📋 → CONSIDERING</span></div><div class="template-body">
-<p style="font-size:10px;font-weight:600;margin-bottom:4px">בחרו לפי פעילות:</p>
-<div class="variant-label">לחימה 16-37</div>
+<div class="template-card" id="t19" data-search="ווידג'ט לא שילם מעקב"><div class="template-header"><span class="tnum-badge">#19</span><span class="ttitle">ווידג׳ט — לא שילם (מעקב)</span><span class="tbadge">🟡</span></div><div class="template-meta"><span>⏰ 24-48 שעות אחרי</span><span>📋 → NEAR PURCHASE</span></div><div class="template-body">
+<div class="message" onclick="copyMsg(this)"><button class="cbtn">📋 העתק</button>היי <span class="placeholder">[שם]</span> 👋
+ראינו שהתעניינתם באימונים אצלנו — נשמח לעזור!
+
+נתקעתם עם משהו? יש שאלות? אנחנו כאן.
+אפשר גם שיחה קצרה בטלפון 📞
+
+מחכים! 🙏</div>
+</div></div>
+
+<!-- ===== GROUP 2: DETAILS PER CLASS ===== -->
+<div class="section-divider" id="group2"><span class="gnum">2</span> פרטי היכרות — לפי שיעור</div>
+
+<div class="template-card" id="t4a" data-search="לחימה מבוגרים 16 37 היכרות"><div class="template-header"><span class="tnum-badge">#4a</span><span class="ttitle">לחימה 16-37</span><span class="tbadge">🔵</span></div><div class="template-meta"><span>⏰ הליד מעוניין</span><span>📋 → CONSIDERING</span></div><div class="template-body">
 <div class="message" onclick="copyMsg(this)"><button class="cbtn">📋 העתק</button>מעולה, נשמח לראות אתכם! 🙏
 
-שיעורי אומנויות הלחימה לבוגרים: ראשון ורביעי, 18:45-20:00.
+לחימה למבוגרים: ראשון+רביעי 20:00-21:30.
+אומנויות לחימה משולבות — טכניקה, כושר, חשיבה תחת לחץ והגנה עצמית.
 
 📍 אולם "המגינים", חזית חמש 2, חולון
 🗺️ https://maps.app.goo.gl/Ru3awL6neiGsfMky5
@@ -308,10 +282,13 @@ h3{font-size:12px;font-weight:600;margin-top:16px;margin-bottom:6px}
 🔗 https://letts.co.il/payment/MkxOaWFZZ0pjajBrY2I2V0d0cGdpZz09
 
 יש שאלות? 🙏</div>
-<div class="variant-label">כושר+לחימה 38-58</div>
+</div></div>
+
+<div class="template-card" id="t4b" data-search="לחימה כושר מבוגרים 38 58 היכרות"><div class="template-header"><span class="tnum-badge">#4b</span><span class="ttitle">לחימה+כושר 38-58</span><span class="tbadge">🔵</span></div><div class="template-meta"><span>⏰ הליד מעוניין</span><span>📋 → CONSIDERING</span></div><div class="template-body">
 <div class="message" onclick="copyMsg(this)"><button class="cbtn">📋 העתק</button>מעולה, נשמח לראות אתכם! 🙏
 
-כושר ואומנויות לחימה למבוגרים: שני וחמישי, 18:15-19:30.
+לחימה+כושר למבוגרים 38-58: שלישי+חמישי 20:00-21:15.
+אימון המשלב הגנה עצמית, כושר ותנועה — בעוצמה מותאמת.
 
 📍 אולם "המגינים", חזית חמש 2, חולון
 🗺️ https://maps.app.goo.gl/Ru3awL6neiGsfMky5
@@ -323,7 +300,9 @@ h3{font-size:12px;font-weight:600;margin-top:16px;margin-bottom:6px}
 🔗 https://letts.co.il/payment/MkxOaWFZZ0pjajBrY2I2V0d0cGdpZz09
 
 יש שאלות? 🙏</div>
-<div class="variant-label">מובמנט</div>
+</div></div>
+
+<div class="template-card" id="t4c" data-search="מובמנט תנועה movement היכרות"><div class="template-header"><span class="tnum-badge">#4c</span><span class="ttitle">מובמנט</span><span class="tbadge">🔵</span></div><div class="template-meta"><span>⏰ הליד מעוניין</span><span>📋 → CONSIDERING</span></div><div class="template-body">
 <div class="message" onclick="copyMsg(this)"><button class="cbtn">📋 העתק</button>מעולה, נשמח לראות אתכם! 🙏
 
 שיעורי מובמנט: שלישי 19:45-21:00 / שישי 14:30-15:45.
@@ -338,7 +317,9 @@ h3{font-size:12px;font-weight:600;margin-top:16px;margin-bottom:6px}
 🔗 https://letts.co.il/payment/MkxOaWFZZ0pjajBrY2I2V0d0cGdpZz09
 
 יש שאלות? 🙏</div>
-<div class="variant-label">כוח וגמישות</div>
+</div></div>
+
+<div class="template-card" id="t4d" data-search="כוח גמישות strength היכרות"><div class="template-header"><span class="tnum-badge">#4d</span><span class="ttitle">כוח וגמישות</span><span class="tbadge">🔵</span></div><div class="template-meta"><span>⏰ הליד מעוניין</span><span>📋 → CONSIDERING</span></div><div class="template-body">
 <div class="message" onclick="copyMsg(this)"><button class="cbtn">📋 העתק</button>מעולה, נשמח לראות אתכם! 🙏
 
 כוח וגמישות: שלישי 18:30-19:45 / שישי 15:45-17:00.
@@ -355,9 +336,7 @@ h3{font-size:12px;font-weight:600;margin-top:16px;margin-bottom:6px}
 יש שאלות? 🙏</div>
 </div></div>
 
-<div class="template-card" id="t5" data-search="היכרות תשלום הורה ילד נוער 6 8 9 11 12 15"><div class="template-header"><span class="tnum-badge">#5</span><span class="ttitle">פרטי היכרות (הורה)</span><span class="tbadge">🔵</span></div><div class="template-meta"><span>⏰ הורה מעוניין</span><span>📋 → CONSIDERING</span></div><div class="template-body">
-<p style="font-size:10px;font-weight:600;margin-bottom:4px">לפי גיל:</p>
-<div class="variant-label">ילדים 6-8</div>
+<div class="template-card" id="t4e" data-search="ילדים 6 8 kids היכרות"><div class="template-header"><span class="tnum-badge">#4e</span><span class="ttitle">ילדים 6-8</span><span class="tbadge">🔵</span></div><div class="template-meta"><span>⏰ הורה מעוניין</span><span>📋 → CONSIDERING</span></div><div class="template-body">
 <div class="message" onclick="copyMsg(this)"><button class="cbtn">📋 העתק</button>מעולה, נשמח לראות את <span class="placeholder">[שם הילד/ה]</span> אצלנו! 🙏
 
 לחימה לילדים 6-8: ראשון+רביעי 17:00-17:45.
@@ -373,7 +352,9 @@ h3{font-size:12px;font-weight:600;margin-top:16px;margin-bottom:6px}
 🔗 https://letts.co.il/payment/dmcrM2NxNlhYYzR6aGRnWm4ybGdCZz09
 
 יש שאלות? 🙏</div>
-<div class="variant-label">ילדים 9-11</div>
+</div></div>
+
+<div class="template-card" id="t4f" data-search="ילדים 9 11 kids היכרות"><div class="template-header"><span class="tnum-badge">#4f</span><span class="ttitle">ילדים 9-11</span><span class="tbadge">🔵</span></div><div class="template-meta"><span>⏰ הורה מעוניין</span><span>📋 → CONSIDERING</span></div><div class="template-body">
 <div class="message" onclick="copyMsg(this)"><button class="cbtn">📋 העתק</button>מעולה, נשמח לראות את <span class="placeholder">[שם הילד/ה]</span> אצלנו! 🙏
 
 לחימה לילדים 9-11: ראשון+רביעי 17:45-18:45.
@@ -389,7 +370,9 @@ h3{font-size:12px;font-weight:600;margin-top:16px;margin-bottom:6px}
 🔗 https://letts.co.il/payment/dmcrM2NxNlhYYzR6aGRnWm4ybGdCZz09
 
 יש שאלות? 🙏</div>
-<div class="variant-label">נוער 12-15</div>
+</div></div>
+
+<div class="template-card" id="t4g" data-search="נוער 12 15 youth היכרות"><div class="template-header"><span class="tnum-badge">#4g</span><span class="ttitle">נוער 12-15</span><span class="tbadge">🔵</span></div><div class="template-meta"><span>⏰ הורה מעוניין</span><span>📋 → CONSIDERING</span></div><div class="template-body">
 <div class="message" onclick="copyMsg(this)"><button class="cbtn">📋 העתק</button>מעולה, נשמח לראות את <span class="placeholder">[שם הילד/ה]</span> אצלנו! 🙏
 
 לחימה לנוער 12-15: ראשון+רביעי 18:45-20:00.
@@ -407,8 +390,33 @@ h3{font-size:12px;font-weight:600;margin-top:16px;margin-bottom:6px}
 יש שאלות? 🙏</div>
 </div></div>
 
-<div class="section-divider" id="group3"><span class="gnum">3</span> אחרי תשלום</div>
-<div class="template-card" id="t6a" data-search="אישור תשלום להביא לחימה שחורה"><div class="template-header"><span class="tnum-badge">#6a</span><span class="ttitle">אישור: מבוגר — לחימה</span><span class="tbadge">🟢</span></div><div class="template-meta"><span>⏰ מיד אחרי תשלום</span><span>📋 → PURCHASED</span></div><div class="template-body">
+<div class="template-card" id="t4h" data-search="פרטי שיעור private אישי"><div class="template-header"><span class="tnum-badge">#4h</span><span class="ttitle">שיעור פרטי</span><span class="tbadge">🔵</span></div><div class="template-meta"><span>⏰ מתעניין בפרטי</span><span>📋 → CONSIDERING</span></div><div class="template-body">
+<div class="message" onclick="copyMsg(this)"><button class="cbtn">📋 העתק</button>מעולה, נשמח לעבוד איתכם! 🙏
+
+שיעור פרטי — 250₪ ל-60 דקות.
+התאמה אישית: לחימה, תנועה, כוח, גמישות — או שילוב.
+מתאים למתחילים ולמתקדמים.
+
+נתאם יום ושעה שנוחים לכם.
+שאלות? 🙏</div>
+</div></div>
+
+<div class="template-card" id="t4i" data-search="פרטי שיקומי שיקום rehab private"><div class="template-header"><span class="tnum-badge">#4i</span><span class="ttitle">שיעור פרטי שיקומי</span><span class="tbadge">🔵</span></div><div class="template-meta"><span>⏰ מתעניין בשיקומי</span><span>📋 → CONSIDERING</span></div><div class="template-body">
+<div class="message" onclick="copyMsg(this)"><button class="cbtn">📋 העתק</button>מעולה, נשמח לעזור! 🙏
+
+שיעור פרטי שיקומי — 300₪ ל-60 דקות.
+ליאור, פיזיותרפיסט ומורה לתנועה עם 20+ שנות ניסיון, בונה תוכנית אישית שמשלבת שיקום, תנועה וחיזוק — בהתאמה מלאה למצבכם.
+
+נתאם יום ושעה שנוחים לכם.
+שאלות? 🙏</div>
+</div></div>
+
+<!-- ===== GROUP 3: PAYMENT CONFIRMATIONS PER CLASS ===== -->
+<div class="section-divider" id="group3"><span class="gnum">3</span> אישור תשלום — לפי שיעור</div>
+
+<div class="template-card" id="t6a" data-search="אישור תשלום לחימה שחורה combat"><div class="template-header"><span class="tnum-badge">#6a</span><span class="ttitle">אישור: לחימה (כל הגילאים)</span><span class="tbadge">🟢</span></div><div class="template-meta"><span>⏰ מיד אחרי תשלום</span><span>📋 → PURCHASED</span></div><div class="template-body">
+<div class="note"><strong>💡</strong> לחימה מבוגרים, 38+, ילדים ונוער — כולם אותו דרס קוד. אם הליד הורה — התאימו נוסח (ראו גרסת הורה).</div>
+<div class="variant-label">מבוגר/ת</div>
 <div class="message" onclick="copyMsg(this)"><button class="cbtn">📋 העתק</button>מעולה, התשלום התקבל! 🙌
 
 🗓️ שיעור קרוב: <span class="placeholder">[יום ותאריך]</span>, <span class="placeholder">[שעה]</span>
@@ -420,28 +428,9 @@ h3{font-size:12px;font-weight:600;margin-top:16px;margin-bottom:6px}
 
 📍 אולם "המגינים", חזית חמש 2, חולון
 🗺️ https://maps.app.goo.gl/Ru3awL6neiGsfMky5
-🅿️ חנייה ברחובות הסמוכים
 
 הגיעו 5-10 דק׳ לפני. נשלח טופס בריאות בהודעה הבאה 🙏</div>
-</div></div>
-
-<div class="template-card" id="t6b" data-search="אישור תשלום מובמנט כוח תנועה"><div class="template-header"><span class="tnum-badge">#6b</span><span class="ttitle">אישור: מבוגר — מובמנט/כוח</span><span class="tbadge">🟢</span></div><div class="template-meta"><span>⏰ מיד אחרי תשלום</span><span>📋 → PURCHASED</span></div><div class="template-body">
-<div class="message" onclick="copyMsg(this)"><button class="cbtn">📋 העתק</button>מעולה, התשלום התקבל! 🙌
-
-🗓️ שיעור קרוב: <span class="placeholder">[יום ותאריך]</span>, <span class="placeholder">[שעה]</span>
-
-מה להביא:
-👕 בגדי אימון נוחים
-💧 בקבוק מים
-
-📍 אולם "המגינים", חזית חמש 2, חולון
-🗺️ https://maps.app.goo.gl/Ru3awL6neiGsfMky5
-🅿️ חנייה ברחובות הסמוכים
-
-הגיעו 5-10 דק׳ לפני. נשלח טופס בריאות בהודעה הבאה 🙏</div>
-</div></div>
-
-<div class="template-card" id="t7" data-search="אישור תשלום הורה ילד נוער שחורה"><div class="template-header"><span class="tnum-badge">#7</span><span class="ttitle">אישור: הורה</span><span class="tbadge">🟢</span></div><div class="template-meta"><span>⏰ מיד אחרי תשלום</span><span>📋 → PURCHASED</span></div><div class="template-body">
+<div class="variant-label">הורה</div>
 <div class="message" onclick="copyMsg(this)"><button class="cbtn">📋 העתק</button>מעולה, התשלום התקבל! 🙌
 שמחים ש-<span class="placeholder">[שם הילד/ה]</span> מצטרף/ת!
 
@@ -457,7 +446,37 @@ h3{font-size:12px;font-weight:600;margin-top:16px;margin-bottom:6px}
 הגיעו 5-10 דק׳ לפני. נשלח טופס בריאות בהודעה הבאה 🙏</div>
 </div></div>
 
-<div class="template-card" id="t8" data-search="טופס בריאות הצהרה health"><div class="template-header"><span class="tnum-badge">#8</span><span class="ttitle">טופס בריאות</span><span class="tbadge">🟢</span></div><div class="template-meta"><span>⏰ מיד אחרי #6/#7</span></div><div class="template-body">
+<div class="template-card" id="t6b" data-search="אישור תשלום מובמנט כוח"><div class="template-header"><span class="tnum-badge">#6b</span><span class="ttitle">אישור: מובמנט / כוח</span><span class="tbadge">🟢</span></div><div class="template-meta"><span>⏰ מיד אחרי תשלום</span><span>📋 → PURCHASED</span></div><div class="template-body">
+<div class="message" onclick="copyMsg(this)"><button class="cbtn">📋 העתק</button>מעולה, התשלום התקבל! 🙌
+
+🗓️ שיעור קרוב: <span class="placeholder">[יום ותאריך]</span>, <span class="placeholder">[שעה]</span>
+
+מה להביא:
+👕 בגדי אימון נוחים
+💧 בקבוק מים
+
+📍 אולם "המגינים", חזית חמש 2, חולון
+🗺️ https://maps.app.goo.gl/Ru3awL6neiGsfMky5
+
+הגיעו 5-10 דק׳ לפני. נשלח טופס בריאות בהודעה הבאה 🙏</div>
+</div></div>
+
+<div class="template-card" id="t6c" data-search="אישור תשלום פרטי private"><div class="template-header"><span class="tnum-badge">#6c</span><span class="ttitle">אישור: שיעור פרטי</span><span class="tbadge">🟢</span></div><div class="template-meta"><span>⏰ אחרי תיאום ותשלום</span><span>📋 → PURCHASED</span></div><div class="template-body">
+<div class="message" onclick="copyMsg(this)"><button class="cbtn">📋 העתק</button>מעולה, התשלום התקבל! 🙌
+
+🗓️ נתראה: <span class="placeholder">[יום ותאריך]</span>, <span class="placeholder">[שעה]</span>
+
+מה להביא:
+👕 בגדי אימון נוחים
+💧 בקבוק מים
+
+📍 <span class="placeholder">[מיקום]</span>
+
+נשלח טופס בריאות בהודעה הבאה 🙏</div>
+</div></div>
+
+<!-- ===== GROUP 3.5: HEALTH + REMINDER ===== -->
+<div class="template-card" id="t8" data-search="טופס בריאות הצהרה health"><div class="template-header"><span class="tnum-badge">#8</span><span class="ttitle">טופס בריאות</span><span class="tbadge">🟢</span></div><div class="template-meta"><span>⏰ מיד אחרי אישור תשלום</span></div><div class="template-body">
 <div class="message" onclick="copyMsg(this)"><button class="cbtn">📋 העתק</button>עוד דבר חשוב 📋
 
 לפני השיעור הראשון — טופס הצהרת בריאות קצר.
@@ -478,6 +497,7 @@ h3{font-size:12px;font-weight:600;margin-top:16px;margin-bottom:6px}
 מחכים 🙏</div>
 </div></div>
 
+<!-- ===== GROUP 4: CLASS FOLLOW-UP ===== -->
 <div class="section-divider" id="group4"><span class="gnum">4</span> מעקב היכרות</div>
 <div class="template-card" id="t10" data-search="מעקב שיעור ראשון 1 first"><div class="template-header"><span class="tnum-badge">#10</span><span class="ttitle">מעקב שיעור 1</span><span class="tbadge">🟡</span></div><div class="template-meta"><span>⏰ למחרת 9-11</span><span>📋 → MADE 1ST</span></div><div class="template-body">
 <div class="variant-label">מבוגר/ת</div>
@@ -498,7 +518,7 @@ h3{font-size:12px;font-weight:600;margin-top:16px;margin-bottom:6px}
 הבא: <span class="placeholder">[יום ותאריך]</span>, <span class="placeholder">[שעה]</span> — מחכים! 🙏</div>
 </div></div>
 
-<div class="template-card" id="t11" data-search="מעקב שיעור שני 2 ערך מים"><div class="template-header"><span class="tnum-badge">#11</span><span class="ttitle">ערך שיעור 2</span><span class="tbadge">🟡</span></div><div class="template-meta"><span>⏰ למחרת 9-11</span><span>📋 → MADE 2ND</span></div><div class="template-body">
+<div class="template-card" id="t11" data-search="מעקב שיעור שני 2 ערך"><div class="template-header"><span class="tnum-badge">#11</span><span class="ttitle">ערך שיעור 2</span><span class="tbadge">🟡</span></div><div class="template-meta"><span>⏰ למחרת 9-11</span><span>📋 → MADE 2ND</span></div><div class="template-body">
 <div class="variant-label">מבוגר/ת</div>
 <div class="message" onclick="copyMsg(this)"><button class="cbtn">📋 העתק</button>היי <span class="placeholder">[שם]</span> 👋
 שיעור שני מאחורי — יפה! 💪
@@ -508,89 +528,56 @@ h3{font-size:12px;font-weight:600;margin-top:16px;margin-bottom:6px}
 🧘 כאבי שרירים = טבעי, הגוף מסתגל
 ⏰ הגעה מוקדמת = נכנסים למוד
 
-עם הזמן הטכניקה משתפרת וכל שיעור מהנה יותר.
-
 <span class="placeholder">[יום ותאריך]</span>, <span class="placeholder">[שעה]</span> — מחכים! 🙏</div>
 <div class="variant-label">הורה</div>
 <div class="message" onclick="copyMsg(this)"><button class="cbtn">📋 העתק</button>היי <span class="placeholder">[שם ההורה]</span> 👋
-<span class="placeholder">[שם הילד/ה]</span> אחרי 2 שיעורים — מעולה! 💪
+<span class="placeholder">[שם הילד/ה]</span> סיים/ה שיעור שני — יפה! 💪
 
-💧 מים גם למחרת
-🧘 כאבי שרירים = טבעי
-😊 אתגרים חברתיים = חלק מהתהליך
+נשמח לשמוע — נהנה/ית? משהו שחשוב שנדע?
 
-הילדים ״מרגישים בבית״ אחרי 3-4 שיעורים.
-
-הבא: <span class="placeholder">[יום ותאריך]</span>, <span class="placeholder">[שעה]</span> 🙏</div>
+<span class="placeholder">[יום ותאריך]</span>, <span class="placeholder">[שעה]</span> — מחכים! 🙏</div>
 </div></div>
 
 <div class="template-card" id="t12" data-search="הרשמה מנוי שלישי 3 מבוגר 450"><div class="template-header"><span class="tnum-badge">#12</span><span class="ttitle">הרשמה — מבוגר/ת</span><span class="tbadge">🟡</span></div><div class="template-meta"><span>⏰ אחרי שיעור 3</span><span>📋 → MADE 3RD</span></div><div class="template-body">
 <div class="message" onclick="copyMsg(this)"><button class="cbtn">📋 העתק</button>היי <span class="placeholder">[שם]</span> 👋
 סיימתם 3 שיעורי היכרות — כל הכבוד! 🙌
 
-מקווים שהרגשתם את האווירה ומה שהאימונים נותנים.
-נשמח שתמשיכו — לפתח את מה שהתחלתם.
+נשמח שתמשיכו.
 
 🔹 450₪/חודש, ללא הגבלת שיעורים
-לחימה + מובמנט + כוח — מה שמתאים.
 
-🔗 https://1pa.co/M0vKzsxWes
-
-לדבר קודם? 📞 אנחנו כאן 🙏</div>
-<div class="office-note"><strong>⚠️</strong> כרטיסיית 10: 699₪. מצב מיוחד → ליאור.</div>
+לדבר קודם? 📞 🙏</div>
 </div></div>
 
-<div class="template-card" id="t13" data-search="הרשמה מנוי שלישי 3 הורה ילד נוער 300 380"><div class="template-header"><span class="tnum-badge">#13</span><span class="ttitle">הרשמה — הורה</span><span class="tbadge">🔵</span></div><div class="template-meta"><span>⏰ אחרי שיעור 3</span><span>📋 → MADE 3RD</span></div><div class="template-body">
-<div class="variant-label">ילדים 6-8 (300₪)</div>
+<div class="template-card" id="t13" data-search="הרשמה מנוי שלישי 3 הורה ילד 300 380"><div class="template-header"><span class="tnum-badge">#13</span><span class="ttitle">הרשמה — הורה</span><span class="tbadge">🔵</span></div><div class="template-meta"><span>⏰ אחרי שיעור 3</span><span>📋 → MADE 3RD</span></div><div class="template-body">
 <div class="message" onclick="copyMsg(this)"><button class="cbtn">📋 העתק</button>היי <span class="placeholder">[שם ההורה]</span> 👋
 <span class="placeholder">[שם הילד/ה]</span> סיים/ה 3 שיעורי היכרות — כל הכבוד! 🙌
-אנחנו רואים ש<span class="placeholder">[הוא/היא]</span> <span class="placeholder">[התאמה אישית]</span>.
 
-🔹 300₪/חודש, 2 שיעורים (א׳+ד׳)
-🔗 https://1pa.co/3JmwcKoO3j
-שאלות? 🙏</div>
-<div class="variant-label">ילדים 9-11 (300₪)</div>
-<div class="message" onclick="copyMsg(this)"><button class="cbtn">📋 העתק</button>היי <span class="placeholder">[שם ההורה]</span> 👋
-<span class="placeholder">[שם הילד/ה]</span> סיים/ה 3 שיעורי היכרות — כל הכבוד! 🙌
-אנחנו רואים ש<span class="placeholder">[הוא/היא]</span> <span class="placeholder">[התאמה אישית]</span>.
+<span class="placeholder">[לפי גיל: ילדים 300₪ / נוער 380₪]</span>/חודש
 
-🔹 300₪/חודש, 2 שיעורים (א׳+ד׳)
-🔗 https://1pa.co/edqL1EYZGG
 שאלות? 🙏</div>
-<div class="variant-label">נוער 12-15 (380₪)</div>
-<div class="message" onclick="copyMsg(this)"><button class="cbtn">📋 העתק</button>היי <span class="placeholder">[שם ההורה]</span> 👋
-<span class="placeholder">[שם הילד/ה]</span> סיים/ה 3 שיעורי היכרות — כל הכבוד! 🙌
-אנחנו רואים ש<span class="placeholder">[הוא/היא]</span> <span class="placeholder">[התאמה אישית]</span>.
-
-🔹 380₪/חודש, 2 שיעורים (א׳+ד׳)
-🔗 https://1pa.co/jeCPoJ3831
-שאלות? 🙏</div>
-<div class="office-note"><strong>⚠️ 2 ילדים:</strong> 500₪ <a href="https://letts.co.il/payment/YWxjbGM1cmt2TGdsOVI4dHNkdWRrQT09">לינק</a> | <strong>2 נוער:</strong> 600₪ <a href="https://letts.co.il/payment/UVA0bUNpTjM3SkNuS09FN2tueVRmdz09">לינק</a></div>
 </div></div>
 
+<!-- ===== GROUP 5: ENROLLMENT ===== -->
 <div class="section-divider" id="group5"><span class="gnum">5</span> הרשמה והמשך</div>
-<div class="template-card" id="t14" data-search="ברוכים הבאים מנוי מבוגר welcome boostapp"><div class="template-header"><span class="tnum-badge">#14</span><span class="ttitle">ברוכים הבאים (מבוגר/ת)</span><span class="tbadge">🟢</span></div><div class="template-meta"><span>⏰ אחרי מנוי</span><span>📋 → ENROLLED</span></div><div class="template-body">
+<div class="template-card" id="t14" data-search="ברוכים הבאים מנוי מבוגר welcome"><div class="template-header"><span class="tnum-badge">#14</span><span class="ttitle">ברוכים הבאים (מבוגר/ת)</span><span class="tbadge">🟢</span></div><div class="template-meta"><span>⏰ אחרי מנוי</span><span>📋 → ENROLLED</span></div><div class="template-body">
 <div class="message" onclick="copyMsg(this)"><button class="cbtn">📋 העתק</button>ברוכים הבאים למשפחת אלמנט! 🙌🔥
 
-📱 הורידו BoostApp Business — הירשמו לשיעורים מראש
-📋 שאלון רקע: https://forms.gle/piXKhuJLkjBAV8mM6
-🥊 ציוד: עם הזמן סד שיניים + כפפות. נכוון בשיעור.
-📍 אולם "המגינים", חזית חמש 2, חולון
+📱 הורידו את BoostApp Business (אפליקציה לניהול מערכת שעות + הודעות)
+📋 שאלון רקע — נשלח בנפרד
+🥊 ציוד: סד שיניים + כפפות (נמליץ כשתהיו מוכנים)
 
-חברים שיתאימו? יש מבצע חבר מביא חבר! 🙏
-יאללה 💪</div>
+חברים שרוצים להצטרף? חבר מביא חבר — 50% לשניכם על חודש ראשון! 🙏</div>
 </div></div>
 
 <div class="template-card" id="t15" data-search="ברוכים הבאים מנוי הורה ילד welcome"><div class="template-header"><span class="tnum-badge">#15</span><span class="ttitle">ברוכים הבאים (הורה)</span><span class="tbadge">🟢</span></div><div class="template-meta"><span>⏰ אחרי מנוי</span><span>📋 → ENROLLED</span></div><div class="template-body">
 <div class="message" onclick="copyMsg(this)"><button class="cbtn">📋 העתק</button>ברוכים הבאים למשפחת אלמנט! 🙌🔥
 שמחים ש-<span class="placeholder">[שם הילד/ה]</span> ממשיך/ה!
 
-📱 הורידו BoostApp Business — לוח שיעורים
-📋 שאלון רקע: https://forms.gle/piXKhuJLkjBAV8mM6
-📍 אולם "המגינים", חזית חמש 2, חולון
+📱 BoostApp Business — אפליקציה לניהול שעות
+📋 שאלון רקע — נשלח בנפרד
 
-חברים מהכיתה? יש מבצע חבר מביא חבר! 🙏
-יאללה 💪</div>
+חברים מהכיתה? חבר מביא חבר — 50% לשניכם! 🙏</div>
 </div></div>
 
 <div class="template-card" id="t16" data-search="חבר מביא חבר referral הנחה 50"><div class="template-header"><span class="tnum-badge">#16</span><span class="ttitle">חבר מביא חבר</span><span class="tbadge">🟢</span></div><div class="template-meta"><span>⏰ 2-3 שבועות אחרי</span></div><div class="template-body">
@@ -603,93 +590,55 @@ h3{font-size:12px;font-weight:600;margin-top:16px;margin-bottom:6px}
 אין כמו להתאמן עם מישהו שמכירים 🙏</div>
 </div></div>
 
+<!-- ===== GROUP 6: RETENTION ===== -->
 <div class="section-divider" id="group6"><span class="gnum">6</span> שימור ומעקב</div>
-<div class="template-card" id="t17a" data-search="נעלם השתתק לא הגיע שילם ghosting"><div class="template-header"><span class="tnum-badge">#17a</span><span class="ttitle">שילם ולא הגיע</span><span class="tbadge">🟡</span></div><div class="template-meta"><span>⏰ 3-4 ימים</span></div><div class="template-body">
+<div class="template-card" id="t17a" data-search="נעלם לא הגיע שילם ghosting"><div class="template-header"><span class="tnum-badge">#17a</span><span class="ttitle">שילם ולא הגיע</span><span class="tbadge">🟡</span></div><div class="template-meta"><span>⏰ 3-4 ימים</span></div><div class="template-body">
 <div class="message" onclick="copyMsg(this)"><button class="cbtn">📋 העתק</button>היי <span class="placeholder">[שם]</span> 👋
 שמנו לב שעדיין לא הגעתם — הכל בסדר?
 
 לפעמים קשה ״לדחוף מהדלת״ 😊
 שיעורי ההיכרות ממתינים.
 
-הקרוב: <span class="placeholder">[יום ותאריך]</span>, <span class="placeholder">[שעה]</span>
-📍 אולם "המגינים", חזית חמש 2, חולון
-
-לשנות מועד? שלחו 🙏</div>
+הקרוב: <span class="placeholder">[יום ותאריך]</span>, <span class="placeholder">[שעה]</span> 🙏</div>
 </div></div>
 
-<div class="template-card" id="t17b" data-search="נעלם השתתק באמצע היכרות disappeared"><div class="template-header"><span class="tnum-badge">#17b</span><span class="ttitle">הגיע 1-2 ונעלם</span><span class="tbadge">🟡</span></div><div class="template-meta"><span>⏰ שבוע אחרי</span></div><div class="template-body">
+<div class="template-card" id="t17b" data-search="נעלם באמצע היכרות disappeared"><div class="template-header"><span class="tnum-badge">#17b</span><span class="ttitle">הגיע 1-2 ונעלם</span><span class="tbadge">🟡</span></div><div class="template-meta"><span>⏰ שבוע אחרי</span></div><div class="template-body">
 <div class="message" onclick="copyMsg(this)"><button class="cbtn">📋 העתק</button>היי <span class="placeholder">[שם]</span> 👋
-לא ראינו אתכם — הכל בסדר?
+לא ראינו אתכם! הכל בסדר?
 
-נשאר <span class="placeholder">[שיעור אחד / שניים]</span> בהיכרות.
-משהו לא התאים? נשמח לשמוע.
-מועד אחר? אנחנו גמישים 🙏</div>
+אם יש משהו שגרם לחוסר נוחות, נשמח לשמוע.
+ואם זה עניין של זמן — תמיד אפשר לחזור.
+
+מחכים 🙏</div>
 </div></div>
 
-<div class="template-card" id="t18" data-search="לחשוב מתלבט לא עכשיו not ready"><div class="template-header"><span class="tnum-badge">#18</span><span class="ttitle">מתלבט</span><span class="tbadge">🟢</span></div><div class="template-meta"><span>📋 → NOT READY</span></div><div class="template-body">
+<div class="template-card" id="t18" data-search="מתלבט לחשוב not ready"><div class="template-header"><span class="tnum-badge">#18</span><span class="ttitle">מתלבט</span><span class="tbadge">🟢</span></div><div class="template-meta"><span>📋 → NOT READY</span></div><div class="template-body">
 <div class="message" onclick="copyMsg(this)"><button class="cbtn">📋 העתק</button>לגמרי מובן, <span class="placeholder">[שם]</span> 🙏
 קחו זמן — אנחנו כאן כשתהיו מוכנים.
 אפשר תמיד לחזור להיכרות. מחכים 💪</div>
 </div></div>
 
-<div class="template-card" id="t19" data-search="ווידג'ט לא שילם widget abandoned cart"><div class="template-header"><span class="tnum-badge">#19</span><span class="ttitle">ווידג׳ט — לא שילם</span><span class="tbadge">🟡</span></div><div class="template-meta"><span>⏰ 24-48 שעות</span><span>📋 NEAR PURCHASE</span></div><div class="template-body">
-<div class="message" onclick="copyMsg(this)"><button class="cbtn">📋 העתק</button>היי <span class="placeholder">[שם]</span> 👋
-ראינו שהתעניינתם — נשמח לעזור!
-
-שאלות? נתקעתם? אנחנו כאן.
-אפשר שיחה בטלפון 📞
-
-🔗 https://letts.co.il/payment/WXZycXZLa09XMlp3QzhJS2hhNHFkdz09
-
-מחכים! 🙏</div>
-</div></div>
-
-<!-- ========== REFERENCE ========== -->
-<div id="ref-section">
-<h2>📎 לינקים ומידע</h2>
-<h3>🔗 היכרות</h3>
-<table class="links-table"><thead><tr><th>סוג</th><th>מחיר</th><th>לינק</th></tr></thead><tbody>
-<tr><td>3 שיעורים</td><td>99₪</td><td><a href="https://letts.co.il/payment/WXZycXZLa09XMlp3QzhJS2hhNHFkdz09">לינק</a></td></tr>
-<tr><td>בודד בוגרים+נוער</td><td>70₪</td><td><a href="https://letts.co.il/payment/MkxOaWFZZ0pjajBrY2I2V0d0cGdpZz09">לינק</a></td></tr>
-<tr><td>בודד ילדים</td><td>60₪</td><td><a href="https://letts.co.il/payment/dmcrM2NxNlhYYzR6aGRnWm4ybGdCZz09">לינק</a></td></tr>
-<tr><td>פרטי רגיל</td><td>250₪</td><td><a href="https://letts.co.il/payment/Zi9WMk5ySzdPeTJpQWFTTkNnNmIvUT09">לינק</a></td></tr>
-<tr><td>פרטי שיקום</td><td>300₪</td><td><a href="https://letts.co.il/payment/cFNJVHdveWFPQlNabWFPN20vMkhwQT09">לינק</a></td></tr>
+<!-- ===== REF SECTION ===== -->
+<h2 id="ref-section">📎 לינקים ותמחור</h2>
+<table class="links-table"><thead><tr><th>פריט</th><th>לינק</th></tr></thead><tbody>
+<tr><td>3 שיעורי היכרות (99₪)</td><td><a href="https://letts.co.il/payment/WXZycXZLa09XMlp3QzhJS2hhNHFkdz09" target="_blank">letts.co.il/…</a></td></tr>
+<tr><td>בודד מבוגר/נוער (70₪)</td><td><a href="https://letts.co.il/payment/MkxOaWFZZ0pjajBrY2I2V0d0cGdpZz09" target="_blank">letts.co.il/…</a></td></tr>
+<tr><td>בודד ילדים (60₪)</td><td><a href="https://letts.co.il/payment/dmcrM2NxNlhYYzR6aGRnWm4ybGdCZz09" target="_blank">letts.co.il/…</a></td></tr>
+<tr><td>טופס בריאות</td><td><a href="https://forms.gle/YUfdx6rxZcSfsKQj7" target="_blank">forms.gle/…</a></td></tr>
+<tr><td>מיקום (Maps)</td><td><a href="https://maps.app.goo.gl/Ru3awL6neiGsfMky5" target="_blank">maps.app.goo.gl/…</a></td></tr>
 </tbody></table>
-<h3>🔗 מנויים</h3>
-<table class="links-table"><thead><tr><th>קבוצה</th><th>₪</th><th>לינק</th></tr></thead><tbody>
-<tr><td>בוגרים</td><td>450</td><td><a href="https://1pa.co/M0vKzsxWes">לינק</a></td></tr>
-<tr><td>נוער</td><td>380</td><td><a href="https://1pa.co/jeCPoJ3831">לינק</a></td></tr>
-<tr><td>ילדים 6-8</td><td>300</td><td><a href="https://1pa.co/3JmwcKoO3j">לינק</a></td></tr>
-<tr><td>ילדים 9-11</td><td>300</td><td><a href="https://1pa.co/edqL1EYZGG">לינק</a></td></tr>
-<tr><td>2 ילדים</td><td>500</td><td><a href="https://letts.co.il/payment/YWxjbGM1cmt2TGdsOVI4dHNkdWRrQT09">לינק</a></td></tr>
-<tr><td>2 נוער</td><td>600</td><td><a href="https://letts.co.il/payment/UVA0bUNpTjM3SkNuS09FN2tueVRmdz09">לינק</a></td></tr>
-<tr><td>פעם/שבוע</td><td>300</td><td>משרד</td></tr>
-<tr><td>כרטיסיית 10</td><td>699</td><td>טרם</td></tr>
-</tbody></table>
-<h3>📋 טפסים</h3>
-<table class="links-table"><tbody>
-<tr><td>בריאות</td><td><a href="https://forms.gle/YUfdx6rxZcSfsKQj7">לינק</a></td></tr>
-<tr><td>רקע+מטרות</td><td><a href="https://forms.gle/piXKhuJLkjBAV8mM6">לינק</a></td></tr>
-<tr><td>משוב היכרות</td><td>טרם</td></tr>
-</tbody></table>
-<h3>🗓️ שיעורים</h3>
-<table class="links-table"><thead><tr><th>קבוצה</th><th>ימים</th><th>שעות</th></tr></thead><tbody>
-<tr><td>🥊 6-8</td><td>א׳+ד׳</td><td>17:00-17:45</td></tr>
-<tr><td>🥊 9-11</td><td>א׳+ד׳</td><td>17:45-18:45</td></tr>
-<tr><td>🥊 נוער</td><td>א׳+ד׳</td><td>18:45-20:00</td></tr>
-<tr><td>🥊 בוגרים</td><td>א׳+ד׳</td><td>18:45-20:00</td></tr>
-<tr><td>🥊 38-58</td><td>ב׳+ה׳</td><td>18:15-19:30</td></tr>
-<tr><td>🤸 מובמנט</td><td>ג׳/ו׳</td><td>19:45-21:00 / 14:30-15:45</td></tr>
-<tr><td>💪 כוח</td><td>ג׳/ו׳</td><td>18:30-19:45 / 15:45-17:00</td></tr>
-</tbody></table>
-<h3>ℹ️ כללי</h3>
-<table class="links-table"><tbody>
-<tr><td><strong>כתובת</strong></td><td>אולם "המגינים", חזית חמש 2, חולון</td></tr>
-<tr><td><strong>Maps</strong></td><td><a href="https://maps.app.goo.gl/Ru3awL6neiGsfMky5">לינק</a></td></tr>
-<tr><td><strong>טלפון</strong></td><td dir="ltr">+972512826106</td></tr>
+
+<h2>טבלת תמחור</h2>
+<table class="ref-table"><thead><tr><th>שירות</th><th>מחיר</th></tr></thead><tbody>
+<tr><td>מנוי מבוגרים (ללא הגבלה)</td><td>450₪/חודש</td></tr>
+<tr><td>מנוי נוער</td><td>380₪/חודש</td></tr>
+<tr><td>מנוי ילדים</td><td>300₪/חודש</td></tr>
+<tr><td>2 ילדים</td><td>500₪/חודש</td></tr>
+<tr><td>2 נוער</td><td>600₪/חודש</td></tr>
+<tr><td>שיעור פרטי</td><td>250₪</td></tr>
+<tr><td>שיעור פרטי שיקומי</td><td>300₪</td></tr>
 <tr><td><strong>חבר↔חבר</strong></td><td>50% חודש 1 — למביא ולחבר</td></tr>
 </tbody></table>
-</div>
 
 <div class="open-items">
 <h3>📝 פתוח</h3>
@@ -697,130 +646,112 @@ h3{font-size:12px;font-weight:600;margin-top:16px;margin-bottom:6px}
 <li>כרטיסיית 10 (699₪) — דף תשלום</li>
 <li>טופס משוב היכרות</li>
 <li>מנוי בוגר+ילד / בוגר+נוער</li>
-<li>תבנית שיעורים פרטיים</li>
 </ul>
 </div>
 </div>
 
 <button class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">⬆</button>
 
-<button class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">⬆</button>
-</div>
-
 <script>
 // === COPY HELPERS ===
-function copyMsg(el){const c=el.cloneNode(true);const b=c.querySelector('.cbtn');if(b)b.remove();c.querySelectorAll('.placeholder').forEach(s=>s.replaceWith(s.textContent));const t=c.innerText.trim();doCopy(t,el.querySelector('.cbtn'))}
-function doCopy(t,btn){try{navigator.clipboard.writeText(t).then(()=>flash(btn)).catch(()=>fb(t,btn))}catch(e){fb(t,btn)}}
+function copyMsg(el){const c=el.cloneNode(true);c.querySelector('.cbtn')?.remove();c.querySelectorAll('.placeholder').forEach(s=>s.replaceWith(s.textContent));doCopy(c.innerText.trim(),el.querySelector('.cbtn'))}
+function doCopy(t,btn){navigator.clipboard?.writeText(t).then(()=>flash(btn)).catch(()=>fb(t,btn))||fb(t,btn)}
 function fb(t,btn){const a=document.createElement('textarea');a.value=t;a.style.cssText='position:fixed;left:-9999px';document.body.appendChild(a);a.select();try{document.execCommand('copy');flash(btn)}catch(e){}document.body.removeChild(a)}
 function flash(btn){if(!btn)return;btn.textContent='✅';btn.classList.add('copied');setTimeout(()=>{btn.textContent='📋 העתק';btn.classList.remove('copied')},1200)}
 
 // === TOOLTIP ===
-const tt=document.getElementById('tooltip');let ttTimeout;
-document.addEventListener('mouseover',function(e){const node=e.target.closest('[data-tt-body]');if(!node)return;clearTimeout(ttTimeout);const title=node.getAttribute('data-tt-title');let body=node.getAttribute('data-tt-body').replace(/\\n/g,'\n');const htmlBody=body.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>').replace(/\[([^\]]+)\]/g,'<span class="ph">[$1]</span>');tt.querySelector('.tt-title').textContent=title;tt.querySelector('.tt-body').innerHTML=htmlBody;const r=node.getBoundingClientRect();tt.style.top='0';tt.style.left='0';tt.classList.add('visible');const th=tt.offsetHeight;let top=r.top-th-8,left=r.left+r.width/2-150;if(top<8)top=r.bottom+8;if(left<8)left=8;if(left+300>window.innerWidth)left=window.innerWidth-308;tt.style.top=top+'px';tt.style.left=left+'px'});
-document.addEventListener('mouseout',function(e){const node=e.target.closest('[data-tt-body]');if(!node)return;const related=e.relatedTarget;if(related&&(related.closest('[data-tt-body]')===node||related.closest('#tooltip')))return;ttTimeout=setTimeout(()=>{tt.classList.remove('visible')},150)});
-tt.addEventListener('mouseover',()=>{clearTimeout(ttTimeout)});tt.addEventListener('mouseleave',()=>{ttTimeout=setTimeout(()=>{tt.classList.remove('visible')},100)});
-function copyTooltip(){const body=tt.querySelector('.tt-body');const c=body.cloneNode(true);c.querySelectorAll('.ph').forEach(s=>s.replaceWith(s.textContent));c.querySelectorAll('br').forEach(br=>br.replaceWith('\n'));doCopy(c.innerText.trim(),tt.querySelector('.tt-copy'))}
+const tt=document.getElementById('tooltip');let ttT;
+document.addEventListener('mouseover',e=>{const n=e.target.closest('[data-tt-body]');if(!n)return;clearTimeout(ttT);const body=n.getAttribute('data-tt-body').replace(/\\n/g,'\n');const html=body.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>').replace(/\[([^\]]+)\]/g,'<span class="ph">[$1]</span>');tt.querySelector('.tt-title').textContent=n.getAttribute('data-tt-title');tt.querySelector('.tt-body').innerHTML=html;const r=n.getBoundingClientRect();tt.classList.add('visible');const th=tt.offsetHeight;let top=r.top-th-8,left=r.left+r.width/2-150;if(top<8)top=r.bottom+8;if(left<8)left=8;if(left+300>window.innerWidth)left=window.innerWidth-308;tt.style.top=top+'px';tt.style.left=left+'px'});
+document.addEventListener('mouseout',e=>{const n=e.target.closest('[data-tt-body]');if(!n)return;if(e.relatedTarget?.closest('[data-tt-body]')===n||e.relatedTarget?.closest('#tooltip'))return;ttT=setTimeout(()=>tt.classList.remove('visible'),150)});
+tt.addEventListener('mouseover',()=>clearTimeout(ttT));tt.addEventListener('mouseleave',()=>{ttT=setTimeout(()=>tt.classList.remove('visible'),100)});
+function copyTooltip(){const c=tt.querySelector('.tt-body').cloneNode(true);c.querySelectorAll('.ph').forEach(s=>s.replaceWith(s.textContent));c.querySelectorAll('br').forEach(br=>br.replaceWith('\n'));doCopy(c.innerText.trim(),tt.querySelector('.tt-copy'))}
 
 // === SEARCH ===
-function goTo(id){const el=document.getElementById(id);if(!el)return;el.classList.remove('search-hidden');el.scrollIntoView({behavior:'smooth',block:'center'});el.style.boxShadow='0 0 0 2px var(--accent)';setTimeout(()=>{el.style.boxShadow=''},2000)}
+function goTo(id){const el=document.getElementById(id);if(!el)return;el.classList.remove('search-hidden');el.scrollIntoView({behavior:'smooth',block:'center'});el.style.boxShadow='0 0 0 2px var(--accent)';setTimeout(()=>el.style.boxShadow='',2000)}
 function filterTemplates(){const q=document.getElementById('searchInput').value.trim().toLowerCase();const cards=document.querySelectorAll('.template-card');let v=0;document.querySelectorAll('.fnode.search-glow').forEach(n=>n.classList.remove('search-glow'));if(!q){cards.forEach(c=>c.classList.remove('search-hidden'));document.getElementById('searchCount').textContent='';document.getElementById('noResults').classList.remove('visible');document.querySelectorAll('.section-divider,#flowcharts,.instructions,.flow-legend').forEach(e=>e.style.display='');return}document.querySelectorAll('.section-divider,#flowcharts,.instructions,.flow-legend').forEach(e=>e.style.display='none');cards.forEach(c=>{const s=(c.getAttribute('data-search')||'')+' '+c.textContent;if(s.toLowerCase().includes(q)){c.classList.remove('search-hidden');v++}else c.classList.add('search-hidden')});if(q.length>=2){document.querySelectorAll('.section-divider,#flowcharts,.instructions,.flow-legend').forEach(e=>e.style.display='');NODES.forEach(n=>{if(n._el&&(n.label.toLowerCase().includes(q)||(n.ttTitle||'').toLowerCase().includes(q)||(n.ttBody||'').toLowerCase().includes(q)))n._el.classList.add('search-glow')})}document.getElementById('searchCount').textContent=v+'';document.getElementById('noResults').classList.toggle('visible',v===0)}
-window.addEventListener('scroll',()=>{document.getElementById('backTop').classList.toggle('visible',window.scrollY>250)});
-document.querySelectorAll('.nav-tabs a').forEach(a=>a.addEventListener('click',()=>{document.getElementById('searchInput').value='';filterTemplates()}));
+window.addEventListener('scroll',()=>document.getElementById('backTop').classList.toggle('visible',window.scrollY>250));
 
 // ============================================================
-// FLOWCHART ENGINE v5.3
-// Features: anchor-based arrows, lane coloring, no stage lines
+// FLOWCHART ENGINE v5.4
+// Undo/redo, add/delete, orthogonal arrows, arrow rebinding
 // ============================================================
 
-// Lanes: 'adult' = warm pink, 'parent' = cool blue, null = default
+const CU_MAP = {t1:{l:'CONSIDERING',c:'#f87171'},t2:{l:'NEW LEADS',c:'#94a3b8'},t3:{l:'NEW LEADS',c:'#94a3b8'},t19:{l:'NEAR PURCHASE',c:'#f472b6'},t4a:{l:'CONSIDERING',c:'#f87171'},t4b:{l:'CONSIDERING',c:'#f87171'},t4c:{l:'CONSIDERING',c:'#f87171'},t4d:{l:'CONSIDERING',c:'#f87171'},t4e:{l:'CONSIDERING',c:'#f87171'},t4f:{l:'CONSIDERING',c:'#f87171'},t4g:{l:'CONSIDERING',c:'#f87171'},t4h:{l:'CONSIDERING',c:'#f87171'},t4i:{l:'CONSIDERING',c:'#f87171'},t6a:{l:'PURCHASED',c:'#60a5fa'},t6b:{l:'PURCHASED',c:'#60a5fa'},t6c:{l:'PURCHASED',c:'#60a5fa'},t8:{l:'PURCHASED',c:'#60a5fa'},t9:{l:'PURCHASED',c:'#60a5fa'},t10:{l:'MADE 1ST',c:'#4ade80'},t11:{l:'MADE 2ND',c:'#4ade80'},t12:{l:'MADE 3RD',c:'#fb923c'},t13:{l:'MADE 3RD',c:'#fb923c'},t14:{l:'ENROLLED',c:'#22c55e'},t15:{l:'ENROLLED',c:'#22c55e'},t16:{l:'ENROLLED',c:'#22c55e'},t17a:{l:'LOST?',c:'#fb923c'},t17b:{l:'LOST?',c:'#fb923c'},t18:{l:'NOT READY',c:'#2dd4bf'}};
+const LANE_COLORS = {adult:'#d81b60',parent:'#1565c0'};
+
+// === DEFAULT DATA ===
 const DEFAULT_NODES = [
-  // === PHASE 1: ENTRY & FIRST CONTACT ===
-  {id:'entry', type:'trigger', label:'📥 ליד חדש נכנס', x:420, y:30, w:150},
-  {id:'srcQ', type:'decision', label:'מקור הפנייה?', x:430, y:110, w:125},
+  // PHASE 1: Entry
+  {id:'entry',type:'trigger',label:'📥 ליד חדש נכנס',x:450,y:25,w:145},
+  {id:'srcQ',type:'decision',label:'מקור הפנייה?',x:460,y:100,w:120},
+  // Widget
+  {id:'widget',type:'action',label:'📱 ווידג׳ט\n(דף נחיתה / Linktree)',x:180,y:195,w:165},
+  {id:'widgetQ',type:'decision',label:'תוצאה?',x:210,y:290,w:95},
+  {id:'wPaid',type:'action',label:'💳 שילם דרך\nהווידג׳ט',x:40,y:385,w:115},
+  {id:'wCallback',type:'action',label:'📞 ביקש\nשנחזור',x:195,y:385,w:105},
+  {id:'wNoPay',type:'action',label:'⏰ לא שילם\n(24-48 שעות)',x:345,y:385,w:115},
+  {id:'n_t1',type:'template',label:'#1 תגובה\nווידג׳ט',x:190,y:475,w:120,link:'t1',ttTitle:'#1 תגובה ווידג׳ט',ttBody:'היי [שם] 👋\nכאן צוות אלמנט...\nראינו שהתעניינתם ב[שם הקבוצה].\nיש לכם שאלות? 🙏'},
+  {id:'n_t19',type:'template',label:'#19 מעקב\nלא שילם',x:335,y:475,w:115,link:'t19',ttTitle:'#19 מעקב לא שילם',ttBody:'היי [שם] 👋\nנתקעתם עם משהו? אנחנו כאן.\nאפשר גם שיחה בטלפון 📞'},
+  // Direct
+  {id:'direct',type:'action',label:'💬 פנייה ישירה\n(WA / טלפון / מייל)',x:650,y:195,w:175},
+  {id:'directQ',type:'decision',label:'מי פנה?',x:690,y:295,w:100},
+  {id:'n_t2',type:'template',label:'#2 תגובה\nמבוגר/ת',x:600,y:395,w:115,link:'t2',lane:'adult',ttTitle:'#2 ליד ישיר — מבוגר',ttBody:'היי [שם] 👋\nתודה שפניתם!\nמה חיפשתם? 🙏'},
+  {id:'n_t3',type:'template',label:'#3 תגובה\nהורה',x:765,y:395,w:105,link:'t3',lane:'parent',ttTitle:'#3 ליד ישיר — הורה',ttBody:'היי [שם ההורה] 👋\nמה הגיל, ומה חיפשתם? 💪'},
 
-  // Widget branch
-  {id:'widget', type:'action', label:'📱 ווידג׳ט\n(דף נחיתה / Linktree)', x:160, y:200, w:170},
-  {id:'widgetQ', type:'decision', label:'תוצאה?', x:185, y:295, w:100},
-  {id:'wPaid', type:'action', label:'💳 שילם דרך\nהווידג׳ט', x:20, y:390, w:120},
-  {id:'wCallback', type:'action', label:'📞 ביקש\nשנחזור', x:175, y:390, w:110},
-  {id:'wNoPay', type:'action', label:'⏰ לא שילם\n(24-48 שעות)', x:330, y:390, w:120},
-  {id:'n_t1', type:'template', label:'#1 תגובה\nווידג׳ט', x:170, y:480, w:125, link:'t1',
-   ttTitle:'#1 תגובה ווידג׳ט', ttBody:'היי [שם] 👋\nכאן צוות אלמנט — אומנויות לחימה ותנועה.\nראינו שהשארתם פרטים ונשמח לעזור!\n\nראינו שהתעניינתם ב[שם הקבוצה].\nיש לכם שאלות? נשמח לספר עוד ולתאם שיעור היכרות 🙏'},
-  {id:'n_t19', type:'template', label:'#19 מעקב\nלא שילם', x:320, y:480, w:120, link:'t19',
-   ttTitle:'#19 ווידג׳ט — לא שילם', ttBody:'היי [שם] 👋\nראינו שהתעניינתם באימונים אצלנו — נשמח לעזור!\n\nנתקעתם עם משהו? יש שאלות? אנחנו כאן.\nאפשר גם שיחה קצרה בטלפון 📞\n\nמחכים! 🙏'},
+  // PHASE 2: Details — single node + per-class branches
+  {id:'details',type:'action',label:'📋 פרטי היכרות\n(בחר שיעור)',x:410,y:580,w:160},
+  {id:'n_t4a',type:'template',label:'#4a לחימה\n16-37',x:20,y:685,w:100,link:'t4a',ttTitle:'#4a לחימה 16-37',ttBody:'ראשון+רביעי 20:00-21:30\n99₪ חבילה / 70₪ בודד'},
+  {id:'n_t4b',type:'template',label:'#4b לחימה\n38-58',x:140,y:685,w:100,link:'t4b',ttTitle:'#4b לחימה+כושר 38-58',ttBody:'שלישי+חמישי 20:00-21:15\n99₪ חבילה / 70₪ בודד'},
+  {id:'n_t4c',type:'template',label:'#4c מובמנט',x:260,y:685,w:90,link:'t4c',ttTitle:'#4c מובמנט',ttBody:'שלישי 19:45-21:00 / שישי 14:30-15:45\n99₪ חבילה / 70₪ בודד'},
+  {id:'n_t4d',type:'template',label:'#4d כוח\nוגמישות',x:370,y:685,w:95,link:'t4d',ttTitle:'#4d כוח וגמישות',ttBody:'שלישי 18:30-19:45 / שישי 15:45-17:00\n99₪ / 70₪'},
+  {id:'n_t4e',type:'template',label:'#4e ילדים\n6-8',x:485,y:685,w:90,link:'t4e',ttTitle:'#4e ילדים 6-8',ttBody:'ראשון+רביעי 17:00-17:45\n99₪ / 60₪'},
+  {id:'n_t4f',type:'template',label:'#4f ילדים\n9-11',x:595,y:685,w:90,link:'t4f',ttTitle:'#4f ילדים 9-11',ttBody:'ראשון+רביעי 17:45-18:45\n99₪ / 60₪'},
+  {id:'n_t4g',type:'template',label:'#4g נוער\n12-15',x:705,y:685,w:90,link:'t4g',ttTitle:'#4g נוער 12-15',ttBody:'ראשון+רביעי 18:45-20:00\n99₪ / 70₪'},
+  {id:'n_t4h',type:'template',label:'#4h פרטי\n250₪',x:815,y:685,w:85,link:'t4h',ttTitle:'#4h שיעור פרטי',ttBody:'250₪/60 דק׳ — התאמה אישית'},
+  {id:'n_t4i',type:'template',label:'#4i שיקומי\n300₪',x:915,y:685,w:85,link:'t4i',ttTitle:'#4i פרטי שיקומי',ttBody:'300₪/60 דק׳ — שיקום+תנועה+חיזוק'},
+  {id:'noResp1',type:'ghost',label:'ללא תגובה',x:780,y:580,w:100},
 
-  // Direct branch
-  {id:'direct', type:'action', label:'💬 פנייה ישירה\n(WA / טלפון / מייל / רשתות)', x:620, y:200, w:185},
-  {id:'directQ', type:'decision', label:'מי פנה?', x:660, y:300, w:105},
-  {id:'n_t2', type:'template', label:'#2 תגובה\nמבוגר/ת', x:570, y:400, w:120, link:'t2', lane:'adult',
-   ttTitle:'#2 ליד ישיר — מבוגר', ttBody:'היי [שם] 👋\nתודה שפניתם אלינו!\nכאן צוות אלמנט — אומנויות לחימה ותנועה בחולון.\nנשמח להכיר ולשמוע מה מעניין אתכם 🙏\n\nמה חיפשתם? אומנויות לחימה, שיעורי תנועה, אימוני כוח וגמישות — או שאולי עדיין בשלב של להבין מה מתאים?'},
-  {id:'n_t3', type:'template', label:'#3 תגובה\nהורה', x:735, y:400, w:110, link:'t3', lane:'parent',
-   ttTitle:'#3 ליד ישיר — הורה', ttBody:'היי [שם ההורה] 👋\nתודה שפניתם אלינו!\nכאן צוות אלמנט — אומנויות לחימה ותנועה בחולון.\n\nנשמח לשמוע קצת על הילד/ה — מה הגיל, ומה חיפשתם? אנחנו מלמדים אומנויות לחימה לילדים ונוער מגיל 6, עם דגש על בטיחות, כושר, התפתחות אישית ובניית ביטחון עצמי 💪'},
+  // PHASE 3: Payment — single node + per-class confirmations
+  {id:'paid',type:'trigger',label:'💳 תשלום להיכרות',x:415,y:810,w:150},
+  {id:'n_t6a',type:'template',label:'#6a אישור\nלחימה',x:120,y:910,w:110,link:'t6a',ttTitle:'#6a אישור לחימה',ttBody:'👕 שחורה+ארוכים\n💍 הסירו תכשיטים'},
+  {id:'n_t6b',type:'template',label:'#6b אישור\nמובמנט/כוח',x:280,y:910,w:115,link:'t6b',ttTitle:'#6b אישור מובמנט/כוח',ttBody:'👕 בגדי אימון נוחים'},
+  {id:'n_t6c',type:'template',label:'#6c אישור\nפרטי',x:440,y:910,w:100,link:'t6c',ttTitle:'#6c אישור פרטי',ttBody:'בגדי אימון נוחים\nמיקום לפי תיאום'},
+  {id:'noResp2',type:'ghost',label:'ללא תגובה',x:640,y:810,w:100},
 
-  // === PHASE 2: DETAILS — TWO LANES ===
-  {id:'n_t4', type:'template', label:'#4 פרטי היכרות\n(מבוגר/ת)', x:140, y:600, w:155, link:'t4', lane:'adult',
-   ttTitle:'#4 פרטי היכרות — מבוגר', ttBody:'מעולה, נשמח לראות אתכם! 🙏\n\n[בחרו לפי פעילות: לחימה 16-37 / כושר+לחימה 38-58 / מובמנט / כוח]\n\nכולל: מיקום, לינק תשלום, שעות'},
-  {id:'n_t5', type:'template', label:'#5 פרטי היכרות\n(הורה)', x:640, y:600, w:155, link:'t5', lane:'parent',
-   ttTitle:'#5 פרטי היכרות — הורה', ttBody:'מעולה, נשמח לראות את [שם הילד/ה] אצלנו! 🙏\n\n[בחרו לפי גיל: 6-8 / 9-11 / נוער 12-15]\n\nכולל: מיקום, לינק תשלום, שעות'},
+  // Timing nodes (new style)
+  {id:'timing1',type:'timing',label:'⏰ מיד אחרי\nאישור תשלום',x:400,y:1010,w:145},
+  {id:'n_t8',type:'template',label:'#8 טופס\nבריאות',x:610,y:1010,w:110,link:'t8',ttTitle:'#8 טופס בריאות',ttBody:'טופס הצהרת בריאות קצר\n~5 דקות'},
+  {id:'timing2',type:'timing',label:'⏰ יום לפני\nהשיעור',x:400,y:1110,w:135},
+  {id:'n_t9',type:'template',label:'#9 תזכורת',x:610,y:1110,w:100,link:'t9',ttTitle:'#9 תזכורת',ttBody:'תזכורת — מחר שיעור!\n[יום] [שעה]'},
 
-  // === PHASE 3: PAYMENT + PREP ===
-  {id:'payA', type:'trigger', label:'💳 תשלום מבוגר', x:155, y:700, w:130, lane:'adult'},
-  {id:'typeQ', type:'decision', label:'סוג פעילות?', x:155, y:775, w:120, lane:'adult'},
-  {id:'n_t6a', type:'template', label:'#6a אישור\nלחימה', x:50, y:865, w:120, link:'t6a', lane:'adult',
-   ttTitle:'#6a אישור — מבוגר לחימה', ttBody:'מעולה, התשלום התקבל! 🙌\n\n🗓️ שיעור קרוב: [יום ותאריך], [שעה]\n\nמה להביא:\n👕 חולצה שחורה + מכנסיים ארוכים\n💧 בקבוק מים\n💍 להסיר תכשיטים\n\n📍 אולם "המגינים"\nהגיעו 5-10 דק׳ לפני 🙏'},
-  {id:'n_t6b', type:'template', label:'#6b אישור\nמובמנט/כוח', x:220, y:865, w:130, link:'t6b', lane:'adult',
-   ttTitle:'#6b אישור — מובמנט/כוח', ttBody:'מעולה, התשלום התקבל! 🙌\n\n🗓️ שיעור קרוב: [יום ותאריך], [שעה]\n\nמה להביא:\n👕 בגדי אימון נוחים\n💧 בקבוק מים\n\n📍 אולם "המגינים"\nהגיעו 5-10 דק׳ לפני 🙏'},
+  // PHASE 4: Class follow-up
+  {id:'class1',type:'trigger',label:'🥋 שיעור #1',x:430,y:1210,w:110},
+  {id:'att1',type:'decision',label:'הגיע?',x:435,y:1280,w:85},
+  {id:'n_t10',type:'template',label:'#10 מעקב\nשיעור 1',x:320,y:1360,w:120,link:'t10',ttTitle:'#10 מעקב שיעור 1',ttBody:'איך הרגשתם? שאלות? 💪'},
+  {id:'n_t17a',type:'ghost',label:'#17a שילם\nולא הגיע',x:590,y:1360,w:110,link:'t17a',ttTitle:'#17a שילם ולא הגיע',ttBody:'שמנו לב שעדיין לא הגעתם'},
+  {id:'class2',type:'trigger',label:'🥋 שיעור #2',x:335,y:1450,w:110},
+  {id:'att2',type:'decision',label:'הגיע?',x:340,y:1520,w:85},
+  {id:'n_t11',type:'template',label:'#11 ערך\nשיעור 2',x:220,y:1600,w:110,link:'t11',ttTitle:'#11 ערך שיעור 2',ttBody:'שיעור שני מאחורי — יפה! 💪'},
+  {id:'n_t17b_2',type:'ghost',label:'#17b נעלם',x:490,y:1600,w:95,link:'t17b'},
+  {id:'class3',type:'trigger',label:'🥋 שיעור #3',x:235,y:1690,w:110},
+  {id:'att3',type:'decision',label:'הגיע?',x:240,y:1760,w:85},
+  {id:'n_t12',type:'template',label:'#12 הרשמה\nמבוגר/ת',x:90,y:1845,w:120,link:'t12',lane:'adult',ttTitle:'#12 הרשמה מבוגר',ttBody:'450₪/חודש ללא הגבלה'},
+  {id:'n_t13',type:'template',label:'#13 הרשמה\nהורה',x:260,y:1845,w:115,link:'t13',lane:'parent',ttTitle:'#13 הרשמה הורה',ttBody:'ילדים 300₪ / נוער 380₪'},
+  {id:'n_t17b_3',type:'ghost',label:'#17b נעלם',x:435,y:1845,w:95,link:'t17b'},
 
-  {id:'payP', type:'trigger', label:'💳 תשלום הורה', x:660, y:700, w:130, lane:'parent'},
-  {id:'n_t7', type:'template', label:'#7 אישור\nהורה', x:660, y:790, w:120, link:'t7', lane:'parent',
-   ttTitle:'#7 אישור — הורה', ttBody:'מעולה, התשלום התקבל! 🙌\nשמחים ש-[שם הילד/ה] מצטרף/ת!\n\n🗓️ שיעור קרוב: [יום ותאריך], [שעה]\n\nמה להביא:\n👕 חולצה שחורה + מכנסיים ארוכים\n💧 בקבוק מים | 💍 להסיר תכשיטים\n\n📍 אולם "המגינים" 🙏'},
-
-  // Shared post-payment
-  {id:'sendHealth', type:'action', label:'⬇️ הודעה נפרדת מיד אחרי', x:380, y:960, w:175},
-  {id:'n_t8', type:'template', label:'#8 טופס בריאות', x:400, y:1030, w:140, link:'t8',
-   ttTitle:'#8 טופס בריאות', ttBody:'עוד דבר חשוב 📋\n\nלפני השיעור הראשון — טופס הצהרת בריאות קצר.\nחשוב לנו לדאוג לבטיחות שלכם.\n\n🔗 טופס\n\n~5 דקות. תודה! 🙏'},
-  {id:'waitDay', type:'action', label:'⏰ יום לפני השיעור', x:405, y:1100, w:135},
-  {id:'n_t9', type:'template', label:'#9 תזכורת', x:415, y:1170, w:115, link:'t9',
-   ttTitle:'#9 תזכורת יום לפני', ttBody:'היי 👋\nתזכורת — מחר שיעור באלמנט!\n\n🗓️ [יום], [תאריך] | 🕐 [שעה]\n📍 אולם "המגינים"\n\nמחכים 🙏'},
-
-  // === PHASE 4: CLASS FOLLOW-UP ===
-  {id:'class1', type:'trigger', label:'🥋 שיעור #1', x:425, y:1250, w:110},
-  {id:'att1', type:'decision', label:'הגיע?', x:430, y:1320, w:90},
-  {id:'n_t10', type:'template', label:'#10 מעקב\nשיעור 1', x:310, y:1400, w:130, link:'t10',
-   ttTitle:'#10 מעקב שיעור 1', ttBody:'היי [שם] 👋\nאיך הרגשתם אחרי השיעור הראשון?\n\nהשיעורים הראשונים תמיד אתגר — סימן שיש לאן לגדול 💪\nשאלות, כאבים שחשוב שנדע?\n\nהבא: [יום ותאריך], [שעה] — מחכים! 🙏'},
-  {id:'n_t17a', type:'ghost', label:'#17a שילם\nולא הגיע', x:590, y:1400, w:120, link:'t17a',
-   ttTitle:'#17a שילם ולא הגיע', ttBody:'היי [שם] 👋\nשמנו לב שעדיין לא הגעתם — הכל בסדר?\n\nלפעמים קשה ״לדחוף מהדלת״ 😊\nשיעורי ההיכרות ממתינים.\n\nהקרוב: [יום ותאריך], [שעה] 🙏'},
-  {id:'class2', type:'trigger', label:'🥋 שיעור #2', x:325, y:1490, w:110},
-  {id:'att2', type:'decision', label:'הגיע?', x:330, y:1555, w:90},
-  {id:'n_t11', type:'template', label:'#11 ערך\nשיעור 2', x:210, y:1640, w:120, link:'t11',
-   ttTitle:'#11 ערך שיעור 2', ttBody:'היי [שם] 👋\nשיעור שני מאחורי — יפה! 💪\n\nטיפים:\n💧 מים גם ביום שאחרי\n🧘 כאבי שרירים = טבעי\n⏰ הגעה מוקדמת = נכנסים למוד\n\n[יום ותאריך], [שעה] — מחכים! 🙏'},
-  {id:'n_t17b_2', type:'ghost', label:'#17b נעלם', x:490, y:1640, w:100, link:'t17b'},
-  {id:'class3', type:'trigger', label:'🥋 שיעור #3', x:225, y:1730, w:110},
-  {id:'att3', type:'decision', label:'הגיע?', x:230, y:1800, w:90},
-  {id:'n_t12', type:'template', label:'#12 הרשמה\nמבוגר/ת', x:80, y:1890, w:125, link:'t12', lane:'adult',
-   ttTitle:'#12 הרשמה — מבוגר', ttBody:'היי [שם] 👋\nסיימתם 3 שיעורי היכרות — כל הכבוד! 🙌\n\nנשמח שתמשיכו.\n\n🔹 450₪/חודש, ללא הגבלת שיעורים\n\nלדבר קודם? 📞 🙏'},
-  {id:'n_t13', type:'template', label:'#13 הרשמה\nהורה', x:255, y:1890, w:120, link:'t13', lane:'parent',
-   ttTitle:'#13 הרשמה — הורה', ttBody:'היי [שם ההורה] 👋\n[שם הילד/ה] סיים/ה 3 שיעורי היכרות — כל הכבוד! 🙌\n\n[לפי גיל: ילדים 300₪ / נוער 380₪]\n\nשאלות? 🙏'},
-  {id:'n_t17b_3', type:'ghost', label:'#17b נעלם', x:440, y:1890, w:100, link:'t17b'},
-
-  // === PHASE 5: ENROLLMENT ===
-  {id:'enrollQ', type:'decision', label:'החלטה?', x:185, y:1985, w:100},
-  {id:'enrolled', type:'action', label:'✅ נרשם!', x:80, y:2070, w:100},
-  {id:'n_t18', type:'template', label:'#18 מתלבט', x:240, y:2070, w:110, link:'t18',
-   ttTitle:'#18 מתלבט', ttBody:'לגמרי מובן, [שם] 🙏\nקחו זמן — אנחנו כאן כשתהיו מוכנים.\nאפשר תמיד לחזור להיכרות. מחכים 💪'},
-  {id:'n_t17b_final', type:'ghost', label:'#17b נעלם', x:400, y:2070, w:100, link:'t17b'},
-  {id:'whoEnroll', type:'decision', label:'מי?', x:85, y:2155, w:85},
-  {id:'n_t14', type:'template', label:'#14 ברוכים הבאים\n(מבוגר)', x:10, y:2240, w:140, link:'t14', lane:'adult',
-   ttTitle:'#14 ברוכים הבאים — מבוגר', ttBody:'ברוכים הבאים למשפחת אלמנט! 🙌🔥\n\n📱 הורידו BoostApp Business\n📋 שאלון רקע\n🥊 ציוד: סד שיניים + כפפות\n\nחברים? חבר מביא חבר! 🙏'},
-  {id:'n_t15', type:'template', label:'#15 ברוכים הבאים\n(הורה)', x:195, y:2240, w:140, link:'t15', lane:'parent',
-   ttTitle:'#15 ברוכים הבאים — הורה', ttBody:'ברוכים הבאים למשפחת אלמנט! 🙌🔥\nשמחים ש-[שם הילד/ה] ממשיך/ה!\n\n📱 BoostApp Business\n📋 שאלון רקע\n\nחברים מהכיתה? חבר מביא חבר! 🙏'},
-  {id:'wait23w', type:'action', label:'⏰ 2-3 שבועות', x:115, y:2330, w:115},
-  {id:'n_t16', type:'template', label:'#16 חבר↔חבר', x:120, y:2400, w:120, link:'t16',
-   ttTitle:'#16 חבר מביא חבר', ttBody:'היי [שם] 👋\nשמחים לראות שמתקדמים! 💪\n\nמבצע ״חבר מביא חבר״:\n🎁 חבר ירשם למנוי → גם אתם וגם הוא 50% על חודש ראשון!\n\nאין כמו להתאמן עם מישהו שמכירים 🙏'},
-  {id:'done', type:'end', label:'🎉 חבר פעיל!', x:130, y:2480, w:110},
+  // PHASE 5: Enrollment
+  {id:'enrollQ',type:'decision',label:'החלטה?',x:190,y:1940,w:95},
+  {id:'enrolled',type:'action',label:'✅ נרשם!',x:85,y:2025,w:95},
+  {id:'n_t18',type:'template',label:'#18 מתלבט',x:240,y:2025,w:105,link:'t18',ttTitle:'#18 מתלבט',ttBody:'קחו זמן — אנחנו כאן 🙏'},
+  {id:'n_t17b_f',type:'ghost',label:'#17b נעלם',x:395,y:2025,w:95,link:'t17b'},
+  {id:'whoEnroll',type:'decision',label:'מי?',x:90,y:2110,w:80},
+  {id:'n_t14',type:'template',label:'#14 ברוכים\nהבאים (מבוגר)',x:10,y:2200,w:130,link:'t14',lane:'adult',ttTitle:'#14 ברוכים הבאים — מבוגר',ttBody:'📱 BoostApp\n🥊 ציוד'},
+  {id:'n_t15',type:'template',label:'#15 ברוכים\nהבאים (הורה)',x:185,y:2200,w:130,link:'t15',lane:'parent',ttTitle:'#15 ברוכים הבאים — הורה',ttBody:'📱 BoostApp'},
+  {id:'wait23w',type:'action',label:'⏰ 2-3 שבועות',x:110,y:2290,w:110},
+  {id:'n_t16',type:'template',label:'#16 חבר↔חבר',x:115,y:2360,w:115,link:'t16',ttTitle:'#16 חבר מביא חבר',ttBody:'50% לשניכם!'},
+  {id:'done',type:'end',label:'🎉 חבר פעיל!',x:125,y:2440,w:105},
 ];
 
-// Edge lane: 'adult','parent', or null
 const DEFAULT_EDGES = [
   {from:'entry',to:'srcQ'},
   {from:'srcQ',to:'widget',label:'ווידג׳ט'},
@@ -831,37 +762,51 @@ const DEFAULT_EDGES = [
   {from:'widgetQ',to:'wNoPay',label:'לא שילם'},
   {from:'wCallback',to:'n_t1'},
   {from:'wNoPay',to:'n_t19'},
-  // Widget paid → skip to health (send #6/#7 matching the lead)
-  {from:'wPaid',to:'sendHealth',style:'dashed',label:'→ שלחו #6/#7'},
-  // Widget leads respond → go straight to the right details template
-  // #1/#19 branch directly to adult or parent details (no extra decision node)
-  {from:'n_t1',to:'n_t4',style:'dashed',label:'מבוגר ⟶',lane:'adult'},
-  {from:'n_t1',to:'n_t5',style:'dashed',label:'הורה ⟶',lane:'parent'},
-  {from:'n_t19',to:'n_t4',style:'dashed',label:'מבוגר ⟶',lane:'adult'},
-  {from:'n_t19',to:'n_t5',style:'dashed',label:'הורה ⟶',lane:'parent'},
-  // Direct leads → identified immediately
+  {from:'wPaid',to:'paid',style:'dashed',label:'→ שלחו אישור'},
+  // Widget leads → details
+  {from:'n_t1',to:'details',style:'dashed'},
+  {from:'n_t19',to:'details',style:'dashed'},
+  // Direct leads
   {from:'direct',to:'directQ'},
   {from:'directQ',to:'n_t2',label:'מבוגר/ת',lane:'adult'},
   {from:'directQ',to:'n_t3',label:'הורה',lane:'parent'},
-  {from:'n_t2',to:'n_t4',style:'dashed',label:'מעוניין ⟶',lane:'adult'},
-  {from:'n_t3',to:'n_t5',style:'dashed',label:'מעוניין ⟶',lane:'parent'},
-  // Details → Payment (lanes stay separate)
-  {from:'n_t4',to:'payA',style:'dashed',lane:'adult'},
-  {from:'n_t5',to:'payP',style:'dashed',lane:'parent'},
-  // Adult payment
-  {from:'payA',to:'typeQ',lane:'adult'},
-  {from:'typeQ',to:'n_t6a',label:'לחימה',lane:'adult'},
-  {from:'typeQ',to:'n_t6b',label:'מובמנט / כוח',lane:'adult'},
-  // Parent payment
-  {from:'payP',to:'n_t7',lane:'parent'},
-  // All → shared health+reminder
-  {from:'n_t6a',to:'sendHealth',lane:'adult'},
-  {from:'n_t6b',to:'sendHealth',lane:'adult'},
-  {from:'n_t7',to:'sendHealth',lane:'parent'},
-  {from:'sendHealth',to:'n_t8'},
-  {from:'n_t8',to:'waitDay'},
-  {from:'waitDay',to:'n_t9'},
-  {from:'n_t9',to:'class1'},
+  {from:'n_t2',to:'details',style:'dashed',lane:'adult'},
+  {from:'n_t3',to:'details',style:'dashed',lane:'parent'},
+  // Details → per-class branches (sideways)
+  {from:'details',to:'n_t4a',fromAnchor:'bottom',toAnchor:'top'},
+  {from:'details',to:'n_t4b',fromAnchor:'bottom',toAnchor:'top'},
+  {from:'details',to:'n_t4c',fromAnchor:'bottom',toAnchor:'top'},
+  {from:'details',to:'n_t4d',fromAnchor:'bottom',toAnchor:'top'},
+  {from:'details',to:'n_t4e',fromAnchor:'bottom',toAnchor:'top'},
+  {from:'details',to:'n_t4f',fromAnchor:'bottom',toAnchor:'top'},
+  {from:'details',to:'n_t4g',fromAnchor:'bottom',toAnchor:'top'},
+  {from:'details',to:'n_t4h',fromAnchor:'bottom',toAnchor:'top'},
+  {from:'details',to:'n_t4i',fromAnchor:'bottom',toAnchor:'top'},
+  {from:'details',to:'noResp1',label:'ללא תגובה'},
+  // All class templates → payment
+  {from:'n_t4a',to:'paid',style:'dashed',fromAnchor:'bottom',toAnchor:'top'},
+  {from:'n_t4b',to:'paid',style:'dashed',fromAnchor:'bottom',toAnchor:'top'},
+  {from:'n_t4c',to:'paid',style:'dashed',fromAnchor:'bottom',toAnchor:'top'},
+  {from:'n_t4d',to:'paid',style:'dashed',fromAnchor:'bottom',toAnchor:'top'},
+  {from:'n_t4e',to:'paid',style:'dashed',fromAnchor:'bottom',toAnchor:'top'},
+  {from:'n_t4f',to:'paid',style:'dashed',fromAnchor:'bottom',toAnchor:'top'},
+  {from:'n_t4g',to:'paid',style:'dashed',fromAnchor:'bottom',toAnchor:'top'},
+  {from:'n_t4h',to:'paid',style:'dashed',fromAnchor:'bottom',toAnchor:'top'},
+  {from:'n_t4i',to:'paid',style:'dashed',fromAnchor:'bottom',toAnchor:'top'},
+  // Payment → confirmations (sideways)
+  {from:'paid',to:'n_t6a',fromAnchor:'bottom',toAnchor:'top'},
+  {from:'paid',to:'n_t6b',fromAnchor:'bottom',toAnchor:'top'},
+  {from:'paid',to:'n_t6c',fromAnchor:'bottom',toAnchor:'top'},
+  {from:'paid',to:'noResp2',label:'ללא תגובה'},
+  // Confirmations → timing
+  {from:'n_t6a',to:'timing1',style:'dashed',fromAnchor:'bottom',toAnchor:'top'},
+  {from:'n_t6b',to:'timing1',style:'dashed',fromAnchor:'bottom',toAnchor:'top'},
+  {from:'n_t6c',to:'timing1',style:'dashed',fromAnchor:'bottom',toAnchor:'top'},
+  // Timing → branches sideways to templates
+  {from:'timing1',to:'n_t8',fromAnchor:'right',toAnchor:'left'},
+  {from:'timing1',to:'timing2'},
+  {from:'timing2',to:'n_t9',fromAnchor:'right',toAnchor:'left'},
+  {from:'timing2',to:'class1'},
   // Classes
   {from:'class1',to:'att1'},
   {from:'att1',to:'n_t10',label:'✅ הגיע'},
@@ -875,442 +820,144 @@ const DEFAULT_EDGES = [
   {from:'att3',to:'n_t12',label:'✅ מבוגר',lane:'adult'},
   {from:'att3',to:'n_t13',label:'✅ הורה',lane:'parent'},
   {from:'att3',to:'n_t17b_3',label:'❌'},
-  // Enrollment
-  {from:'n_t12',to:'enrollQ',lane:'adult'},
-  {from:'n_t13',to:'enrollQ',lane:'parent'},
+  {from:'n_t12',to:'enrollQ'},
+  {from:'n_t13',to:'enrollQ'},
   {from:'enrollQ',to:'enrolled',label:'✅ נרשם'},
-  {from:'enrollQ',to:'n_t18',label:'🤔 מתלבט'},
-  {from:'enrollQ',to:'n_t17b_final',label:'👻'},
+  {from:'enrollQ',to:'n_t18',label:'🤔'},
+  {from:'enrollQ',to:'n_t17b_f',label:'👻'},
   {from:'enrolled',to:'whoEnroll'},
   {from:'whoEnroll',to:'n_t14',label:'מבוגר',lane:'adult'},
   {from:'whoEnroll',to:'n_t15',label:'הורה',lane:'parent'},
-  {from:'n_t14',to:'wait23w',lane:'adult'},
-  {from:'n_t15',to:'wait23w',lane:'parent'},
+  {from:'n_t14',to:'wait23w'},
+  {from:'n_t15',to:'wait23w'},
   {from:'wait23w',to:'n_t16'},
   {from:'n_t16',to:'done'},
 ];
-
-// ClickUp status colors
-const CU_MAP = {
-  t1:{label:'CONSIDERING',color:'#f87171'},t2:{label:'NEW LEADS',color:'#94a3b8'},t3:{label:'NEW LEADS',color:'#94a3b8'},
-  t4:{label:'CONSIDERING',color:'#f87171'},t5:{label:'CONSIDERING',color:'#f87171'},
-  t6a:{label:'PURCHASED',color:'#60a5fa'},t6b:{label:'PURCHASED',color:'#60a5fa'},t7:{label:'PURCHASED',color:'#60a5fa'},
-  t8:{label:'PURCHASED',color:'#60a5fa'},t9:{label:'PURCHASED',color:'#60a5fa'},
-  t10:{label:'MADE 1ST',color:'#4ade80'},t11:{label:'MADE 2ND',color:'#4ade80'},
-  t12:{label:'MADE 3RD',color:'#fb923c'},t13:{label:'MADE 3RD',color:'#fb923c'},
-  t14:{label:'ENROLLED',color:'#22c55e'},t15:{label:'ENROLLED',color:'#22c55e'},t16:{label:'ENROLLED',color:'#22c55e'},
-  t17a:{label:'LOST?',color:'#fb923c'},t17b:{label:'LOST?',color:'#fb923c'},
-  t18:{label:'NOT READY',color:'#2dd4bf'},t19:{label:'NEAR PURCHASE',color:'#f472b6'},
-};
 
 // === STATE ===
 let NODES = JSON.parse(JSON.stringify(DEFAULT_NODES));
 let EDGES = JSON.parse(JSON.stringify(DEFAULT_EDGES));
 const nodeMap = {};
-let zoom = 1, snapEnabled = true;
-const GRID = 20;
+let zoom = 1, snapEnabled = true, GRID = 20;
 let isDraggingNode = false, dragItem = null, dragOffX = 0, dragOffY = 0, dragStartX = 0, dragStartY = 0, moved = false;
-let selectedEdgeIdx = -1;
-let drawingArrow = null; // {fromNode, fromAnchor, tempLine}
+let selectedEdgeIdx = -1, selectedNodeId = null;
+let drawingArrow = null, rebindingEdge = null;
+let nextNodeId = 100;
 
 const inner = document.getElementById('canvasInner');
 const scroll = document.getElementById('canvasScroll');
 const svg = document.getElementById('canvasSvg');
 const arrowToolbar = document.getElementById('arrowToolbar');
 
-// === ANCHOR SYSTEM (6 points per node) ===
-const ANCHOR_NAMES = ['top','tr','right','bottom','bl','left'];
-function getAnchorPos(node, anchor) {
-  const w = node._w || 140, h = node._h || 30;
-  switch(anchor) {
-    case 'top':    return {x: node.x + w/2, y: node.y};
-    case 'tr':     return {x: node.x + w,   y: node.y};
-    case 'right':  return {x: node.x + w,   y: node.y + h/2};
-    case 'bottom': return {x: node.x + w/2, y: node.y + h};
-    case 'bl':     return {x: node.x,       y: node.y + h};
-    case 'left':   return {x: node.x,       y: node.y + h/2};
-    default:       return {x: node.x + w/2, y: node.y + h};
-  }
-}
+// === UNDO/REDO ===
+let undoStack = [], redoStack = [];
+function snapshot(){const s={n:NODES.map(n=>({...n,_el:undefined,_w:undefined,_h:undefined})),e:JSON.parse(JSON.stringify(EDGES))};undoStack.push(JSON.stringify(s));if(undoStack.length>50)undoStack.shift();redoStack=[];updateUndoBtns()}
+function doUndo(){if(!undoStack.length)return;const cur={n:NODES.map(n=>({...n,_el:undefined,_w:undefined,_h:undefined})),e:JSON.parse(JSON.stringify(EDGES))};redoStack.push(JSON.stringify(cur));const s=JSON.parse(undoStack.pop());restoreState(s);updateUndoBtns()}
+function doRedo(){if(!redoStack.length)return;const cur={n:NODES.map(n=>({...n,_el:undefined,_w:undefined,_h:undefined})),e:JSON.parse(JSON.stringify(EDGES))};undoStack.push(JSON.stringify(cur));const s=JSON.parse(redoStack.pop());restoreState(s);updateUndoBtns()}
+function restoreState(s){NODES=s.n;EDGES=s.e;NODES.forEach(n=>nodeMap[n.id]=n);deselectAll();renderAll();debouncedSave()}
+function updateUndoBtns(){document.getElementById('undoBtn').disabled=!undoStack.length;document.getElementById('redoBtn').disabled=!redoStack.length}
+document.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key==='z'){e.preventDefault();doUndo()}if((e.ctrlKey||e.metaKey)&&(e.key==='y'||e.key==='Z'&&e.shiftKey)){e.preventDefault();doRedo()}if(e.key==='Delete'||e.key==='Backspace'){if(selectedNodeId&&!e.target.matches('input,textarea')){e.preventDefault();deleteNode(selectedNodeId)}if(selectedEdgeIdx>=0){e.preventDefault();deleteSelectedEdge()}}});
 
-function bestAnchors(from, to) {
-  const fw = from._w||140, fh = from._h||30, tw = to._w||140, th = to._h||30;
-  const fcx = from.x+fw/2, fcy = from.y+fh/2, tcx = to.x+tw/2, tcy = to.y+th/2;
-  let fA = 'bottom', tA = 'top';
-  if (tcy > fcy + fh/2 - 5) { fA='bottom'; tA='top'; }
-  else if (tcx < fcx - fw/2) { fA='left'; tA='right'; }
-  else if (tcx > fcx + fw/2) { fA='right'; tA='left'; }
-  else { fA='bottom'; tA='top'; }
-  return {fA, tA};
-}
+// === ADD / DELETE NODES ===
+function showAddMenu(evt){evt.stopPropagation();const d=document.getElementById('addDialog');if(d.classList.contains('visible')){d.classList.remove('visible');return}const types=[{t:'action',l:'📋 פעולה'},{t:'decision',l:'❓ החלטה'},{t:'template',l:'💬 תבנית'},{t:'trigger',l:'🟢 טריגר'},{t:'timing',l:'⏰ תזמון'},{t:'ghost',l:'👻 נעלם'}];d.innerHTML='';types.forEach(({t,l})=>{const b=document.createElement('button');b.textContent=l;b.onclick=()=>{d.classList.remove('visible');addNode(t)};d.appendChild(b)});const r=evt.target.getBoundingClientRect();d.style.left=(r.left-80)+'px';d.style.top=(r.bottom+4)+'px';d.classList.add('visible')}
+function addNode(type){snapshot();const cx=(scroll.scrollLeft+scroll.clientWidth/2)/zoom;const cy=(scroll.scrollTop+scroll.clientHeight/2)/zoom;const id='n_'+nextNodeId++;const n={id,type,label:(type==='timing'?'⏰ תזמון חדש':type==='decision'?'החלטה?':'אלמנט חדש'),x:snap(cx-60),y:snap(cy-15),w:120};NODES.push(n);nodeMap[n.id]=n;renderAll();selectNode(id);debouncedSave()}
+function deleteNode(id){snapshot();EDGES=EDGES.filter(e=>e.from!==id&&e.to!==id);NODES=NODES.filter(n=>n.id!==id);delete nodeMap[id];deselectAll();renderAll();debouncedSave()}
 
-function edgePath(p1, a1, p2, a2) {
-  const dx = Math.abs(p2.x-p1.x), dy = Math.abs(p2.y-p1.y);
-  if (dx < 15 && dy < 15) return `M${p1.x},${p1.y} L${p2.x},${p2.y}`;
-  // Control points that leave in the anchor direction
-  const dist = Math.min(Math.max(dy*0.4,30),80);
-  const c1 = ctrlPt(a1, p1, dist);
-  const c2 = ctrlPt(a2, p2, dist);
-  return `M${p1.x},${p1.y} C${c1.x},${c1.y} ${c2.x},${c2.y} ${p2.x},${p2.y}`;
-}
-function ctrlPt(anchor, p, d) {
-  switch(anchor) {
-    case 'top': return {x:p.x, y:p.y-d};
-    case 'bottom': return {x:p.x, y:p.y+d};
-    case 'left': return {x:p.x-d, y:p.y};
-    case 'right': return {x:p.x+d, y:p.y};
-    case 'tr': return {x:p.x+d*.7, y:p.y-d*.7};
-    case 'bl': return {x:p.x-d*.7, y:p.y+d*.7};
-    default: return {x:p.x, y:p.y+d};
-  }
-}
+// === ANCHOR SYSTEM ===
+function getAnchorPos(n,a){const w=n._w||120,h=n._h||30;switch(a){case'top':return{x:n.x+w/2,y:n.y};case'right':return{x:n.x+w,y:n.y+h/2};case'bottom':return{x:n.x+w/2,y:n.y+h};case'left':return{x:n.x,y:n.y+h/2};default:return{x:n.x+w/2,y:n.y+h}}}
 
-// Lane colors for arrows
-const LANE_COLORS = {adult:'#d81b60', parent:'#1565c0'};
+function bestAnchors(f,t){const fw=f._w||120,fh=f._h||30,tw=t._w||120,th=t._h||30;const fcx=f.x+fw/2,fcy=f.y+fh/2,tcx=t.x+tw/2,tcy=t.y+th/2;const dx=tcx-fcx,dy=tcy-fcy;if(Math.abs(dy)>Math.abs(dx)){return dy>0?{fA:'bottom',tA:'top'}:{fA:'top',tA:'bottom'}}return dx>0?{fA:'right',tA:'left'}:{fA:'left',tA:'right'}}
+
+// ORTHOGONAL PATH ROUTING (Manhattan style with elbows)
+function orthoPath(p1,a1,p2,a2){
+  const STUB=25;
+  const s1=stub(p1,a1,STUB),s2=stub(p2,a2,STUB);
+  const v1=isVert(a1),v2=isVert(a2);
+  // Same axis: Z-route through midpoint
+  if(v1&&v2){const my=(s1.y+s2.y)/2;return pts([p1,s1,{x:s1.x,y:my},{x:s2.x,y:my},s2,p2])}
+  if(!v1&&!v2){const mx=(s1.x+s2.x)/2;return pts([p1,s1,{x:mx,y:s1.y},{x:mx,y:s2.y},s2,p2])}
+  // Cross axis: L-route
+  if(v1&&!v2)return pts([p1,s1,{x:s1.x,y:s2.y},s2,p2]);
+  return pts([p1,s1,{x:s2.x,y:s1.y},s2,p2]);
+}
+function stub(p,a,d){switch(a){case'top':return{x:p.x,y:p.y-d};case'bottom':return{x:p.x,y:p.y+d};case'left':return{x:p.x-d,y:p.y};case'right':return{x:p.x+d,y:p.y};default:return{x:p.x,y:p.y+d}}}
+function isVert(a){return a==='top'||a==='bottom'}
+function pts(arr){return'M'+arr.map(p=>p.x+','+p.y).join(' L')}
 
 // === STORAGE ===
-const STORAGE_KEY = 'element-flow-v53';
+const STORAGE_KEY='element-flow-v54';
 let saveTimeout;
-function debouncedSave(){ clearTimeout(saveTimeout); saveTimeout = setTimeout(saveLayout, 600); }
-function showSaveToast(t){ const el=document.getElementById('saveToast'); el.textContent=t||'💾 נשמר'; el.classList.add('show'); setTimeout(()=>el.classList.remove('show'),1200); }
+function debouncedSave(){clearTimeout(saveTimeout);saveTimeout=setTimeout(saveLayout,600)}
+function showSaveToast(t){const el=document.getElementById('saveToast');el.textContent=t||'💾 נשמר';el.classList.add('show');setTimeout(()=>el.classList.remove('show'),1200)}
+function saveLayout(){const d={nodes:NODES.map(n=>({id:n.id,type:n.type,label:n.label,x:n.x,y:n.y,w:n.w,link:n.link,lane:n.lane,ttTitle:n.ttTitle,ttBody:n.ttBody})),edges:EDGES};try{localStorage.setItem(STORAGE_KEY,JSON.stringify(d));showSaveToast()}catch(e){}}
+function loadLayout(){try{const r=localStorage.getItem(STORAGE_KEY);if(!r)return false;const d=JSON.parse(r);if(d.nodes)NODES=d.nodes;if(d.edges)EDGES=d.edges;return true}catch(e){return false}}
+function resetPositions(){NODES=JSON.parse(JSON.stringify(DEFAULT_NODES));EDGES=JSON.parse(JSON.stringify(DEFAULT_EDGES));NODES.forEach(n=>nodeMap[n.id]=n);try{localStorage.removeItem(STORAGE_KEY)}catch(e){}undoStack=[];redoStack=[];updateUndoBtns();deselectAll();renderAll();showSaveToast('↺ אופס')}
 
-async function saveLayout() {
-  const data = {
-    nodes: NODES.map(n=>({id:n.id,x:n.x,y:n.y})),
-    edges: EDGES.map(e=>({from:e.from,to:e.to,fromAnchor:e.fromAnchor,toAnchor:e.toAnchor,label:e.label,style:e.style,lane:e.lane,custom:e.custom}))
-  };
-  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); showSaveToast(); } catch(e){}
-}
+function snap(v){return snapEnabled?Math.round(v/GRID)*GRID:v}
+function toggleSnap(){snapEnabled=!snapEnabled;document.getElementById('snapBtn').classList.toggle('active',snapEnabled)}
 
-function loadLayout() {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return false;
-    const data = JSON.parse(raw);
-    if (data.nodes) data.nodes.forEach(s => { const n=NODES.find(n=>n.id===s.id); if(n){n.x=s.x;n.y=s.y} });
-    if (data.edges) EDGES = data.edges;
-    return true;
-  } catch(e){ return false; }
-}
+// === SELECTION ===
+function selectNode(id){deselectAll();selectedNodeId=id;const el=document.getElementById('fn_'+id);if(el)el.classList.add('selected-node')}
+function deselectAll(){selectedNodeId=null;selectedEdgeIdx=-1;arrowToolbar.classList.remove('visible');document.querySelectorAll('.fnode.selected-node').forEach(e=>e.classList.remove('selected-node'));document.querySelectorAll('.fnode.show-anchors').forEach(e=>e.classList.remove('show-anchors'))}
+function selectEdge(idx){deselectAll();selectedEdgeIdx=idx;renderEdges();const e=EDGES[idx];if(!e)return;const f=nodeMap[e.from],t=nodeMap[e.to];if(!f||!t)return;let fA=e.fromAnchor,tA=e.toAnchor;if(!fA||!tA){const a=bestAnchors(f,t);fA=fA||a.fA;tA=tA||a.tA}const p1=getAnchorPos(f,fA),p2=getAnchorPos(t,tA);const sr=scroll.getBoundingClientRect();const sx=(p1.x+p2.x)/2*zoom-scroll.scrollLeft+sr.left;const sy=(p1.y+p2.y)/2*zoom-scroll.scrollTop+sr.top-40;arrowToolbar.style.left=sx+'px';arrowToolbar.style.top=sy+'px';arrowToolbar.classList.add('visible')}
+function flipSelectedEdge(){if(selectedEdgeIdx<0)return;snapshot();const e=EDGES[selectedEdgeIdx];[e.from,e.to]=[e.to,e.from];[e.fromAnchor,e.toAnchor]=[e.toAnchor,e.fromAnchor];renderEdges();debouncedSave();selectEdge(selectedEdgeIdx)}
+function deleteSelectedEdge(){if(selectedEdgeIdx<0)return;snapshot();EDGES.splice(selectedEdgeIdx,1);deselectAll();renderEdges();debouncedSave()}
 
-function resetPositions() {
-  NODES = JSON.parse(JSON.stringify(DEFAULT_NODES));
-  EDGES = JSON.parse(JSON.stringify(DEFAULT_EDGES));
-  NODES.forEach(n=>{ nodeMap[n.id]=n; });
-  try { localStorage.removeItem(STORAGE_KEY); } catch(e){}
-  deselectEdge();
-  renderAll();
-  showSaveToast('↺ אופס');
-}
+// === RENDER ===
+function renderAll(){renderNodes();requestAnimationFrame(()=>{renderEdges();updateMinimap()})}
+function renderNodes(){inner.querySelectorAll('.fnode').forEach(e=>e.remove());NODES.forEach(n=>{nodeMap[n.id]=n;const tc=n.type==='template'?'fnode-template':n.type==='decision'?'fnode-decision':n.type==='trigger'?'fnode-trigger':n.type==='ghost'?'fnode-ghost':n.type==='end'?'fnode-end':n.type==='timing'?'fnode-timing':'fnode-action';const el=document.createElement('div');el.className=`fnode ${tc}`;if(n.lane)el.classList.add('lane-'+n.lane);if(n.id===selectedNodeId)el.classList.add('selected-node');el.id='fn_'+n.id;el.style.left=n.x+'px';el.style.top=n.y+'px';if(n.w)el.style.width=n.w+'px';el.innerHTML=n.label.replace(/\n/g,'<br>');
+if((n.type==='template'||n.type==='ghost')&&n.link){const cu=CU_MAP[n.link];if(cu){const b=document.createElement('div');b.className='cu-badge';b.style.background=cu.c;b.textContent='→ '+cu.l;el.appendChild(b)}}
+if(n.ttBody){el.setAttribute('data-tt-title',n.ttTitle);el.setAttribute('data-tt-body',n.ttBody)}
+if(n.link)el.addEventListener('click',()=>{if(!isDraggingNode&&!drawingArrow)goTo(n.link)});
+// 4 anchor points (top, right, bottom, left)
+['top','right','bottom','left'].forEach(a=>{const d=document.createElement('div');d.className='anchor-point';d.dataset.anchor=a;d.dataset.nodeId=n.id;const pos={top:'50%,0',right:'100%,50%',bottom:'50%,100%',left:'0,50%'};const[px,py]=pos[a].split(',');d.style.left=px;d.style.top=py;d.addEventListener('mousedown',onAnchorDown);el.appendChild(d)});
+el.addEventListener('mousedown',onNodeMouseDown);el.addEventListener('touchstart',onNodeTouchStart,{passive:false});
+el.addEventListener('dblclick',e=>{e.stopPropagation();const newLabel=prompt('תווית:',n.label.replace(/<br>/g,'\n'));if(newLabel!==null){snapshot();n.label=newLabel;renderAll();debouncedSave()}});
+inner.appendChild(el);n._el=el;n._w=el.offsetWidth;n._h=el.offsetHeight})}
 
-function snap(v){ return snapEnabled ? Math.round(v/GRID)*GRID : v; }
-function toggleSnap(){ snapEnabled=!snapEnabled; document.getElementById('snapBtn').classList.toggle('active',snapEnabled); }
+function renderEdges(){NODES.forEach(n=>{if(n._el){n._w=n._el.offsetWidth;n._h=n._el.offsetHeight}});inner.querySelectorAll('.edge-label').forEach(e=>e.remove());let paths='';
+EDGES.forEach((e,idx)=>{const f=nodeMap[e.from],t=nodeMap[e.to];if(!f||!t)return;let fA=e.fromAnchor,tA=e.toAnchor;if(!fA||!tA){const a=bestAnchors(f,t);fA=fA||a.fA;tA=tA||a.tA}const p1=getAnchorPos(f,fA),p2=getAnchorPos(t,tA);const d=orthoPath(p1,fA,p2,tA);const dash=e.style==='dashed'?'stroke-dasharray="6,4"':'';const col=e.lane?LANE_COLORS[e.lane]:'#999';const sel=idx===selectedEdgeIdx;const sw=sel?3:1.5;const mid=e.lane?'ah_'+e.lane:'ah_def';
+paths+=`<path d="${d}" fill="none" stroke="transparent" stroke-width="14" style="cursor:pointer;pointer-events:stroke" data-eidx="${idx}"/>`;
+paths+=`<path d="${d}" fill="none" stroke="${col}" stroke-width="${sw}" ${dash} marker-end="url(#${mid})" style="pointer-events:none"/>`;
+if(e.label){const lbl=document.createElement('div');lbl.className='edge-label';if(e.lane)lbl.style.color=LANE_COLORS[e.lane];lbl.style.left=((p1.x+p2.x)/2)+'px';lbl.style.top=((p1.y+p2.y)/2-8)+'px';lbl.style.transform='translate(-50%,-50%)';lbl.textContent=e.label;inner.appendChild(lbl)}});
+let mx=900,my=800;NODES.forEach(n=>{mx=Math.max(mx,n.x+(n._w||150)+60);my=Math.max(my,n.y+(n._h||40)+80)});inner.style.width=mx+'px';inner.style.height=my+'px';svg.setAttribute('width',mx);svg.setAttribute('height',my);svg.style.pointerEvents='auto';
+svg.innerHTML=`<defs><marker id="ah_def" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#999"/></marker><marker id="ah_adult" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="${LANE_COLORS.adult}"/></marker><marker id="ah_parent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="${LANE_COLORS.parent}"/></marker></defs>`+paths;
+if(drawingArrow?.tempPath){const tp=document.createElementNS('http://www.w3.org/2000/svg','path');tp.setAttribute('d',drawingArrow.tempPath);tp.setAttribute('fill','none');tp.setAttribute('stroke','var(--accent)');tp.setAttribute('stroke-width','2');tp.setAttribute('stroke-dasharray','4,4');svg.appendChild(tp)}}
 
-// === RENDER ALL ===
-function renderAll() {
-  renderNodes();
-  requestAnimationFrame(()=>{ renderEdges(); updateMinimap(); });
-}
-
-function renderNodes() {
-  inner.querySelectorAll('.fnode').forEach(e=>e.remove());
-  NODES.forEach(n => {
-    nodeMap[n.id] = n;
-    const typeClass = n.type==='template'?'fnode-template':n.type==='decision'?'fnode-decision':n.type==='trigger'?'fnode-trigger':n.type==='ghost'?'fnode-ghost':n.type==='end'?'fnode-end':'fnode-action';
-    const el = document.createElement('div');
-    el.className = `fnode ${typeClass}`;
-    if (n.lane) el.classList.add('lane-'+n.lane);
-    el.id = 'fn_'+n.id;
-    el.style.left = n.x+'px'; el.style.top = n.y+'px';
-    if (n.w) el.style.width = n.w+'px';
-    el.innerHTML = n.label.replace(/\n/g,'<br>');
-
-    // ClickUp badge
-    if ((n.type==='template'||n.type==='ghost')&&n.link) {
-      const cu = CU_MAP[n.link];
-      if (cu) { const b=document.createElement('div'); b.className='cu-badge'; b.style.background=cu.color; b.textContent='→ '+cu.label; el.appendChild(b); }
-    }
-
-    // Tooltip
-    if (n.ttBody) { el.setAttribute('data-tt-title',n.ttTitle); el.setAttribute('data-tt-body',n.ttBody); }
-    if (n.link) el.addEventListener('click',()=>{ if(!isDraggingNode&&!drawingArrow) goTo(n.link); });
-
-    // 6 anchor points
-    ANCHOR_NAMES.forEach(a => {
-      const dot = document.createElement('div');
-      dot.className = 'anchor-point';
-      dot.dataset.anchor = a;
-      dot.dataset.nodeId = n.id;
-      const w = n.w||140, h = 30; // approximate; will be recalculated
-      const positions = {top:'50%,0',tr:'100%,0',right:'100%,50%',bottom:'50%,100%',bl:'0,100%',left:'0,50%'};
-      const [px,py] = positions[a].split(',');
-      dot.style.left = px; dot.style.top = py;
-      dot.addEventListener('mousedown', onAnchorDown);
-      el.appendChild(dot);
-    });
-
-    el.addEventListener('mousedown', onNodeMouseDown);
-    el.addEventListener('touchstart', onNodeTouchStart, {passive:false});
-    inner.appendChild(el);
-    n._el = el; n._w = el.offsetWidth; n._h = el.offsetHeight;
-  });
-}
-
-function renderEdges() {
-  NODES.forEach(n=>{ if(n._el){n._w=n._el.offsetWidth;n._h=n._el.offsetHeight;} });
-  inner.querySelectorAll('.edge-label').forEach(e=>e.remove());
-  let paths = '';
-
-  EDGES.forEach((e,idx) => {
-    const from = nodeMap[e.from], to = nodeMap[e.to];
-    if (!from||!to) return;
-    // Determine anchors
-    let fA = e.fromAnchor, tA = e.toAnchor;
-    if (!fA||!tA) { const auto = bestAnchors(from,to); fA=fA||auto.fA; tA=tA||auto.tA; }
-    const p1 = getAnchorPos(from, fA), p2 = getAnchorPos(to, tA);
-    const d = edgePath(p1, fA, p2, tA);
-    const dashStyle = e.style==='dashed' ? 'stroke-dasharray="6,4"' : '';
-    const color = e.lane ? (LANE_COLORS[e.lane]||'#999') : '#999';
-    const sel = idx===selectedEdgeIdx;
-    const sw = sel ? 3 : 1.5;
-    const markerId = e.lane ? 'ah_'+e.lane : 'ah_default';
-    // Hit area (invisible wide path)
-    paths += `<path d="${d}" fill="none" stroke="transparent" stroke-width="14" style="cursor:pointer;pointer-events:stroke" data-eidx="${idx}"/>`;
-    // Visible path
-    paths += `<path d="${d}" fill="none" stroke="${color}" stroke-width="${sw}" ${dashStyle} marker-end="url(#${markerId})" style="pointer-events:none"${sel?' class="selected-edge"':''}/>`;
-
-    // Edge label
-    if (e.label) {
-      const lbl = document.createElement('div');
-      lbl.className = 'edge-label';
-      if (e.lane) lbl.style.color = LANE_COLORS[e.lane];
-      lbl.style.left = ((p1.x+p2.x)/2)+'px';
-      lbl.style.top = ((p1.y+p2.y)/2 - 8)+'px';
-      lbl.style.transform = 'translate(-50%,-50%)';
-      lbl.textContent = e.label;
-      inner.appendChild(lbl);
-    }
-  });
-
-  // Canvas bounds
-  let maxX = 900, maxY = 800;
-  NODES.forEach(n=>{ maxX=Math.max(maxX,n.x+(n._w||180)+60); maxY=Math.max(maxY,n.y+(n._h||40)+80); });
-  inner.style.width = maxX+'px'; inner.style.height = maxY+'px';
-  svg.setAttribute('width', maxX); svg.setAttribute('height', maxY);
-  svg.style.pointerEvents = 'auto';
-
-  const defs = `<defs>
-    <marker id="ah_default" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#999"/></marker>
-    <marker id="ah_adult" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="${LANE_COLORS.adult}"/></marker>
-    <marker id="ah_parent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="${LANE_COLORS.parent}"/></marker>
-  </defs>`;
-  svg.innerHTML = defs + paths;
-
-  // Temp arrow for drawing mode
-  if (drawingArrow && drawingArrow.tempPath) {
-    const tempSvg = document.createElementNS('http://www.w3.org/2000/svg','path');
-    tempSvg.setAttribute('d', drawingArrow.tempPath);
-    tempSvg.setAttribute('fill','none'); tempSvg.setAttribute('stroke','var(--accent)');
-    tempSvg.setAttribute('stroke-width','2'); tempSvg.setAttribute('stroke-dasharray','4,4');
-    tempSvg.setAttribute('marker-end','url(#ah_default)');
-    tempSvg.style.pointerEvents = 'none';
-    svg.appendChild(tempSvg);
-  }
-}
-
-// === EDGE CLICK / SELECT ===
-svg.addEventListener('click', function(e) {
-  const hit = e.target.closest('[data-eidx]');
-  if (hit) {
-    e.stopPropagation();
-    const idx = parseInt(hit.dataset.eidx);
-    selectEdge(idx);
-  } else {
-    deselectEdge();
-  }
-});
-
-function selectEdge(idx) {
-  selectedEdgeIdx = idx;
-  renderEdges();
-  // Position toolbar at edge midpoint
-  const edge = EDGES[idx];
-  if (!edge) return;
-  const from = nodeMap[edge.from], to = nodeMap[edge.to];
-  if (!from||!to) return;
-  let fA = edge.fromAnchor, tA = edge.toAnchor;
-  if (!fA||!tA) { const auto = bestAnchors(from,to); fA=fA||auto.fA; tA=tA||auto.tA; }
-  const p1 = getAnchorPos(from,fA), p2 = getAnchorPos(to,tA);
-  const mx = (p1.x+p2.x)/2, my = (p1.y+p2.y)/2;
-  const scrollRect = scroll.getBoundingClientRect();
-  const sx = mx*zoom - scroll.scrollLeft + scrollRect.left;
-  const sy = my*zoom - scroll.scrollTop + scrollRect.top - 40;
-  arrowToolbar.style.left = sx+'px'; arrowToolbar.style.top = sy+'px';
-  arrowToolbar.classList.add('visible');
-  updateMinimap();
-}
-function deselectEdge() {
-  selectedEdgeIdx = -1;
-  arrowToolbar.classList.remove('visible');
-  renderEdges();
-  updateMinimap();
-}
-function flipSelectedEdge() {
-  if (selectedEdgeIdx<0) return;
-  const e = EDGES[selectedEdgeIdx];
-  [e.from, e.to] = [e.to, e.from];
-  [e.fromAnchor, e.toAnchor] = [e.toAnchor, e.fromAnchor];
-  renderEdges();
-  debouncedSave();
-  selectEdge(selectedEdgeIdx); // reposition toolbar
-}
-function deleteSelectedEdge() {
-  if (selectedEdgeIdx<0) return;
-  EDGES.splice(selectedEdgeIdx, 1);
-  deselectEdge();
-  renderEdges();
-  debouncedSave();
-}
+// === EDGE CLICK ===
+svg.addEventListener('click',e=>{const h=e.target.closest('[data-eidx]');if(h){e.stopPropagation();selectEdge(parseInt(h.dataset.eidx))}else deselectAll()});
+// Double-click edge to edit label
+svg.addEventListener('dblclick',e=>{const h=e.target.closest('[data-eidx]');if(h){e.stopPropagation();const idx=parseInt(h.dataset.eidx);const edge=EDGES[idx];if(!edge)return;const newLabel=prompt('תווית חץ:',edge.label||'');if(newLabel!==null){snapshot();edge.label=newLabel;renderEdges();debouncedSave()}}});
 
 // === ANCHOR DRAG → CREATE ARROW ===
-function onAnchorDown(e) {
-  e.stopPropagation(); e.preventDefault();
-  const anchor = e.target.dataset.anchor;
-  const nodeId = e.target.dataset.nodeId;
-  const node = nodeMap[nodeId];
-  if (!node) return;
-  e.target.classList.add('active');
-  drawingArrow = {fromNode:node, fromAnchor:anchor, tempPath:null, anchorEl:e.target};
-  document.addEventListener('mousemove', onArrowDragMove);
-  document.addEventListener('mouseup', onArrowDragEnd);
-}
+function onAnchorDown(e){e.stopPropagation();e.preventDefault();const a=e.target.dataset.anchor,nid=e.target.dataset.nodeId,n=nodeMap[nid];if(!n)return;e.target.classList.add('active');drawingArrow={fromNode:n,fromAnchor:a,tempPath:null,anchorEl:e.target};document.addEventListener('mousemove',onArrowMove);document.addEventListener('mouseup',onArrowEnd)}
+function onArrowMove(e){if(!drawingArrow)return;const sr=scroll.getBoundingClientRect();const mx=(e.clientX-sr.left+scroll.scrollLeft)/zoom,my=(e.clientY-sr.top+scroll.scrollTop)/zoom;const p1=getAnchorPos(drawingArrow.fromNode,drawingArrow.fromAnchor);drawingArrow.tempPath=`M${p1.x},${p1.y} L${mx},${my}`;renderEdges()}
+function onArrowEnd(e){document.removeEventListener('mousemove',onArrowMove);document.removeEventListener('mouseup',onArrowEnd);if(drawingArrow?.anchorEl)drawingArrow.anchorEl.classList.remove('active');const t=document.elementFromPoint(e.clientX,e.clientY);if(t?.classList.contains('anchor-point')){const tid=t.dataset.nodeId,ta=t.dataset.anchor;if(tid&&tid!==drawingArrow.fromNode.id){snapshot();EDGES.push({from:drawingArrow.fromNode.id,to:tid,fromAnchor:drawingArrow.fromAnchor,toAnchor:ta,label:'',style:'solid',lane:null,custom:true});debouncedSave()}}drawingArrow=null;renderEdges();updateMinimap()}
 
-function onArrowDragMove(e) {
-  if (!drawingArrow) return;
-  const scrollRect = scroll.getBoundingClientRect();
-  const mx = (e.clientX - scrollRect.left + scroll.scrollLeft) / zoom;
-  const my = (e.clientY - scrollRect.top + scroll.scrollTop) / zoom;
-  const p1 = getAnchorPos(drawingArrow.fromNode, drawingArrow.fromAnchor);
-  drawingArrow.tempPath = `M${p1.x},${p1.y} L${mx},${my}`;
-  renderEdges();
-}
+// Click canvas to deselect
+scroll.addEventListener('click',e=>{if(!e.target.closest('[data-eidx]')&&!e.target.closest('.anchor-point')&&!e.target.closest('.fnode')){deselectAll();document.getElementById('addDialog').classList.remove('visible')}});
 
-function onArrowDragEnd(e) {
-  document.removeEventListener('mousemove', onArrowDragMove);
-  document.removeEventListener('mouseup', onArrowDragEnd);
-  if (drawingArrow && drawingArrow.anchorEl) drawingArrow.anchorEl.classList.remove('active');
-  // Check if dropped on an anchor
-  const target = document.elementFromPoint(e.clientX, e.clientY);
-  if (target && target.classList.contains('anchor-point')) {
-    const toNodeId = target.dataset.nodeId;
-    const toAnchor = target.dataset.anchor;
-    if (toNodeId && toNodeId !== drawingArrow.fromNode.id) {
-      EDGES.push({
-        from: drawingArrow.fromNode.id,
-        to: toNodeId,
-        fromAnchor: drawingArrow.fromAnchor,
-        toAnchor: toAnchor,
-        label: '',
-        style: 'solid',
-        lane: null,
-        custom: true
-      });
-      debouncedSave();
-    }
-  }
-  drawingArrow = null;
-  renderEdges();
-  updateMinimap();
-}
-
-// Click elsewhere to deselect
-scroll.addEventListener('click', function(e) {
-  if (!e.target.closest('[data-eidx]') && !e.target.closest('.anchor-point') && !e.target.closest('.fnode')) {
-    deselectEdge();
-  }
-});
-
-// === DRAG NODES ===
-function onNodeMouseDown(e) {
-  if (e.target.classList.contains('anchor-point')) return;
-  if (e.button!==0) return;
-  e.stopPropagation();
-  const el = e.currentTarget;
-  const nodeId = el.id.replace('fn_','');
-  const node = nodeMap[nodeId];
-  if (!node) return;
-  dragItem = {type:'node',ref:node};
-  moved = false;
-  const scrollRect = scroll.getBoundingClientRect();
-  dragOffX = e.clientX-scrollRect.left+scroll.scrollLeft-node.x*zoom;
-  dragOffY = e.clientY-scrollRect.top+scroll.scrollTop-node.y*zoom;
-  dragStartX = e.clientX; dragStartY = e.clientY;
-  document.addEventListener('mousemove', onDragMove);
-  document.addEventListener('mouseup', onDragEnd);
-}
-
-function onNodeTouchStart(e) {
-  if (e.target.classList.contains('anchor-point')) return;
-  if (e.touches.length!==1) return;
-  e.preventDefault();
-  const touch = e.touches[0], el = e.currentTarget;
-  const nodeId = el.id.replace('fn_','');
-  const node = nodeMap[nodeId]; if (!node) return;
-  dragItem = {type:'node',ref:node}; moved = false;
-  const scrollRect = scroll.getBoundingClientRect();
-  dragOffX = touch.clientX-scrollRect.left+scroll.scrollLeft-node.x*zoom;
-  dragOffY = touch.clientY-scrollRect.top+scroll.scrollTop-node.y*zoom;
-  dragStartX = touch.clientX; dragStartY = touch.clientY;
-  document.addEventListener('touchmove', onTouchDragMove, {passive:false});
-  document.addEventListener('touchend', onTouchDragEnd);
-}
-
-function onDragMove(e) {
-  if (!dragItem) return;
-  const dx=e.clientX-dragStartX, dy=e.clientY-dragStartY;
-  if (!moved&&(Math.abs(dx)>3||Math.abs(dy)>3)){moved=true;isDraggingNode=true;document.getElementById('canvasWrapper').classList.add('node-dragging')}
-  if (!moved) return;
-  const scrollRect = scroll.getBoundingClientRect();
-  const n = dragItem.ref;
-  let x = (e.clientX-scrollRect.left+scroll.scrollLeft-dragOffX)/zoom;
-  let y = (e.clientY-scrollRect.top+scroll.scrollTop-dragOffY)/zoom;
-  n.x = Math.max(0,snap(x)); n.y = Math.max(0,snap(y));
-  n._el.style.left = n.x+'px'; n._el.style.top = n.y+'px';
-  renderEdges(); updateMinimap();
-}
-
-function onDragEnd() {
-  document.removeEventListener('mousemove',onDragMove);
-  document.removeEventListener('mouseup',onDragEnd);
-  document.getElementById('canvasWrapper').classList.remove('node-dragging');
-  if (moved) debouncedSave();
-  setTimeout(()=>{isDraggingNode=false},50);
-  dragItem = null;
-}
-function onTouchDragMove(e){ if(!dragItem||e.touches.length!==1)return;e.preventDefault();onDragMove({clientX:e.touches[0].clientX,clientY:e.touches[0].clientY}); }
-function onTouchDragEnd(){ document.removeEventListener('touchmove',onTouchDragMove);document.removeEventListener('touchend',onTouchDragEnd);onDragEnd(); }
+// === NODE DRAG ===
+function onNodeMouseDown(e){if(e.target.classList.contains('anchor-point')||e.button!==0)return;e.stopPropagation();const el=e.currentTarget,nid=el.id.replace('fn_',''),n=nodeMap[nid];if(!n)return;selectNode(nid);dragItem={type:'node',ref:n};moved=false;const sr=scroll.getBoundingClientRect();dragOffX=e.clientX-sr.left+scroll.scrollLeft-n.x*zoom;dragOffY=e.clientY-sr.top+scroll.scrollTop-n.y*zoom;dragStartX=e.clientX;dragStartY=e.clientY;document.addEventListener('mousemove',onDragMove);document.addEventListener('mouseup',onDragEnd)}
+function onNodeTouchStart(e){if(e.target.classList.contains('anchor-point')||e.touches.length!==1)return;e.preventDefault();const touch=e.touches[0],el=e.currentTarget,nid=el.id.replace('fn_',''),n=nodeMap[nid];if(!n)return;dragItem={type:'node',ref:n};moved=false;const sr=scroll.getBoundingClientRect();dragOffX=touch.clientX-sr.left+scroll.scrollLeft-n.x*zoom;dragOffY=touch.clientY-sr.top+scroll.scrollTop-n.y*zoom;dragStartX=touch.clientX;dragStartY=touch.clientY;document.addEventListener('touchmove',onTouchMove,{passive:false});document.addEventListener('touchend',onTouchEnd)}
+function onDragMove(e){if(!dragItem)return;if(!moved&&(Math.abs(e.clientX-dragStartX)>3||Math.abs(e.clientY-dragStartY)>3)){moved=true;isDraggingNode=true;if(!undoStack.length||true)snapshot();document.getElementById('canvasWrapper').classList.add('node-dragging')}if(!moved)return;const sr=scroll.getBoundingClientRect(),n=dragItem.ref;n.x=Math.max(0,snap((e.clientX-sr.left+scroll.scrollLeft-dragOffX)/zoom));n.y=Math.max(0,snap((e.clientY-sr.top+scroll.scrollTop-dragOffY)/zoom));n._el.style.left=n.x+'px';n._el.style.top=n.y+'px';renderEdges();updateMinimap()}
+function onDragEnd(){document.removeEventListener('mousemove',onDragMove);document.removeEventListener('mouseup',onDragEnd);document.getElementById('canvasWrapper').classList.remove('node-dragging');if(moved)debouncedSave();setTimeout(()=>isDraggingNode=false,50);dragItem=null}
+function onTouchMove(e){if(!dragItem||e.touches.length!==1)return;e.preventDefault();onDragMove({clientX:e.touches[0].clientX,clientY:e.touches[0].clientY})}
+function onTouchEnd(){document.removeEventListener('touchmove',onTouchMove);document.removeEventListener('touchend',onTouchEnd);onDragEnd()}
 
 // === ZOOM ===
-function canvasZoom(factor){const nz=Math.min(2,Math.max(0.25,zoom*factor));const cx=(scroll.scrollLeft+scroll.clientWidth/2)/zoom;const cy=(scroll.scrollTop+scroll.clientHeight/2)/zoom;zoom=nz;inner.style.transform=`scale(${zoom})`;scroll.scrollLeft=cx*zoom-scroll.clientWidth/2;scroll.scrollTop=cy*zoom-scroll.clientHeight/2;updateMinimap()}
+function canvasZoom(f){const nz=Math.min(2,Math.max(.25,zoom*f));const cx=(scroll.scrollLeft+scroll.clientWidth/2)/zoom,cy=(scroll.scrollTop+scroll.clientHeight/2)/zoom;zoom=nz;inner.style.transform=`scale(${zoom})`;scroll.scrollLeft=cx*zoom-scroll.clientWidth/2;scroll.scrollTop=cy*zoom-scroll.clientHeight/2;updateMinimap()}
 function canvasReset(){zoom=1;inner.style.transform='scale(1)';scroll.scrollLeft=0;scroll.scrollTop=0;updateMinimap()}
-function canvasFitAll(){let mx=0,my=0;NODES.forEach(n=>{mx=Math.max(mx,n.x+(n._w||180));my=Math.max(my,n.y+(n._h||40))});mx+=40;my+=40;zoom=Math.min(scroll.clientWidth/mx,scroll.clientHeight/my,1.5);zoom=Math.max(zoom,0.2);inner.style.transform=`scale(${zoom})`;scroll.scrollLeft=0;scroll.scrollTop=0;updateMinimap()}
-scroll.addEventListener('wheel',(e)=>{if(e.ctrlKey||e.metaKey){e.preventDefault();canvasZoom(e.deltaY<0?1.08:0.93)}},{passive:false});
+function canvasFitAll(){let mx=0,my=0;NODES.forEach(n=>{mx=Math.max(mx,n.x+(n._w||150));my=Math.max(my,n.y+(n._h||40))});mx+=40;my+=40;zoom=Math.min(scroll.clientWidth/mx,scroll.clientHeight/my,1.5);zoom=Math.max(zoom,.2);inner.style.transform=`scale(${zoom})`;scroll.scrollLeft=0;scroll.scrollTop=0;updateMinimap()}
+scroll.addEventListener('wheel',e=>{if(e.ctrlKey||e.metaKey){e.preventDefault();canvasZoom(e.deltaY<0?1.08:.93)}},{passive:false});
 
 // === MINIMAP ===
-const mmCanvas=document.getElementById('minimapCanvas'),mmCtx=mmCanvas.getContext('2d'),mmVP=document.getElementById('minimapViewport');
-function updateMinimap(){const W=150,H=90;mmCanvas.width=W;mmCanvas.height=H;mmCtx.clearRect(0,0,W,H);let mx=900,my=800;NODES.forEach(n=>{mx=Math.max(mx,n.x+(n._w||150)+20);my=Math.max(my,n.y+(n._h||30)+20)});const s=Math.min(W/mx,H/my);const colors={trigger:'#66bb6a',decision:'#ffa726',action:'#42a5f5',template:'#ab47bc',ghost:'#ef5350',end:'#26a69a'};NODES.forEach(n=>{let c=colors[n.type]||'#999';if(n.lane==='adult')c=LANE_COLORS.adult;if(n.lane==='parent')c=LANE_COLORS.parent;mmCtx.fillStyle=c;mmCtx.fillRect(n.x*s,n.y*s,Math.max((n._w||120)*s,2),Math.max((n._h||28)*s,2))});
-// Draw lane-colored edges on minimap
-EDGES.forEach(e=>{const from=nodeMap[e.from],to=nodeMap[e.to];if(!from||!to)return;mmCtx.strokeStyle=e.lane?LANE_COLORS[e.lane]:'rgba(0,0,0,.1)';mmCtx.lineWidth=e.lane?1:.5;mmCtx.beginPath();mmCtx.moveTo((from.x+(from._w||120)/2)*s,(from.y+(from._h||28)/2)*s);mmCtx.lineTo((to.x+(to._w||120)/2)*s,(to.y+(to._h||28)/2)*s);mmCtx.stroke()});
-const vx=(scroll.scrollLeft/zoom)*s,vy=(scroll.scrollTop/zoom)*s,vw=(scroll.clientWidth/zoom)*s,vh=(scroll.clientHeight/zoom)*s;mmVP.style.left=vx+'px';mmVP.style.top=vy+'px';mmVP.style.width=vw+'px';mmVP.style.height=vh+'px'}
+const mmC=document.getElementById('minimapCanvas'),mmX=mmC.getContext('2d'),mmV=document.getElementById('minimapViewport');
+function updateMinimap(){const W=150,H=90;mmC.width=W;mmC.height=H;mmX.clearRect(0,0,W,H);let mx=900,my=800;NODES.forEach(n=>{mx=Math.max(mx,n.x+(n._w||120)+20);my=Math.max(my,n.y+(n._h||30)+20)});const s=Math.min(W/mx,H/my);const colors={trigger:'#66bb6a',decision:'#ffa726',action:'#42a5f5',template:'#ab47bc',ghost:'#ef5350',end:'#26a69a',timing:'#ff9800'};NODES.forEach(n=>{let c=colors[n.type]||'#999';if(n.lane==='adult')c=LANE_COLORS.adult;if(n.lane==='parent')c=LANE_COLORS.parent;mmX.fillStyle=c;mmX.fillRect(n.x*s,n.y*s,Math.max((n._w||100)*s,2),Math.max((n._h||25)*s,2))});EDGES.forEach(e=>{const f=nodeMap[e.from],t=nodeMap[e.to];if(!f||!t)return;mmX.strokeStyle=e.lane?LANE_COLORS[e.lane]:'rgba(0,0,0,.1)';mmX.lineWidth=e.lane?1:.5;mmX.beginPath();mmX.moveTo((f.x+(f._w||100)/2)*s,(f.y+(f._h||25)/2)*s);mmX.lineTo((t.x+(t._w||100)/2)*s,(t.y+(t._h||25)/2)*s);mmX.stroke()});const vx=scroll.scrollLeft/zoom*s,vy=scroll.scrollTop/zoom*s,vw=scroll.clientWidth/zoom*s,vh=scroll.clientHeight/zoom*s;mmV.style.left=vx+'px';mmV.style.top=vy+'px';mmV.style.width=vw+'px';mmV.style.height=vh+'px'}
 scroll.addEventListener('scroll',updateMinimap);
 
 // === INIT ===
-(function init(){
-  NODES.forEach(n=>{nodeMap[n.id]=n});
-  loadLayout();
-  renderAll();
-  scroll.scrollLeft = Math.max(0, 420*zoom - scroll.clientWidth/2);
-})();
+(function init(){NODES.forEach(n=>nodeMap[n.id]=n);loadLayout();NODES.forEach(n=>nodeMap[n.id]=n);renderAll();scroll.scrollLeft=Math.max(0,430*zoom-scroll.clientWidth/2)})();
 </script>
 </body>
 </html>
