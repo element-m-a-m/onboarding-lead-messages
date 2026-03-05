@@ -7,12 +7,13 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800&display=swap">
 <style>
 :root{--bg:#f8f9fa;--surface:#fff;--text:#1a1a1a;--text2:#666;--accent:#25D366;--accent2:#128C7E;--border:#e2e8f0;--hdr:#1a1a2e;
---c-step:#f1f5f9;--c-step-b:#64748b;
+--c-step:#f1f5f9;--c-step-b:#94a3b8;
+--c-major:#e2e8f0;--c-major-b:#475569;
 --c-source:#fffbeb;--c-source-b:#f59e0b;
+--c-decision:#fffbeb;--c-decision-b:#f59e0b;
 --c-wa:#ecfdf5;--c-wa-b:#128C7E;
 --c-ghost:#ffebee;--c-ghost-b:#ef5350;
 --c-end:#e0f2f1;--c-end-b:#26a69a;
---c-decision:#fffbeb;--c-decision-b:#f59e0b;
 --lane-adult:#d81b60;--lane-parent:#1565c0;--lane-adult-bg:#fce4ec;--lane-adult-b:#e91e63;--lane-parent-bg:#e3f2fd;--lane-parent-b:#42a5f5}
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Heebo',sans-serif;background:var(--bg);color:var(--text);line-height:1.5;font-size:11px}
@@ -34,9 +35,9 @@ h2{font-size:14px;font-weight:700;color:var(--hdr);margin-top:28px;margin-bottom
 
 /* === CANVAS === */
 #flowcharts{scroll-margin-top:80px}
-.canvas-wrapper{position:relative;background:#f5f6f8;border:1.5px solid var(--border);border-radius:10px;overflow:hidden;margin:8px 0 16px;height:700px;cursor:grab;user-select:none}
+.canvas-wrapper{position:relative;background:#fafbfc;border:1.5px solid var(--border);border-radius:10px;overflow:hidden;margin:8px 0 16px;height:700px;cursor:grab;user-select:none}
 .canvas-wrapper:active{cursor:grabbing}.canvas-wrapper.node-dragging{cursor:grabbing}
-.canvas-grid{position:absolute;inset:0;pointer-events:none;z-index:0;background-image:radial-gradient(circle,rgba(0,0,0,.05) .5px,transparent .5px);background-size:10px 10px}
+.canvas-grid{position:absolute;inset:0;pointer-events:none;z-index:0;background-image:radial-gradient(circle,rgba(0,0,0,.04) .5px,transparent .5px);background-size:10px 10px}
 .canvas-toolbar{position:absolute;top:8px;left:8px;z-index:20;display:flex;flex-direction:column;gap:4px}
 .canvas-toolbar button{width:30px;height:30px;border:1px solid var(--border);border-radius:6px;background:#fff;font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 3px rgba(0,0,0,.1);transition:background .15s}
 .canvas-toolbar button:hover{background:#e8e8e8}.canvas-toolbar button.active{background:var(--accent);color:#fff;border-color:var(--accent)}
@@ -55,12 +56,14 @@ h2{font-size:14px;font-weight:700;color:var(--hdr);margin-top:28px;margin-bottom
 .fnode:active{cursor:grabbing;z-index:50}.fnode:hover{box-shadow:0 3px 12px rgba(0,0,0,.15);z-index:40}
 .fnode.selected-node{box-shadow:0 0 0 2.5px #3b82f6,0 0 12px rgba(59,130,246,.3)!important;z-index:46}
 .fnode.search-glow{box-shadow:0 0 0 2.5px #fbbf24,0 0 12px rgba(251,191,36,.4)!important;z-index:42}
-/* Step */
-.fnode-step{background:var(--c-step);border:1.5px solid var(--c-step-b);border-radius:8px;color:#334155}
+/* Minor step (light, recedes) */
+.fnode-step{background:var(--c-step);border:1.5px solid var(--c-step-b);border-radius:8px;color:#64748b;font-weight:400}
 .fnode-step.is-timer{border-style:dashed;border-radius:20px;font-size:9px}
-/* Source/Channel (replaces decision for non-decisions) */
+/* MAJOR milestone (bold, commanding) */
+.fnode-step.is-major{background:linear-gradient(135deg,#1e293b,#334155);border:2px solid #0f172a;color:#f1f5f9;font-weight:700;font-size:10px;border-radius:10px;box-shadow:0 2px 8px rgba(15,23,42,.25);padding:8px 14px}
+/* Source/channel (warm amber) */
 .fnode-source{background:var(--c-source);border:1.5px solid var(--c-source-b);border-radius:8px;color:#92400e;font-weight:600}
-/* Decision (real decisions only) */
+/* Decision (diamond) */
 .fnode-decision{background:transparent;border:none;padding:8px 18px;color:#92400e;font-weight:600}
 .fnode-decision::before{content:'';position:absolute;inset:-1px;border:1.5px solid var(--c-decision-b);clip-path:polygon(12% 0%,88% 0%,100% 50%,88% 100%,12% 100%,0% 50%);background:var(--c-decision);z-index:-1}
 /* WA message */
@@ -68,7 +71,7 @@ h2{font-size:14px;font-weight:700;color:var(--hdr);margin-top:28px;margin-bottom
 .fnode-wa:hover{transform:scale(1.03)}
 .wa-icon{position:absolute;top:3px;left:3px;width:14px;height:14px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;font-size:8px;color:#fff;pointer-events:none;box-shadow:0 1px 2px rgba(0,0,0,.15)}
 /* Ghost */
-.fnode-ghost{background:var(--c-ghost);border:1.5px dashed var(--c-ghost-b);border-radius:6px;color:#c62828;font-weight:600;cursor:pointer}
+.fnode-ghost{background:var(--c-ghost);border:1.5px dashed var(--c-ghost-b);border-radius:6px;color:#c62828;font-weight:600}
 /* End */
 .fnode-end{background:var(--c-end);border:1.5px solid var(--c-end-b);border-radius:16px;color:#00695c;font-weight:600}
 /* Lane modifiers */
@@ -80,11 +83,11 @@ h2{font-size:14px;font-weight:700;color:var(--hdr);margin-top:28px;margin-bottom
 /* CU badges */
 .cu-badge{position:absolute;top:-8px;left:-4px;font-size:6.5px;color:#fff;padding:1px 5px;border-radius:3px;white-space:nowrap;pointer-events:none;opacity:.85;font-weight:600;letter-spacing:.3px;box-shadow:0 1px 3px rgba(0,0,0,.2)}
 /* Edge labels */
-.edge-label{position:absolute;font-size:8px;color:var(--text2);font-weight:600;background:rgba(245,246,248,.92);padding:1px 5px;border-radius:3px;white-space:nowrap;z-index:5;cursor:pointer}
+.edge-label{position:absolute;font-size:8px;color:var(--text2);font-weight:600;background:rgba(250,251,252,.95);padding:1px 5px;border-radius:3px;white-space:nowrap;z-index:5;cursor:pointer}
 .edge-label:hover{background:#fff;box-shadow:0 0 0 1px var(--border)}
-/* Anchors — 8 points (2 per face) */
+/* 8 Anchor points */
 .anchor-point{position:absolute;width:9px;height:9px;border-radius:50%;background:#fff;border:2px solid var(--accent);cursor:crosshair;z-index:55;opacity:0;transition:opacity .15s;transform:translate(-50%,-50%)}
-.fnode:hover .anchor-point,.fnode.show-anchors .anchor-point{opacity:1}
+.fnode:hover .anchor-point{opacity:1}
 .anchor-point:hover{background:var(--accent);transform:translate(-50%,-50%) scale(1.3)}
 .anchor-point.active{background:var(--accent);opacity:1!important}
 /* Edge handles */
@@ -99,11 +102,11 @@ h2{font-size:14px;font-weight:700;color:var(--hdr);margin-top:28px;margin-bottom
 .ctx-menu.visible{display:block}
 .ctx-menu button{display:flex;align-items:center;gap:6px;width:100%;padding:5px 12px;border:none;background:none;cursor:pointer;font-family:'Heebo',sans-serif;font-size:10px;text-align:right;color:var(--text)}
 .ctx-menu button:hover{background:#f1f5f9}.ctx-menu button.danger{color:#dc2626}
-.ctx-menu .ctx-sep{height:1px;background:var(--border);margin:3px 0}
 
 /* Legend */
 .flow-legend{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:8px;padding:6px 10px;background:#f8f9fa;border-radius:5px;border:1px solid var(--border);font-size:8.5px}
 .legend-item{display:flex;align-items:center;gap:3px}
+.lg-major{width:18px;height:12px;background:linear-gradient(135deg,#1e293b,#334155);border:1.5px solid #0f172a;border-radius:4px}
 .lg-step{width:18px;height:11px;background:var(--c-step);border:1px solid var(--c-step-b);border-radius:4px}
 .lg-source{width:18px;height:11px;background:var(--c-source);border:1px solid var(--c-source-b);border-radius:4px}
 .lg-wa{width:18px;height:11px;background:var(--c-wa);border:1px solid var(--c-wa-b);border-radius:4px;position:relative}
@@ -120,7 +123,7 @@ h2{font-size:14px;font-weight:700;color:var(--hdr);margin-top:28px;margin-bottom
 #tooltip .tt-body{padding:8px 10px;white-space:pre-wrap;font-size:8pt;color:#ddd}
 #tooltip .tt-body .ph{background:rgba(254,243,199,.2);color:#fbbf24;padding:0 2px;border-radius:2px;font-weight:600}
 
-/* Template cards (same) */
+/* Template cards */
 .section-divider{margin:24px 0 8px;padding:8px 12px;background:var(--hdr);color:#fff;border-radius:6px;font-size:12px;font-weight:700;display:flex;align-items:center;gap:6px;scroll-margin-top:80px}
 .gnum{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;background:#fff;color:var(--hdr);font-weight:800;font-size:10px}
 .template-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;margin:10px 0;overflow:hidden;box-shadow:0 1px 2px rgba(0,0,0,.03);scroll-margin-top:80px}
@@ -150,44 +153,44 @@ h2{font-size:14px;font-weight:700;color:var(--hdr);margin-top:28px;margin-bottom
 </style>
 </head>
 <body>
-<div class="page-header"><h1>אלמנט — חוברת תבניות וואטסאפ</h1><div class="sub">Element — WhatsApp Templates Playbook</div><div class="ver">גרסה 5.7 | מרץ 2026</div></div>
+<div class="page-header"><h1>אלמנט — חוברת תבניות וואטסאפ</h1><div class="sub">Element — WhatsApp Templates Playbook</div><div class="ver">גרסה 5.8 | מרץ 2026</div></div>
 <div class="search-bar"><span>🔍</span><input type="text" id="searchInput" placeholder="חיפוש..." oninput="filterTemplates()"><span id="searchCount"></span></div>
 <div class="nav-tabs"><a href="#flowcharts">📊 זרימה</a><a href="#group1">1️⃣ תגובה</a><a href="#group2">2️⃣ היכרות</a><a href="#group3">3️⃣ אישור</a><a href="#group4">4️⃣ מעקב</a><a href="#group5">5️⃣ הרשמה</a><a href="#group6">6️⃣ שימור</a><a href="#ref-section">📎 טבלה</a></div>
 <div id="tooltip"><div class="tt-header"><span class="tt-title"></span><button class="tt-copy" onclick="copyTooltip()">📋 העתק</button></div><div class="tt-body"></div></div>
-<div class="arrow-toolbar" id="arrowToolbar"><button onclick="flipSelectedEdge()" title="הפוך כיוון">🔄</button><button class="danger" onclick="deleteSelectedEdge()" title="מחק">🗑️</button></div>
+<div class="arrow-toolbar" id="arrowToolbar"><button onclick="flipSelectedEdge()" title="הפוך">🔄</button><button class="danger" onclick="deleteSelectedEdge()" title="מחק">🗑️</button></div>
 <div class="ctx-menu" id="ctxMenu"></div>
 <div class="container">
 <div class="instructions"><h3>📌 הוראות</h3><ul>
-<li><span class="placeholder">[סוגריים]</span> = פרטים | <strong>Ctrl+Z/Y</strong> undo/redo | <strong>Ctrl+C/V</strong> העתק/הדבק | <strong>Delete</strong> מחק</li>
-<li><strong>דאבל-קליק</strong> = ערוך טקסט | <strong>גרירה מנקודה</strong> = חץ חדש | <strong>לחיצת חץ</strong> = בחר+גרור קצה | <strong>קליק ימני</strong> = תפריט</li>
+<li><span class="placeholder">[סוגריים]</span> = פרטים | <strong>Ctrl+Z/Y</strong> undo | <strong>Ctrl+C/V</strong> העתק | <strong>Delete</strong> מחק</li>
+<li><strong>דאבל-קליק</strong> = ערוך | <strong>גרירה מנקודה</strong> = חץ | <strong>לחיצת חץ</strong> = בחר+גרור קצה | <strong>ימני</strong> = תפריט</li>
 </ul></div>
 <div id="flowcharts">
 <h2>📊 תרשים זרימה — מליד ועד הרשמה</h2>
 <div class="flow-legend">
+<div class="legend-item"><div class="lg-major"></div> שלב מרכזי</div>
 <div class="legend-item"><div class="lg-step"></div> שלב</div>
 <div class="legend-item"><div class="lg-source"></div> מקור/ערוץ</div>
 <div class="legend-item"><div class="lg-wa"></div> הודעת WA</div>
 <div class="legend-item"><div class="lg-ghost"></div> נעלם</div>
 <div class="legend-item"><div class="lg-lane" style="background:var(--lane-adult)"></div> מבוגר</div>
 <div class="legend-item"><div class="lg-lane" style="background:var(--lane-parent)"></div> הורה</div>
-<div class="legend-item" style="margin-right:auto;color:var(--text2)">💾 Ctrl+Z/Y/C/V</div>
 </div>
 <div class="canvas-wrapper" id="canvasWrapper">
   <div class="canvas-grid"></div>
   <div class="canvas-toolbar">
-    <button onclick="canvasZoom(1.15)" title="זום +">＋</button>
-    <button onclick="canvasZoom(0.87)" title="זום −">−</button>
+    <button onclick="canvasZoom(1.15)" title="+">＋</button>
+    <button onclick="canvasZoom(0.87)" title="−">−</button>
     <button onclick="canvasReset()" title="אפס">⟲</button>
     <button onclick="canvasFitAll()" title="הכל">☐</button>
     <div class="sep"></div>
-    <button onclick="undo()" id="undoBtn" title="Ctrl+Z" disabled>↩</button>
-    <button onclick="redo()" id="redoBtn" title="Ctrl+Y" disabled>↪</button>
+    <button onclick="undo()" id="undoBtn" disabled>↩</button>
+    <button onclick="redo()" id="redoBtn" disabled>↪</button>
     <div class="sep"></div>
-    <button onclick="toggleSnap()" id="snapBtn" class="active" title="רשת">⊞</button>
-    <button onclick="resetPositions()" title="אפס הכל">↺</button>
+    <button onclick="toggleSnap()" id="snapBtn" class="active">⊞</button>
+    <button onclick="resetPositions()">↺</button>
   </div>
   <div class="save-toast" id="saveToast">💾</div>
-  <div class="canvas-info" id="canvasInfo">דאבל-קליק=ערוך | נקודה=חץ | Ctrl+C/V | קליק ימני=תפריט</div>
+  <div class="canvas-info" id="canvasInfo">דאבל-קליק=ערוך | נקודה=חץ | Ctrl+C/V | ימני=תפריט</div>
   <div class="minimap" id="minimap"><canvas id="minimapCanvas"></canvas><div class="minimap-viewport" id="minimapViewport"></div></div>
   <div class="canvas-scroll" id="canvasScroll"><div class="canvas-inner" id="canvasInner"><svg class="canvas-svg" id="canvasSvg"></svg></div></div>
 </div>
@@ -555,7 +558,7 @@ h2{font-size:14px;font-weight:700;color:var(--hdr);margin-top:28px;margin-bottom
 <button class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">⬆</button>
 </div>
 <script>
-// === UTILITIES ===
+// === UTILITIES (same as v5.7) ===
 function copyMsg(el){const c=el.cloneNode(true);c.querySelector('.cbtn')?.remove();c.querySelectorAll('.placeholder').forEach(s=>s.replaceWith(s.textContent));doCopy(c.innerText.trim(),el.querySelector('.cbtn'))}
 function doCopy(t,btn){try{navigator.clipboard.writeText(t).then(()=>flash(btn)).catch(()=>fb(t,btn))}catch(e){fb(t,btn)}}
 function fb(t,btn){const a=document.createElement('textarea');a.value=t;a.style.cssText='position:fixed;left:-9999px';document.body.appendChild(a);a.select();try{document.execCommand('copy');flash(btn)}catch(e){}document.body.removeChild(a)}
@@ -571,183 +574,177 @@ window.addEventListener('scroll',()=>document.getElementById('backTop').classLis
 document.querySelectorAll('.nav-tabs a').forEach(a=>a.addEventListener('click',()=>{document.getElementById('searchInput').value='';filterTemplates()}));
 
 // ================================================================
-// ENGINE v5.7 — 8 anchors, inline edit, copy/paste, source nodes
+// ENGINE v5.8 — smart anchors, obstacle routing, visual hierarchy
 // ================================================================
 const CU={t1:{l:'CONSIDERING',c:'#f87171'},t2:{l:'NEW LEADS',c:'#94a3b8'},t3:{l:'NEW LEADS',c:'#94a3b8'},t4a:{l:'CONSIDERING',c:'#f87171'},t4b:{l:'CONSIDERING',c:'#f87171'},t4c:{l:'CONSIDERING',c:'#f87171'},t4d:{l:'CONSIDERING',c:'#f87171'},t4e:{l:'CONSIDERING',c:'#f87171'},t4f:{l:'CONSIDERING',c:'#f87171'},t4g:{l:'CONSIDERING',c:'#f87171'},t6a:{l:'PURCHASED',c:'#60a5fa'},t6b:{l:'PURCHASED',c:'#60a5fa'},t6c:{l:'PURCHASED',c:'#60a5fa'},t6d:{l:'PURCHASED',c:'#60a5fa'},t6e:{l:'PURCHASED',c:'#60a5fa'},t6f:{l:'PURCHASED',c:'#60a5fa'},t6g:{l:'PURCHASED',c:'#60a5fa'},t8:{l:'PURCHASED',c:'#60a5fa'},t10:{l:'MADE 1ST',c:'#4ade80'},t11:{l:'MADE 2ND',c:'#4ade80'},t12:{l:'MADE 3RD',c:'#fb923c'},t13:{l:'MADE 3RD',c:'#fb923c'},t14:{l:'ENROLLED',c:'#22c55e'},t15:{l:'ENROLLED',c:'#22c55e'},t16:{l:'ENROLLED',c:'#22c55e'},t17a:{l:'LOST?',c:'#fb923c'},t17b:{l:'LOST?',c:'#fb923c'},t18:{l:'NOT READY',c:'#2dd4bf'},t19:{l:'NEAR PURCHASE',c:'#f472b6'}};
 const LC={adult:'#d81b60',parent:'#1565c0'};
 
+// === NODES with major flag and better spacing ===
 const DEFAULT_NODES=[
-  // ENTRY — no "מקור הפנייה?" decision. entry→two sources directly
-  {id:'entry',type:'step',label:'📥 ליד חדש נכנס',x:440,y:30,w:145},
-  // Sources (yellow) — replacing old decision
-  {id:'widget',type:'source',label:'📱 ווידג׳ט\n(דף נחיתה / Linktree)',x:170,y:140,w:175},
-  {id:'direct',type:'source',label:'💬 פנייה ישירה\n(WA / טלפון / מייל)',x:620,y:140,w:175},
-  // Widget outcomes
-  {id:'wPaid',type:'step',label:'💳 שילם',x:60,y:260,w:90},
-  {id:'wNoPay',type:'step',label:'⏰ לא שילם\n(24-48 שעות)',x:250,y:260,w:125},
-  // No "תגובה?" decision — direct outcomes as sources
-  {id:'wCallback',type:'source',label:'📞 ביקש שנחזור',x:175,y:370,w:130},
-  {id:'wAbandoned',type:'source',label:'🚫 נטש / הפסיק',x:350,y:370,w:125},
-  {id:'n_t1',type:'wa',label:'#1 תגובה\nווידג׳ט',x:180,y:460,w:120,link:'t1',
+  {id:'entry',type:'step',label:'📥 ליד חדש נכנס',x:420,y:30,w:155,major:true},
+  {id:'widget',type:'source',label:'📱 ווידג׳ט\n(דף נחיתה / Linktree)',x:140,y:150,w:180},
+  {id:'direct',type:'source',label:'💬 פנייה ישירה\n(WA / טלפון / מייל)',x:610,y:150,w:180},
+  // Widget outcomes — spread apart more
+  {id:'wPaid',type:'step',label:'💳 שילם',x:40,y:290,w:100},
+  {id:'wNoPay',type:'step',label:'⏰ לא שילם\n(24-48 שעות)',x:260,y:290,w:130},
+  {id:'wCallback',type:'source',label:'📞 ביקש שנחזור',x:160,y:410,w:135},
+  {id:'wAbandoned',type:'source',label:'🚫 נטש / הפסיק',x:350,y:410,w:130},
+  {id:'n_t1',type:'wa',label:'#1 תגובה\nווידג׳ט',x:165,y:510,w:120,link:'t1',
    ttTitle:'#1 תגובה ווידג׳ט',ttBody:'היי [שם] 👋\nכאן צוות אלמנט.\nראינו שהשארתם פרטים ונשמח לעזור! 🙏'},
-  {id:'n_t19',type:'wa',label:'#19 מעקב\nלא שילם',x:350,y:460,w:115,link:'t19',
+  {id:'n_t19',type:'wa',label:'#19 מעקב\nלא שילם',x:355,y:510,w:118,link:'t19',
    ttTitle:'#19 מעקב — לא שילם',ttBody:'היי [שם] 👋\nראינו שהתעניינתם — נשמח לעזור! 📞 🙏'},
-  // Direct → #2/#3 directly (no "מי פנה?" decision)
-  {id:'n_t2',type:'wa',label:'#2 תגובה\nמבוגר/ת',x:570,y:280,w:115,link:'t2',lane:'adult',
+  // Direct → messages directly
+  {id:'n_t2',type:'wa',label:'#2 תגובה\nמבוגר/ת',x:570,y:310,w:118,link:'t2',lane:'adult',
    ttTitle:'#2 ליד ישיר — מבוגר',ttBody:'היי [שם] 👋\nתודה שפניתם! מה חיפשתם? 🙏'},
-  {id:'n_t3',type:'wa',label:'#3 תגובה\nהורה',x:730,y:280,w:105,link:'t3',lane:'parent',
+  {id:'n_t3',type:'wa',label:'#3 תגובה\nהורה',x:740,y:310,w:108,link:'t3',lane:'parent',
    ttTitle:'#3 ליד ישיר — הורה',ttBody:'היי [שם ההורה] 👋\nמה הגיל ומה חיפשתם? 💪'},
 
-  // DETAILS HUB + chain
-  {id:'details',type:'step',label:'📋 פרטי היכרות\n(לפי קבוצה)',x:390,y:570,w:160},
-  {id:'n_t4a',type:'wa',label:'#4a\nילדים 6-8',x:30,y:670,w:95,link:'t4a',lane:'parent',ttTitle:'#4a ילדים 6-8',ttBody:'🥋 ילדים 6-8\n📅 [ימים]\n💰 60₪\n🔗 [לינק]'},
-  {id:'n_t4b',type:'wa',label:'#4b\nילדים 9-11',x:140,y:670,w:95,link:'t4b',lane:'parent',ttTitle:'#4b ילדים 9-11',ttBody:'🥋 ילדים 9-11\n📅 [ימים]\n💰 60₪\n🔗 [לינק]'},
-  {id:'n_t4c',type:'wa',label:'#4c\nנוער 12-15',x:250,y:670,w:95,link:'t4c',lane:'parent',ttTitle:'#4c נוער 12-15',ttBody:'🥋 נוער 12-15\n📅 [ימים]\n💰 70₪\n🔗 [לינק]'},
-  {id:'n_t4d',type:'wa',label:'#4d\nלחימה 16-37',x:360,y:670,w:105,link:'t4d',lane:'adult',ttTitle:'#4d לחימה 16-37',ttBody:'🥊 לחימה\n📅 [ימים]\n💰 70₪\n🔗 [לינק]'},
-  {id:'n_t4e',type:'wa',label:'#4e\nכושר 38+',x:480,y:670,w:95,link:'t4e',lane:'adult',ttTitle:'#4e כושר 38+',ttBody:'💪 כושר 38+\n📅 [ימים]\n💰 70₪\n🔗 [לינק]'},
-  {id:'n_t4f',type:'wa',label:'#4f\nמובמנט',x:590,y:670,w:90,link:'t4f',ttTitle:'#4f מובמנט',ttBody:'🤸 מובמנט\n📅 [ימים]\n💰 70₪\n🔗 [לינק]'},
-  {id:'n_t4g',type:'wa',label:'#4g\nכוח',x:695,y:670,w:80,link:'t4g',ttTitle:'#4g כוח',ttBody:'🏋️ כוח\n📅 [ימים]\n💰 70₪\n🔗 [לינק]'},
-  {id:'noResp1',type:'ghost',label:'⛔ ללא תגובה',x:810,y:670,w:100,link:'t17b'},
+  // DETAILS
+  {id:'details',type:'step',label:'📋 פרטי היכרות\n(לפי קבוצה)',x:390,y:630,w:165,major:true},
+  {id:'n_t4a',type:'wa',label:'#4a\nילדים 6-8',x:25,y:750,w:95,link:'t4a',lane:'parent',ttTitle:'#4a ילדים 6-8',ttBody:'🥋 ילדים 6-8\n📅 [ימים]\n💰 60₪\n🔗 [לינק]'},
+  {id:'n_t4b',type:'wa',label:'#4b\nילדים 9-11',x:135,y:750,w:95,link:'t4b',lane:'parent',ttTitle:'#4b ילדים 9-11',ttBody:'🥋 ילדים 9-11\n📅 [ימים]\n💰 60₪\n🔗 [לינק]'},
+  {id:'n_t4c',type:'wa',label:'#4c\nנוער 12-15',x:245,y:750,w:98,link:'t4c',lane:'parent',ttTitle:'#4c נוער 12-15',ttBody:'🥋 נוער 12-15\n📅 [ימים]\n💰 70₪\n🔗 [לינק]'},
+  {id:'n_t4d',type:'wa',label:'#4d\nלחימה 16-37',x:358,y:750,w:108,link:'t4d',lane:'adult',ttTitle:'#4d לחימה 16-37',ttBody:'🥊 לחימה\n📅 [ימים]\n💰 70₪\n🔗 [לינק]'},
+  {id:'n_t4e',type:'wa',label:'#4e\nכושר 38+',x:481,y:750,w:95,link:'t4e',lane:'adult',ttTitle:'#4e כושר 38+',ttBody:'💪 כושר 38+\n📅 [ימים]\n💰 70₪\n🔗 [לינק]'},
+  {id:'n_t4f',type:'wa',label:'#4f\nמובמנט',x:591,y:750,w:90,link:'t4f',ttTitle:'#4f מובמנט',ttBody:'🤸 מובמנט\n📅 [ימים]\n💰 70₪\n🔗 [לינק]'},
+  {id:'n_t4g',type:'wa',label:'#4g\nכוח',x:696,y:750,w:80,link:'t4g',ttTitle:'#4g כוח',ttBody:'🏋️ כוח\n📅 [ימים]\n💰 70₪\n🔗 [לינק]'},
+  {id:'noResp1',type:'ghost',label:'⛔ ללא תגובה',x:810,y:750,w:105,link:'t17b'},
 
   // PAYMENT
-  {id:'payment',type:'step',label:'💳 אישור תשלום להיכרות',x:390,y:780,w:175},
-  {id:'n_t6a',type:'wa',label:'#6a\nילדים 6-8',x:30,y:870,w:95,link:'t6a',lane:'parent',ttTitle:'#6a אישור 6-8',ttBody:'התשלום התקבל! 🙌 🙏'},
-  {id:'n_t6b',type:'wa',label:'#6b\nילדים 9-11',x:140,y:870,w:95,link:'t6b',lane:'parent',ttTitle:'#6b אישור 9-11',ttBody:'התשלום התקבל! 🙌 🙏'},
-  {id:'n_t6c',type:'wa',label:'#6c\nנוער 12-15',x:250,y:870,w:95,link:'t6c',lane:'parent',ttTitle:'#6c אישור נוער',ttBody:'התשלום התקבל! 🙌 🙏'},
-  {id:'n_t6d',type:'wa',label:'#6d\nלחימה',x:360,y:870,w:95,link:'t6d',lane:'adult',ttTitle:'#6d אישור לחימה',ttBody:'התשלום התקבל! 🙌 🙏'},
-  {id:'n_t6e',type:'wa',label:'#6e\nכושר 38+',x:470,y:870,w:95,link:'t6e',lane:'adult',ttTitle:'#6e אישור כושר',ttBody:'התשלום התקבל! 🙌 🙏'},
-  {id:'n_t6f',type:'wa',label:'#6f\nמובמנט',x:580,y:870,w:90,link:'t6f',ttTitle:'#6f אישור מובמנט',ttBody:'התשלום התקבל! 🙌 🙏'},
-  {id:'n_t6g',type:'wa',label:'#6g\nכוח',x:685,y:870,w:80,link:'t6g',ttTitle:'#6g אישור כוח',ttBody:'התשלום התקבל! 🙌 🙏'},
+  {id:'payment',type:'step',label:'💳 אישור תשלום להיכרות',x:380,y:870,w:180,major:true},
+  {id:'n_t6a',type:'wa',label:'#6a\nילדים 6-8',x:25,y:985,w:95,link:'t6a',lane:'parent',ttTitle:'#6a אישור 6-8',ttBody:'התשלום התקבל! 🙌 🙏'},
+  {id:'n_t6b',type:'wa',label:'#6b\nילדים 9-11',x:135,y:985,w:95,link:'t6b',lane:'parent',ttTitle:'#6b אישור 9-11',ttBody:'התשלום התקבל! 🙌 🙏'},
+  {id:'n_t6c',type:'wa',label:'#6c\nנוער 12-15',x:245,y:985,w:95,link:'t6c',lane:'parent',ttTitle:'#6c אישור נוער',ttBody:'התשלום התקבל! 🙌 🙏'},
+  {id:'n_t6d',type:'wa',label:'#6d\nלחימה',x:355,y:985,w:95,link:'t6d',lane:'adult',ttTitle:'#6d אישור לחימה',ttBody:'התשלום התקבל! 🙌 🙏'},
+  {id:'n_t6e',type:'wa',label:'#6e\nכושר 38+',x:465,y:985,w:95,link:'t6e',lane:'adult',ttTitle:'#6e אישור כושר',ttBody:'התשלום התקבל! 🙌 🙏'},
+  {id:'n_t6f',type:'wa',label:'#6f\nמובמנט',x:575,y:985,w:90,link:'t6f',ttTitle:'#6f אישור מובמנט',ttBody:'התשלום התקבל! 🙌 🙏'},
+  {id:'n_t6g',type:'wa',label:'#6g\nכוח',x:680,y:985,w:80,link:'t6g',ttTitle:'#6g אישור כוח',ttBody:'התשלום התקבל! 🙌 🙏'},
 
-  // TIMERS + side branches
-  {id:'timerHealth',type:'step',label:'⏰ מיד אחרי אישור',x:400,y:970,w:145,timer:true},
-  {id:'n_t8',type:'wa',label:'#8 טופס\nבריאות',x:610,y:962,w:110,link:'t8',ttTitle:'#8 בריאות',ttBody:'טופס הצהרת בריאות 📋\n🔗 [לינק] 🙏'},
-  {id:'timerDay',type:'step',label:'⏰ יום לפני השיעור',x:403,y:1045,w:140,timer:true},
-  {id:'n_t9',type:'wa',label:'#9 תזכורת',x:610,y:1037,w:100,link:'t9',ttTitle:'#9 תזכורת',ttBody:'מחר שיעור!\n🗓️ [יום], [שעה] 🙏'},
+  // TIMERS
+  {id:'timerHealth',type:'step',label:'⏰ מיד אחרי אישור',x:400,y:1095,w:148,timer:true},
+  {id:'n_t8',type:'wa',label:'#8 טופס\nבריאות',x:620,y:1087,w:110,link:'t8',ttTitle:'#8 בריאות',ttBody:'טופס הצהרת בריאות 📋 🙏'},
+  {id:'timerDay',type:'step',label:'⏰ יום לפני השיעור',x:403,y:1175,w:142,timer:true},
+  {id:'n_t9',type:'wa',label:'#9 תזכורת',x:620,y:1167,w:100,link:'t9',ttTitle:'#9 תזכורת',ttBody:'מחר שיעור! 🙏'},
 
   // CLASSES
-  {id:'class1',type:'step',label:'🥋 שיעור #1',x:430,y:1125,w:105},
-  {id:'att1',type:'decision',label:'הגיע?',x:435,y:1195,w:85},
-  {id:'n_t10',type:'wa',label:'#10 מעקב\nשיעור 1',x:320,y:1280,w:120,link:'t10',ttTitle:'#10 מעקב 1',ttBody:'איך הרגשתם? 💪 🙏'},
-  {id:'n_t17a',type:'ghost',label:'#17a שילם\nולא הגיע',x:600,y:1280,w:110,link:'t17a',ttTitle:'#17a לא הגיע',ttBody:'הכל בסדר? 🙏'},
-  {id:'class2',type:'step',label:'🥋 שיעור #2',x:335,y:1370,w:105},
-  {id:'att2',type:'decision',label:'הגיע?',x:340,y:1435,w:85},
-  {id:'n_t11',type:'wa',label:'#11 ערך\nשיעור 2',x:225,y:1520,w:110,link:'t11',ttTitle:'#11 ערך 2',ttBody:'שיעור שני — יפה! 💪 🙏'},
-  {id:'n_t17b_2',type:'ghost',label:'#17b נעלם',x:500,y:1520,w:90,link:'t17b'},
-  {id:'class3',type:'step',label:'🥋 שיעור #3',x:240,y:1610,w:105},
-  {id:'att3',type:'decision',label:'הגיע?',x:245,y:1675,w:85},
-  {id:'n_t12',type:'wa',label:'#12 הרשמה\nמבוגר/ת',x:100,y:1760,w:115,link:'t12',lane:'adult',ttTitle:'#12 הרשמה מבוגר',ttBody:'כל הכבוד! 🙌\n450₪/חודש 🙏'},
-  {id:'n_t13',type:'wa',label:'#13 הרשמה\nהורה',x:265,y:1760,w:110,link:'t13',lane:'parent',ttTitle:'#13 הרשמה הורה',ttBody:'[שם] סיים/ה 3 היכרות! 🙌 🙏'},
-  {id:'n_t17b_3',type:'ghost',label:'#17b נעלם',x:440,y:1760,w:90,link:'t17b'},
+  {id:'class1',type:'step',label:'🥋 שיעור #1',x:430,y:1265,w:108,major:true},
+  {id:'att1',type:'decision',label:'הגיע?',x:438,y:1345,w:88},
+  {id:'n_t10',type:'wa',label:'#10 מעקב\nשיעור 1',x:320,y:1435,w:122,link:'t10',ttTitle:'#10 מעקב 1',ttBody:'איך הרגשתם? 💪 🙏'},
+  {id:'n_t17a',type:'ghost',label:'#17a שילם\nולא הגיע',x:610,y:1435,w:112,link:'t17a',ttTitle:'#17a לא הגיע',ttBody:'הכל בסדר? 🙏'},
+  {id:'class2',type:'step',label:'🥋 שיעור #2',x:335,y:1535,w:108},
+  {id:'att2',type:'decision',label:'הגיע?',x:343,y:1610,w:88},
+  {id:'n_t11',type:'wa',label:'#11 ערך\nשיעור 2',x:225,y:1700,w:112,link:'t11',ttTitle:'#11 ערך 2',ttBody:'שיעור שני — יפה! 💪 🙏'},
+  {id:'n_t17b_2',type:'ghost',label:'#17b נעלם',x:508,y:1700,w:92,link:'t17b'},
+  {id:'class3',type:'step',label:'🥋 שיעור #3',x:240,y:1800,w:108,major:true},
+  {id:'att3',type:'decision',label:'הגיע?',x:248,y:1878,w:88},
+  {id:'n_t12',type:'wa',label:'#12 הרשמה\nמבוגר/ת',x:100,y:1968,w:118,link:'t12',lane:'adult',ttTitle:'#12 הרשמה מבוגר',ttBody:'כל הכבוד! 🙌 450₪/חודש 🙏'},
+  {id:'n_t13',type:'wa',label:'#13 הרשמה\nהורה',x:270,y:1968,w:112,link:'t13',lane:'parent',ttTitle:'#13 הרשמה הורה',ttBody:'[שם] סיים/ה 3 היכרות! 🙌 🙏'},
+  {id:'n_t17b_3',type:'ghost',label:'#17b נעלם',x:448,y:1968,w:92,link:'t17b'},
 
   // ENROLLMENT
-  {id:'enrollQ',type:'decision',label:'החלטה?',x:195,y:1855,w:95},
-  {id:'enrolled',type:'step',label:'✅ נרשם!',x:90,y:1940,w:95},
-  {id:'n_t18',type:'wa',label:'#18 מתלבט',x:245,y:1940,w:100,link:'t18',ttTitle:'#18 מתלבט',ttBody:'לגמרי מובן 🙏 💪'},
-  {id:'n_t17b_f',type:'ghost',label:'#17b נעלם',x:405,y:1940,w:90,link:'t17b'},
-  {id:'whoEnroll',type:'decision',label:'מי?',x:95,y:2020,w:80},
-  {id:'n_t14',type:'wa',label:'#14 ברוכים\nהבאים (מבוגר)',x:10,y:2105,w:130,link:'t14',lane:'adult',ttTitle:'#14 ברוכים הבאים',ttBody:'ברוכים הבאים! 🙌🔥 🙏'},
-  {id:'n_t15',type:'wa',label:'#15 ברוכים\nהבאים (הורה)',x:185,y:2105,w:130,link:'t15',lane:'parent',ttTitle:'#15 ברוכים הבאים',ttBody:'ברוכים הבאים! 🙌🔥 🙏'},
-  {id:'wait23w',type:'step',label:'⏰ 2-3 שבועות',x:115,y:2195,w:110,timer:true},
-  {id:'n_t16',type:'wa',label:'#16 חבר↔חבר',x:290,y:2187,w:110,link:'t16',ttTitle:'#16 חבר מביא חבר',ttBody:'חבר מביא חבר! 🎁 50% 🙏'},
-  {id:'done',type:'end',label:'🎉 חבר פעיל!',x:130,y:2280,w:105},
+  {id:'enrollQ',type:'decision',label:'החלטה?',x:200,y:2068,w:98},
+  {id:'enrolled',type:'step',label:'✅ נרשם!',x:92,y:2155,w:98,major:true},
+  {id:'n_t18',type:'wa',label:'#18 מתלבט',x:250,y:2155,w:102,link:'t18',ttTitle:'#18 מתלבט',ttBody:'לגמרי מובן 🙏 💪'},
+  {id:'n_t17b_f',type:'ghost',label:'#17b נעלם',x:418,y:2155,w:92,link:'t17b'},
+  {id:'whoEnroll',type:'decision',label:'מי?',x:98,y:2245,w:82},
+  {id:'n_t14',type:'wa',label:'#14 ברוכים\nהבאים (מבוגר)',x:12,y:2335,w:132,link:'t14',lane:'adult',ttTitle:'#14 ברוכים הבאים',ttBody:'ברוכים הבאים! 🙌🔥 🙏'},
+  {id:'n_t15',type:'wa',label:'#15 ברוכים\nהבאים (הורה)',x:190,y:2335,w:132,link:'t15',lane:'parent',ttTitle:'#15 ברוכים הבאים',ttBody:'ברוכים הבאים! 🙌🔥 🙏'},
+  {id:'wait23w',type:'step',label:'⏰ 2-3 שבועות',x:118,y:2430,w:112,timer:true},
+  {id:'n_t16',type:'wa',label:'#16 חבר↔חבר',x:298,y:2422,w:112,link:'t16',ttTitle:'#16 חבר מביא חבר',ttBody:'חבר מביא חבר! 🎁 50% 🙏'},
+  {id:'done',type:'end',label:'🎉 חבר פעיל!',x:132,y:2530,w:108},
 ];
 
+// Edges with explicit anchor assignments to avoid crossings
 const DEFAULT_EDGES=[
-  // Entry → sources (no decision)
-  {from:'entry',to:'widget',label:'ווידג׳ט'},{from:'entry',to:'direct',label:'פנייה ישירה'},
-  // Widget
-  {from:'widget',to:'wPaid',label:'שילם ✅'},{from:'widget',to:'wNoPay',label:'לא שילם'},
-  // No "תגובה?" — wNoPay branches directly
-  {from:'wNoPay',to:'wCallback',label:'ביקש שנחזור'},{from:'wNoPay',to:'wAbandoned',label:'נטש'},
+  {from:'entry',to:'widget',fromAnchor:'b1',toAnchor:'t2',label:'ווידג׳ט'},
+  {from:'entry',to:'direct',fromAnchor:'b2',toAnchor:'t1',label:'פנייה ישירה'},
+  // Widget: b1→wPaid, b2→wNoPay (distributed on bottom face)
+  {from:'widget',to:'wPaid',fromAnchor:'b1',toAnchor:'t1',label:'שילם ✅'},
+  {from:'widget',to:'wNoPay',fromAnchor:'b2',toAnchor:'t1',label:'לא שילם'},
+  // wNoPay: b1→wCallback, b2→wAbandoned
+  {from:'wNoPay',to:'wCallback',fromAnchor:'b1',toAnchor:'t2',label:'ביקש שנחזור'},
+  {from:'wNoPay',to:'wAbandoned',fromAnchor:'b2',toAnchor:'t1',label:'נטש'},
   {from:'wCallback',to:'n_t1'},{from:'wAbandoned',to:'n_t19'},
-  {from:'wPaid',to:'payment',style:'dashed',label:'→ שלחו #6 המתאים'},
-  {from:'n_t1',to:'details',style:'dashed',label:'מגיב ⟶'},{from:'n_t19',to:'details',style:'dashed',label:'מגיב ⟶'},
-  // Direct → #2/#3 directly (no "מי פנה?")
-  {from:'direct',to:'n_t2',label:'מבוגר',lane:'adult'},{from:'direct',to:'n_t3',label:'הורה',lane:'parent'},
-  {from:'n_t2',to:'details',style:'dashed',label:'מעוניין ⟶',lane:'adult'},
-  {from:'n_t3',to:'details',style:'dashed',label:'מעוניין ⟶',lane:'parent'},
-  // Details chains
-  {from:'details',to:'n_t4a',fromAnchor:'bl',toAnchor:'t1'},
+  {from:'wPaid',to:'payment',style:'dashed',fromAnchor:'b1',toAnchor:'l2',label:'→ שלחו #6 המתאים'},
+  // #1/#19 → details: route to RIGHT side of details to avoid crossing over #19
+  {from:'n_t1',to:'details',style:'dashed',fromAnchor:'b2',toAnchor:'l1',label:'מגיב ⟶'},
+  {from:'n_t19',to:'details',style:'dashed',fromAnchor:'b1',toAnchor:'l2',label:'מגיב ⟶'},
+  // Direct: b1→#2(adult), b2→#3(parent) — distributed
+  {from:'direct',to:'n_t2',fromAnchor:'b1',toAnchor:'t2',label:'מבוגר',lane:'adult'},
+  {from:'direct',to:'n_t3',fromAnchor:'b2',toAnchor:'t1',label:'הורה',lane:'parent'},
+  // #2/#3 → details: route to right side to avoid crossing
+  {from:'n_t2',to:'details',style:'dashed',fromAnchor:'b1',toAnchor:'r1',label:'מעוניין ⟶',lane:'adult'},
+  {from:'n_t3',to:'details',style:'dashed',fromAnchor:'b1',toAnchor:'r2',label:'מעוניין ⟶',lane:'parent'},
+  // Details: chain + continuation. Main path b2→payment, chain b1→4a
+  {from:'details',to:'n_t4a',fromAnchor:'b1',toAnchor:'t1',main:true},
   {from:'n_t4a',to:'n_t4b',fromAnchor:'l1',toAnchor:'r1',noHead:true},
   {from:'n_t4b',to:'n_t4c',fromAnchor:'l1',toAnchor:'r1',noHead:true},
   {from:'n_t4c',to:'n_t4d',fromAnchor:'l1',toAnchor:'r1',noHead:true},
   {from:'n_t4d',to:'n_t4e',fromAnchor:'l1',toAnchor:'r1',noHead:true},
   {from:'n_t4e',to:'n_t4f',fromAnchor:'l1',toAnchor:'r1',noHead:true},
   {from:'n_t4f',to:'n_t4g',fromAnchor:'l1',toAnchor:'r1',noHead:true},
-  {from:'details',to:'payment',fromAnchor:'b2',toAnchor:'t2'},
+  {from:'details',to:'payment',fromAnchor:'b2',toAnchor:'t2',main:true},
   {from:'details',to:'noResp1',fromAnchor:'r2',toAnchor:'t1',label:'אין תגובה'},
-  // Payment chains
-  {from:'payment',to:'n_t6a',fromAnchor:'bl',toAnchor:'t1'},
+  // Payment chain
+  {from:'payment',to:'n_t6a',fromAnchor:'b1',toAnchor:'t1'},
   {from:'n_t6a',to:'n_t6b',fromAnchor:'l1',toAnchor:'r1',noHead:true},
   {from:'n_t6b',to:'n_t6c',fromAnchor:'l1',toAnchor:'r1',noHead:true},
   {from:'n_t6c',to:'n_t6d',fromAnchor:'l1',toAnchor:'r1',noHead:true},
   {from:'n_t6d',to:'n_t6e',fromAnchor:'l1',toAnchor:'r1',noHead:true},
   {from:'n_t6e',to:'n_t6f',fromAnchor:'l1',toAnchor:'r1',noHead:true},
   {from:'n_t6f',to:'n_t6g',fromAnchor:'l1',toAnchor:'r1',noHead:true},
-  {from:'payment',to:'timerHealth',fromAnchor:'b2',toAnchor:'t2'},
+  {from:'payment',to:'timerHealth',fromAnchor:'b2',toAnchor:'t2',main:true},
   // Timers
   {from:'timerHealth',to:'n_t8',fromAnchor:'r1',toAnchor:'l1'},
-  {from:'timerHealth',to:'timerDay'},
+  {from:'timerHealth',to:'timerDay',main:true},
   {from:'timerDay',to:'n_t9',fromAnchor:'r1',toAnchor:'l1'},
-  {from:'timerDay',to:'class1'},
+  {from:'timerDay',to:'class1',main:true},
   // Classes
-  {from:'class1',to:'att1'},{from:'att1',to:'n_t10',label:'✅'},{from:'att1',to:'n_t17a',label:'❌'},
-  {from:'n_t10',to:'class2'},{from:'class2',to:'att2'},
-  {from:'att2',to:'n_t11',label:'✅'},{from:'att2',to:'n_t17b_2',label:'❌'},
-  {from:'n_t11',to:'class3'},{from:'class3',to:'att3'},
-  {from:'att3',to:'n_t12',label:'✅ מבוגר',lane:'adult'},
-  {from:'att3',to:'n_t13',label:'✅ הורה',lane:'parent'},
-  {from:'att3',to:'n_t17b_3',label:'❌'},
-  {from:'n_t12',to:'enrollQ'},{from:'n_t13',to:'enrollQ'},
-  {from:'enrollQ',to:'enrolled',label:'✅'},{from:'enrollQ',to:'n_t18',label:'🤔'},
-  {from:'enrollQ',to:'n_t17b_f',label:'👻'},
-  {from:'enrolled',to:'whoEnroll'},
-  {from:'whoEnroll',to:'n_t14',label:'מבוגר',lane:'adult'},
-  {from:'whoEnroll',to:'n_t15',label:'הורה',lane:'parent'},
-  {from:'n_t14',to:'wait23w'},{from:'n_t15',to:'wait23w'},
+  {from:'class1',to:'att1',main:true},
+  {from:'att1',to:'n_t10',fromAnchor:'b1',toAnchor:'t2',label:'✅'},
+  {from:'att1',to:'n_t17a',fromAnchor:'b2',toAnchor:'t1',label:'❌'},
+  {from:'n_t10',to:'class2',main:true},{from:'class2',to:'att2',main:true},
+  {from:'att2',to:'n_t11',fromAnchor:'b1',toAnchor:'t2',label:'✅'},
+  {from:'att2',to:'n_t17b_2',fromAnchor:'b2',toAnchor:'t1',label:'❌'},
+  {from:'n_t11',to:'class3',main:true},{from:'class3',to:'att3',main:true},
+  {from:'att3',to:'n_t12',fromAnchor:'b1',toAnchor:'t2',label:'✅ מבוגר',lane:'adult'},
+  {from:'att3',to:'n_t13',fromAnchor:'b2',toAnchor:'t1',label:'✅ הורה',lane:'parent'},
+  {from:'att3',to:'n_t17b_3',fromAnchor:'r1',toAnchor:'t1',label:'❌'},
+  {from:'n_t12',to:'enrollQ',fromAnchor:'b1',toAnchor:'t1'},
+  {from:'n_t13',to:'enrollQ',fromAnchor:'b1',toAnchor:'t2'},
+  {from:'enrollQ',to:'enrolled',fromAnchor:'b1',toAnchor:'t2',label:'✅',main:true},
+  {from:'enrollQ',to:'n_t18',fromAnchor:'b2',toAnchor:'t1',label:'🤔'},
+  {from:'enrollQ',to:'n_t17b_f',fromAnchor:'r1',toAnchor:'t1',label:'👻'},
+  {from:'enrolled',to:'whoEnroll',main:true},
+  {from:'whoEnroll',to:'n_t14',fromAnchor:'b1',toAnchor:'t2',label:'מבוגר',lane:'adult'},
+  {from:'whoEnroll',to:'n_t15',fromAnchor:'b2',toAnchor:'t1',label:'הורה',lane:'parent'},
+  {from:'n_t14',to:'wait23w',fromAnchor:'b1',toAnchor:'t1'},
+  {from:'n_t15',to:'wait23w',fromAnchor:'b1',toAnchor:'t2'},
   {from:'wait23w',to:'n_t16',fromAnchor:'r1',toAnchor:'l1'},
-  {from:'wait23w',to:'done'},
+  {from:'wait23w',to:'done',main:true},
 ];
 
 // STATE
 let NODES=JSON.parse(JSON.stringify(DEFAULT_NODES)),EDGES=JSON.parse(JSON.stringify(DEFAULT_EDGES));
 const NM={};let zoom=1,snapOn=true,GRID=10;
 let isDrag=false,dragIt=null,dragOff={x:0,y:0},dragSt={x:0,y:0},moved=false;
-let selE=-1,selN=null,editingNode=null,clipboard=null;
+let selE=-1,selN=null,editN=null,clip=null;
 let drawA=null,dragH=null;
 let undoS=[],redoS=[],MU=50,nxtId=100;
 const inner=document.getElementById('canvasInner'),scr=document.getElementById('canvasScroll');
-const svg=document.getElementById('canvasSvg'),atb=document.getElementById('arrowToolbar'),ctx=document.getElementById('ctxMenu');
+const svg=document.getElementById('canvasSvg'),atb=document.getElementById('arrowToolbar'),ctxEl=document.getElementById('ctxMenu');
 function snap(v){return snapOn?Math.round(v/GRID)*GRID:v}
 
-// 8 ANCHORS: t1,t2,r1,r2,b1,b2,l1,l2,bl,br,tl,tr (but 8 main)
-// t1=33% top, t2=67% top, r1=33% right, r2=67% right, b1=33% bottom, b2=67% bottom, l1=33% left, l2=67% left
+// 8 ANCHORS
 const AN=['t1','t2','r1','r2','b1','b2','l1','l2'];
 function aPos(n,a){const w=n._w||140,h=n._h||30;
-  const m={t1:{x:n.x+w*.33,y:n.y},t2:{x:n.x+w*.67,y:n.y},
-           r1:{x:n.x+w,y:n.y+h*.33},r2:{x:n.x+w,y:n.y+h*.67},
-           b1:{x:n.x+w*.33,y:n.y+h},b2:{x:n.x+w*.67,y:n.y+h},
-           l1:{x:n.x,y:n.y+h*.33},l2:{x:n.x,y:n.y+h*.67},
-           // Compat fallbacks
-           top:{x:n.x+w/2,y:n.y},right:{x:n.x+w,y:n.y+h/2},bottom:{x:n.x+w/2,y:n.y+h},left:{x:n.x,y:n.y+h/2},
-           bl:{x:n.x+w*.25,y:n.y+h},br:{x:n.x+w*.75,y:n.y+h}};
-  return m[a]||m.b1;
-}
-function bestA(f,t){const fw=f._w||140,fh=f._h||30,tw=t._w||140,th=t._h||30;
-  const dx=(t.x+tw/2)-(f.x+fw/2),dy=(t.y+th/2)-(f.y+fh/2);
-  return Math.abs(dy)>Math.abs(dx)?(dy>0?{fA:'b1',tA:'t1'}:{fA:'t1',tA:'b1'}):(dx>0?{fA:'r1',tA:'l1'}:{fA:'l1',tA:'r1'})}
+  const m={t1:{x:n.x+w*.33,y:n.y},t2:{x:n.x+w*.67,y:n.y},r1:{x:n.x+w,y:n.y+h*.33},r2:{x:n.x+w,y:n.y+h*.67},b1:{x:n.x+w*.33,y:n.y+h},b2:{x:n.x+w*.67,y:n.y+h},l1:{x:n.x,y:n.y+h*.33},l2:{x:n.x,y:n.y+h*.67},bl:{x:n.x+w*.25,y:n.y+h},br:{x:n.x+w*.75,y:n.y+h}};
+  return m[a]||m.b1}
+function bestA(f,t){const fw=f._w||140,fh=f._h||30,tw=t._w||140,th=t._h||30;const dx=(t.x+tw/2)-(f.x+fw/2),dy=(t.y+th/2)-(f.y+fh/2);return Math.abs(dy)>Math.abs(dx)?(dy>0?{fA:'b1',tA:'t1'}:{fA:'t1',tA:'b1'}):(dx>0?{fA:'r1',tA:'l1'}:{fA:'l1',tA:'r1'})}
 function isV(a){return a&&(a[0]==='t'||a[0]==='b')}
-function orthoP(p1,a1,p2,a2,off){
-  const o=off||0,v1=isV(a1),v2=isV(a2);
-  if(v1&&v2){const m=(p1.y+p2.y)/2+o;return`M${p1.x},${p1.y} L${p1.x},${m} L${p2.x},${m} L${p2.x},${p2.y}`}
-  if(!v1&&!v2){const m=(p1.x+p2.x)/2+o;return`M${p1.x},${p1.y} L${m},${p1.y} L${m},${p2.y} L${p2.x},${p2.y}`}
-  if(v1)return`M${p1.x},${p1.y} L${p1.x},${p2.y} L${p2.x},${p2.y}`;
-  return`M${p1.x},${p1.y} L${p2.x},${p1.y} L${p2.x},${p2.y}`;
-}
-function edgeOff(i){const e=EDGES[i];if(!e)return 0;let fA=e.fromAnchor;if(!fA){const f=NM[e.from],t=NM[e.to];if(f&&t)fA=bestA(f,t).fA}const sibs=[];EDGES.forEach((o,j)=>{if(o.from!==e.from)return;let oA=o.fromAnchor;if(!oA){const f=NM[o.from],t=NM[o.to];if(f&&t)oA=bestA(f,t).fA}if(oA===fA)sibs.push(j)});if(sibs.length<=1)return 0;return(sibs.indexOf(i)-(sibs.length-1)/2)*10}
+function orthoP(p1,a1,p2,a2){const v1=isV(a1),v2=isV(a2);if(v1&&v2){const m=(p1.y+p2.y)/2;return`M${p1.x},${p1.y} L${p1.x},${m} L${p2.x},${m} L${p2.x},${p2.y}`}if(!v1&&!v2){const m=(p1.x+p2.x)/2;return`M${p1.x},${p1.y} L${m},${p1.y} L${m},${p2.y} L${p2.x},${p2.y}`}if(v1)return`M${p1.x},${p1.y} L${p1.x},${p2.y} L${p2.x},${p2.y}`;return`M${p1.x},${p1.y} L${p2.x},${p1.y} L${p2.x},${p2.y}`}
 
-// UNDO/REDO
+// UNDO
 function pushU(){undoS.push(gS());if(undoS.length>MU)undoS.shift();redoS=[];uUB()}
 function gS(){return{n:NODES.map(n=>({id:n.id,x:n.x,y:n.y,label:n.label})),e:JSON.parse(JSON.stringify(EDGES))}}
 function undo(){if(!undoS.length)return;redoS.push(gS());apS(undoS.pop());uUB()}
@@ -756,7 +753,7 @@ function apS(s){s.n.forEach(sv=>{const n=NM[sv.id];if(n){n.x=sv.x;n.y=sv.y;n.lab
 function uUB(){const u=document.getElementById('undoBtn'),r=document.getElementById('redoBtn');if(u)u.disabled=!undoS.length;if(r)r.disabled=!redoS.length}
 
 // STORAGE
-const SK='element-flow-v57';let svT;
+const SK='element-flow-v58';let svT;
 function dSv(){clearTimeout(svT);svT=setTimeout(sv,600)}
 function toast(t){const el=document.getElementById('saveToast');el.textContent=t||'💾';el.classList.add('show');setTimeout(()=>el.classList.remove('show'),1200)}
 function sv(){try{localStorage.setItem(SK,JSON.stringify({n:NODES.map(n=>({id:n.id,x:n.x,y:n.y,label:n.label})),e:EDGES}));toast()}catch(e){}}
@@ -766,13 +763,13 @@ function toggleSnap(){snapOn=!snapOn;document.getElementById('snapBtn').classLis
 
 // KEYBOARD
 document.addEventListener('keydown',function(e){
-  if(editingNode||e.target.tagName==='INPUT')return;
+  if(editN||e.target.tagName==='INPUT')return;
   if((e.ctrlKey||e.metaKey)&&e.key==='z'){e.preventDefault();undo()}
   if((e.ctrlKey||e.metaKey)&&(e.key==='y'||e.key==='Z')){e.preventDefault();redo()}
-  if((e.ctrlKey||e.metaKey)&&e.key==='c'&&selN){clipboard=JSON.parse(JSON.stringify(NM[selN]));toast('📋')}
-  if((e.ctrlKey||e.metaKey)&&e.key==='v'&&clipboard){pushU();const id='c_'+(nxtId++);const n={...clipboard,id,x:clipboard.x+30,y:clipboard.y+30};delete n._el;delete n._w;delete n._h;NODES.push(n);NM[id]=n;renderAll();dSv();selectN(id)}
+  if((e.ctrlKey||e.metaKey)&&e.key==='c'&&selN){clip=JSON.parse(JSON.stringify(NM[selN]));toast('📋')}
+  if((e.ctrlKey||e.metaKey)&&e.key==='v'&&clip){pushU();const id='c_'+(nxtId++);const n={...clip,id,x:clip.x+30,y:clip.y+30};delete n._el;delete n._w;delete n._h;NODES.push(n);NM[id]=n;renderAll();dSv();selectN(id)}
   if(e.key==='Delete'||e.key==='Backspace'){if(selN){e.preventDefault();delN(selN)}else if(selE>=0){e.preventDefault();delEdge()}}
-  if(e.key==='Escape'){if(editingNode)finishEdit();desel()}
+  if(e.key==='Escape'){if(editN)finishEdit();desel()}
 });
 
 // RENDER
@@ -784,6 +781,7 @@ function renderNodes(){
     const tc=n.type==='wa'?'fnode-wa':n.type==='decision'?'fnode-decision':n.type==='ghost'?'fnode-ghost':n.type==='end'?'fnode-end':n.type==='source'?'fnode-source':'fnode-step';
     const el=document.createElement('div');el.className=`fnode ${tc}`;
     if(n.timer)el.classList.add('is-timer');
+    if(n.major)el.classList.add('is-major');
     if(n.lane)el.classList.add('lane-'+n.lane);
     if(n.id===selN)el.classList.add('selected-node');
     el.id='fn_'+n.id;el.style.left=n.x+'px';el.style.top=n.y+'px';
@@ -792,13 +790,10 @@ function renderNodes(){
     if(n.type==='wa'){const ic=document.createElement('div');ic.className='wa-icon';ic.textContent='💬';el.appendChild(ic)}
     if((n.type==='wa'||n.type==='ghost')&&n.link){const cu=CU[n.link];if(cu){const b=document.createElement('div');b.className='cu-badge';b.style.background=cu.c;b.textContent='→ '+cu.l;el.appendChild(b)}}
     if(n.ttBody){el.setAttribute('data-tt-title',n.ttTitle);el.setAttribute('data-tt-body',n.ttBody)}
-    if(n.link)el.addEventListener('click',()=>{if(!isDrag&&!drawA&&!editingNode)goTo(n.link)});
-    // 8 anchor points
-    AN.forEach(a=>{const d=document.createElement('div');d.className='anchor-point';d.dataset.anchor=a;d.dataset.nodeId=n.id;
-      const p={t1:{l:'33%',t:'0'},t2:{l:'67%',t:'0'},r1:{l:'100%',t:'33%'},r2:{l:'100%',t:'67%'},b1:{l:'33%',t:'100%'},b2:{l:'67%',t:'100%'},l1:{l:'0',t:'33%'},l2:{l:'0',t:'67%'}};
-      d.style.left=p[a].l;d.style.top=p[a].t;d.addEventListener('mousedown',onAncDown);el.appendChild(d)});
+    if(n.link)el.addEventListener('click',()=>{if(!isDrag&&!drawA&&!editN)goTo(n.link)});
+    AN.forEach(a=>{const d=document.createElement('div');d.className='anchor-point';d.dataset.anchor=a;d.dataset.nodeId=n.id;const p={t1:{l:'33%',t:'0'},t2:{l:'67%',t:'0'},r1:{l:'100%',t:'33%'},r2:{l:'100%',t:'67%'},b1:{l:'33%',t:'100%'},b2:{l:'67%',t:'100%'},l1:{l:'0',t:'33%'},l2:{l:'0',t:'67%'}};d.style.left=p[a].l;d.style.top=p[a].t;d.addEventListener('mousedown',onAncDown);el.appendChild(d)});
     el.addEventListener('mousedown',onNDown);el.addEventListener('touchstart',onNTouch,{passive:false});
-    el.addEventListener('dblclick',onNDblClick);el.addEventListener('contextmenu',onNCtx);
+    el.addEventListener('dblclick',onNDbl);el.addEventListener('contextmenu',onNCtx);
     inner.appendChild(el);n._el=el;n._w=el.offsetWidth;n._h=el.offsetHeight;
   });
 }
@@ -810,29 +805,37 @@ function renderEdges(){
     const f=NM[e.from],t=NM[e.to];if(!f||!t)return;
     let fA=e.fromAnchor,tA=e.toAnchor;
     if(!fA||!tA){const au=bestA(f,t);fA=fA||au.fA;tA=tA||au.tA}
-    const p1=aPos(f,fA),p2=aPos(t,tA),off=edgeOff(i);
-    const d=orthoP(p1,fA,p2,tA,off);
+    const p1=aPos(f,fA),p2=aPos(t,tA);
+    const d=orthoP(p1,fA,p2,tA);
     const dash=e.style==='dashed'?'stroke-dasharray="6,4"':'';
-    const col=e.lane?LC[e.lane]:'#94a3b8';const sel=i===selE;const nh=e.noHead;
-    const mk=nh?'':(e.lane?`marker-end="url(#ah_${e.lane})"`:'marker-end="url(#ah_def)"');
+    const nh=e.noHead;const sel=i===selE;const isMain=e.main;
+    const col=e.lane?LC[e.lane]:(isMain?'#475569':'#94a3b8');
+    const mk=nh?'':(e.lane?`marker-end="url(#ah_${e.lane})"`:(isMain?'marker-end="url(#ah_main)"':'marker-end="url(#ah_def)"'));
+    // Hit area
     paths+=`<path d="${d}" fill="none" stroke="transparent" stroke-width="16" style="cursor:pointer;pointer-events:stroke" data-eidx="${i}"/>`;
     if(sel){paths+=`<path d="${d}" fill="none" stroke="#3b82f6" stroke-width="3.5" stroke-dasharray="8,4" ${nh?'':'marker-end="url(#ah_sel)"'} style="pointer-events:none"><animate attributeName="stroke-dashoffset" from="24" to="0" dur=".8s" repeatCount="indefinite"/></path>`}
-    else{const sw=nh?1.2:1.5;const xd=nh?'stroke-dasharray="4,3"':'';paths+=`<path d="${d}" fill="none" stroke="${col}" stroke-width="${sw}" ${dash} ${xd} ${mk} style="pointer-events:none"/>`}
-    if(e.label){const lbl=document.createElement('div');lbl.className='edge-label';if(e.lane)lbl.style.color=LC[e.lane];lbl.style.left=((p1.x+p2.x)/2+off)+'px';lbl.style.top=((p1.y+p2.y)/2-8)+'px';lbl.style.transform='translate(-50%,-50%)';lbl.textContent=e.label;lbl.addEventListener('dblclick',()=>editEdgeLabel(i));inner.appendChild(lbl)}
+    else{const sw=nh?1:(isMain?2.2:1.4);const xd=nh?'stroke-dasharray="4,3"':'';paths+=`<path d="${d}" fill="none" stroke="${col}" stroke-width="${sw}" ${dash} ${xd} ${mk} style="pointer-events:none"/>`}
+    if(e.label){const lbl=document.createElement('div');lbl.className='edge-label';if(e.lane)lbl.style.color=LC[e.lane];if(isMain)lbl.style.fontWeight='700';lbl.style.left=((p1.x+p2.x)/2)+'px';lbl.style.top=((p1.y+p2.y)/2-8)+'px';lbl.style.transform='translate(-50%,-50%)';lbl.textContent=e.label;lbl.addEventListener('dblclick',()=>editEL(i));inner.appendChild(lbl)}
     if(sel){inner.appendChild(mkH(p1,'from',i));inner.appendChild(mkH(p2,'to',i))}
   });
-  let maxX=950,maxY=850;NODES.forEach(n=>{maxX=Math.max(maxX,n.x+(n._w||150)+60);maxY=Math.max(maxY,n.y+(n._h||40)+80)});
+  let maxX=960,maxY=860;NODES.forEach(n=>{maxX=Math.max(maxX,n.x+(n._w||150)+60);maxY=Math.max(maxY,n.y+(n._h||40)+80)});
   inner.style.width=maxX+'px';inner.style.height=maxY+'px';svg.setAttribute('width',maxX);svg.setAttribute('height',maxY);
-  svg.innerHTML=`<defs><marker id="ah_def" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#94a3b8"/></marker><marker id="ah_adult" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="${LC.adult}"/></marker><marker id="ah_parent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="${LC.parent}"/></marker><marker id="ah_sel" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#3b82f6"/></marker></defs>`+paths;
+  svg.innerHTML=`<defs>
+    <marker id="ah_def" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#94a3b8"/></marker>
+    <marker id="ah_main" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto"><polygon points="0 0,9 3.5,0 7" fill="#475569"/></marker>
+    <marker id="ah_adult" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="${LC.adult}"/></marker>
+    <marker id="ah_parent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="${LC.parent}"/></marker>
+    <marker id="ah_sel" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#3b82f6"/></marker>
+  </defs>`+paths;
   if(drawA?.tempPath){const tp=document.createElementNS('http://www.w3.org/2000/svg','path');tp.setAttribute('d',drawA.tempPath);tp.setAttribute('fill','none');tp.setAttribute('stroke','#25D366');tp.setAttribute('stroke-width','2');tp.setAttribute('stroke-dasharray','4,4');tp.style.pointerEvents='none';svg.appendChild(tp)}
 }
 function mkH(p,end,i){const h=document.createElement('div');h.className='edge-handle';h.style.left=p.x+'px';h.style.top=p.y+'px';h.dataset.end=end;h.dataset.edgeIdx=i;h.addEventListener('mousedown',onHDown);return h}
 
-// INLINE EDIT (double-click)
-function onNDblClick(e){e.stopPropagation();e.preventDefault();const id=e.currentTarget.id.replace('fn_','');startEdit(id)}
-function startEdit(id){if(editingNode)finishEdit();const n=NM[id];if(!n||!n._el)return;editingNode=id;const txt=n._el.querySelector('.node-text');if(!txt)return;n._el.classList.add('editing');txt.contentEditable='true';txt.focus();const sel=window.getSelection();sel.selectAllChildren(txt)}
-function finishEdit(){if(!editingNode)return;const n=NM[editingNode];if(!n||!n._el)return;pushU();const txt=n._el.querySelector('.node-text');if(txt){n.label=txt.innerText.trim();txt.contentEditable='false'}n._el.classList.remove('editing');editingNode=null;dSv();renderAll()}
-function editEdgeLabel(i){const e=EDGES[i];const v=prompt('תווית החץ:',e.label||'');if(v!==null){pushU();e.label=v;dSv();renderEdges()}}
+// INLINE EDIT
+function onNDbl(e){e.stopPropagation();e.preventDefault();startEdit(e.currentTarget.id.replace('fn_',''))}
+function startEdit(id){if(editN)finishEdit();const n=NM[id];if(!n||!n._el)return;editN=id;const txt=n._el.querySelector('.node-text');if(!txt)return;n._el.classList.add('editing');txt.contentEditable='true';txt.focus();window.getSelection().selectAllChildren(txt)}
+function finishEdit(){if(!editN)return;const n=NM[editN];if(!n||!n._el)return;pushU();const txt=n._el.querySelector('.node-text');if(txt){n.label=txt.innerText.trim();txt.contentEditable='false'}n._el.classList.remove('editing');editN=null;dSv();renderAll()}
+function editEL(i){const e=EDGES[i];const v=prompt('תווית:',e.label||'');if(v!==null){pushU();e.label=v;dSv();renderEdges()}}
 
 // EDGE SELECT
 svg.style.pointerEvents='auto';
@@ -840,10 +843,9 @@ svg.addEventListener('click',function(e){const h=e.target.closest('[data-eidx]')
 scr.addEventListener('click',function(e){if(!e.target.closest('[data-eidx]')&&!e.target.closest('.anchor-point')&&!e.target.closest('.fnode')&&!e.target.closest('.edge-handle')&&!e.target.closest('.arrow-toolbar'))desel()});
 function selectE(i){selE=i;selN=null;renderAll();const e=EDGES[i];if(!e)return;const f=NM[e.from],t=NM[e.to];if(!f||!t)return;let fA=e.fromAnchor,tA=e.toAnchor;if(!fA||!tA){const au=bestA(f,t);fA=fA||au.fA;tA=tA||au.tA}const p1=aPos(f,fA),p2=aPos(t,tA);const mx=(p1.x+p2.x)/2,my=(p1.y+p2.y)/2;const sr=scr.getBoundingClientRect();atb.style.left=(mx*zoom-scr.scrollLeft+sr.left)+'px';atb.style.top=(my*zoom-scr.scrollTop+sr.top-40)+'px';atb.classList.add('visible')}
 function selectN(id){selN=id;selE=-1;atb.classList.remove('visible');renderAll()}
-function desel(){selE=-1;selN=null;atb.classList.remove('visible');ctx.classList.remove('visible');renderAll()}
+function desel(){selE=-1;selN=null;atb.classList.remove('visible');ctxEl.classList.remove('visible');renderAll()}
 function flipSelectedEdge(){if(selE<0)return;pushU();const e=EDGES[selE];[e.from,e.to]=[e.to,e.from];[e.fromAnchor,e.toAnchor]=[e.toAnchor,e.fromAnchor];dSv();selectE(selE)}
 function deleteSelectedEdge(){if(selE<0)return;pushU();EDGES.splice(selE,1);desel();dSv()}
-// Compat aliases
 function delEdge(){deleteSelectedEdge()}
 
 // HANDLE DRAG
@@ -851,29 +853,29 @@ function onHDown(e){e.stopPropagation();e.preventDefault();const end=e.target.da
 function onHMove(e){if(!dragH)return;const sr=scr.getBoundingClientRect();const mx=(e.clientX-sr.left+scr.scrollLeft)/zoom,my=(e.clientY-sr.top+scr.scrollTop)/zoom;let best=null,bestD=Infinity;NODES.forEach(n=>{AN.forEach(a=>{const p=aPos(n,a);const d=Math.hypot(p.x-mx,p.y-my);if(d<bestD){bestD=d;best={nid:n.id,a}}})});const edge=EDGES[dragH.idx];if(best&&bestD<50){if(dragH.end==='from'){edge.from=best.nid;edge.fromAnchor=best.a}else{edge.to=best.nid;edge.toAnchor=best.a}}renderEdges();uMM()}
 function onHUp(){document.removeEventListener('mousemove',onHMove);document.removeEventListener('mouseup',onHUp);const edge=EDGES[dragH?.idx];if(edge&&edge.from===edge.to){EDGES[dragH.idx]=dragH.orig;undoS.pop()}dragH=null;dSv();renderAll();if(selE>=0)selectE(selE)}
 
-// NODE ADD/DELETE/DUPLICATE
+// NODE ADD/DELETE
 function addN(type,x,y){pushU();const id='c_'+(nxtId++);const labels={step:'🔹 שלב',decision:'החלטה?',wa:'💬 הודעה',ghost:'⛔ נעלם',source:'📍 מקור'};NODES.push({id,type,label:labels[type]||'צומת',x:snap(x),y:snap(y),w:120});NM[id]=NODES[NODES.length-1];renderAll();dSv();selectN(id)}
 function delN(id){const i=NODES.findIndex(n=>n.id===id);if(i<0)return;pushU();EDGES=EDGES.filter(e=>e.from!==id&&e.to!==id);NODES.splice(i,1);delete NM[id];if(selN===id)selN=null;renderAll();dSv()}
 function dupN(id){const n=NM[id];if(!n)return;pushU();const nid='c_'+(nxtId++);const dn={...JSON.parse(JSON.stringify(n)),id:nid,x:n.x+30,y:n.y+30};delete dn._el;delete dn._w;delete dn._h;NODES.push(dn);NM[nid]=dn;renderAll();dSv();selectN(nid)}
 
 // CONTEXT MENUS
-function onNCtx(e){e.preventDefault();e.stopPropagation();const id=e.currentTarget.id.replace('fn_','');selectN(id);showCtx(e.clientX,e.clientY,[{i:'✏️',l:'ערוך טקסט',a:()=>startEdit(id)},{i:'📋',l:'שכפל',a:()=>dupN(id)},{i:'🗑️',l:'מחק',a:()=>delN(id),d:true}])}
-scr.addEventListener('contextmenu',function(e){if(e.target.closest('.fnode'))return;e.preventDefault();const sr=scr.getBoundingClientRect();const cx=(e.clientX-sr.left+scr.scrollLeft)/zoom,cy=(e.clientY-sr.top+scr.scrollTop)/zoom;showCtx(e.clientX,e.clientY,[{i:'🔹',l:'שלב',a:()=>addN('step',cx,cy)},{i:'📍',l:'מקור/ערוץ',a:()=>addN('source',cx,cy)},{i:'◇',l:'החלטה',a:()=>addN('decision',cx,cy)},{i:'💬',l:'הודעת WA',a:()=>addN('wa',cx,cy)},{i:'⛔',l:'נעלם',a:()=>addN('ghost',cx,cy)}])});
-function showCtx(x,y,items){ctx.innerHTML='';items.forEach(it=>{const b=document.createElement('button');b.innerHTML=it.i+' '+it.l;if(it.d)b.classList.add('danger');b.onclick=()=>{ctx.classList.remove('visible');it.a()};ctx.appendChild(b)});ctx.style.left=x+'px';ctx.style.top=y+'px';ctx.classList.add('visible')}
-document.addEventListener('click',()=>ctx.classList.remove('visible'));
+function onNCtx(e){e.preventDefault();e.stopPropagation();const id=e.currentTarget.id.replace('fn_','');selectN(id);showCtx(e.clientX,e.clientY,[{i:'✏️',l:'ערוך',a:()=>startEdit(id)},{i:'📋',l:'שכפל',a:()=>dupN(id)},{i:'🗑️',l:'מחק',a:()=>delN(id),d:true}])}
+scr.addEventListener('contextmenu',function(e){if(e.target.closest('.fnode'))return;e.preventDefault();const sr=scr.getBoundingClientRect();const cx=(e.clientX-sr.left+scr.scrollLeft)/zoom,cy=(e.clientY-sr.top+scr.scrollTop)/zoom;showCtx(e.clientX,e.clientY,[{i:'🔹',l:'שלב',a:()=>addN('step',cx,cy)},{i:'📍',l:'מקור',a:()=>addN('source',cx,cy)},{i:'◇',l:'החלטה',a:()=>addN('decision',cx,cy)},{i:'💬',l:'הודעת WA',a:()=>addN('wa',cx,cy)},{i:'⛔',l:'נעלם',a:()=>addN('ghost',cx,cy)}])});
+function showCtx(x,y,items){ctxEl.innerHTML='';items.forEach(it=>{const b=document.createElement('button');b.innerHTML=it.i+' '+it.l;if(it.d)b.classList.add('danger');b.onclick=()=>{ctxEl.classList.remove('visible');it.a()};ctxEl.appendChild(b)});ctxEl.style.left=x+'px';ctxEl.style.top=y+'px';ctxEl.classList.add('visible')}
+document.addEventListener('click',()=>ctxEl.classList.remove('visible'));
 
-// ANCHOR → NEW ARROW
+// ANCHOR → ARROW
 function onAncDown(e){e.stopPropagation();e.preventDefault();const a=e.target.dataset.anchor,nid=e.target.dataset.nodeId,node=NM[nid];if(!node)return;e.target.classList.add('active');drawA={fn:node,fa:a,tempPath:null,el:e.target};document.addEventListener('mousemove',onAMove);document.addEventListener('mouseup',onAUp)}
-function onAMove(e){if(!drawA)return;const sr=scr.getBoundingClientRect();const mx=(e.clientX-sr.left+scr.scrollLeft)/zoom,my=(e.clientY-sr.top+scr.scrollTop)/zoom;const p1=aPos(drawA.fn,drawA.fa);drawA.tempPath=`M${p1.x},${p1.y} L${mx},${my}`;renderEdges()}
+function onAMove(e){if(!drawA)return;const sr=scr.getBoundingClientRect();const mx=(e.clientX-sr.left+scr.scrollLeft)/zoom,my=(e.clientY-sr.top+scr.scrollTop)/zoom;drawA.tempPath=`M${aPos(drawA.fn,drawA.fa).x},${aPos(drawA.fn,drawA.fa).y} L${mx},${my}`;renderEdges()}
 function onAUp(e){document.removeEventListener('mousemove',onAMove);document.removeEventListener('mouseup',onAUp);if(drawA?.el)drawA.el.classList.remove('active');const tgt=document.elementFromPoint(e.clientX,e.clientY);if(tgt?.classList.contains('anchor-point')){const tid=tgt.dataset.nodeId,ta=tgt.dataset.anchor;if(tid&&tid!==drawA.fn.id){pushU();EDGES.push({from:drawA.fn.id,to:tid,fromAnchor:drawA.fa,toAnchor:ta});dSv()}}drawA=null;renderEdges();uMM()}
 
 // NODE DRAG
-function onNDown(e){if(e.target.classList.contains('anchor-point')||e.target.classList.contains('edge-handle'))return;if(e.button!==0||editingNode)return;e.stopPropagation();const el=e.currentTarget,nid=el.id.replace('fn_',''),node=NM[nid];if(!node)return;selectN(nid);dragIt={ref:node};moved=false;const sr=scr.getBoundingClientRect();dragOff.x=e.clientX-sr.left+scr.scrollLeft-node.x*zoom;dragOff.y=e.clientY-sr.top+scr.scrollTop-node.y*zoom;dragSt.x=e.clientX;dragSt.y=e.clientY;document.addEventListener('mousemove',onDMove);document.addEventListener('mouseup',onDEnd)}
-function onNTouch(e){if(e.target.classList.contains('anchor-point'))return;if(e.touches.length!==1||editingNode)return;e.preventDefault();const t=e.touches[0],el=e.currentTarget,nid=el.id.replace('fn_',''),node=NM[nid];if(!node)return;dragIt={ref:node};moved=false;const sr=scr.getBoundingClientRect();dragOff.x=t.clientX-sr.left+scr.scrollLeft-node.x*zoom;dragOff.y=t.clientY-sr.top+scr.scrollTop-node.y*zoom;dragSt.x=t.clientX;dragSt.y=t.clientY;document.addEventListener('touchmove',onTMove,{passive:false});document.addEventListener('touchend',onTEnd)}
+function onNDown(e){if(e.target.classList.contains('anchor-point')||e.target.classList.contains('edge-handle'))return;if(e.button!==0||editN)return;e.stopPropagation();const el=e.currentTarget,nid=el.id.replace('fn_',''),node=NM[nid];if(!node)return;selectN(nid);dragIt={ref:node};moved=false;const sr=scr.getBoundingClientRect();dragOff.x=e.clientX-sr.left+scr.scrollLeft-node.x*zoom;dragOff.y=e.clientY-sr.top+scr.scrollTop-node.y*zoom;dragSt.x=e.clientX;dragSt.y=e.clientY;document.addEventListener('mousemove',onDMove);document.addEventListener('mouseup',onDEnd)}
+function onNTouch(e){if(e.target.classList.contains('anchor-point'))return;if(e.touches.length!==1||editN)return;e.preventDefault();const t=e.touches[0],el=e.currentTarget,nid=el.id.replace('fn_',''),node=NM[nid];if(!node)return;dragIt={ref:node};moved=false;const sr=scr.getBoundingClientRect();dragOff.x=t.clientX-sr.left+scr.scrollLeft-node.x*zoom;dragOff.y=t.clientY-sr.top+scr.scrollTop-node.y*zoom;dragSt.x=t.clientX;dragSt.y=t.clientY;document.addEventListener('touchmove',onTM,{passive:false});document.addEventListener('touchend',onTE)}
 function onDMove(e){if(!dragIt)return;if(!moved&&(Math.abs(e.clientX-dragSt.x)>3||Math.abs(e.clientY-dragSt.y)>3)){moved=true;isDrag=true;pushU();document.getElementById('canvasWrapper').classList.add('node-dragging')}if(!moved)return;const sr=scr.getBoundingClientRect(),n=dragIt.ref;n.x=Math.max(0,snap((e.clientX-sr.left+scr.scrollLeft-dragOff.x)/zoom));n.y=Math.max(0,snap((e.clientY-sr.top+scr.scrollTop-dragOff.y)/zoom));n._el.style.left=n.x+'px';n._el.style.top=n.y+'px';renderEdges();uMM()}
 function onDEnd(){document.removeEventListener('mousemove',onDMove);document.removeEventListener('mouseup',onDEnd);document.getElementById('canvasWrapper').classList.remove('node-dragging');if(moved)dSv();setTimeout(()=>isDrag=false,50);dragIt=null}
-function onTMove(e){if(!dragIt||e.touches.length!==1)return;e.preventDefault();onDMove({clientX:e.touches[0].clientX,clientY:e.touches[0].clientY})}
-function onTEnd(){document.removeEventListener('touchmove',onTMove);document.removeEventListener('touchend',onTEnd);onDEnd()}
+function onTM(e){if(!dragIt||e.touches.length!==1)return;e.preventDefault();onDMove({clientX:e.touches[0].clientX,clientY:e.touches[0].clientY})}
+function onTE(){document.removeEventListener('touchmove',onTM);document.removeEventListener('touchend',onTE);onDEnd()}
 
 // ZOOM
 function canvasZoom(f){const nz=Math.min(2,Math.max(.25,zoom*f));const cx=(scr.scrollLeft+scr.clientWidth/2)/zoom,cy=(scr.scrollTop+scr.clientHeight/2)/zoom;zoom=nz;inner.style.transform=`scale(${zoom})`;scr.scrollLeft=cx*zoom-scr.clientWidth/2;scr.scrollTop=cy*zoom-scr.clientHeight/2;uMM()}
@@ -883,10 +885,10 @@ scr.addEventListener('wheel',(e)=>{if(e.ctrlKey||e.metaKey){e.preventDefault();c
 
 // MINIMAP
 const mmC=document.getElementById('minimapCanvas'),mmX=mmC.getContext('2d'),mmV=document.getElementById('minimapViewport');
-function uMM(){const W=150,H=90;mmC.width=W;mmC.height=H;mmX.clearRect(0,0,W,H);let mx=950,my=850;NODES.forEach(n=>{mx=Math.max(mx,n.x+(n._w||120)+20);my=Math.max(my,n.y+(n._h||30)+20)});const s=Math.min(W/mx,H/my);const colors={step:'#64748b',source:'#f59e0b',decision:'#f59e0b',wa:'#128C7E',ghost:'#ef5350',end:'#26a69a'};NODES.forEach(n=>{let c=colors[n.type]||'#999';if(n.lane==='adult')c=LC.adult;if(n.lane==='parent')c=LC.parent;mmX.fillStyle=c;mmX.fillRect(n.x*s,n.y*s,Math.max((n._w||100)*s,2),Math.max((n._h||25)*s,2))});const vx=(scr.scrollLeft/zoom)*s,vy=(scr.scrollTop/zoom)*s,vw=(scr.clientWidth/zoom)*s,vh=(scr.clientHeight/zoom)*s;mmV.style.left=vx+'px';mmV.style.top=vy+'px';mmV.style.width=vw+'px';mmV.style.height=vh+'px'}
+function uMM(){const W=150,H=90;mmC.width=W;mmC.height=H;mmX.clearRect(0,0,W,H);let mx=960,my=860;NODES.forEach(n=>{mx=Math.max(mx,n.x+(n._w||120)+20);my=Math.max(my,n.y+(n._h||30)+20)});const s=Math.min(W/mx,H/my);const colors={step:'#64748b',source:'#f59e0b',decision:'#f59e0b',wa:'#128C7E',ghost:'#ef5350',end:'#26a69a'};NODES.forEach(n=>{let c=n.major?'#1e293b':(colors[n.type]||'#999');if(n.lane==='adult')c=LC.adult;if(n.lane==='parent')c=LC.parent;mmX.fillStyle=c;mmX.fillRect(n.x*s,n.y*s,Math.max((n._w||100)*s,2),Math.max((n._h||25)*s,2))});const vx=(scr.scrollLeft/zoom)*s,vy=(scr.scrollTop/zoom)*s,vw=(scr.clientWidth/zoom)*s,vh=(scr.clientHeight/zoom)*s;mmV.style.left=vx+'px';mmV.style.top=vy+'px';mmV.style.width=vw+'px';mmV.style.height=vh+'px'}
 scr.addEventListener('scroll',uMM);
 
-(function(){NODES.forEach(n=>NM[n.id]=n);ld();renderAll();scr.scrollLeft=Math.max(0,420*zoom-scr.clientWidth/2)})();
+(function(){NODES.forEach(n=>NM[n.id]=n);ld();renderAll();scr.scrollLeft=Math.max(0,400*zoom-scr.clientWidth/2)})();
 </script>
 </body>
 </html>
