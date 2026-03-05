@@ -151,11 +151,13 @@ h2{font-size:14px;font-weight:700;color:var(--hdr);margin-top:28px;margin-bottom
 .no-results{text-align:center;padding:24px;color:var(--text2);display:none;font-size:11px}.no-results.visible{display:block}
 .back-top{position:fixed;bottom:14px;left:14px;background:var(--hdr);color:#fff;border:none;border-radius:50%;width:32px;height:32px;font-size:14px;cursor:pointer;box-shadow:0 2px 6px rgba(0,0,0,.2);opacity:0;transition:opacity .3s;z-index:50}.back-top.visible{opacity:1}
 @media(max-width:640px){#tooltip{max-width:260px;width:260px}.canvas-wrapper{height:500px}}
+/* Chain connector (no arrowhead) */
+.chain-connector{stroke-dasharray:none!important}
 @media print{.search-bar,.nav-tabs,.back-top,.cbtn,#tooltip,.canvas-toolbar,.minimap,.canvas-info,.save-toast,.arrow-toolbar,.ctx-menu{display:none!important}.template-card{break-inside:avoid}}
 </style>
 </head>
 <body>
-<div class="page-header"><h1>אלמנט — חוברת תבניות וואטסאפ</h1><div class="sub">Element — WhatsApp Templates Playbook</div><div class="ver">גרסה 5.5 | מרץ 2026</div></div>
+<div class="page-header"><h1>אלמנט — חוברת תבניות וואטסאפ</h1><div class="sub">Element — WhatsApp Templates Playbook</div><div class="ver">גרסה 5.6 | מרץ 2026</div></div>
 <div class="search-bar"><span>🔍</span><input type="text" id="searchInput" placeholder="חיפוש..." oninput="filterTemplates()"><span id="searchCount"></span></div>
 <div class="nav-tabs"><a href="#flowcharts">📊 זרימה</a><a href="#group1">1️⃣ תגובה</a><a href="#group2">2️⃣ היכרות</a><a href="#group3">3️⃣ אישור</a><a href="#group4">4️⃣ מעקב</a><a href="#group5">5️⃣ הרשמה</a><a href="#group6">6️⃣ שימור</a><a href="#ref-section">📎 טבלה</a></div>
 <div id="tooltip"><div class="tt-header"><span class="tt-title"></span><button class="tt-copy" onclick="copyTooltip()">📋 העתק</button></div><div class="tt-body"></div></div>
@@ -561,7 +563,7 @@ h2{font-size:14px;font-weight:700;color:var(--hdr);margin-top:28px;margin-bottom
 <button class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">⬆</button>
 </div>
 <script>
-// === COPY / TOOLTIP / SEARCH ===
+// === COPY / TOOLTIP / SEARCH (unchanged from v5.5) ===
 function copyMsg(el){const c=el.cloneNode(true);c.querySelector('.cbtn')?.remove();c.querySelectorAll('.placeholder').forEach(s=>s.replaceWith(s.textContent));doCopy(c.innerText.trim(),el.querySelector('.cbtn'))}
 function doCopy(t,btn){try{navigator.clipboard.writeText(t).then(()=>flash(btn)).catch(()=>fb(t,btn))}catch(e){fb(t,btn)}}
 function fb(t,btn){const a=document.createElement('textarea');a.value=t;a.style.cssText='position:fixed;left:-9999px';document.body.appendChild(a);a.select();try{document.execCommand('copy');flash(btn)}catch(e){}document.body.removeChild(a)}
@@ -572,21 +574,21 @@ document.addEventListener('mouseout',function(e){const nd=e.target.closest('[dat
 tt.addEventListener('mouseover',()=>clearTimeout(ttT));tt.addEventListener('mouseleave',()=>{ttT=setTimeout(()=>tt.classList.remove('visible'),100)});
 function copyTooltip(){const c=tt.querySelector('.tt-body').cloneNode(true);c.querySelectorAll('.ph').forEach(s=>s.replaceWith(s.textContent));c.querySelectorAll('br').forEach(br=>br.replaceWith('\n'));doCopy(c.innerText.trim(),tt.querySelector('.tt-copy'))}
 function goTo(id){const el=document.getElementById(id);if(!el)return;el.classList.remove('search-hidden');el.scrollIntoView({behavior:'smooth',block:'center'});el.style.boxShadow='0 0 0 2px var(--accent)';setTimeout(()=>el.style.boxShadow='',2000)}
-function filterTemplates(){const q=document.getElementById('searchInput').value.trim().toLowerCase();const cards=document.querySelectorAll('.template-card');let v=0;document.querySelectorAll('.fnode.search-glow').forEach(n=>n.classList.remove('search-glow'));if(!q){cards.forEach(c=>c.classList.remove('search-hidden'));document.getElementById('searchCount').textContent='';document.getElementById('noResults').classList.remove('visible');document.querySelectorAll('.section-divider,#flowcharts,.instructions,.flow-legend').forEach(e=>e.style.display='');return}document.querySelectorAll('.section-divider,#flowcharts,.instructions,.flow-legend').forEach(e=>e.style.display='none');cards.forEach(c=>{const s=(c.getAttribute('data-search')||'')+' '+c.textContent;if(s.toLowerCase().includes(q)){c.classList.remove('search-hidden');v++}else c.classList.add('search-hidden')});if(q.length>=2){document.querySelectorAll('.section-divider,#flowcharts,.instructions,.flow-legend').forEach(e=>e.style.display='');NODES.forEach(n=>{if(n._el&&(n.label.toLowerCase().includes(q)))n._el.classList.add('search-glow')})}document.getElementById('searchCount').textContent=v+'';document.getElementById('noResults').classList.toggle('visible',v===0)}
+function filterTemplates(){const q=document.getElementById('searchInput').value.trim().toLowerCase();const cards=document.querySelectorAll('.template-card');let v=0;document.querySelectorAll('.fnode.search-glow').forEach(n=>n.classList.remove('search-glow'));if(!q){cards.forEach(c=>c.classList.remove('search-hidden'));document.getElementById('searchCount').textContent='';document.getElementById('noResults').classList.remove('visible');document.querySelectorAll('.section-divider,#flowcharts,.instructions,.flow-legend').forEach(e=>e.style.display='');return}document.querySelectorAll('.section-divider,#flowcharts,.instructions,.flow-legend').forEach(e=>e.style.display='none');cards.forEach(c=>{const s=(c.getAttribute('data-search')||'')+' '+c.textContent;if(s.toLowerCase().includes(q)){c.classList.remove('search-hidden');v++}else c.classList.add('search-hidden')});if(q.length>=2){document.querySelectorAll('.section-divider,#flowcharts,.instructions,.flow-legend').forEach(e=>e.style.display='');NODES.forEach(n=>{if(n._el&&n.label.toLowerCase().includes(q))n._el.classList.add('search-glow')})}document.getElementById('searchCount').textContent=v+'';document.getElementById('noResults').classList.toggle('visible',v===0)}
 window.addEventListener('scroll',()=>document.getElementById('backTop').classList.toggle('visible',window.scrollY>250));
 document.querySelectorAll('.nav-tabs a').forEach(a=>a.addEventListener('click',()=>{document.getElementById('searchInput').value='';filterTemplates()}));
 
 // ================================================================
-// FLOWCHART ENGINE v5.5
+// FLOWCHART ENGINE v5.6 — chain connections, improved routing
 // ================================================================
 const CU={t1:{l:'CONSIDERING',c:'#f87171'},t2:{l:'NEW LEADS',c:'#94a3b8'},t3:{l:'NEW LEADS',c:'#94a3b8'},t4a:{l:'CONSIDERING',c:'#f87171'},t4b:{l:'CONSIDERING',c:'#f87171'},t4c:{l:'CONSIDERING',c:'#f87171'},t4d:{l:'CONSIDERING',c:'#f87171'},t4e:{l:'CONSIDERING',c:'#f87171'},t4f:{l:'CONSIDERING',c:'#f87171'},t4g:{l:'CONSIDERING',c:'#f87171'},t6a:{l:'PURCHASED',c:'#60a5fa'},t6b:{l:'PURCHASED',c:'#60a5fa'},t6c:{l:'PURCHASED',c:'#60a5fa'},t6d:{l:'PURCHASED',c:'#60a5fa'},t6e:{l:'PURCHASED',c:'#60a5fa'},t6f:{l:'PURCHASED',c:'#60a5fa'},t6g:{l:'PURCHASED',c:'#60a5fa'},t8:{l:'PURCHASED',c:'#60a5fa'},t10:{l:'MADE 1ST',c:'#4ade80'},t11:{l:'MADE 2ND',c:'#4ade80'},t12:{l:'MADE 3RD',c:'#fb923c'},t13:{l:'MADE 3RD',c:'#fb923c'},t14:{l:'ENROLLED',c:'#22c55e'},t15:{l:'ENROLLED',c:'#22c55e'},t16:{l:'ENROLLED',c:'#22c55e'},t17a:{l:'LOST?',c:'#fb923c'},t17b:{l:'LOST?',c:'#fb923c'},t18:{l:'NOT READY',c:'#2dd4bf'},t19:{l:'NEAR PURCHASE',c:'#f472b6'}};
 const LC={adult:'#d81b60',parent:'#1565c0'};
 
 const DEFAULT_NODES=[
-  // ENTRY
+  // === ENTRY ===
   {id:'entry',type:'step',label:'📥 ליד חדש נכנס',x:440,y:30,w:145},
   {id:'srcQ',type:'decision',label:'מקור הפנייה?',x:450,y:110,w:120},
-  // WIDGET branch (restructured per #2)
+  // WIDGET
   {id:'widget',type:'step',label:'📱 ווידג׳ט\n(דף נחיתה / Linktree)',x:170,y:200,w:170},
   {id:'wPaid',type:'step',label:'💳 שילם',x:50,y:310,w:90},
   {id:'wNoPay',type:'step',label:'⏰ לא שילם\n(24-48 שעות)',x:280,y:310,w:120},
@@ -596,70 +598,77 @@ const DEFAULT_NODES=[
   {id:'n_t1',type:'wa',label:'#1 תגובה\nווידג׳ט',x:185,y:590,w:120,link:'t1',
    ttTitle:'#1 תגובה ווידג׳ט',ttBody:'היי [שם] 👋\nכאן צוות אלמנט.\nראינו שהשארתם פרטים ונשמח לעזור!\nיש לכם שאלות? 🙏'},
   {id:'n_t19',type:'wa',label:'#19 מעקב\nלא שילם',x:360,y:590,w:115,link:'t19',
-   ttTitle:'#19 מעקב — לא שילם',ttBody:'היי [שם] 👋\nראינו שהתעניינתם — נשמח לעזור!\nנתקעתם עם משהו? 📞\nמחכים! 🙏'},
-  // DIRECT branch
+   ttTitle:'#19 מעקב — לא שילם',ttBody:'היי [שם] 👋\nראינו שהתעניינתם — נשמח לעזור!\nנתקעתם? 📞\nמחכים! 🙏'},
+  // DIRECT
   {id:'direct',type:'step',label:'💬 פנייה ישירה\n(WA / טלפון / מייל)',x:640,y:200,w:170},
   {id:'directQ',type:'decision',label:'מי פנה?',x:675,y:310,w:100},
   {id:'n_t2',type:'wa',label:'#2 תגובה\nמבוגר/ת',x:590,y:410,w:115,link:'t2',lane:'adult',
-   ttTitle:'#2 ליד ישיר — מבוגר',ttBody:'היי [שם] 👋\nתודה שפניתם!\nנשמח להכיר — מה חיפשתם? 🙏'},
+   ttTitle:'#2 ליד ישיר — מבוגר',ttBody:'היי [שם] 👋\nתודה שפניתם! מה חיפשתם? 🙏'},
   {id:'n_t3',type:'wa',label:'#3 תגובה\nהורה',x:745,y:410,w:105,link:'t3',lane:'parent',
-   ttTitle:'#3 ליד ישיר — הורה',ttBody:'היי [שם ההורה] 👋\nתודה שפניתם!\nמה הגיל ומה חיפשתם? 💪'},
-  // DETAILS HUB (single, per-class fan-out)
+   ttTitle:'#3 ליד ישיר — הורה',ttBody:'היי [שם ההורה] 👋\nמה הגיל ומה חיפשתם? 💪'},
+
+  // === DETAILS HUB + HORIZONTAL CHAIN ===
   {id:'details',type:'step',label:'📋 פרטי היכרות\n(לפי קבוצה)',x:400,y:690,w:160},
-  {id:'n_t4a',type:'wa',label:'#4a\nילדים 6-8',x:20,y:785,w:95,link:'t4a',lane:'parent',ttTitle:'#4a ילדים 6-8',ttBody:'🥋 ילדים 6-8\n📅 [ימים]\n💰 60₪\n🔗 [לינק]'},
-  {id:'n_t4b',type:'wa',label:'#4b\nילדים 9-11',x:130,y:785,w:95,link:'t4b',lane:'parent',ttTitle:'#4b ילדים 9-11',ttBody:'🥋 ילדים 9-11\n📅 [ימים]\n💰 60₪\n🔗 [לינק]'},
-  {id:'n_t4c',type:'wa',label:'#4c\nנוער 12-15',x:240,y:785,w:95,link:'t4c',lane:'parent',ttTitle:'#4c נוער 12-15',ttBody:'🥋 נוער 12-15\n📅 [ימים]\n💰 70₪\n🔗 [לינק]'},
-  {id:'n_t4d',type:'wa',label:'#4d\nלחימה 16-37',x:360,y:785,w:105,link:'t4d',lane:'adult',ttTitle:'#4d לחימה 16-37',ttBody:'🥊 לחימה 16-37\n📅 [ימים]\n💰 70₪\n🔗 [לינק]'},
-  {id:'n_t4e',type:'wa',label:'#4e\nכושר 38+',x:480,y:785,w:95,link:'t4e',lane:'adult',ttTitle:'#4e כושר 38+',ttBody:'💪 כושר+לחימה 38+\n📅 [ימים]\n💰 70₪\n🔗 [לינק]'},
-  {id:'n_t4f',type:'wa',label:'#4f\nמובמנט',x:590,y:785,w:90,link:'t4f',ttTitle:'#4f מובמנט',ttBody:'🤸 מובמנט\n📅 [ימים]\n💰 70₪\n🔗 [לינק]'},
-  {id:'n_t4g',type:'wa',label:'#4g\nכוח',x:695,y:785,w:80,link:'t4g',ttTitle:'#4g כוח',ttBody:'🏋️ כוח\n📅 [ימים]\n💰 70₪\n🔗 [לינק]'},
-  {id:'noResp1',type:'ghost',label:'⛔ ללא תגובה',x:800,y:785,w:100,link:'t17b'},
-  // PAYMENT HUB (single, per-class confirmations)
-  {id:'payment',type:'step',label:'💳 תשלום להיכרות',x:400,y:890,w:155},
-  {id:'n_t6a',type:'wa',label:'#6a\nילדים 6-8',x:20,y:980,w:95,link:'t6a',lane:'parent',ttTitle:'#6a אישור 6-8',ttBody:'התשלום התקבל! 🙌\n🗓️ [יום], [שעה]\n👕 שחורה+ארוכים 🙏'},
-  {id:'n_t6b',type:'wa',label:'#6b\nילדים 9-11',x:130,y:980,w:95,link:'t6b',lane:'parent',ttTitle:'#6b אישור 9-11',ttBody:'התשלום התקבל! 🙌\n🗓️ [יום], [שעה] 🙏'},
-  {id:'n_t6c',type:'wa',label:'#6c\nנוער 12-15',x:240,y:980,w:95,link:'t6c',lane:'parent',ttTitle:'#6c אישור נוער',ttBody:'התשלום התקבל! 🙌\n🗓️ [יום], [שעה] 🙏'},
-  {id:'n_t6d',type:'wa',label:'#6d\nלחימה',x:360,y:980,w:95,link:'t6d',lane:'adult',ttTitle:'#6d אישור לחימה',ttBody:'התשלום התקבל! 🙌\n🗓️ [יום], [שעה] 🙏'},
-  {id:'n_t6e',type:'wa',label:'#6e\nכושר 38+',x:470,y:980,w:95,link:'t6e',lane:'adult',ttTitle:'#6e אישור כושר',ttBody:'התשלום התקבל! 🙌 🙏'},
-  {id:'n_t6f',type:'wa',label:'#6f\nמובמנט',x:580,y:980,w:90,link:'t6f',ttTitle:'#6f אישור מובמנט',ttBody:'התשלום התקבל! 🙌 🙏'},
-  {id:'n_t6g',type:'wa',label:'#6g\nכוח',x:685,y:980,w:80,link:'t6g',ttTitle:'#6g אישור כוח',ttBody:'התשלום התקבל! 🙌 🙏'},
-  // TIMERS
-  {id:'timerHealth',type:'step',label:'⏰ מיד אחרי אישור',x:410,y:1075,w:145,timer:true},
-  {id:'n_t8',type:'wa',label:'#8 טופס\nבריאות',x:610,y:1067,w:110,link:'t8',ttTitle:'#8 טופס בריאות',ttBody:'טופס הצהרת בריאות קצר 📋\n🔗 [לינק]\n~5 דקות 🙏'},
-  {id:'timerDay',type:'step',label:'⏰ יום לפני השיעור',x:413,y:1150,w:140,timer:true},
-  {id:'n_t9',type:'wa',label:'#9 תזכורת',x:610,y:1142,w:100,link:'t9',ttTitle:'#9 תזכורת',ttBody:'תזכורת — מחר שיעור!\n🗓️ [יום], [שעה]\n📍 אולם המגינים 🙏'},
-  // CLASS FOLLOW-UP
-  {id:'class1',type:'step',label:'🥋 שיעור #1',x:440,y:1230,w:105},
-  {id:'att1',type:'decision',label:'הגיע?',x:445,y:1300,w:85},
-  {id:'n_t10',type:'wa',label:'#10 מעקב\nשיעור 1',x:330,y:1385,w:120,link:'t10',ttTitle:'#10 מעקב 1',ttBody:'איך הרגשתם? 💪\nשאלות? כאבים?\n[יום], [שעה] 🙏'},
-  {id:'n_t17a',type:'ghost',label:'#17a שילם\nולא הגיע',x:600,y:1385,w:110,link:'t17a',ttTitle:'#17a לא הגיע',ttBody:'הכל בסדר?\nהקרוב: [יום], [שעה] 🙏'},
-  {id:'class2',type:'step',label:'🥋 שיעור #2',x:345,y:1475,w:105},
-  {id:'att2',type:'decision',label:'הגיע?',x:350,y:1540,w:85},
-  {id:'n_t11',type:'wa',label:'#11 ערך\nשיעור 2',x:235,y:1625,w:110,link:'t11',ttTitle:'#11 ערך 2',ttBody:'שיעור שני — יפה! 💪\nטיפים + [יום], [שעה] 🙏'},
-  {id:'n_t17b_2',type:'ghost',label:'#17b נעלם',x:505,y:1625,w:90,link:'t17b'},
-  {id:'class3',type:'step',label:'🥋 שיעור #3',x:250,y:1715,w:105},
-  {id:'att3',type:'decision',label:'הגיע?',x:255,y:1780,w:85},
-  {id:'n_t12',type:'wa',label:'#12 הרשמה\nמבוגר/ת',x:110,y:1865,w:115,link:'t12',lane:'adult',ttTitle:'#12 הרשמה מבוגר',ttBody:'3 היכרות — כל הכבוד! 🙌\n450₪/חודש 🙏'},
-  {id:'n_t13',type:'wa',label:'#13 הרשמה\nהורה',x:275,y:1865,w:110,link:'t13',lane:'parent',ttTitle:'#13 הרשמה הורה',ttBody:'[שם] סיים/ה 3 היכרות! 🙌\n[300₪/380₪] 🙏'},
-  {id:'n_t17b_3',type:'ghost',label:'#17b נעלם',x:445,y:1865,w:90,link:'t17b'},
-  // ENROLLMENT
-  {id:'enrollQ',type:'decision',label:'החלטה?',x:205,y:1960,w:95},
-  {id:'enrolled',type:'step',label:'✅ נרשם!',x:100,y:2045,w:95},
-  {id:'n_t18',type:'wa',label:'#18 מתלבט',x:255,y:2045,w:100,link:'t18',ttTitle:'#18 מתלבט',ttBody:'לגמרי מובן 🙏 מחכים 💪'},
-  {id:'n_t17b_f',type:'ghost',label:'#17b נעלם',x:410,y:2045,w:90,link:'t17b'},
-  {id:'whoEnroll',type:'decision',label:'מי?',x:105,y:2125,w:80},
-  {id:'n_t14',type:'wa',label:'#14 ברוכים\nהבאים (מבוגר)',x:20,y:2210,w:130,link:'t14',lane:'adult',ttTitle:'#14 ברוכים הבאים',ttBody:'ברוכים הבאים! 🙌🔥\nBoostApp + ציוד 🙏'},
-  {id:'n_t15',type:'wa',label:'#15 ברוכים\nהבאים (הורה)',x:195,y:2210,w:130,link:'t15',lane:'parent',ttTitle:'#15 ברוכים הבאים',ttBody:'ברוכים הבאים! 🙌🔥\nBoostApp + שאלון 🙏'},
-  {id:'wait23w',type:'step',label:'⏰ 2-3 שבועות',x:125,y:2300,w:110,timer:true},
-  {id:'n_t16',type:'wa',label:'#16 חבר↔חבר',x:300,y:2292,w:110,link:'t16',ttTitle:'#16 חבר מביא חבר',ttBody:'חבר מביא חבר! 🎁\n50% לשניכם 🙏'},
-  {id:'done',type:'end',label:'🎉 חבר פעיל!',x:140,y:2385,w:105},
+  // Chain: laid out horizontally, evenly spaced
+  {id:'n_t4a',type:'wa',label:'#4a\nילדים 6-8',x:30,y:790,w:95,link:'t4a',lane:'parent',ttTitle:'#4a ילדים 6-8',ttBody:'🥋 ילדים 6-8\n📅 [ימים]\n💰 60₪\n🔗 [לינק]'},
+  {id:'n_t4b',type:'wa',label:'#4b\nילדים 9-11',x:145,y:790,w:95,link:'t4b',lane:'parent',ttTitle:'#4b ילדים 9-11',ttBody:'🥋 ילדים 9-11\n📅 [ימים]\n💰 60₪\n🔗 [לינק]'},
+  {id:'n_t4c',type:'wa',label:'#4c\nנוער 12-15',x:260,y:790,w:95,link:'t4c',lane:'parent',ttTitle:'#4c נוער 12-15',ttBody:'🥋 נוער 12-15\n📅 [ימים]\n💰 70₪\n🔗 [לינק]'},
+  {id:'n_t4d',type:'wa',label:'#4d\nלחימה 16-37',x:375,y:790,w:105,link:'t4d',lane:'adult',ttTitle:'#4d לחימה 16-37',ttBody:'🥊 לחימה 16-37\n📅 [ימים]\n💰 70₪\n🔗 [לינק]'},
+  {id:'n_t4e',type:'wa',label:'#4e\nכושר 38+',x:500,y:790,w:95,link:'t4e',lane:'adult',ttTitle:'#4e כושר 38+',ttBody:'💪 כושר+לחימה 38+\n📅 [ימים]\n💰 70₪\n🔗 [לינק]'},
+  {id:'n_t4f',type:'wa',label:'#4f\nמובמנט',x:615,y:790,w:90,link:'t4f',ttTitle:'#4f מובמנט',ttBody:'🤸 מובמנט\n📅 [ימים]\n💰 70₪\n🔗 [לינק]'},
+  {id:'n_t4g',type:'wa',label:'#4g\nכוח',x:725,y:790,w:80,link:'t4g',ttTitle:'#4g כוח',ttBody:'🏋️ כוח\n📅 [ימים]\n💰 70₪\n🔗 [לינק]'},
+  {id:'noResp1',type:'ghost',label:'⛔ ללא תגובה',x:840,y:790,w:100,link:'t17b'},
+
+  // === PAYMENT CONFIRMATION HUB + CHAIN ===
+  {id:'payment',type:'step',label:'💳 אישור תשלום להיכרות',x:390,y:905,w:175},
+  {id:'n_t6a',type:'wa',label:'#6a\nילדים 6-8',x:30,y:1000,w:95,link:'t6a',lane:'parent',ttTitle:'#6a אישור 6-8',ttBody:'התשלום התקבל! 🙌\n🗓️ [יום], [שעה]\n👕 שחורה+ארוכים 🙏'},
+  {id:'n_t6b',type:'wa',label:'#6b\nילדים 9-11',x:145,y:1000,w:95,link:'t6b',lane:'parent',ttTitle:'#6b אישור 9-11',ttBody:'התשלום התקבל! 🙌 🙏'},
+  {id:'n_t6c',type:'wa',label:'#6c\nנוער 12-15',x:260,y:1000,w:95,link:'t6c',lane:'parent',ttTitle:'#6c אישור נוער',ttBody:'התשלום התקבל! 🙌 🙏'},
+  {id:'n_t6d',type:'wa',label:'#6d\nלחימה',x:375,y:1000,w:95,link:'t6d',lane:'adult',ttTitle:'#6d אישור לחימה',ttBody:'התשלום התקבל! 🙌 🙏'},
+  {id:'n_t6e',type:'wa',label:'#6e\nכושר 38+',x:490,y:1000,w:95,link:'t6e',lane:'adult',ttTitle:'#6e אישור כושר',ttBody:'התשלום התקבל! 🙌 🙏'},
+  {id:'n_t6f',type:'wa',label:'#6f\nמובמנט',x:605,y:1000,w:90,link:'t6f',ttTitle:'#6f אישור מובמנט',ttBody:'התשלום התקבל! 🙌 🙏'},
+  {id:'n_t6g',type:'wa',label:'#6g\nכוח',x:715,y:1000,w:80,link:'t6g',ttTitle:'#6g אישור כוח',ttBody:'התשלום התקבל! 🙌 🙏'},
+
+  // === TIMERS ===
+  {id:'timerHealth',type:'step',label:'⏰ מיד אחרי אישור',x:410,y:1105,w:145,timer:true},
+  {id:'n_t8',type:'wa',label:'#8 טופס\nבריאות',x:620,y:1097,w:110,link:'t8',ttTitle:'#8 טופס בריאות',ttBody:'טופס הצהרת בריאות 📋\n🔗 [לינק]\n~5 דק׳ 🙏'},
+  {id:'timerDay',type:'step',label:'⏰ יום לפני השיעור',x:413,y:1180,w:140,timer:true},
+  {id:'n_t9',type:'wa',label:'#9 תזכורת',x:620,y:1172,w:100,link:'t9',ttTitle:'#9 תזכורת',ttBody:'תזכורת — מחר שיעור!\n🗓️ [יום], [שעה] 🙏'},
+
+  // === CLASS FOLLOW-UP ===
+  {id:'class1',type:'step',label:'🥋 שיעור #1',x:440,y:1260,w:105},
+  {id:'att1',type:'decision',label:'הגיע?',x:445,y:1330,w:85},
+  {id:'n_t10',type:'wa',label:'#10 מעקב\nשיעור 1',x:330,y:1415,w:120,link:'t10',ttTitle:'#10 מעקב 1',ttBody:'איך הרגשתם? 💪\n[יום], [שעה] 🙏'},
+  {id:'n_t17a',type:'ghost',label:'#17a שילם\nולא הגיע',x:610,y:1415,w:110,link:'t17a',ttTitle:'#17a לא הגיע',ttBody:'הכל בסדר?\nהקרוב: [יום], [שעה] 🙏'},
+  {id:'class2',type:'step',label:'🥋 שיעור #2',x:345,y:1505,w:105},
+  {id:'att2',type:'decision',label:'הגיע?',x:350,y:1570,w:85},
+  {id:'n_t11',type:'wa',label:'#11 ערך\nשיעור 2',x:235,y:1655,w:110,link:'t11',ttTitle:'#11 ערך 2',ttBody:'שיעור שני — יפה! 💪\n[יום], [שעה] 🙏'},
+  {id:'n_t17b_2',type:'ghost',label:'#17b נעלם',x:510,y:1655,w:90,link:'t17b'},
+  {id:'class3',type:'step',label:'🥋 שיעור #3',x:250,y:1745,w:105},
+  {id:'att3',type:'decision',label:'הגיע?',x:255,y:1810,w:85},
+  {id:'n_t12',type:'wa',label:'#12 הרשמה\nמבוגר/ת',x:110,y:1895,w:115,link:'t12',lane:'adult',ttTitle:'#12 הרשמה מבוגר',ttBody:'3 היכרות — כל הכבוד! 🙌\n450₪/חודש 🙏'},
+  {id:'n_t13',type:'wa',label:'#13 הרשמה\nהורה',x:275,y:1895,w:110,link:'t13',lane:'parent',ttTitle:'#13 הרשמה הורה',ttBody:'[שם] סיים/ה 3 היכרות! 🙌\n[300₪/380₪] 🙏'},
+  {id:'n_t17b_3',type:'ghost',label:'#17b נעלם',x:450,y:1895,w:90,link:'t17b'},
+
+  // === ENROLLMENT ===
+  {id:'enrollQ',type:'decision',label:'החלטה?',x:205,y:1990,w:95},
+  {id:'enrolled',type:'step',label:'✅ נרשם!',x:100,y:2075,w:95},
+  {id:'n_t18',type:'wa',label:'#18 מתלבט',x:255,y:2075,w:100,link:'t18',ttTitle:'#18 מתלבט',ttBody:'לגמרי מובן 🙏 מחכים 💪'},
+  {id:'n_t17b_f',type:'ghost',label:'#17b נעלם',x:415,y:2075,w:90,link:'t17b'},
+  {id:'whoEnroll',type:'decision',label:'מי?',x:105,y:2155,w:80},
+  {id:'n_t14',type:'wa',label:'#14 ברוכים\nהבאים (מבוגר)',x:20,y:2240,w:130,link:'t14',lane:'adult',ttTitle:'#14 ברוכים הבאים',ttBody:'ברוכים הבאים! 🙌🔥 🙏'},
+  {id:'n_t15',type:'wa',label:'#15 ברוכים\nהבאים (הורה)',x:195,y:2240,w:130,link:'t15',lane:'parent',ttTitle:'#15 ברוכים הבאים',ttBody:'ברוכים הבאים! 🙌🔥 🙏'},
+  {id:'wait23w',type:'step',label:'⏰ 2-3 שבועות',x:125,y:2330,w:110,timer:true},
+  {id:'n_t16',type:'wa',label:'#16 חבר↔חבר',x:300,y:2322,w:110,link:'t16',ttTitle:'#16 חבר מביא חבר',ttBody:'חבר מביא חבר! 🎁\n50% לשניכם 🙏'},
+  {id:'done',type:'end',label:'🎉 חבר פעיל!',x:140,y:2415,w:105},
 ];
 
 const DEFAULT_EDGES=[
+  // Entry
   {from:'entry',to:'srcQ'},
   {from:'srcQ',to:'widget',label:'ווידג׳ט'},
   {from:'srcQ',to:'direct',label:'פנייה ישירה'},
-  // Widget → direct split (no decision node)
+  // Widget
   {from:'widget',to:'wPaid',label:'שילם ✅'},
   {from:'widget',to:'wNoPay',label:'לא שילם'},
   {from:'wNoPay',to:'wNoPayQ'},
@@ -676,25 +685,40 @@ const DEFAULT_EDGES=[
   {from:'directQ',to:'n_t3',label:'הורה',lane:'parent'},
   {from:'n_t2',to:'details',style:'dashed',label:'מעוניין ⟶',lane:'adult'},
   {from:'n_t3',to:'details',style:'dashed',label:'מעוניין ⟶',lane:'parent'},
-  // Details fan-out
-  {from:'details',to:'n_t4a',label:'6-8'},{from:'details',to:'n_t4b',label:'9-11'},
-  {from:'details',to:'n_t4c',label:'12-15'},{from:'details',to:'n_t4d',label:'16-37'},
-  {from:'details',to:'n_t4e',label:'38+'},{from:'details',to:'n_t4f',label:'מובמנט'},
-  {from:'details',to:'n_t4g',label:'כוח'},{from:'details',to:'noResp1',label:'אין תגובה'},
-  // Fan-in to payment
-  {from:'n_t4a',to:'payment'},{from:'n_t4b',to:'payment'},{from:'n_t4c',to:'payment'},
-  {from:'n_t4d',to:'payment'},{from:'n_t4e',to:'payment'},{from:'n_t4f',to:'payment'},{from:'n_t4g',to:'payment'},
-  // Payment fan-out
-  {from:'payment',to:'n_t6a',label:'6-8'},{from:'payment',to:'n_t6b',label:'9-11'},
-  {from:'payment',to:'n_t6c',label:'12-15'},{from:'payment',to:'n_t6d',label:'לחימה'},
-  {from:'payment',to:'n_t6e',label:'38+'},{from:'payment',to:'n_t6f',label:'מובמנט'},{from:'payment',to:'n_t6g',label:'כוח'},
-  // Confirmations → timer
-  {from:'n_t6a',to:'timerHealth'},{from:'n_t6b',to:'timerHealth'},{from:'n_t6c',to:'timerHealth'},
-  {from:'n_t6d',to:'timerHealth'},{from:'n_t6e',to:'timerHealth'},{from:'n_t6f',to:'timerHealth'},{from:'n_t6g',to:'timerHealth'},
+
+  // === DETAILS PHASE ===
+  // Hub → first in chain (arrow)
+  {from:'details',to:'n_t4a',fromAnchor:'bottom',toAnchor:'top'},
+  // Chain links (no arrowhead): 4a→4b→4c→4d→4e→4f→4g
+  {from:'n_t4a',to:'n_t4b',fromAnchor:'left',toAnchor:'right',noHead:true},
+  {from:'n_t4b',to:'n_t4c',fromAnchor:'left',toAnchor:'right',noHead:true},
+  {from:'n_t4c',to:'n_t4d',fromAnchor:'left',toAnchor:'right',noHead:true},
+  {from:'n_t4d',to:'n_t4e',fromAnchor:'left',toAnchor:'right',noHead:true},
+  {from:'n_t4e',to:'n_t4f',fromAnchor:'left',toAnchor:'right',noHead:true},
+  {from:'n_t4f',to:'n_t4g',fromAnchor:'left',toAnchor:'right',noHead:true},
+  // Hub → continuation (flow arrows)
+  {from:'details',to:'payment',fromAnchor:'bottom',toAnchor:'top'},
+  {from:'details',to:'noResp1',fromAnchor:'right',toAnchor:'top',label:'אין תגובה'},
+
+  // === PAYMENT CONFIRMATION PHASE ===
+  // Hub → first in chain (arrow)
+  {from:'payment',to:'n_t6a',fromAnchor:'bottom',toAnchor:'top'},
+  // Chain links (no arrowhead)
+  {from:'n_t6a',to:'n_t6b',fromAnchor:'left',toAnchor:'right',noHead:true},
+  {from:'n_t6b',to:'n_t6c',fromAnchor:'left',toAnchor:'right',noHead:true},
+  {from:'n_t6c',to:'n_t6d',fromAnchor:'left',toAnchor:'right',noHead:true},
+  {from:'n_t6d',to:'n_t6e',fromAnchor:'left',toAnchor:'right',noHead:true},
+  {from:'n_t6e',to:'n_t6f',fromAnchor:'left',toAnchor:'right',noHead:true},
+  {from:'n_t6f',to:'n_t6g',fromAnchor:'left',toAnchor:'right',noHead:true},
+  // Hub → continuation
+  {from:'payment',to:'timerHealth',fromAnchor:'bottom',toAnchor:'top'},
+
+  // Timers (side branches)
   {from:'timerHealth',to:'n_t8',fromAnchor:'right',toAnchor:'left'},
   {from:'timerHealth',to:'timerDay'},
   {from:'timerDay',to:'n_t9',fromAnchor:'right',toAnchor:'left'},
   {from:'timerDay',to:'class1'},
+  // Classes
   {from:'class1',to:'att1'},
   {from:'att1',to:'n_t10',label:'✅ הגיע'},{from:'att1',to:'n_t17a',label:'❌'},
   {from:'n_t10',to:'class2'},{from:'class2',to:'att2'},
@@ -725,13 +749,14 @@ let undoStack=[],redoStack=[],MAX_UNDO=50,nextId=100;
 const inner=document.getElementById('canvasInner'),scroll=document.getElementById('canvasScroll');
 const svg=document.getElementById('canvasSvg'),atb=document.getElementById('arrowToolbar'),ctxMenu=document.getElementById('ctxMenu');
 
-// UNDO/REDO
 function snap(v){return snapOn?Math.round(v/GRID)*GRID:v}
+
+// UNDO/REDO
 function pushUndo(){undoStack.push(getState());if(undoStack.length>MAX_UNDO)undoStack.shift();redoStack=[];updUB()}
 function getState(){return{n:NODES.map(n=>({id:n.id,x:n.x,y:n.y})),e:JSON.parse(JSON.stringify(EDGES))}}
-function undo(){if(!undoStack.length)return;redoStack.push(getState());apply(undoStack.pop());updUB()}
-function redo(){if(!redoStack.length)return;undoStack.push(getState());apply(redoStack.pop());updUB()}
-function apply(s){s.n.forEach(sv=>{const n=nodeMap[sv.id];if(n){n.x=sv.x;n.y=sv.y}});EDGES=s.e;renderAll();dSave()}
+function undo(){if(!undoStack.length)return;redoStack.push(getState());applyS(undoStack.pop());updUB()}
+function redo(){if(!redoStack.length)return;undoStack.push(getState());applyS(redoStack.pop());updUB()}
+function applyS(s){s.n.forEach(sv=>{const n=nodeMap[sv.id];if(n){n.x=sv.x;n.y=sv.y}});EDGES=s.e;renderAll();dSave()}
 function updUB(){const u=document.getElementById('undoBtn'),r=document.getElementById('redoBtn');if(u)u.disabled=!undoStack.length;if(r)r.disabled=!redoStack.length}
 document.addEventListener('keydown',function(e){
   if(e.target.tagName==='INPUT')return;
@@ -741,21 +766,50 @@ document.addEventListener('keydown',function(e){
   if(e.key==='Escape')deselect();
 });
 
-// ORTHOGONAL ROUTING
+// ORTHOGONAL ROUTING (improved — per-edge offset to avoid overlap)
 const ANCHORS=['top','right','bottom','left'];
 function aPos(n,a){const w=n._w||140,h=n._h||30;return a==='top'?{x:n.x+w/2,y:n.y}:a==='right'?{x:n.x+w,y:n.y+h/2}:a==='bottom'?{x:n.x+w/2,y:n.y+h}:{x:n.x,y:n.y+h/2}}
 function bestA(f,t){const fw=f._w||140,fh=f._h||30,tw=t._w||140,th=t._h||30;const dx=(t.x+tw/2)-(f.x+fw/2),dy=(t.y+th/2)-(f.y+fh/2);return Math.abs(dy)>Math.abs(dx)?(dy>0?{fA:'bottom',tA:'top'}:{fA:'top',tA:'bottom'}):(dx>0?{fA:'right',tA:'left'}:{fA:'left',tA:'right'})}
 function isV(a){return a==='top'||a==='bottom'}
-function orthoPath(p1,a1,p2,a2){
+
+// Compute per-edge offset: edges sharing the same source node + anchor get staggered
+function getEdgeOffset(edgeIdx) {
+  const e = EDGES[edgeIdx]; if(!e) return 0;
+  // Find sibling edges from same node+anchor
+  let fA = e.fromAnchor;
+  if(!fA){ const f=nodeMap[e.from],t=nodeMap[e.to]; if(f&&t){fA=bestA(f,t).fA} }
+  const siblings = [];
+  EDGES.forEach((other,i) => {
+    if(other.from !== e.from) return;
+    let oA = other.fromAnchor;
+    if(!oA){ const f=nodeMap[other.from],t=nodeMap[other.to]; if(f&&t){oA=bestA(f,t).fA} }
+    if(oA === fA) siblings.push(i);
+  });
+  if(siblings.length <= 1) return 0;
+  const myIdx = siblings.indexOf(edgeIdx);
+  const spread = 12; // px between parallel lines
+  return (myIdx - (siblings.length-1)/2) * spread;
+}
+
+function orthoPath(p1,a1,p2,a2,offset) {
+  const off = offset || 0;
   const v1=isV(a1),v2=isV(a2);
-  if(v1&&v2){const m=(p1.y+p2.y)/2;return`M${p1.x},${p1.y} L${p1.x},${m} L${p2.x},${m} L${p2.x},${p2.y}`}
-  if(!v1&&!v2){const m=(p1.x+p2.x)/2;return`M${p1.x},${p1.y} L${m},${p1.y} L${m},${p2.y} L${p2.x},${p2.y}`}
-  if(v1)return`M${p1.x},${p1.y} L${p1.x},${p2.y} L${p2.x},${p2.y}`;
-  return`M${p1.x},${p1.y} L${p2.x},${p1.y} L${p2.x},${p2.y}`;
+  if(v1&&v2){
+    const m=(p1.y+p2.y)/2+off;
+    return`M${p1.x},${p1.y} L${p1.x},${m} L${p2.x},${m} L${p2.x},${p2.y}`;
+  }
+  if(!v1&&!v2){
+    const m=(p1.x+p2.x)/2+off;
+    return`M${p1.x},${p1.y} L${m},${p1.y} L${m},${p2.y} L${p2.x},${p2.y}`;
+  }
+  if(v1){
+    return`M${p1.x},${p1.y} L${p1.x},${p2.y+off} L${p2.x},${p2.y+off} L${p2.x},${p2.y}`;
+  }
+  return`M${p1.x},${p1.y} L${p2.x+off},${p1.y} L${p2.x+off},${p2.y} L${p2.x},${p2.y}`;
 }
 
 // STORAGE
-const SK='element-flow-v55';let saveT;
+const SK='element-flow-v56';let saveT;
 function dSave(){clearTimeout(saveT);saveT=setTimeout(save,600)}
 function toast(t){const el=document.getElementById('saveToast');el.textContent=t||'💾 נשמר';el.classList.add('show');setTimeout(()=>el.classList.remove('show'),1200)}
 function save(){try{localStorage.setItem(SK,JSON.stringify({n:NODES.map(n=>({id:n.id,x:n.x,y:n.y})),e:EDGES}));toast()}catch(e){}}
@@ -778,17 +832,12 @@ function renderNodes(){
     el.id='fn_'+n.id;el.style.left=n.x+'px';el.style.top=n.y+'px';
     if(n.w)el.style.width=n.w+'px';
     el.innerHTML=n.label.replace(/\n/g,'<br>');
-    // WA icon
     if(n.type==='wa'){const ic=document.createElement('div');ic.className='wa-icon';ic.textContent='💬';el.appendChild(ic)}
-    // CU badge
     if((n.type==='wa'||n.type==='ghost')&&n.link){const cu=CU[n.link];if(cu){const b=document.createElement('div');b.className='cu-badge';b.style.background=cu.c;b.textContent='→ '+cu.l;el.appendChild(b)}}
     if(n.ttBody){el.setAttribute('data-tt-title',n.ttTitle);el.setAttribute('data-tt-body',n.ttBody)}
     if(n.link)el.addEventListener('click',()=>{if(!isDragging&&!drawArrow)goTo(n.link)});
-    // Anchors
     ANCHORS.forEach(a=>{const d=document.createElement('div');d.className='anchor-point';d.dataset.anchor=a;d.dataset.nodeId=n.id;const p={top:{l:'50%',t:'0'},right:{l:'100%',t:'50%'},bottom:{l:'50%',t:'100%'},left:{l:'0',t:'50%'}};d.style.left=p[a].l;d.style.top=p[a].t;d.addEventListener('mousedown',onAnchorDown);el.appendChild(d)});
-    el.addEventListener('mousedown',onNodeDown);
-    el.addEventListener('touchstart',onNodeTouch,{passive:false});
-    el.addEventListener('contextmenu',onNodeCtx);
+    el.addEventListener('mousedown',onNodeDown);el.addEventListener('touchstart',onNodeTouch,{passive:false});el.addEventListener('contextmenu',onNodeCtx);
     inner.appendChild(el);n._el=el;n._w=el.offsetWidth;n._h=el.offsetHeight;
   });
 }
@@ -802,127 +851,62 @@ function renderEdges(){
     let fA=e.fromAnchor,tA=e.toAnchor;
     if(!fA||!tA){const au=bestA(f,t);fA=fA||au.fA;tA=tA||au.tA}
     const p1=aPos(f,fA),p2=aPos(t,tA);
-    const d=orthoPath(p1,fA,p2,tA);
+    const offset=getEdgeOffset(i);
+    const d=orthoPath(p1,fA,p2,tA,offset);
     const dash=e.style==='dashed'?'stroke-dasharray="6,4"':'';
-    const col=e.lane?(LC[e.lane]||'#999'):'#999';
+    const col=e.lane?(LC[e.lane]||'#94a3b8'):(e.noHead?'#94a3b8':'#94a3b8');
     const sel=i===selEdge;
-    const mk=e.lane?'ah_'+e.lane:'ah_def';
-    // Hit area (wide invisible)
+    const noHead=e.noHead;
+    const mk=noHead?'':(e.lane?`marker-end="url(#ah_${e.lane})"`:'marker-end="url(#ah_def)"');
+    // Hit area
     paths+=`<path d="${d}" fill="none" stroke="transparent" stroke-width="16" style="cursor:pointer;pointer-events:stroke" data-eidx="${i}"/>`;
-    // Visible path
+    // Visible
     if(sel){
-      // Selected: bright blue + animated dash
-      paths+=`<path d="${d}" fill="none" stroke="#3b82f6" stroke-width="3.5" stroke-dasharray="8,4" marker-end="url(#ah_sel)" style="pointer-events:none"><animate attributeName="stroke-dashoffset" from="24" to="0" dur="0.8s" repeatCount="indefinite"/></path>`;
+      paths+=`<path d="${d}" fill="none" stroke="#3b82f6" stroke-width="3.5" stroke-dasharray="8,4" ${noHead?'':'marker-end="url(#ah_sel)"'} style="pointer-events:none"><animate attributeName="stroke-dashoffset" from="24" to="0" dur="0.8s" repeatCount="indefinite"/></path>`;
     } else {
-      paths+=`<path d="${d}" fill="none" stroke="${col}" stroke-width="1.5" ${dash} marker-end="url(#${mk})" style="pointer-events:none"/>`;
+      const sw=noHead?1.2:1.5;
+      const lineCol=e.lane?LC[e.lane]:col;
+      const extraDash=noHead?'stroke-dasharray="4,3"':'';
+      paths+=`<path d="${d}" fill="none" stroke="${lineCol}" stroke-width="${sw}" ${dash} ${extraDash} ${mk} style="pointer-events:none"/>`;
     }
     // Label
-    if(e.label){const lbl=document.createElement('div');lbl.className='edge-label';if(e.lane)lbl.style.color=LC[e.lane];lbl.style.left=((p1.x+p2.x)/2)+'px';lbl.style.top=((p1.y+p2.y)/2-8)+'px';lbl.style.transform='translate(-50%,-50%)';lbl.textContent=e.label;inner.appendChild(lbl)}
+    if(e.label){const lbl=document.createElement('div');lbl.className='edge-label';if(e.lane)lbl.style.color=LC[e.lane];lbl.style.left=((p1.x+p2.x)/2+offset)+'px';lbl.style.top=((p1.y+p2.y)/2-8)+'px';lbl.style.transform='translate(-50%,-50%)';lbl.textContent=e.label;inner.appendChild(lbl)}
     // Endpoint handles (when selected)
-    if(sel){
-      const h1=mkHandle(p1,'from',i,fA);inner.appendChild(h1);
-      const h2=mkHandle(p2,'to',i,tA);inner.appendChild(h2);
-    }
+    if(sel){inner.appendChild(mkHandle(p1,'from',i));inner.appendChild(mkHandle(p2,'to',i))}
   });
-  let maxX=950,maxY=850;
+  let maxX=980,maxY=880;
   NODES.forEach(n=>{maxX=Math.max(maxX,n.x+(n._w||150)+60);maxY=Math.max(maxY,n.y+(n._h||40)+80)});
   inner.style.width=maxX+'px';inner.style.height=maxY+'px';
   svg.setAttribute('width',maxX);svg.setAttribute('height',maxY);
   svg.innerHTML=`<defs>
-    <marker id="ah_def" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#999"/></marker>
+    <marker id="ah_def" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#94a3b8"/></marker>
     <marker id="ah_adult" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="${LC.adult}"/></marker>
     <marker id="ah_parent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="${LC.parent}"/></marker>
     <marker id="ah_sel" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#3b82f6"/></marker>
   </defs>`+paths;
-  // Temp draw arrow
   if(drawArrow?.tempPath){const tp=document.createElementNS('http://www.w3.org/2000/svg','path');tp.setAttribute('d',drawArrow.tempPath);tp.setAttribute('fill','none');tp.setAttribute('stroke','#25D366');tp.setAttribute('stroke-width','2');tp.setAttribute('stroke-dasharray','4,4');tp.style.pointerEvents='none';svg.appendChild(tp)}
 }
 
-// Edge endpoint handle
-function mkHandle(pos,end,edgeIdx,anchor){
-  const h=document.createElement('div');h.className='edge-handle';
-  h.style.left=pos.x+'px';h.style.top=pos.y+'px';
-  h.dataset.end=end;h.dataset.edgeIdx=edgeIdx;
-  h.addEventListener('mousedown',onHandleDown);
-  return h;
-}
+function mkHandle(pos,end,edgeIdx){const h=document.createElement('div');h.className='edge-handle';h.style.left=pos.x+'px';h.style.top=pos.y+'px';h.dataset.end=end;h.dataset.edgeIdx=edgeIdx;h.addEventListener('mousedown',onHandleDown);return h}
 
 // === EDGE INTERACTIONS ===
 svg.style.pointerEvents='auto';
-svg.addEventListener('click',function(e){
-  const hit=e.target.closest('[data-eidx]');
-  if(hit){e.stopPropagation();selectEdge(parseInt(hit.dataset.eidx))}
-});
-scroll.addEventListener('click',function(e){
-  if(!e.target.closest('[data-eidx]')&&!e.target.closest('.anchor-point')&&!e.target.closest('.fnode')&&!e.target.closest('.edge-handle')&&!e.target.closest('.arrow-toolbar'))deselect();
-});
+svg.addEventListener('click',function(e){const hit=e.target.closest('[data-eidx]');if(hit){e.stopPropagation();selectEdge(parseInt(hit.dataset.eidx))}});
+scroll.addEventListener('click',function(e){if(!e.target.closest('[data-eidx]')&&!e.target.closest('.anchor-point')&&!e.target.closest('.fnode')&&!e.target.closest('.edge-handle')&&!e.target.closest('.arrow-toolbar'))deselect()});
 
-function selectEdge(i){
-  selEdge=i;selNode=null;renderAll();
-  const edge=EDGES[i];if(!edge)return;
-  const f=nodeMap[edge.from],t=nodeMap[edge.to];if(!f||!t)return;
-  let fA=edge.fromAnchor,tA=edge.toAnchor;
-  if(!fA||!tA){const au=bestA(f,t);fA=fA||au.fA;tA=tA||au.tA}
-  const p1=aPos(f,fA),p2=aPos(t,tA);
-  const mx=(p1.x+p2.x)/2,my=(p1.y+p2.y)/2;
-  const sr=scroll.getBoundingClientRect();
-  atb.style.left=(mx*zoom-scroll.scrollLeft+sr.left)+'px';
-  atb.style.top=(my*zoom-scroll.scrollTop+sr.top-40)+'px';
-  atb.classList.add('visible');
-}
+function selectEdge(i){selEdge=i;selNode=null;renderAll();const edge=EDGES[i];if(!edge)return;const f=nodeMap[edge.from],t=nodeMap[edge.to];if(!f||!t)return;let fA=edge.fromAnchor,tA=edge.toAnchor;if(!fA||!tA){const au=bestA(f,t);fA=fA||au.fA;tA=tA||au.tA}const p1=aPos(f,fA),p2=aPos(t,tA);const mx=(p1.x+p2.x)/2,my=(p1.y+p2.y)/2;const sr=scroll.getBoundingClientRect();atb.style.left=(mx*zoom-scroll.scrollLeft+sr.left)+'px';atb.style.top=(my*zoom-scroll.scrollTop+sr.top-40)+'px';atb.classList.add('visible')}
 function selectNode(id){selNode=id;selEdge=-1;atb.classList.remove('visible');renderAll()}
 function deselect(){selEdge=-1;selNode=null;atb.classList.remove('visible');ctxMenu.classList.remove('visible');renderAll()}
 function flipSelectedEdge(){if(selEdge<0)return;pushUndo();const e=EDGES[selEdge];[e.from,e.to]=[e.to,e.from];[e.fromAnchor,e.toAnchor]=[e.toAnchor,e.fromAnchor];dSave();selectEdge(selEdge)}
 function delEdge(){if(selEdge<0)return;pushUndo();EDGES.splice(selEdge,1);deselect();dSave()}
 
-// === HANDLE DRAG (reattach arrow endpoint) ===
-function onHandleDown(e){
-  e.stopPropagation();e.preventDefault();
-  const end=e.target.dataset.end;const idx=parseInt(e.target.dataset.edgeIdx);
-  const edge=EDGES[idx];if(!edge)return;
-  pushUndo();
-  dragHandle={idx,end,edge:JSON.parse(JSON.stringify(edge))};
-  document.addEventListener('mousemove',onHandleMove);
-  document.addEventListener('mouseup',onHandleUp);
-}
-function onHandleMove(e){
-  if(!dragHandle)return;
-  const sr=scroll.getBoundingClientRect();
-  const mx=(e.clientX-sr.left+scroll.scrollLeft)/zoom;
-  const my=(e.clientY-sr.top+scroll.scrollTop)/zoom;
-  // Find nearest anchor
-  let best=null,bestD=Infinity;
-  NODES.forEach(n=>{
-    ANCHORS.forEach(a=>{
-      const p=aPos(n,a);const d=Math.hypot(p.x-mx,p.y-my);
-      if(d<bestD){bestD=d;best={nodeId:n.id,anchor:a,pos:p}}
-    });
-  });
-  const edge=EDGES[dragHandle.idx];
-  if(best&&bestD<40*zoom){
-    // Snap preview
-    if(dragHandle.end==='from'){edge.from=best.nodeId;edge.fromAnchor=best.anchor}
-    else{edge.to=best.nodeId;edge.toAnchor=best.anchor}
-  }
-  renderEdges();updMM();
-}
-function onHandleUp(e){
-  document.removeEventListener('mousemove',onHandleMove);
-  document.removeEventListener('mouseup',onHandleUp);
-  // Validate — don't allow self-loops
-  const edge=EDGES[dragHandle?.idx];
-  if(edge&&edge.from===edge.to){
-    // Revert
-    EDGES[dragHandle.idx]=dragHandle.edge;
-    undoStack.pop();
-  }
-  dragHandle=null;
-  dSave();renderAll();
-  if(selEdge>=0)selectEdge(selEdge);
-}
+// HANDLE DRAG (reattach endpoints)
+function onHandleDown(e){e.stopPropagation();e.preventDefault();const end=e.target.dataset.end,idx=parseInt(e.target.dataset.edgeIdx);const edge=EDGES[idx];if(!edge)return;pushUndo();dragHandle={idx,end,orig:JSON.parse(JSON.stringify(edge))};document.addEventListener('mousemove',onHandleMove);document.addEventListener('mouseup',onHandleUp)}
+function onHandleMove(e){if(!dragHandle)return;const sr=scroll.getBoundingClientRect();const mx=(e.clientX-sr.left+scroll.scrollLeft)/zoom,my=(e.clientY-sr.top+scroll.scrollTop)/zoom;let best=null,bestD=Infinity;NODES.forEach(n=>{ANCHORS.forEach(a=>{const p=aPos(n,a);const d=Math.hypot(p.x-mx,p.y-my);if(d<bestD){bestD=d;best={nodeId:n.id,anchor:a}}})});const edge=EDGES[dragHandle.idx];if(best&&bestD<50){if(dragHandle.end==='from'){edge.from=best.nodeId;edge.fromAnchor=best.anchor}else{edge.to=best.nodeId;edge.toAnchor=best.anchor}}renderEdges();updMM()}
+function onHandleUp(){document.removeEventListener('mousemove',onHandleMove);document.removeEventListener('mouseup',onHandleUp);const edge=EDGES[dragHandle?.idx];if(edge&&edge.from===edge.to){EDGES[dragHandle.idx]=dragHandle.orig;undoStack.pop()}dragHandle=null;dSave();renderAll();if(selEdge>=0)selectEdge(selEdge)}
 
 // NODE ADD/DELETE
-function addNode(type,x,y){pushUndo();const id='c_'+(nextId++);const labels={step:'🔹 שלב חדש',decision:'החלטה?',wa:'💬 הודעה',ghost:'⛔ נעלם'};NODES.push({id,type,label:labels[type]||'צומת',x:snap(x),y:snap(y),w:120});nodeMap[id]=NODES[NODES.length-1];renderAll();dSave();selectNode(id)}
+function addNode(type,x,y){pushUndo();const id='c_'+(nextId++);const labels={step:'🔹 שלב',decision:'החלטה?',wa:'💬 הודעה',ghost:'⛔ נעלם'};NODES.push({id,type,label:labels[type]||'צומת',x:snap(x),y:snap(y),w:120});nodeMap[id]=NODES[NODES.length-1];renderAll();dSave();selectNode(id)}
 function delNode(id){const i=NODES.findIndex(n=>n.id===id);if(i<0)return;pushUndo();EDGES=EDGES.filter(e=>e.from!==id&&e.to!==id);NODES.splice(i,1);delete nodeMap[id];if(selNode===id)selNode=null;renderAll();dSave()}
 
 // CONTEXT MENUS
@@ -952,10 +936,9 @@ scroll.addEventListener('wheel',(e)=>{if(e.ctrlKey||e.metaKey){e.preventDefault(
 
 // MINIMAP
 const mmC=document.getElementById('minimapCanvas'),mmX=mmC.getContext('2d'),mmV=document.getElementById('minimapViewport');
-function updMM(){const W=150,H=90;mmC.width=W;mmC.height=H;mmX.clearRect(0,0,W,H);let mx=950,my=850;NODES.forEach(n=>{mx=Math.max(mx,n.x+(n._w||120)+20);my=Math.max(my,n.y+(n._h||30)+20)});const s=Math.min(W/mx,H/my);const colors={step:'#64748b',decision:'#f59e0b',wa:'#128C7E',ghost:'#ef5350',end:'#26a69a'};NODES.forEach(n=>{let c=colors[n.type]||'#999';if(n.lane==='adult')c=LC.adult;if(n.lane==='parent')c=LC.parent;mmX.fillStyle=c;mmX.fillRect(n.x*s,n.y*s,Math.max((n._w||100)*s,2),Math.max((n._h||25)*s,2))});EDGES.forEach(e=>{const f=nodeMap[e.from],t=nodeMap[e.to];if(!f||!t)return;mmX.strokeStyle=e.lane?LC[e.lane]:'rgba(0,0,0,.08)';mmX.lineWidth=e.lane?1:.5;mmX.beginPath();mmX.moveTo((f.x+(f._w||100)/2)*s,(f.y+(f._h||25)/2)*s);mmX.lineTo((t.x+(t._w||100)/2)*s,(t.y+(t._h||25)/2)*s);mmX.stroke()});const vx=(scroll.scrollLeft/zoom)*s,vy=(scroll.scrollTop/zoom)*s,vw=(scroll.clientWidth/zoom)*s,vh=(scroll.clientHeight/zoom)*s;mmV.style.left=vx+'px';mmV.style.top=vy+'px';mmV.style.width=vw+'px';mmV.style.height=vh+'px'}
+function updMM(){const W=150,H=90;mmC.width=W;mmC.height=H;mmX.clearRect(0,0,W,H);let mx=980,my=880;NODES.forEach(n=>{mx=Math.max(mx,n.x+(n._w||120)+20);my=Math.max(my,n.y+(n._h||30)+20)});const s=Math.min(W/mx,H/my);const colors={step:'#64748b',decision:'#f59e0b',wa:'#128C7E',ghost:'#ef5350',end:'#26a69a'};NODES.forEach(n=>{let c=colors[n.type]||'#999';if(n.lane==='adult')c=LC.adult;if(n.lane==='parent')c=LC.parent;mmX.fillStyle=c;mmX.fillRect(n.x*s,n.y*s,Math.max((n._w||100)*s,2),Math.max((n._h||25)*s,2))});EDGES.forEach(e=>{const f=nodeMap[e.from],t=nodeMap[e.to];if(!f||!t)return;mmX.strokeStyle=e.lane?LC[e.lane]:(e.noHead?'rgba(0,0,0,.05)':'rgba(0,0,0,.08)');mmX.lineWidth=e.lane?1:.5;mmX.beginPath();mmX.moveTo((f.x+(f._w||100)/2)*s,(f.y+(f._h||25)/2)*s);mmX.lineTo((t.x+(t._w||100)/2)*s,(t.y+(t._h||25)/2)*s);mmX.stroke()});const vx=(scroll.scrollLeft/zoom)*s,vy=(scroll.scrollTop/zoom)*s,vw=(scroll.clientWidth/zoom)*s,vh=(scroll.clientHeight/zoom)*s;mmV.style.left=vx+'px';mmV.style.top=vy+'px';mmV.style.width=vw+'px';mmV.style.height=vh+'px'}
 scroll.addEventListener('scroll',updMM);
 
-// INIT
 (function(){NODES.forEach(n=>nodeMap[n.id]=n);load();renderAll();scroll.scrollLeft=Math.max(0,420*zoom-scroll.clientWidth/2)})();
 </script>
 </body>
