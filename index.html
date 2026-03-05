@@ -131,6 +131,9 @@ h2 { font-size: 18px; font-weight: 800; color: var(--hdr); margin-top: 32px; mar
 /* Edge Handles */
 .edge-handle { position: absolute; width: 16px; height: 16px; border-radius: 50%; background: #3b82f6; border: 3px solid #fff; cursor: grab; z-index: 56; transform: translate(-50%, -50%); box-shadow: 0 2px 6px rgba(59,130,246,0.5); pointer-events: auto; transition: transform 0.2s; }
 .edge-handle:hover { transform: translate(-50%, -50%) scale(1.3); background: #2563eb; }
+/* Edge Labels */
+.edge-label { position: absolute; font-size: 10px; font-weight: 600; color: var(--text2); background: rgba(255,255,255,0.9); padding: 2px 8px; border-radius: 4px; border: 1px solid var(--border); white-space: nowrap; pointer-events: auto; cursor: pointer; z-index: 12; transition: all 0.2s; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+.edge-label:hover { background: #fff; border-color: #94a3b8; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
 
 /* Toolbars & Menus */
 .arrow-toolbar { position: absolute; z-index: 60; background: #fff; border: 1px solid var(--border); border-radius: 8px; padding: 4px; display: flex; gap: 4px; box-shadow: 0 8px 24px rgba(0,0,0,0.12); opacity: 0; pointer-events: none; transition: all 0.2s; transform: translateY(10px); }
@@ -215,7 +218,7 @@ h2 { font-size: 18px; font-weight: 800; color: var(--hdr); margin-top: 32px; mar
 <div class="page-header">
   <h1>אלמנט — חוברת תבניות וואטסאפ</h1>
   <div class="sub">Element — WhatsApp Templates Playbook & Flow Engine (Desktop Pro)</div>
-  <div class="ver">גרסה 6.1 | ארכיטקטורה נקייה, העתק/הדבק ועריכה מתקדמת</div>
+  <div class="ver">גרסה 6.2 | ארכיטקטורה נקייה, העתק/הדבק ועריכה מתקדמת</div>
 </div>
 
 <div class="search-bar">
@@ -396,6 +399,14 @@ h2 { font-size: 18px; font-weight: 800; color: var(--hdr); margin-top: 32px; mar
   <div class="note"><strong>להורים:</strong> שנו את הניסוח ל-״איך <span class="placeholder">[שם הילד/ה]</span> הרגיש/ה אחרי השיעור הראשון?״</div>
   </div></div>
 
+  <div class="section-divider" id="group5"><span class="gnum">5</span> הרשמה למנוי</div>
+  <p style="font-size: 13px; color: var(--text2); margin-bottom: 16px;">הודעות הרשמה ללקוחות שסיימו 3 שיעורי היכרות, וברוכים הבאים לנרשמים חדשים.</p>
+  <div style="background: #fffbeb; border: 1px solid #fde68a; border-radius: 8px; padding: 12px 16px; margin: 0 0 16px; font-size: 12px; color: #92400e;"><strong>תבניות #12, #13, #14, #15, #18 —</strong> טרם הוזנו. צפויות להתווסף בגרסה הבאה.</div>
+
+  <div class="section-divider" id="group6"><span class="gnum">6</span> שימור והפניות</div>
+  <p style="font-size: 13px; color: var(--text2); margin-bottom: 16px;">הודעות שימור ללקוחות פעילים, בקשת הפניות (חבר מביא חבר), ומעקב נטישה.</p>
+  <div style="background: #fffbeb; border: 1px solid #fde68a; border-radius: 8px; padding: 12px 16px; margin: 0 0 16px; font-size: 12px; color: #92400e;"><strong>תבניות #16, #17a, #17b —</strong> טרם הוזנו. צפויות להתווסף בגרסה הבאה.</div>
+
   <h2 id="ref-section">📎 טבלת מצבים ב-ClickUp (מקוצרת)</h2>
   <table class="ref-table">
     <thead><tr><th>שלב בלקוח</th><th>תגית שלב במערכת</th><th>פעולה דרושה / תבנית</th></tr></thead>
@@ -504,25 +515,25 @@ const DEFAULT_NODES=[
   {id:'n_t17b_2',type:'ghost',label:'#17b נעלם פתאום',x:480,y:1880,w:130},
 
   // Phase 4
-  {id:'class3',type:'step',label:'🥋 שיעור סיום #3',x:200,y:2000,w:130,major:true},
-  {id:'att3',type:'decision',label:'האם הגיע?',x:200,y:2100,w:110},
-  
-  {id:'n_t12',type:'wa',label:'#12 הרשמה בוגר',x:60,y:2220,w:130,lane:'adult'},
-  {id:'n_t13',type:'wa',label:'#13 הרשמה הורה',x:220,y:2220,w:130,lane:'parent'},
-  {id:'n_t17b_3',type:'ghost',label:'#17b נעלם בסוף',x:380,y:2220,w:130},
-  
-  {id:'enrollQ',type:'decision',label:'החלטת לקוח?',x:140,y:2360,w:130},
-  {id:'enrolled',type:'step',label:'✅ נרשם למנוי!',x:-20,y:2480,w:130,major:true},
-  {id:'n_t18',type:'wa',label:'#18 מתלבט כרגע',x:140,y:2480,w:130},
-  {id:'n_t17b_f',type:'ghost',label:'#17b הפסיק לענות',x:300,y:2480,w:130},
-  
-  {id:'whoEnroll',type:'decision',label:'סוג לקוח?',x:-20,y:2600,w:110},
-  {id:'n_t14',type:'wa',label:'#14 ברוכים הבאים\nלמבוגר + אפליקציה',x:-120,y:2720,w:140,lane:'adult'},
-  {id:'n_t15',type:'wa',label:'#15 ברוכים הבאים\nלהורה + אפליקציה',x:80,y:2720,w:140,lane:'parent'},
-  
-  {id:'wait23w',type:'step',label:'⏰ אימון 2-3 שב׳',x:-20,y:2860,w:130,timer:true},
-  {id:'n_t16',type:'wa',label:'#16 חבר מביא חבר',x:180,y:2860,w:130},
-  {id:'done',type:'end',label:'🎉 לקוח פעיל!',x:-20,y:3000,w:140}
+  {id:'class3',type:'step',label:'🥋 שיעור סיום #3',x:280,y:2000,w:130,major:true},
+  {id:'att3',type:'decision',label:'האם הגיע?',x:280,y:2100,w:110},
+
+  {id:'n_t12',type:'wa',label:'#12 הרשמה בוגר',x:140,y:2220,w:130,lane:'adult'},
+  {id:'n_t13',type:'wa',label:'#13 הרשמה הורה',x:300,y:2220,w:130,lane:'parent'},
+  {id:'n_t17b_3',type:'ghost',label:'#17b נעלם בסוף',x:460,y:2220,w:130},
+
+  {id:'enrollQ',type:'decision',label:'החלטת לקוח?',x:220,y:2360,w:130},
+  {id:'enrolled',type:'step',label:'✅ נרשם למנוי!',x:60,y:2480,w:130,major:true},
+  {id:'n_t18',type:'wa',label:'#18 מתלבט כרגע',x:220,y:2480,w:130},
+  {id:'n_t17b_f',type:'ghost',label:'#17b הפסיק לענות',x:380,y:2480,w:130},
+
+  {id:'whoEnroll',type:'decision',label:'סוג לקוח?',x:60,y:2600,w:110},
+  {id:'n_t14',type:'wa',label:'#14 ברוכים הבאים\nלמבוגר + אפליקציה',x:20,y:2720,w:140,lane:'adult'},
+  {id:'n_t15',type:'wa',label:'#15 ברוכים הבאים\nלהורה + אפליקציה',x:200,y:2720,w:140,lane:'parent'},
+
+  {id:'wait23w',type:'step',label:'⏰ אימון 2-3 שב׳',x:100,y:2860,w:130,timer:true},
+  {id:'n_t16',type:'wa',label:'#16 חבר מביא חבר',x:280,y:2860,w:130},
+  {id:'done',type:'end',label:'🎉 לקוח פעיל!',x:100,y:3000,w:140}
 ];
 
 // Cleaned up edges (Removed all default labels)
@@ -681,7 +692,7 @@ function smartOrthoP(p1, a1, p2, a2) {
 }
 
 // Storage & Undo (Version bumped to v61 to force fresh layout for user)
-const SK='element-flow-v61'; let svT;
+const SK='element-flow-v62'; let svT;
 function dSv(){clearTimeout(svT); svT=setTimeout(sv,800);}
 function toast(t){const el=document.getElementById('saveToast'); el.textContent=t||'נשמר בהצלחה 💾'; el.classList.add('show'); setTimeout(()=>el.classList.remove('show'),2000);}
 function pushU(){undoS.push(gS()); if(undoS.length>MU)undoS.shift(); redoS=[]; uUB();}
@@ -730,10 +741,10 @@ function renderBackground() {
   let bgHtml = '';
   PHASES.forEach(p => {
     bgHtml += `<rect x="-150" y="${p.y}" width="${maxX + 200}" height="${p.h}" fill="${p.color}" rx="12" stroke="${p.stroke}" stroke-dasharray="8,4" stroke-width="2"/>`;
-    bgHtml += `<text x="${maxX + 30}" y="${p.y + 30}" font-weight="800" font-size="16" fill="${p.stroke}" text-anchor="start" style="opacity:0.8">${p.title}</text>`;
+    bgHtml += `<text x="${maxX/2}" y="${p.y + 24}" font-weight="800" font-size="14" fill="${p.stroke}" text-anchor="middle" style="opacity:0.9" direction="rtl">${p.title}</text>`;
   });
   
-  svgBg.setAttribute('width', maxX);
+  svgBg.setAttribute('width', maxX + 200);
   svgBg.setAttribute('height', maxY);
   svgBg.innerHTML = bgHtml;
 }
