@@ -50,7 +50,7 @@ h2 { font-size: 18px; font-weight: 800; color: var(--hdr); margin-top: 32px; mar
 
 /* === DESKTOP CANVAS ENGINE === */
 #flowcharts { scroll-margin-top: 80px; margin-bottom: 40px; }
-.canvas-wrapper { position: relative; background: #fafbfc; border: 2px solid var(--border); border-radius: 12px; overflow: hidden; margin: 8px 0 24px; height: 800px; cursor: grab; user-select: none; box-shadow: 0 10px 30px -10px rgba(0,0,0,0.1); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+.canvas-wrapper { position: relative; background: #fafbfc; border: 2px solid var(--border); border-radius: 12px; overflow: hidden; margin: 8px 0 24px; height: 800px; cursor: grab; user-select: none; box-shadow: 0 10px 30px -10px rgba(0,0,0,0.1); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); direction: ltr; }
 .canvas-wrapper:active { cursor: grabbing; }
 .canvas-wrapper.node-dragging { cursor: grabbing; }
 
@@ -86,7 +86,7 @@ h2 { font-size: 18px; font-weight: 800; color: var(--hdr); margin-top: 32px; mar
 .canvas-svg { position: absolute; top: 0; left: 0; z-index: 2; overflow: visible; }
 
 /* === NODES === */
-.fnode { position: absolute; padding: 10px 14px; font-size: 11px; font-weight: 600; text-align: center; max-width: 240px; white-space: normal; word-break: break-word; line-height: 1.4; border-radius: 8px; cursor: grab; z-index: 10; transition: box-shadow 0.2s, transform 0.1s; user-select: none; box-shadow: 0 2px 4px rgba(0,0,0,0.04); }
+.fnode { position: absolute; padding: 10px 14px; font-size: 11px; font-weight: 600; text-align: center; max-width: 240px; white-space: normal; word-break: break-word; line-height: 1.4; border-radius: 8px; cursor: grab; z-index: 10; transition: box-shadow 0.2s, transform 0.1s; user-select: none; box-shadow: 0 2px 4px rgba(0,0,0,0.04); direction: rtl; }
 .fnode:active { cursor: grabbing; z-index: 50; transform: scale(0.98); }
 .fnode:hover { box-shadow: 0 8px 16px rgba(0,0,0,0.1); z-index: 40; }
 
@@ -157,14 +157,16 @@ h2 { font-size: 18px; font-weight: 800; color: var(--hdr); margin-top: 32px; mar
 .lg-box { width: 20px; height: 14px; border-radius: 4px; border-width: 1.5px; border-style: solid; position: relative; }
 
 /* Tooltip (Desktop Pro) */
-#tooltip { position: fixed; z-index: 9999; pointer-events: none; opacity: 0; transition: opacity 0.2s, transform 0.2s; max-width: 360px; width: 360px; background: #0f172a; color: #f8fafc; border: 1px solid #334155; border-radius: 12px; box-shadow: 0 12px 40px rgba(0,0,0,0.4); font-size: 12px; line-height: 1.6; direction: rtl; text-align: right; overflow: hidden; transform: translateY(5px); }
+#tooltip { position: fixed; z-index: 9999; pointer-events: none; opacity: 0; transition: opacity 0.2s, transform 0.2s; max-width: 300px; width: 300px; background: #0f172a; color: #f8fafc; border: 1px solid #334155; border-radius: 10px; box-shadow: 0 8px 28px rgba(0,0,0,0.35); font-size: 11px; line-height: 1.5; direction: rtl; text-align: right; overflow: hidden; transform: translateY(5px); }
 #tooltip.visible { opacity: 1; pointer-events: auto; transform: translateY(0); }
-#tooltip .tt-header { display: flex; justify-content: space-between; align-items: center; padding: 10px 16px; background: rgba(37,211,102,0.15); border-bottom: 1px solid rgba(37,211,102,0.2); }
-#tooltip .tt-title { font-weight: 700; color: #6ee7b7; font-size: 13px; }
-#tooltip .tt-copy { background: var(--accent); color: #fff; border: none; border-radius: 6px; padding: 4px 12px; font-size: 11px; font-weight: 600; font-family: 'Heebo', sans-serif; cursor: pointer; transition: background 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+#tooltip .tt-header { display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; background: rgba(37,211,102,0.15); border-bottom: 1px solid rgba(37,211,102,0.2); }
+#tooltip .tt-title { font-weight: 700; color: #6ee7b7; font-size: 12px; }
+#tooltip .tt-copy { background: var(--accent); color: #fff; border: none; border-radius: 6px; padding: 3px 10px; font-size: 10px; font-weight: 600; font-family: 'Heebo', sans-serif; cursor: pointer; transition: background 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
 #tooltip .tt-copy:hover { background: #16a34a; }
-#tooltip .tt-body { padding: 14px 16px; white-space: pre-wrap; font-size: 12px; color: #cbd5e1; }
-#tooltip .tt-body .ph { background: rgba(251,191,36,0.15); color: #fbbf24; padding: 2px 4px; border-radius: 4px; font-weight: 600; font-family: monospace; font-size: 11px; }
+#tooltip .tt-body { padding: 10px 12px; white-space: pre-wrap; font-size: 11px; color: #cbd5e1; max-height: 320px; overflow-y: auto; }
+#tooltip .tt-body::-webkit-scrollbar { width: 6px; }
+#tooltip .tt-body::-webkit-scrollbar-thumb { background: rgba(148,163,184,0.4); border-radius: 3px; }
+#tooltip .tt-body .ph { background: rgba(251,191,36,0.15); color: #fbbf24; padding: 2px 4px; border-radius: 4px; font-weight: 600; font-family: monospace; font-size: 10px; }
 
 /* Template cards (Desktop sizing) */
 .section-divider { margin: 40px 0 16px; padding: 12px 16px; background: var(--hdr); color: #fff; border-radius: 8px; font-size: 16px; font-weight: 800; display: flex; align-items: center; gap: 10px; scroll-margin-top: 80px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
@@ -202,6 +204,13 @@ h2 { font-size: 18px; font-weight: 800; color: var(--hdr); margin-top: 32px; mar
 .back-top.visible { opacity: 1; transform: translateY(0); }
 .back-top:hover { background: var(--accent2); transform: translateY(-4px); }
 
+/* Phase Drag Handles */
+.phase-drag-handle { position: absolute; height: 12px; cursor: ns-resize; z-index: 8; left: 0; right: 0; background: transparent; transition: background 0.2s; }
+.phase-drag-handle:hover { background: rgba(37,211,102,0.15); }
+.phase-drag-handle:active { background: rgba(37,211,102,0.25); }
+.phase-drag-handle::after { content: ''; position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); width: 40px; height: 4px; border-radius: 2px; background: rgba(148,163,184,0.4); transition: background 0.2s; }
+.phase-drag-handle:hover::after { background: rgba(37,211,102,0.7); }
+
 /* SVG Filters & Animations */
 .edge-path { transition: stroke 0.2s, stroke-width 0.2s; }
 .edge-path.hover-glow { stroke: #3b82f6 !important; stroke-width: 4px !important; filter: drop-shadow(0 0 6px rgba(59,130,246,0.6)); z-index: 100; }
@@ -218,7 +227,7 @@ h2 { font-size: 18px; font-weight: 800; color: var(--hdr); margin-top: 32px; mar
 <div class="page-header">
   <h1>אלמנט — חוברת תבניות וואטסאפ</h1>
   <div class="sub">Element — WhatsApp Templates Playbook & Flow Engine (Desktop Pro)</div>
-  <div class="ver">גרסה 6.2 | ארכיטקטורה נקייה, העתק/הדבק ועריכה מתקדמת</div>
+  <div class="ver">גרסה 6.3 | גבולות שלב נגררים, טולטיפ חכם, פריסה ממורכזת</div>
 </div>
 
 <div class="search-bar">
@@ -425,7 +434,7 @@ h2 { font-size: 18px; font-weight: 800; color: var(--hdr); margin-top: 32px; mar
 
 <script>
 // ================================================================
-// DESKTOP ENGINE v6.1 — Master Architecture, Copy/Paste, Advanced Edit
+// DESKTOP ENGINE v6.3 — Drag Phase Boundaries, Smart Tooltips, Centered Layout
 // ================================================================
 
 // UI Utilities
@@ -435,7 +444,17 @@ function fb(t,btn){const a=document.createElement('textarea');a.value=t;a.style.
 function flash(btn){if(!btn)return;const orig=btn.textContent;btn.textContent='✅ הועתק';btn.classList.add('copied');setTimeout(()=>{btn.textContent=orig;btn.classList.remove('copied')},1500)}
 
 const tt=document.getElementById('tooltip');let ttT;
-document.addEventListener('mouseover',function(e){const nd=e.target.closest('[data-tt-body]');if(!nd)return;clearTimeout(ttT);tt.querySelector('.tt-title').textContent=nd.getAttribute('data-tt-title');let b=nd.getAttribute('data-tt-body').replace(/\\n/g,'\n');tt.querySelector('.tt-body').innerHTML=b.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>').replace(/\[([^\]]+)\]/g,'<span class="ph">[$1]</span>');const r=nd.getBoundingClientRect();tt.style.top='0';tt.style.left='0';tt.classList.add('visible');let top=r.top-tt.offsetHeight-12,left=r.left+r.width/2-180;if(top<16)top=r.bottom+12;if(left<16)left=16;if(left+360>window.innerWidth)left=window.innerWidth-376;tt.style.top=top+'px';tt.style.left=left+'px'});
+document.addEventListener('mouseover',function(e){const nd=e.target.closest('[data-tt-body]');if(!nd)return;clearTimeout(ttT);tt.querySelector('.tt-title').textContent=nd.getAttribute('data-tt-title');
+  // Try to extract full message from template card via link property
+  let b='';
+  const nodeId=nd.id?.replace('fn_','');
+  const nodeData=nodeId&&NM[nodeId];
+  if(nodeData&&nodeData.link){
+    const card=document.getElementById(nodeData.link);
+    if(card){const msg=card.querySelector('.message');if(msg){const cl=msg.cloneNode(true);cl.querySelector('.cbtn')?.remove();cl.querySelectorAll('.placeholder').forEach(s=>s.replaceWith('['+s.textContent.replace(/[\[\]]/g,'')+']'));b=cl.innerText.trim()}}
+  }
+  if(!b) b=nd.getAttribute('data-tt-body').replace(/\\n/g,'\n');
+  tt.querySelector('.tt-body').innerHTML=b.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>').replace(/\[([^\]]+)\]/g,'<span class="ph">[$1]</span>');const r=nd.getBoundingClientRect();tt.style.top='0';tt.style.left='0';tt.classList.add('visible');let top=r.top-tt.offsetHeight-12,left=r.left+r.width/2-150;if(top<16)top=r.bottom+12;if(left<16)left=16;if(left+320>window.innerWidth)left=window.innerWidth-336;tt.style.top=top+'px';tt.style.left=left+'px'});
 document.addEventListener('mouseout',function(e){const nd=e.target.closest('[data-tt-body]');if(!nd)return;if(e.relatedTarget?.closest('[data-tt-body]')===nd||e.relatedTarget?.closest('#tooltip'))return;ttT=setTimeout(()=>tt.classList.remove('visible'),200)});
 tt.addEventListener('mouseover',()=>clearTimeout(ttT));tt.addEventListener('mouseleave',()=>{ttT=setTimeout(()=>tt.classList.remove('visible'),150)});
 function copyTooltip(){const c=tt.querySelector('.tt-body').cloneNode(true);c.querySelectorAll('.ph').forEach(s=>s.replaceWith(s.textContent));c.querySelectorAll('br').forEach(br=>br.replaceWith('\n'));doCopy(c.innerText.trim(),tt.querySelector('.tt-copy'))}
@@ -505,35 +524,35 @@ const DEFAULT_NODES=[
   {id:'class1',type:'step',label:'🥋 שיעור היכרות #1',x:480,y:1320,w:130,major:true},
   {id:'att1',type:'decision',label:'האם הגיע?',x:480,y:1420,w:110},
   
-  {id:'n_t10',type:'wa',label:'#10 מעקב שיעור 1',x:340,y:1540,w:140,link:'t10'},
-  {id:'n_t17a',type:'ghost',label:'#17a שילם ולא הגיע',x:620,y:1540,w:140},
-  
-  {id:'class2',type:'step',label:'🥋 שיעור היכרות #2',x:340,y:1660,w:130},
-  {id:'att2',type:'decision',label:'האם הגיע?',x:340,y:1760,w:110},
-  
-  {id:'n_t11',type:'wa',label:'#11 מתן ערך / שרירים',x:200,y:1880,w:140},
-  {id:'n_t17b_2',type:'ghost',label:'#17b נעלם פתאום',x:480,y:1880,w:130},
+  {id:'n_t10',type:'wa',label:'#10 מעקב שיעור 1',x:420,y:1540,w:140,link:'t10'},
+  {id:'n_t17a',type:'ghost',label:'#17a שילם ולא הגיע',x:700,y:1540,w:140},
+
+  {id:'class2',type:'step',label:'🥋 שיעור היכרות #2',x:420,y:1660,w:130},
+  {id:'att2',type:'decision',label:'האם הגיע?',x:420,y:1760,w:110},
+
+  {id:'n_t11',type:'wa',label:'#11 מתן ערך / שרירים',x:320,y:1880,w:140},
+  {id:'n_t17b_2',type:'ghost',label:'#17b נעלם פתאום',x:560,y:1880,w:130},
 
   // Phase 4
-  {id:'class3',type:'step',label:'🥋 שיעור סיום #3',x:280,y:2000,w:130,major:true},
-  {id:'att3',type:'decision',label:'האם הגיע?',x:280,y:2100,w:110},
+  {id:'class3',type:'step',label:'🥋 שיעור סיום #3',x:480,y:2000,w:130,major:true},
+  {id:'att3',type:'decision',label:'האם הגיע?',x:480,y:2100,w:110},
 
-  {id:'n_t12',type:'wa',label:'#12 הרשמה בוגר',x:140,y:2220,w:130,lane:'adult'},
-  {id:'n_t13',type:'wa',label:'#13 הרשמה הורה',x:300,y:2220,w:130,lane:'parent'},
-  {id:'n_t17b_3',type:'ghost',label:'#17b נעלם בסוף',x:460,y:2220,w:130},
+  {id:'n_t12',type:'wa',label:'#12 הרשמה בוגר',x:340,y:2220,w:130,lane:'adult'},
+  {id:'n_t13',type:'wa',label:'#13 הרשמה הורה',x:500,y:2220,w:130,lane:'parent'},
+  {id:'n_t17b_3',type:'ghost',label:'#17b נעלם בסוף',x:660,y:2220,w:130},
 
-  {id:'enrollQ',type:'decision',label:'החלטת לקוח?',x:220,y:2360,w:130},
-  {id:'enrolled',type:'step',label:'✅ נרשם למנוי!',x:60,y:2480,w:130,major:true},
-  {id:'n_t18',type:'wa',label:'#18 מתלבט כרגע',x:220,y:2480,w:130},
-  {id:'n_t17b_f',type:'ghost',label:'#17b הפסיק לענות',x:380,y:2480,w:130},
+  {id:'enrollQ',type:'decision',label:'החלטת לקוח?',x:420,y:2360,w:130},
+  {id:'enrolled',type:'step',label:'✅ נרשם למנוי!',x:260,y:2480,w:130,major:true},
+  {id:'n_t18',type:'wa',label:'#18 מתלבט כרגע',x:420,y:2480,w:130},
+  {id:'n_t17b_f',type:'ghost',label:'#17b הפסיק לענות',x:580,y:2480,w:130},
 
-  {id:'whoEnroll',type:'decision',label:'סוג לקוח?',x:60,y:2600,w:110},
-  {id:'n_t14',type:'wa',label:'#14 ברוכים הבאים\nלמבוגר + אפליקציה',x:20,y:2720,w:140,lane:'adult'},
-  {id:'n_t15',type:'wa',label:'#15 ברוכים הבאים\nלהורה + אפליקציה',x:200,y:2720,w:140,lane:'parent'},
+  {id:'whoEnroll',type:'decision',label:'סוג לקוח?',x:260,y:2600,w:110},
+  {id:'n_t14',type:'wa',label:'#14 ברוכים הבאים\nלמבוגר + אפליקציה',x:220,y:2720,w:140,lane:'adult'},
+  {id:'n_t15',type:'wa',label:'#15 ברוכים הבאים\nלהורה + אפליקציה',x:400,y:2720,w:140,lane:'parent'},
 
-  {id:'wait23w',type:'step',label:'⏰ אימון 2-3 שב׳',x:100,y:2860,w:130,timer:true},
-  {id:'n_t16',type:'wa',label:'#16 חבר מביא חבר',x:280,y:2860,w:130},
-  {id:'done',type:'end',label:'🎉 לקוח פעיל!',x:100,y:3000,w:140}
+  {id:'wait23w',type:'step',label:'⏰ אימון 2-3 שב׳',x:300,y:2860,w:130,timer:true},
+  {id:'n_t16',type:'wa',label:'#16 חבר מביא חבר',x:480,y:2860,w:130},
+  {id:'done',type:'end',label:'🎉 לקוח פעיל!',x:360,y:3000,w:140}
 ];
 
 // Cleaned up edges (Removed all default labels)
@@ -692,7 +711,7 @@ function smartOrthoP(p1, a1, p2, a2) {
 }
 
 // Storage & Undo (Version bumped to v61 to force fresh layout for user)
-const SK='element-flow-v62'; let svT;
+const SK='element-flow-v63'; let svT;
 function dSv(){clearTimeout(svT); svT=setTimeout(sv,800);}
 function toast(t){const el=document.getElementById('saveToast'); el.textContent=t||'נשמר בהצלחה 💾'; el.classList.add('show'); setTimeout(()=>el.classList.remove('show'),2000);}
 function pushU(){undoS.push(gS()); if(undoS.length>MU)undoS.shift(); redoS=[]; uUB();}
@@ -737,17 +756,60 @@ function renderAll(){renderBackground(); renderNodes(); requestAnimationFrame(()
 function renderBackground() {
   let maxX=1200, maxY=900;
   NODES.forEach(n=>{maxX=Math.max(maxX,n.x+(n._w||200)+100); maxY=Math.max(maxY,n.y+(n._h||100)+100)});
-  
+
   let bgHtml = '';
   PHASES.forEach(p => {
     bgHtml += `<rect x="-150" y="${p.y}" width="${maxX + 200}" height="${p.h}" fill="${p.color}" rx="12" stroke="${p.stroke}" stroke-dasharray="8,4" stroke-width="2"/>`;
     bgHtml += `<text x="${maxX/2}" y="${p.y + 24}" font-weight="800" font-size="14" fill="${p.stroke}" text-anchor="middle" style="opacity:0.9" direction="rtl">${p.title}</text>`;
   });
-  
+
   svgBg.setAttribute('width', maxX + 200);
   svgBg.setAttribute('height', maxY);
   svgBg.innerHTML = bgHtml;
+
+  // Phase drag handles (DOM elements at each phase boundary)
+  inner.querySelectorAll('.phase-drag-handle').forEach(e=>e.remove());
+  for(let i=1;i<PHASES.length;i++){
+    const handle=document.createElement('div');
+    handle.className='phase-drag-handle';
+    handle.style.top=(PHASES[i].y - 6)+'px';
+    handle.style.width=(maxX + 200)+'px';
+    handle.dataset.phaseIdx=i;
+    handle.addEventListener('mousedown', onPhaseDragStart);
+    inner.appendChild(handle);
+  }
 }
+
+// Phase boundary dragging
+let phaseDrag=null;
+function onPhaseDragStart(e){
+  e.preventDefault(); e.stopPropagation();
+  const idx=parseInt(e.target.dataset.phaseIdx);
+  phaseDrag={idx, startY:e.clientY, origY:PHASES[idx].y, origPrevH:PHASES[idx-1].h};
+  document.addEventListener('mousemove', onPhaseDragMove);
+  document.addEventListener('mouseup', onPhaseDragEnd);
+}
+function onPhaseDragMove(e){
+  if(!phaseDrag) return;
+  const dy=(e.clientY - phaseDrag.startY)/zoom;
+  const newY=phaseDrag.origY + dy;
+  const minY=PHASES[phaseDrag.idx-1].y + 80; // min phase height 80px
+  const maxY=PHASES[phaseDrag.idx].y + PHASES[phaseDrag.idx].h - 80;
+  const clampedY=Math.max(minY, Math.min(maxY, newY));
+  const deltaY=clampedY - PHASES[phaseDrag.idx].y;
+  PHASES[phaseDrag.idx-1].h = phaseDrag.origPrevH + (clampedY - phaseDrag.origY);
+  PHASES[phaseDrag.idx].h -= deltaY;
+  PHASES[phaseDrag.idx].y = clampedY;
+  renderBackground(); renderEdges(); uMM();
+}
+function onPhaseDragEnd(){
+  phaseDrag=null;
+  document.removeEventListener('mousemove', onPhaseDragMove);
+  document.removeEventListener('mouseup', onPhaseDragEnd);
+  svPhases(); toast('גבולות שלב עודכנו ✅');
+}
+function svPhases(){try{localStorage.setItem('element-phases-v63',JSON.stringify(PHASES.map(p=>({id:p.id,y:p.y,h:p.h}))))}catch(e){}}
+function ldPhases(){try{const r=localStorage.getItem('element-phases-v63');if(!r)return;const d=JSON.parse(r);d.forEach(s=>{const p=PHASES.find(p=>p.id===s.id);if(p){p.y=s.y;p.h=s.h}})}catch(e){}}
 
 function renderNodes(){
   inner.querySelectorAll('.fnode').forEach(e=>e.remove());
@@ -964,8 +1026,19 @@ const mmC=document.getElementById('minimapCanvas'), mmX=mmC.getContext('2d'), mm
 function uMM(){const W=180, H=110; mmC.width=W; mmC.height=H; mmX.clearRect(0,0,W,H); let mx=1200, my=900; NODES.forEach(n=>{mx=Math.max(mx,n.x+(n._w||150)+50); my=Math.max(my,n.y+(n._h||50)+50)}); const s=Math.min(W/mx,H/my); const colors={step:'#64748b',source:'#f59e0b',decision:'#f59e0b',wa:'#10b981',ghost:'#ef4444',end:'#22c55e'}; NODES.forEach(n=>{let c=n.major?'#0f172a':(colors[n.type]||'#94a3b8'); if(n.lane==='adult')c=LC.adult; if(n.lane==='parent')c=LC.parent; mmX.fillStyle=c; mmX.beginPath(); mmX.roundRect(n.x*s,n.y*s,Math.max((n._w||140)*s,3),Math.max((n._h||40)*s,3),3); mmX.fill();}); const vx=(scr.scrollLeft/zoom)*s, vy=(scr.scrollTop/zoom)*s, vw=(scr.clientWidth/zoom)*s, vh=(scr.clientHeight/zoom)*s; mmV.style.left=vx+'px'; mmV.style.top=vy+'px'; mmV.style.width=vw+'px'; mmV.style.height=vh+'px';}
 scr.addEventListener('scroll',uMM);
 
-// Initialization
-(function(){NODES.forEach(n=>NM[n.id]=n); ld(); renderAll(); scr.scrollLeft=Math.max(0, 250*zoom-scr.clientWidth/2);})();
+// Initialization — fit tree width to canvas so no horizontal scroll needed
+(function(){
+  NODES.forEach(n=>NM[n.id]=n); ldPhases(); ld(); renderAll();
+  // Calculate tree width and zoom to fit horizontally
+  let mx=0; NODES.forEach(n=>{mx=Math.max(mx,n.x+(n._w||160))});
+  mx+=120; // padding
+  const fitZoom = scr.clientWidth / mx;
+  zoom = Math.min(fitZoom, 1); // never zoom beyond 100%
+  zoom = Math.max(zoom, 0.3);
+  inner.style.transform=`scale(${zoom})`;
+  scr.scrollLeft=0; scr.scrollTop=0;
+  uMM();
+})();
 </script>
 </body>
 </html>
