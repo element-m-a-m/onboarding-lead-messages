@@ -115,16 +115,12 @@ h2 { font-size: 18px; font-weight: 800; color: var(--hdr); margin-top: 32px; mar
 .fnode-wa.lane-adult { border-color: var(--lane-adult-b) !important; background: linear-gradient(135deg, var(--c-wa) 60%, #fce4ec) !important; }
 .fnode-wa.lane-parent { border-color: var(--lane-parent-b) !important; background: linear-gradient(135deg, var(--c-wa) 60%, #eff6ff) !important; }
 
-/* Inline editing */
-.fnode.editing { cursor: text; z-index: 55; transform: scale(1.05); box-shadow: 0 8px 24px rgba(0,0,0,0.15); }
-.fnode.editing .node-text { outline: none; background: rgba(255,255,255,0.9); border-radius: 4px; padding: 4px 8px; min-width: 60px; display: inline-block; border: 1px dashed var(--accent); }
+/* Inline editing overrides */
+.fnode.editing { cursor: text; user-select: text; z-index: 60 !important; transform: scale(1.05); box-shadow: 0 0 0 3px var(--accent), 0 8px 24px rgba(0,0,0,0.2) !important; }
+.fnode.editing .node-text { outline: none; background: rgba(255,255,255,0.95); border-radius: 4px; padding: 4px 8px; min-width: 80px; display: inline-block; border: 1px dashed var(--accent); user-select: text; pointer-events: auto; }
 
 /* Badges */
 .cu-badge { position: absolute; top: -10px; right: 10px; font-size: 8px; color: #fff; padding: 2px 6px; border-radius: 4px; white-space: nowrap; pointer-events: none; font-weight: 700; letter-spacing: 0.5px; box-shadow: 0 2px 4px rgba(0,0,0,0.15); border: 1px solid rgba(255,255,255,0.3); }
-
-/* Edge Labels */
-.edge-label { position: absolute; font-size: 10px; color: var(--text2); font-weight: 700; background: rgba(255,255,255,0.95); padding: 2px 8px; border-radius: 4px; white-space: nowrap; z-index: 5; cursor: pointer; border: 1px solid var(--border); box-shadow: 0 2px 4px rgba(0,0,0,0.05); transition: all 0.2s; }
-.edge-label:hover { background: #fff; border-color: var(--accent); color: var(--accent2); transform: translate(-50%, -50%) scale(1.05) !important; z-index: 50; }
 
 /* Desktop Anchors (Larger Hit Areas) */
 .anchor-point { position: absolute; width: 14px; height: 14px; border-radius: 50%; background: #fff; border: 2.5px solid #cbd5e1; cursor: crosshair; z-index: 55; opacity: 0; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); transform: translate(-50%, -50%); }
@@ -219,7 +215,7 @@ h2 { font-size: 18px; font-weight: 800; color: var(--hdr); margin-top: 32px; mar
 <div class="page-header">
   <h1>אלמנט — חוברת תבניות וואטסאפ</h1>
   <div class="sub">Element — WhatsApp Templates Playbook & Flow Engine (Desktop Pro)</div>
-  <div class="ver">גרסה 6.0 | ארכיטקטורת זרימה חכמה</div>
+  <div class="ver">גרסה 6.1 | ארכיטקטורה נקייה, העתק/הדבק ועריכה מתקדמת</div>
 </div>
 
 <div class="search-bar">
@@ -255,10 +251,9 @@ h2 { font-size: 18px; font-weight: 800; color: var(--hdr); margin-top: 32px; mar
     <h3>📌 הוראות עבודה למערכת הזרימה החכמה (Desktop)</h3>
     <ul>
       <li><kbd>Hover</kbd> על צומת מזהיב את כל החיבורים שלה.</li>
-      <li><kbd>דאבל-קליק</kbd> על צומת מאפשר עריכת טקסט מהירה.</li>
-      <li><kbd>גרירה</kbd> מנקודת עיגול בצד ימין/שמאל יוצרת קשר חדש.</li>
-      <li><kbd>לחיצה</kbd> על חץ לבחירה, ואז גרירת הידיות הכחולות לשינוי חיבורים.</li>
-      <li><kbd>קליק ימני</kbd> על הרקע להוספת צמתים, או על צומת לתפריט פעולות.</li>
+      <li><kbd>דאבל-קליק</kbd> על צומת לעריכת טקסט (אנטר לשמירה, Shift+Enter לשורה חדשה).</li>
+      <li><kbd>קליק ימני</kbd> לפתיחת תפריט פעולות (העתק, הדבק, שכפל, מחק).</li>
+      <li><kbd>גרירה</kbd> מנקודת עיגול יוצרת קשר חדש. <kbd>לחיצה</kbd> על חץ לבחירה ושינוי חיבורים.</li>
       <li><kbd>Ctrl+C / V</kbd> העתק/הדבק | <kbd>Ctrl+Z / Y</kbd> ביטול/שחזור | <kbd>Delete</kbd> מחיקה.</li>
     </ul>
   </div>
@@ -297,10 +292,8 @@ h2 { font-size: 18px; font-weight: 800; color: var(--hdr); margin-top: 32px; mar
       
       <div class="canvas-scroll" id="canvasScroll">
         <div class="canvas-inner" id="canvasInner">
-          <!-- Background SVG for Phases/Swimlanes will be injected here -->
           <svg class="canvas-svg" id="canvasSvgBg" style="z-index: 1;"></svg>
           <svg class="canvas-svg" id="canvasSvg" style="z-index: 5; pointer-events: none;"></svg>
-          <!-- Nodes injected via JS above z-index 10 -->
         </div>
       </div>
     </div>
@@ -403,8 +396,6 @@ h2 { font-size: 18px; font-weight: 800; color: var(--hdr); margin-top: 32px; mar
   <div class="note"><strong>להורים:</strong> שנו את הניסוח ל-״איך <span class="placeholder">[שם הילד/ה]</span> הרגיש/ה אחרי השיעור הראשון?״</div>
   </div></div>
 
-  <!-- (Additional templates hidden for brevity, system is fully functional) -->
-
   <h2 id="ref-section">📎 טבלת מצבים ב-ClickUp (מקוצרת)</h2>
   <table class="ref-table">
     <thead><tr><th>שלב בלקוח</th><th>תגית שלב במערכת</th><th>פעולה דרושה / תבנית</th></tr></thead>
@@ -423,7 +414,7 @@ h2 { font-size: 18px; font-weight: 800; color: var(--hdr); margin-top: 32px; mar
 
 <script>
 // ================================================================
-// DESKTOP ENGINE v6.0 — Smart Routing, Phases, Relational Hover
+// DESKTOP ENGINE v6.1 — Master Architecture, Copy/Paste, Advanced Edit
 // ================================================================
 
 // UI Utilities
@@ -444,116 +435,117 @@ window.addEventListener('scroll',()=>document.getElementById('backTop').classLis
 function toggleFullscreen() {
   const wrapper = document.getElementById('canvasWrapper');
   wrapper.classList.toggle('fullscreen');
-  setTimeout(() => canvasFitAll(), 300); // re-fit after transition
+  setTimeout(() => canvasFitAll(), 300);
 }
 
 // Meta Data
 const CU={t1:{l:'CONSIDERING',c:'#f87171'},t2:{l:'NEW LEADS',c:'#94a3b8'},t3:{l:'NEW LEADS',c:'#94a3b8'},t4a:{l:'CONSIDERING',c:'#f87171'},t6a:{l:'PURCHASED',c:'#60a5fa'},t8:{l:'PURCHASED',c:'#60a5fa'},t10:{l:'MADE 1ST',c:'#4ade80'},t19:{l:'NEAR PURCHASE',c:'#f472b6'}};
 const LC={adult:'#d81b60',parent:'#2563eb'};
 
-// Visual Swimlane Phases (Background SVGs)
+// Visually Encapsulating Swimlanes based on the NEW exact layout
 const PHASES = [
   { id: 'p1', y: 0, h: 580, title: 'שלב 1: איסוף לידים, קפסולציה ותגובה ראשונית', color: '#f8fafc', stroke: '#cbd5e1' },
-  { id: 'p2', y: 600, h: 630, title: 'שלב 2: תיאום שיעורי היכרות וגביית תשלום', color: '#f0f9ff', stroke: '#bae6fd' },
-  { id: 'p3', y: 1250, h: 760, title: 'שלב 3: חווית לקוח במהלך 3 שיעורי ההיכרות', color: '#f0fdf4', stroke: '#bbf7d0' },
-  { id: 'p4', y: 2040, h: 580, title: 'שלב 4: הרשמה למנוי, שימור והפניות', color: '#fdf4ff', stroke: '#fbcfe8' }
+  { id: 'p2', y: 600, h: 540, title: 'שלב 2: תיאום שיעורי היכרות וגביית תשלום', color: '#f0f9ff', stroke: '#bae6fd' },
+  { id: 'p3', y: 1160, h: 1000, title: 'שלב 3: חווית לקוח במהלך 3 שיעורי ההיכרות', color: '#f0fdf4', stroke: '#bbf7d0' },
+  { id: 'p4', y: 2180, h: 900, title: 'שלב 4: הרשמה למנוי, שימור והפניות', color: '#fdf4ff', stroke: '#fbcfe8' }
 ];
 
-// Base Nodes Definition (Adjusted for better desktop spacing)
+// Clean, mathematically organized cascading layout (No overlaps)
 const DEFAULT_NODES=[
-  // Phase 1
-  {id:'entry',type:'step',label:'📥 ליד חדש נכנס\nלמערכת ה-CRM',x:450,y:40,w:180,major:true},
-  {id:'widget',type:'source',label:'📱 ווידג׳ט אתר\n(טופס נחיתה / Linktree)',x:160,y:180,w:200},
-  {id:'direct',type:'source',label:'💬 פנייה ישירה\n(וואטסאפ / טלפון / רשתות)',x:660,y:180,w:220},
+  {id:'entry',type:'step',label:'📥 ליד חדש נכנס\nלמערכת ה-CRM',x:520,y:40,w:180,major:true},
   
-  {id:'wPaid',type:'step',label:'💳 שילם בהצלחה',x:40,y:330,w:130},
-  {id:'wNoPay',type:'step',label:'⏰ לא שילם\n(המתנה 24-48 שעות)',x:280,y:330,w:160},
-  {id:'wCallback',type:'source',label:'📞 ביקש שנחזור',x:180,y:460,w:150},
-  {id:'wAbandoned',type:'source',label:'🚫 נטש / סגר חלון',x:380,y:460,w:150},
+  {id:'widget',type:'source',label:'📱 ווידג׳ט אתר\n(טופס / Linktree)',x:280,y:160,w:160},
+  {id:'direct',type:'source',label:'💬 פנייה ישירה\n(WA / טלפון / רשתות)',x:760,y:160,w:180},
   
-  {id:'n_t1',type:'wa',label:'#1 תגובה ראשונית\nלווידג׳ט',x:195,y:570,w:140,link:'t1',ttTitle:'#1 תגובה ווידג׳ט',ttBody:'היי [שם] 👋\nכאן צוות אלמנט.\nראינו שהשארתם פרטים ונשמח לעזור! 🙏'},
-  {id:'n_t19',type:'wa',label:'#19 הודעת מעקב\nלמי שלא שילם',x:385,y:570,w:140,link:'t19',ttTitle:'#19 מעקב — לא שילם',ttBody:'היי [שם] 👋\nראינו שהתעניינתם — נשמח לעזור! 📞 🙏'},
+  {id:'wPaid',type:'step',label:'💳 שילם',x:160,y:280,w:120},
+  {id:'wNoPay',type:'step',label:'⏰ לא שילם\n(המתנה 24-48ש)',x:400,y:280,w:140},
   
-  {id:'n_t2',type:'wa',label:'#2 תגובה מהירה\nלמבוגר/ת',x:610,y:350,w:140,link:'t2',lane:'adult',ttTitle:'#2 ליד ישיר — מבוגר',ttBody:'היי [שם] 👋\nתודה שפניתם! מה חיפשתם? 🙏'},
-  {id:'n_t3',type:'wa',label:'#3 תגובה מהירה\nלהורה',x:810,y:350,w:140,link:'t3',lane:'parent',ttTitle:'#3 ליד ישיר — הורה',ttBody:'היי [שם ההורה] 👋\nמה הגיל ומה חיפשתם? 💪'},
+  {id:'wCallback',type:'source',label:'📞 ביקש שנחזור',x:320,y:400,w:140},
+  {id:'wAbandoned',type:'source',label:'🚫 נטש / סגר חלון',x:480,y:400,w:140},
+  
+  {id:'n_t1',type:'wa',label:'#1 תגובה ראשונית',x:320,y:500,w:140,link:'t1',ttTitle:'#1 תגובה ווידג׳ט',ttBody:'היי [שם] 👋\nכאן צוות אלמנט.\nראינו שהשארתם פרטים ונשמח לעזור! 🙏'},
+  {id:'n_t19',type:'wa',label:'#19 הודעת מעקב',x:480,y:500,w:140,link:'t19',ttTitle:'#19 מעקב — לא שילם',ttBody:'היי [שם] 👋\nראינו שהתעניינתם — נשמח לעזור! 📞 🙏'},
+  
+  {id:'n_t2',type:'wa',label:'#2 תגובה: מבוגר/ת',x:640,y:300,w:140,link:'t2',lane:'adult',ttTitle:'#2 ליד ישיר — מבוגר',ttBody:'היי [שם] 👋\nתודה שפניתם! מה חיפשתם? 🙏'},
+  {id:'n_t3',type:'wa',label:'#3 תגובה: הורה',x:880,y:300,w:140,link:'t3',lane:'parent',ttTitle:'#3 ליד ישיר — הורה',ttBody:'היי [שם ההורה] 👋\nמה הגיל ומה חיפשתם? 💪'},
 
   // Phase 2
-  {id:'details',type:'step',label:'📋 שליחת פרטי היכרות טכניים\n(מותאם לפי סוג הקבוצה שביקשו)',x:420,y:670,w:260,major:true},
+  {id:'details',type:'step',label:'📋 שליחת פרטי היכרות טכניים',x:480,y:640,w:220,major:true},
   
-  // Spaced out class boxes
-  {id:'n_t4a',type:'wa',label:'#4a ילדים 6-8',x:200,y:810,w:120,link:'t4a',lane:'parent'},
-  {id:'n_t4b',type:'wa',label:'#4b ילדים 9-11',x:340,y:810,w:120,lane:'parent'},
-  {id:'n_t4c',type:'wa',label:'#4c נוער 12-15',x:480,y:810,w:120,lane:'parent'},
-  {id:'n_t4d',type:'wa',label:'#4d לחימה בוגרים',x:620,y:810,w:130,lane:'adult'},
-  {id:'n_t4e',type:'wa',label:'#4e כושר 38+',x:770,y:810,w:120,lane:'adult'},
-  {id:'noResp1',type:'ghost',label:'⛔ ללא תגובה / מסנן',x:930,y:810,w:140},
+  {id:'n_t4a',type:'wa',label:'#4a ילדים 6-8',x:180,y:780,w:120,link:'t4a',lane:'parent'},
+  {id:'n_t4b',type:'wa',label:'#4b ילדים 9-11',x:320,y:780,w:120,lane:'parent'},
+  {id:'n_t4c',type:'wa',label:'#4c נוער 12-15',x:460,y:780,w:120,lane:'parent'},
+  {id:'n_t4d',type:'wa',label:'#4d לחימה בוגרים',x:600,y:780,w:130,lane:'adult'},
+  {id:'n_t4e',type:'wa',label:'#4e כושר 38+',x:750,y:780,w:120,lane:'adult'},
+  {id:'noResp1',type:'ghost',label:'⛔ אין תגובה / סונן',x:890,y:780,w:140},
 
-  {id:'payment',type:'step',label:'💳 אימות תשלום וקליטה לשיעור היכרות',x:420,y:960,w:260,major:true},
+  {id:'payment',type:'step',label:'💳 אימות תשלום וקליטה להכרות',x:480,y:920,w:240,major:true},
   
-  {id:'n_t6a',type:'wa',label:'#6a אישור ילדים 6-8',x:200,y:1090,w:140,link:'t6a',lane:'parent'},
-  {id:'n_t6b',type:'wa',label:'#6b אישור ילדים',x:360,y:1090,w:130,lane:'parent'},
-  {id:'n_t6d',type:'wa',label:'#6d אישור לחימה',x:510,y:1090,w:130,lane:'adult'},
-  {id:'n_t6e',type:'wa',label:'#6e אישור כושר',x:660,y:1090,w:130,lane:'adult'},
-  
-  {id:'n_t8',type:'wa',label:'#8 טופס בריאות',x:850,y:1090,w:130,link:'t8'},
+  {id:'n_t6a',type:'wa',label:'#6a אישור ילדים 6-8',x:240,y:1060,w:130,link:'t6a',lane:'parent'},
+  {id:'n_t6b',type:'wa',label:'#6b אישור ילדים',x:390,y:1060,w:110,lane:'parent'},
+  {id:'n_t6d',type:'wa',label:'#6d אישור לחימה',x:520,y:1060,w:120,lane:'adult'},
+  {id:'n_t6e',type:'wa',label:'#6e אישור כושר',x:660,y:1060,w:110,lane:'adult'},
+  {id:'n_t8',type:'wa',label:'#8 טופס בריאות',x:820,y:1060,w:120,link:'t8'},
 
   // Phase 3
-  {id:'timerDay',type:'step',label:'⏰ המתנה אוטומטית:\nיום לפני השיעור (09:00)',x:450,y:1310,w:180,timer:true},
-  {id:'n_t9',type:'wa',label:'#9 תזכורת הגעה',x:700,y:1310,w:140},
+  {id:'timerDay',type:'step',label:'⏰ יום לפני שיעור (09:00)',x:480,y:1200,w:170,timer:true},
+  {id:'n_t9',type:'wa',label:'#9 תזכורת הגעה',x:680,y:1200,w:120},
 
-  {id:'class1',type:'step',label:'🥋 שיעור היכרות #1',x:480,y:1420,w:130,major:true},
-  {id:'att1',type:'decision',label:'האם הלקוח\nהגיע לשיעור?',x:490,y:1520,w:110},
+  {id:'class1',type:'step',label:'🥋 שיעור היכרות #1',x:480,y:1320,w:130,major:true},
+  {id:'att1',type:'decision',label:'האם הגיע?',x:480,y:1420,w:110},
   
-  {id:'n_t10',type:'wa',label:'#10 מעקב שיעור 1\n(פידבק ותחושות)',x:320,y:1620,w:150,link:'t10'},
-  {id:'n_t17a',type:'ghost',label:'#17a שילם ולא הגיע\n(בירור סיבה)',x:660,y:1620,w:150},
+  {id:'n_t10',type:'wa',label:'#10 מעקב שיעור 1',x:340,y:1540,w:140,link:'t10'},
+  {id:'n_t17a',type:'ghost',label:'#17a שילם ולא הגיע',x:620,y:1540,w:140},
   
-  {id:'class2',type:'step',label:'🥋 שיעור היכרות #2',x:330,y:1740,w:130},
-  {id:'att2',type:'decision',label:'האם הגיע?',x:340,y:1840,w:110},
+  {id:'class2',type:'step',label:'🥋 שיעור היכרות #2',x:340,y:1660,w:130},
+  {id:'att2',type:'decision',label:'האם הגיע?',x:340,y:1760,w:110},
   
-  {id:'n_t11',type:'wa',label:'#11 מתן ערך\n(טיפים לשרירים)',x:200,y:1940,w:140},
-  {id:'n_t17b_2',type:'ghost',label:'#17b נעלם פתאום',x:500,y:1940,w:130},
+  {id:'n_t11',type:'wa',label:'#11 מתן ערך / שרירים',x:200,y:1880,w:140},
+  {id:'n_t17b_2',type:'ghost',label:'#17b נעלם פתאום',x:480,y:1880,w:130},
 
   // Phase 4
-  {id:'class3',type:'step',label:'🥋 שיעור היכרות #3\n(שיעור סיום)',x:205,y:2090,w:140,major:true},
-  {id:'att3',type:'decision',label:'האם הגיע?',x:220,y:2190,w:110},
+  {id:'class3',type:'step',label:'🥋 שיעור סיום #3',x:200,y:2000,w:130,major:true},
+  {id:'att3',type:'decision',label:'האם הגיע?',x:200,y:2100,w:110},
   
-  {id:'n_t12',type:'wa',label:'#12 הצעת הרשמה\nמבוגר/ת (450₪)',x:40,y:2310,w:150,lane:'adult'},
-  {id:'n_t13',type:'wa',label:'#13 הצעת הרשמה\nהורה (300₪/380₪)',x:230,y:2310,w:150,lane:'parent'},
-  {id:'n_t17b_3',type:'ghost',label:'#17b נעלם בסוף',x:440,y:2310,w:130},
+  {id:'n_t12',type:'wa',label:'#12 הרשמה בוגר',x:60,y:2220,w:130,lane:'adult'},
+  {id:'n_t13',type:'wa',label:'#13 הרשמה הורה',x:220,y:2220,w:130,lane:'parent'},
+  {id:'n_t17b_3',type:'ghost',label:'#17b נעלם בסוף',x:380,y:2220,w:130},
   
-  {id:'enrollQ',type:'decision',label:'החלטת לקוח?',x:160,y:2440,w:130},
-  {id:'enrolled',type:'step',label:'✅ נרשם למנוי!',x:20,y:2560,w:140,major:true},
-  {id:'n_t18',type:'wa',label:'#18 מתלבט כרגע',x:200,y:2560,w:130},
-  {id:'n_t17b_f',type:'ghost',label:'#17b הפסיק לענות',x:380,y:2560,w:130},
+  {id:'enrollQ',type:'decision',label:'החלטת לקוח?',x:140,y:2360,w:130},
+  {id:'enrolled',type:'step',label:'✅ נרשם למנוי!',x:-20,y:2480,w:130,major:true},
+  {id:'n_t18',type:'wa',label:'#18 מתלבט כרגע',x:140,y:2480,w:130},
+  {id:'n_t17b_f',type:'ghost',label:'#17b הפסיק לענות',x:300,y:2480,w:130},
   
-  {id:'whoEnroll',type:'decision',label:'סוג לקוח?',x:35,y:2680,w:110},
-  {id:'n_t14',type:'wa',label:'#14 ברוכים הבאים\nלמבוגר + אפליקציה',x:-60,y:2800,w:150,lane:'adult'},
-  {id:'n_t15',type:'wa',label:'#15 ברוכים הבאים\nלהורה + אפליקציה',x:130,y:2800,w:150,lane:'parent'},
+  {id:'whoEnroll',type:'decision',label:'סוג לקוח?',x:-20,y:2600,w:110},
+  {id:'n_t14',type:'wa',label:'#14 ברוכים הבאים\nלמבוגר + אפליקציה',x:-120,y:2720,w:140,lane:'adult'},
+  {id:'n_t15',type:'wa',label:'#15 ברוכים הבאים\nלהורה + אפליקציה',x:80,y:2720,w:140,lane:'parent'},
   
-  {id:'wait23w',type:'step',label:'⏰ המתנה:\n2-3 שבועות אימון',x:30,y:2930,w:150,timer:true},
-  {id:'n_t16',type:'wa',label:'#16 חבר מביא חבר\n(הטבת 50% הנחה)',x:250,y:2925,w:150},
-  {id:'done',type:'end',label:'🎉 לקוח פעיל ומרוצה!',x:40,y:3050,w:160}
+  {id:'wait23w',type:'step',label:'⏰ אימון 2-3 שב׳',x:-20,y:2860,w:130,timer:true},
+  {id:'n_t16',type:'wa',label:'#16 חבר מביא חבר',x:180,y:2860,w:130},
+  {id:'done',type:'end',label:'🎉 לקוח פעיל!',x:-20,y:3000,w:140}
 ];
 
+// Cleaned up edges (Removed all default labels)
 const DEFAULT_EDGES=[
-  {from:'entry',to:'widget',fromAnchor:'b1',toAnchor:'t2',label:'הגיע דרך האתר'},
-  {from:'entry',to:'direct',fromAnchor:'b2',toAnchor:'t1',label:'פנייה ישירה'},
+  {from:'entry',to:'widget',fromAnchor:'b1',toAnchor:'t2'},
+  {from:'entry',to:'direct',fromAnchor:'b2',toAnchor:'t1'},
   
-  {from:'widget',to:'wPaid',fromAnchor:'b1',toAnchor:'t1',label:'שילם במעמד ההרשמה ✅'},
-  {from:'widget',to:'wNoPay',fromAnchor:'b2',toAnchor:'t1',label:'הפסיק תשלום באמצע'},
-  {from:'wNoPay',to:'wCallback',fromAnchor:'b1',toAnchor:'t2',label:'ביקש שנחזור אליו'},
-  {from:'wNoPay',to:'wAbandoned',fromAnchor:'b2',toAnchor:'t1',label:'נטש לגמרי'},
-  {from:'wCallback',to:'n_t1'}, {from:'wAbandoned',to:'n_t19'},
-  {from:'wPaid',to:'payment',style:'dashed',fromAnchor:'b1',toAnchor:'l2',label:'→ דלג ישירות לשלב התשלום'},
+  {from:'widget',to:'wPaid',fromAnchor:'b1',toAnchor:'t1'},
+  {from:'widget',to:'wNoPay',fromAnchor:'b2',toAnchor:'t1'},
+  {from:'wNoPay',to:'wCallback',fromAnchor:'b1',toAnchor:'t2'},
+  {from:'wNoPay',to:'wAbandoned',fromAnchor:'b2',toAnchor:'t1'},
+  {from:'wCallback',to:'n_t1',fromAnchor:'b1',toAnchor:'t1'}, 
+  {from:'wAbandoned',to:'n_t19',fromAnchor:'b1',toAnchor:'t1'},
+  {from:'wPaid',to:'payment',style:'dashed',fromAnchor:'b1',toAnchor:'l1'},
   
-  {from:'n_t1',to:'details',style:'dashed',fromAnchor:'b2',toAnchor:'l1',label:'אם מגיב להודעה ⟶'},
-  {from:'n_t19',to:'details',style:'dashed',fromAnchor:'b1',toAnchor:'l2',label:'אם מגיב להודעה ⟶'},
+  {from:'n_t1',to:'details',style:'dashed',fromAnchor:'b2',toAnchor:'l1'},
+  {from:'n_t19',to:'details',style:'dashed',fromAnchor:'b1',toAnchor:'l2'},
   
-  {from:'direct',to:'n_t2',fromAnchor:'b1',toAnchor:'t2',label:'זיהוי מבוגר',lane:'adult'},
-  {from:'direct',to:'n_t3',fromAnchor:'b2',toAnchor:'t1',label:'זיהוי הורה לילד',lane:'parent'},
+  {from:'direct',to:'n_t2',fromAnchor:'b1',toAnchor:'t2',lane:'adult'},
+  {from:'direct',to:'n_t3',fromAnchor:'b2',toAnchor:'t1',lane:'parent'},
   
-  {from:'n_t2',to:'details',style:'dashed',fromAnchor:'b1',toAnchor:'r1',label:'ממשיך שיחה ⟶',lane:'adult'},
-  {from:'n_t3',to:'details',style:'dashed',fromAnchor:'b1',toAnchor:'r2',label:'ממשיך שיחה ⟶',lane:'parent'},
+  {from:'n_t2',to:'details',style:'dashed',fromAnchor:'b1',toAnchor:'r1',lane:'adult'},
+  {from:'n_t3',to:'details',style:'dashed',fromAnchor:'b1',toAnchor:'r2',lane:'parent'},
   
   // Phase 2 Routing
   {from:'details',to:'n_t4a',fromAnchor:'b1',toAnchor:'t1',main:true},
@@ -561,46 +553,46 @@ const DEFAULT_EDGES=[
   {from:'n_t4b',to:'n_t4c',fromAnchor:'r2',toAnchor:'l2',noHead:true},
   {from:'n_t4c',to:'n_t4d',fromAnchor:'r2',toAnchor:'l2',noHead:true},
   {from:'n_t4d',to:'n_t4e',fromAnchor:'r2',toAnchor:'l2',noHead:true},
-  {from:'details',to:'payment',fromAnchor:'b2',toAnchor:'t2',main:true, label:'הליד בחר מסלול'},
-  {from:'details',to:'noResp1',fromAnchor:'r2',toAnchor:'t1',label:'מסנן אותנו'},
+  {from:'details',to:'payment',fromAnchor:'b2',toAnchor:'t2',main:true},
+  {from:'details',to:'noResp1',fromAnchor:'r2',toAnchor:'t1'},
   
   // Phase 3 Routing
   {from:'payment',to:'n_t6a',fromAnchor:'b1',toAnchor:'t1'},
   {from:'n_t6a',to:'n_t6b',fromAnchor:'r2',toAnchor:'l2',noHead:true},
   {from:'n_t6b',to:'n_t6d',fromAnchor:'r2',toAnchor:'l2',noHead:true},
   {from:'n_t6d',to:'n_t6e',fromAnchor:'r2',toAnchor:'l2',noHead:true},
-  {from:'payment',to:'n_t8',fromAnchor:'r2',toAnchor:'t1', label:'חובה לפני אימון'},
+  {from:'payment',to:'n_t8',fromAnchor:'r2',toAnchor:'t1'},
   
   {from:'payment',to:'timerDay',fromAnchor:'b2',toAnchor:'t2',main:true},
   {from:'timerDay',to:'n_t9',fromAnchor:'r2',toAnchor:'l1'},
   {from:'timerDay',to:'class1',main:true},
   
   {from:'class1',to:'att1',main:true},
-  {from:'att1',to:'n_t10',fromAnchor:'b1',toAnchor:'t2',label:'✅ הגיע לאימון'},
-  {from:'att1',to:'n_t17a',fromAnchor:'b2',toAnchor:'t1',label:'❌ הבריז'},
+  {from:'att1',to:'n_t10',fromAnchor:'b1',toAnchor:'t2'},
+  {from:'att1',to:'n_t17a',fromAnchor:'b2',toAnchor:'t1'},
   {from:'n_t10',to:'class2',main:true},
   
   {from:'class2',to:'att2',main:true},
-  {from:'att2',to:'n_t11',fromAnchor:'b1',toAnchor:'t2',label:'✅ הגיע'},
-  {from:'att2',to:'n_t17b_2',fromAnchor:'b2',toAnchor:'t1',label:'❌ הפסיק להגיע'},
+  {from:'att2',to:'n_t11',fromAnchor:'b1',toAnchor:'t2'},
+  {from:'att2',to:'n_t17b_2',fromAnchor:'b2',toAnchor:'t1'},
   {from:'n_t11',to:'class3',main:true},
   
   // Phase 4 Routing
   {from:'class3',to:'att3',main:true},
-  {from:'att3',to:'n_t12',fromAnchor:'b1',toAnchor:'t2',label:'✅ מתאמן בוגר',lane:'adult'},
-  {from:'att3',to:'n_t13',fromAnchor:'b2',toAnchor:'t1',label:'✅ מתאמן ילד',lane:'parent'},
-  {from:'att3',to:'n_t17b_3',fromAnchor:'r2',toAnchor:'t1',label:'❌ הפסיק להגיע'},
+  {from:'att3',to:'n_t12',fromAnchor:'b1',toAnchor:'t2',lane:'adult'},
+  {from:'att3',to:'n_t13',fromAnchor:'b2',toAnchor:'t1',lane:'parent'},
+  {from:'att3',to:'n_t17b_3',fromAnchor:'r2',toAnchor:'t1'},
   
   {from:'n_t12',to:'enrollQ',fromAnchor:'b1',toAnchor:'t1'},
   {from:'n_t13',to:'enrollQ',fromAnchor:'b1',toAnchor:'t2'},
   
-  {from:'enrollQ',to:'enrolled',fromAnchor:'b1',toAnchor:'t2',label:'✅ סלק בחיוב',main:true},
-  {from:'enrollQ',to:'n_t18',fromAnchor:'b2',toAnchor:'t1',label:'🤔 צריך לחשוב על זה'},
-  {from:'enrollQ',to:'n_t17b_f',fromAnchor:'r2',toAnchor:'t1',label:'👻 הפסיק לענות למכירה'},
+  {from:'enrollQ',to:'enrolled',fromAnchor:'b1',toAnchor:'t2',main:true},
+  {from:'enrollQ',to:'n_t18',fromAnchor:'b2',toAnchor:'t1'},
+  {from:'enrollQ',to:'n_t17b_f',fromAnchor:'r2',toAnchor:'t1'},
   
   {from:'enrolled',to:'whoEnroll',main:true},
-  {from:'whoEnroll',to:'n_t14',fromAnchor:'b1',toAnchor:'t2',label:'מבוגר',lane:'adult'},
-  {from:'whoEnroll',to:'n_t15',fromAnchor:'b2',toAnchor:'t1',label:'הורה',lane:'parent'},
+  {from:'whoEnroll',to:'n_t14',fromAnchor:'b1',toAnchor:'t2',lane:'adult'},
+  {from:'whoEnroll',to:'n_t15',fromAnchor:'b2',toAnchor:'t1',lane:'parent'},
   
   {from:'n_t14',to:'wait23w',fromAnchor:'b1',toAnchor:'t1'},
   {from:'n_t15',to:'wait23w',fromAnchor:'b1',toAnchor:'t2'},
@@ -639,38 +631,34 @@ function bestA(f,t){
   return Math.abs(dy)>Math.abs(dx) ? (dy>0?{fA:'b1',tA:'t1'}:{fA:'t1',tA:'b1'}) : (dx>0?{fA:'r2',tA:'l2'}:{fA:'l2',tA:'r2'});
 }
 
-// Advanced Smart Manhattan Router with Rounded Corners
+// Advanced Smart Manhattan Router
 function smartOrthoP(p1, a1, p2, a2) {
-  const MARGIN = 30;
-  // Direction vectors
+  const MARGIN = 40;
   const dx1 = a1.includes('r') ? 1 : a1.includes('l') ? -1 : 0;
   const dy1 = a1.includes('b') ? 1 : a1.includes('t') ? -1 : 0;
   const dx2 = a2.includes('r') ? 1 : a2.includes('l') ? -1 : 0;
   const dy2 = a2.includes('b') ? 1 : a2.includes('t') ? -1 : 0;
 
-  // Control points (push out from anchor)
   const c1 = { x: p1.x + dx1 * MARGIN, y: p1.y + dy1 * MARGIN };
   const c2 = { x: p2.x + dx2 * MARGIN, y: p2.y + dy2 * MARGIN };
 
   let pts = [p1, c1];
 
-  // Routing Logic
-  if (dx1 !== 0 && dx2 !== 0) { // Side to Side
+  if (dx1 !== 0 && dx2 !== 0) { 
     const midX = (c1.x + c2.x) / 2;
     pts.push({x: midX, y: c1.y}, {x: midX, y: c2.y});
-  } else if (dy1 !== 0 && dy2 !== 0) { // Top to Bottom
+  } else if (dy1 !== 0 && dy2 !== 0) { 
     const midY = (c1.y + c2.y) / 2;
     pts.push({x: c1.x, y: midY}, {x: c2.x, y: midY});
-  } else if (dx1 !== 0 && dy2 !== 0) { // Side to Top/Bottom
+  } else if (dx1 !== 0 && dy2 !== 0) { 
     pts.push({x: c2.x, y: c1.y});
-  } else if (dy1 !== 0 && dx2 !== 0) { // Top/Bottom to Side
+  } else if (dy1 !== 0 && dx2 !== 0) { 
     pts.push({x: c1.x, y: c2.y});
   }
 
   pts.push(c2, p2);
 
-  // Rounding algorithm
-  const RADIUS = 12;
+  const RADIUS = 16;
   let d = `M${pts[0].x},${pts[0].y}`;
   for (let i = 1; i < pts.length - 1; i++) {
     const prev = pts[i - 1], curr = pts[i], next = pts[i + 1];
@@ -692,8 +680,8 @@ function smartOrthoP(p1, a1, p2, a2) {
   return d;
 }
 
-// Storage & Undo
-const SK='element-flow-v60'; let svT;
+// Storage & Undo (Version bumped to v61 to force fresh layout for user)
+const SK='element-flow-v61'; let svT;
 function dSv(){clearTimeout(svT); svT=setTimeout(sv,800);}
 function toast(t){const el=document.getElementById('saveToast'); el.textContent=t||'נשמר בהצלחה 💾'; el.classList.add('show'); setTimeout(()=>el.classList.remove('show'),2000);}
 function pushU(){undoS.push(gS()); if(undoS.length>MU)undoS.shift(); redoS=[]; uUB();}
@@ -708,16 +696,29 @@ function ld(){try{const r=localStorage.getItem(SK); if(!r)return; const d=JSON.p
 function resetPositions(){if(!confirm('שחזור תרשים למקור ימחק את כל השינויים שלך. להמשיך?'))return; NODES=JSON.parse(JSON.stringify(DEFAULT_NODES)); EDGES=JSON.parse(JSON.stringify(DEFAULT_EDGES)); NODES.forEach(n=>NM[n.id]=n); try{localStorage.removeItem(SK)}catch(e){} desel(); undoS=[]; redoS=[]; uUB(); renderAll(); toast('שוחזר למקור ↺')}
 function toggleSnap(){snapOn=!snapOn; document.getElementById('snapBtn').classList.toggle('active',snapOn);}
 
-// Desktop Keyboard Shortcuts
+// Desktop Keyboard Shortcuts (Include Paste functionality)
 document.addEventListener('keydown',function(e){
   if(editN||e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA')return;
   if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='z'){e.preventDefault(); e.shiftKey?redo():undo();}
   if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='y'){e.preventDefault(); redo();}
   if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='c'&&selN){clip=JSON.parse(JSON.stringify(NM[selN])); toast('הועתק ללוח 📋')}
-  if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='v'&&clip){pushU(); const id='c_'+(nxtId++); const n={...clip,id,x:clip.x+GRID*2,y:clip.y+GRID*2}; delete n._el; delete n._w; delete n._h; NODES.push(n); NM[id]=n; renderAll(); dSv(); selectN(id);}
+  if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='v'&&clip){
+    const cx = (scr.scrollLeft + scr.clientWidth/2)/zoom;
+    const cy = (scr.scrollTop + scr.clientHeight/2)/zoom;
+    pasteNode(clip, cx, cy);
+  }
   if(e.key==='Delete'||e.key==='Backspace'){if(selN){e.preventDefault();delN(selN)}else if(selE>=0){e.preventDefault();delEdge()}}
   if(e.key==='Escape'){if(editN)finishEdit(); desel();}
 });
+
+function pasteNode(clipData, cx, cy) {
+  pushU();
+  const id='c_'+(nxtId++);
+  const n={...clipData, id, x:snap(cx - 50), y:snap(cy - 20)};
+  delete n._el; delete n._w; delete n._h;
+  NODES.push(n); NM[id]=n; renderAll(); dSv(); selectN(id);
+  toast('הודבק צומת 📄');
+}
 
 // Rendering Engine
 function renderAll(){renderBackground(); renderNodes(); requestAnimationFrame(()=>{renderEdges(); uMM()});}
@@ -726,11 +727,10 @@ function renderBackground() {
   let maxX=1200, maxY=900;
   NODES.forEach(n=>{maxX=Math.max(maxX,n.x+(n._w||200)+100); maxY=Math.max(maxY,n.y+(n._h||100)+100)});
   
-  // Render Swimlane Phases
   let bgHtml = '';
   PHASES.forEach(p => {
-    bgHtml += `<rect x="10" y="${p.y}" width="${maxX - 20}" height="${p.h}" fill="${p.color}" rx="12" stroke="${p.stroke}" stroke-dasharray="8,4" stroke-width="2"/>`;
-    bgHtml += `<text x="${maxX - 30}" y="${p.y + 30}" font-weight="800" font-size="16" fill="${p.stroke}" text-anchor="start" style="opacity:0.8">${p.title}</text>`;
+    bgHtml += `<rect x="-150" y="${p.y}" width="${maxX + 200}" height="${p.h}" fill="${p.color}" rx="12" stroke="${p.stroke}" stroke-dasharray="8,4" stroke-width="2"/>`;
+    bgHtml += `<text x="${maxX + 30}" y="${p.y + 30}" font-weight="800" font-size="16" fill="${p.stroke}" text-anchor="start" style="opacity:0.8">${p.title}</text>`;
   });
   
   svgBg.setAttribute('width', maxX);
@@ -758,7 +758,6 @@ function renderNodes(){
     if(n.ttBody){el.setAttribute('data-tt-title',n.ttTitle); el.setAttribute('data-tt-body',n.ttBody)}
     if(n.link) el.addEventListener('click', ()=>{if(!isDrag&&!drawA&&!editN) goTo(n.link)});
     
-    // Anchor rendering
     AN.forEach(a=>{
       const d=document.createElement('div'); d.className='anchor-point'; d.dataset.anchor=a; d.dataset.nodeId=n.id;
       const p={t1:{l:'30%',t:'0'}, t2:{l:'70%',t:'0'}, r1:{l:'100%',t:'30%'}, r2:{l:'100%',t:'70%'}, b1:{l:'30%',t:'100%'}, b2:{l:'70%',t:'100%'}, l1:{l:'0',t:'30%'}, l2:{l:'0',t:'70%'}};
@@ -766,7 +765,6 @@ function renderNodes(){
       d.addEventListener('mousedown',onAncDown); el.appendChild(d);
     });
 
-    // Hover logic for Relational Edge Highlighting
     el.addEventListener('mouseenter', () => { hoverN = n.id; renderEdges(); });
     el.addEventListener('mouseleave', () => { hoverN = null; renderEdges(); });
 
@@ -794,10 +792,8 @@ function renderEdges(){
     const mk=nh?'':(e.lane?`marker-end="url(#ah_${e.lane})"`:(isMain?'marker-end="url(#ah_main)"':'marker-end="url(#ah_def)"'));
     const dash=e.style==='dashed'?'stroke-dasharray="8,6"':'';
     
-    // Base Interactive hit area
     paths+=`<path d="${d}" fill="none" stroke="transparent" stroke-width="24" style="cursor:pointer;pointer-events:stroke" data-eidx="${i}"/>`;
     
-    // Visible Line
     if(sel){
       paths+=`<path class="edge-path" d="${d}" fill="none" stroke="#3b82f6" stroke-width="4" stroke-dasharray="10,6" ${nh?'':'marker-end="url(#ah_sel)"'} style="pointer-events:none"><animate attributeName="stroke-dashoffset" from="32" to="0" dur="0.8s" repeatCount="indefinite"/></path>`;
     } else {
@@ -807,12 +803,10 @@ function renderEdges(){
       paths+=`<path class="edge-path ${extraClasses}" d="${d}" fill="none" stroke="${isHovered ? '#3b82f6' : col}" stroke-width="${sw}" ${dash} ${mk} style="pointer-events:none; transition: all 0.2s;"/>`;
     }
 
-    // Label
     if(e.label){
       const lbl=document.createElement('div'); lbl.className='edge-label';
       if(e.lane && !isHovered) lbl.style.color=LC[e.lane];
       if(isHovered) { lbl.style.borderColor='#3b82f6'; lbl.style.color='#3b82f6'; lbl.style.zIndex='60'; }
-      // Place label at middle of the path length (approximate using middle of bounding box for now to avoid expensive SVG path calc)
       lbl.style.left=((p1.x+p2.x)/2)+'px'; lbl.style.top=((p1.y+p2.y)/2 - 12)+'px';
       lbl.style.transform='translate(-50%,-50%)'; lbl.textContent=e.label;
       lbl.addEventListener('dblclick',()=>editEL(i)); inner.appendChild(lbl);
@@ -831,7 +825,6 @@ function renderEdges(){
     <marker id="ah_sel" markerWidth="12" markerHeight="9" refX="10" refY="4.5" orient="auto"><polygon points="0 0,12 4.5,0 9" fill="#3b82f6"/></marker>
   </defs>`+paths;
 
-  // Temp Draw Line
   if(drawA?.tempPath){
     const tp=document.createElementNS('http://www.w3.org/2000/svg','path');
     tp.setAttribute('d',drawA.tempPath); tp.setAttribute('fill','none'); tp.setAttribute('stroke','#25D366');
@@ -842,10 +835,48 @@ function renderEdges(){
 
 function mkH(p,end,i){const h=document.createElement('div'); h.className='edge-handle'; h.style.left=p.x+'px'; h.style.top=p.y+'px'; h.dataset.end=end; h.dataset.edgeIdx=i; h.addEventListener('mousedown',onHDown); return h;}
 
-// Interactive Systems (Edit, Select, Context, Drag)
+// Interactive Systems (Advanced Text Edit, Select, Context, Drag)
 function onNDbl(e){e.stopPropagation(); e.preventDefault(); startEdit(e.currentTarget.id.replace('fn_',''));}
-function startEdit(id){if(editN)finishEdit(); const n=NM[id]; if(!n||!n._el)return; editN=id; const txt=n._el.querySelector('.node-text'); if(!txt)return; n._el.classList.add('editing'); txt.contentEditable='true'; txt.focus(); window.getSelection().selectAllChildren(txt);}
-function finishEdit(){if(!editN)return; const n=NM[editN]; if(!n||!n._el)return; pushU(); const txt=n._el.querySelector('.node-text'); if(txt){n.label=txt.innerText.trim(); txt.contentEditable='false'} n._el.classList.remove('editing'); editN=null; dSv(); renderAll();}
+function startEdit(id){
+  if(editN) finishEdit(); 
+  const n=NM[id]; if(!n||!n._el)return; 
+  editN=id; 
+  const txt=n._el.querySelector('.node-text'); if(!txt)return; 
+  n._el.classList.add('editing'); 
+  txt.contentEditable='true'; 
+  txt.focus(); 
+  window.getSelection().selectAllChildren(txt);
+  
+  // Advanced save bindings
+  txt.onblur = finishEdit;
+  txt.onkeydown = (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      finishEdit();
+    }
+  };
+}
+
+function finishEdit(){
+  if(!editN) return; 
+  const n=NM[editN]; if(!n||!n._el)return; 
+  const txt=n._el.querySelector('.node-text'); 
+  if(txt) {
+    const newText = txt.innerText.trim();
+    if(newText !== n.label) {
+      pushU();
+      n.label = newText;
+      dSv();
+    }
+    txt.contentEditable='false'; 
+    txt.onblur = null;
+    txt.onkeydown = null;
+  }
+  n._el.classList.remove('editing'); 
+  editN=null; 
+  renderAll();
+}
+
 function editEL(i){const e=EDGES[i]; const v=prompt('טקסט תווית לחיבור:',e.label||''); if(v!==null){pushU(); e.label=v; dSv(); renderEdges();}}
 
 svg.style.pointerEvents='auto';
@@ -867,8 +898,40 @@ function addN(type,x,y){pushU(); const id='c_'+(nxtId++); const labels={step:'�
 function delN(id){const i=NODES.findIndex(n=>n.id===id); if(i<0)return; pushU(); EDGES=EDGES.filter(e=>e.from!==id&&e.to!==id); NODES.splice(i,1); delete NM[id]; if(selN===id)selN=null; renderAll(); dSv();}
 function dupN(id){const n=NM[id]; if(!n)return; pushU(); const nid='c_'+(nxtId++); const dn={...JSON.parse(JSON.stringify(n)),id:nid,x:n.x+GRID*2,y:n.y+GRID*2}; delete dn._el; delete dn._w; delete dn._h; NODES.push(dn); NM[nid]=dn; renderAll(); dSv(); selectN(nid);}
 
-function onNCtx(e){e.preventDefault(); e.stopPropagation(); const id=e.currentTarget.id.replace('fn_',''); selectN(id); showCtx(e.clientX,e.clientY,[{i:'✏️',l:'ערוך טקסט',a:()=>startEdit(id)},{i:'📋',l:'שכפל צומת',a:()=>dupN(id)},{i:'',l:'<div class="ctx-sep"></div>',a:()=>{}},{i:'🗑️',l:'מחק צומת',a:()=>delN(id),d:true}]);}
-scr.addEventListener('contextmenu',function(e){if(e.target.closest('.fnode'))return; e.preventDefault(); const sr=scr.getBoundingClientRect(); const cx=(e.clientX-sr.left+scr.scrollLeft)/zoom, cy=(e.clientY-sr.top+scr.scrollTop)/zoom; showCtx(e.clientX,e.clientY,[{i:'🔹',l:'הוסף שלב רגיל',a:()=>addN('step',cx,cy)},{i:'📍',l:'הוסף מקור כניסה',a:()=>addN('source',cx,cy)},{i:'◇',l:'הוסף התניה/החלטה',a:()=>addN('decision',cx,cy)},{i:'💬',l:'הוסף הודעת טקסט',a:()=>addN('wa',cx,cy)},{i:'⛔',l:'הוסף מצב נטישה',a:()=>addN('ghost',cx,cy)}]);});
+// Context Menu (Copy/Paste added)
+function onNCtx(e){
+  e.preventDefault(); e.stopPropagation(); const id=e.currentTarget.id.replace('fn_',''); selectN(id); 
+  showCtx(e.clientX,e.clientY,[
+    {i:'✏️',l:'ערוך טקסט',a:()=>startEdit(id)},
+    {i:'📋',l:'העתק צומת',a:()=>{clip=JSON.parse(JSON.stringify(NM[id])); toast('הועתק ללוח 📋');}},
+    {i:'📄',l:'הדבק צומת',a:()=>{if(clip){ const cx=(e.clientX-scr.getBoundingClientRect().left+scr.scrollLeft)/zoom; const cy=(e.clientY-scr.getBoundingClientRect().top+scr.scrollTop)/zoom; pasteNode(clip, cx, cy); } else toast('הלוח ריק');}},
+    {i:'🗗',l:'שכפל צומת',a:()=>dupN(id)},
+    {i:'',l:'<div class="ctx-sep"></div>',a:()=>{}},
+    {i:'🗑️',l:'מחק צומת',a:()=>delN(id),d:true}
+  ]);
+}
+
+scr.addEventListener('contextmenu',function(e){
+  if(e.target.closest('.fnode'))return; e.preventDefault(); 
+  const sr=scr.getBoundingClientRect(); 
+  const cx=(e.clientX-sr.left+scr.scrollLeft)/zoom, cy=(e.clientY-sr.top+scr.scrollTop)/zoom; 
+  
+  let items = [
+    {i:'🔹',l:'הוסף שלב רגיל',a:()=>addN('step',cx,cy)},
+    {i:'📍',l:'הוסף מקור כניסה',a:()=>addN('source',cx,cy)},
+    {i:'◇',l:'הוסף התניה/החלטה',a:()=>addN('decision',cx,cy)},
+    {i:'💬',l:'הוסף הודעת טקסט',a:()=>addN('wa',cx,cy)},
+    {i:'⛔',l:'הוסף מצב נטישה',a:()=>addN('ghost',cx,cy)}
+  ];
+  
+  if(clip) {
+    items.unshift({i:'',l:'<div class="ctx-sep"></div>',a:()=>{}});
+    items.unshift({i:'📄',l:'הדבק צומת (Paste)',a:()=>pasteNode(clip, cx, cy)});
+  }
+  
+  showCtx(e.clientX,e.clientY,items);
+});
+
 function showCtx(x,y,items){ctxEl.innerHTML=''; items.forEach(it=>{const b=document.createElement('button'); b.innerHTML=it.i+' '+it.l; if(it.d)b.classList.add('danger'); b.onclick=()=>{ctxEl.classList.remove('visible'); it.a()}; ctxEl.appendChild(b);}); ctxEl.style.left=x+'px'; ctxEl.style.top=y+'px'; ctxEl.classList.add('visible');}
 document.addEventListener('click',()=>ctxEl.classList.remove('visible'));
 
@@ -882,7 +945,7 @@ function onDEnd(){document.removeEventListener('mousemove',onDMove); document.re
 
 // Zoom & Minimap
 function canvasZoom(f){const nz=Math.min(2.5,Math.max(.2,zoom*f)); const cx=(scr.scrollLeft+scr.clientWidth/2)/zoom, cy=(scr.scrollTop+scr.clientHeight/2)/zoom; zoom=nz; inner.style.transform=`scale(${zoom})`; scr.scrollLeft=cx*zoom-scr.clientWidth/2; scr.scrollTop=cy*zoom-scr.clientHeight/2; uMM();}
-function canvasReset(){zoom=1; inner.style.transform='scale(1)'; scr.scrollLeft=300; scr.scrollTop=0; uMM();}
+function canvasReset(){zoom=1; inner.style.transform='scale(1)'; scr.scrollLeft=250; scr.scrollTop=0; uMM();}
 function canvasFitAll(){let mx=0,my=0; NODES.forEach(n=>{mx=Math.max(mx,n.x+(n._w||160)); my=Math.max(my,n.y+(n._h||60))}); mx+=100; my+=100; zoom=Math.min(scr.clientWidth/mx, scr.clientHeight/my, 1.2); zoom=Math.max(zoom,.2); inner.style.transform=`scale(${zoom})`; scr.scrollLeft=0; scr.scrollTop=0; uMM();}
 scr.addEventListener('wheel',(e)=>{if(e.ctrlKey||e.metaKey){e.preventDefault(); canvasZoom(e.deltaY<0?1.1:.9);}},{passive:false});
 
@@ -891,7 +954,7 @@ function uMM(){const W=180, H=110; mmC.width=W; mmC.height=H; mmX.clearRect(0,0,
 scr.addEventListener('scroll',uMM);
 
 // Initialization
-(function(){NODES.forEach(n=>NM[n.id]=n); ld(); renderAll(); scr.scrollLeft=Math.max(0, 300*zoom-scr.clientWidth/2);})();
+(function(){NODES.forEach(n=>NM[n.id]=n); ld(); renderAll(); scr.scrollLeft=Math.max(0, 250*zoom-scr.clientWidth/2);})();
 </script>
 </body>
 </html>
