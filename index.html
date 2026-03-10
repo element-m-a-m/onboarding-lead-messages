@@ -227,7 +227,7 @@ h2 { font-size: 18px; font-weight: 800; color: var(--hdr); margin-top: 32px; mar
 <div class="page-header">
   <h1>אלמנט — חוברת תבניות וואטסאפ</h1>
   <div class="sub">Element — WhatsApp Templates Playbook & Flow Engine (Desktop Pro)</div>
-  <div class="ver">גרסה 6.3 | גבולות שלב נגררים, טולטיפ חכם, פריסה ממורכזת</div>
+  <div class="ver">גרסה 6.4 | טולטיפ לכל הצמתים, קבוצות חסרות, קווים חדים, שליטה בחצים</div>
 </div>
 
 <div class="search-bar">
@@ -254,6 +254,7 @@ h2 { font-size: 18px; font-weight: 800; color: var(--hdr); margin-top: 32px; mar
 
 <div class="arrow-toolbar" id="arrowToolbar">
   <button onclick="flipSelectedEdge()" title="הפוך כיוון חץ">🔄</button>
+  <button onclick="toggleEdgeHead()" title="הוסף/הסר ראש חץ">➡️</button>
   <button class="danger" onclick="deleteSelectedEdge()" title="מחיקת קשר">🗑️</button>
 </div>
 <div class="ctx-menu" id="ctxMenu"></div>
@@ -434,7 +435,7 @@ h2 { font-size: 18px; font-weight: 800; color: var(--hdr); margin-top: 32px; mar
 
 <script>
 // ================================================================
-// DESKTOP ENGINE v6.3 — Drag Phase Boundaries, Smart Tooltips, Centered Layout
+// DESKTOP ENGINE v6.4 — Enhanced Tooltips, Missing Groups, Sharp Lines, Arrow Controls
 // ================================================================
 
 // UI Utilities
@@ -507,15 +508,20 @@ const DEFAULT_NODES=[
   {id:'n_t4c',type:'wa',label:'#4c נוער 12-15',x:460,y:780,w:120,lane:'parent'},
   {id:'n_t4d',type:'wa',label:'#4d לחימה בוגרים',x:600,y:780,w:130,lane:'adult'},
   {id:'n_t4e',type:'wa',label:'#4e כושר 38+',x:750,y:780,w:120,lane:'adult'},
-  {id:'noResp1',type:'ghost',label:'⛔ אין תגובה / סונן',x:890,y:780,w:140},
+  {id:'n_t4f',type:'wa',label:'#4f תנועה',x:890,y:780,w:110,lane:'adult'},
+  {id:'n_t4g',type:'wa',label:'#4g כוח וגמישות',x:1020,y:780,w:140,lane:'adult'},
+  {id:'noResp1',type:'ghost',label:'⛔ אין תגובה / סונן',x:1180,y:780,w:140},
 
   {id:'payment',type:'step',label:'💳 אימות תשלום וקליטה להכרות',x:480,y:920,w:240,major:true},
   
-  {id:'n_t6a',type:'wa',label:'#6a אישור ילדים 6-8',x:240,y:1060,w:130,link:'t6a',lane:'parent'},
-  {id:'n_t6b',type:'wa',label:'#6b אישור ילדים',x:390,y:1060,w:110,lane:'parent'},
-  {id:'n_t6d',type:'wa',label:'#6d אישור לחימה',x:520,y:1060,w:120,lane:'adult'},
-  {id:'n_t6e',type:'wa',label:'#6e אישור כושר',x:660,y:1060,w:110,lane:'adult'},
-  {id:'n_t8',type:'wa',label:'#8 טופס בריאות',x:820,y:1060,w:120,link:'t8'},
+  {id:'n_t6a',type:'wa',label:'#6a אישור ילדים 6-8',x:100,y:1060,w:130,link:'t6a',lane:'parent'},
+  {id:'n_t6b',type:'wa',label:'#6b אישור ילדים 9-11',x:250,y:1060,w:140,lane:'parent'},
+  {id:'n_t6c',type:'wa',label:'#6c אישור נוער',x:410,y:1060,w:120,lane:'parent'},
+  {id:'n_t6d',type:'wa',label:'#6d אישור לחימה',x:550,y:1060,w:120,lane:'adult'},
+  {id:'n_t6e',type:'wa',label:'#6e אישור כושר',x:690,y:1060,w:110,lane:'adult'},
+  {id:'n_t6f',type:'wa',label:'#6f אישור תנועה',x:820,y:1060,w:120,lane:'adult'},
+  {id:'n_t6g',type:'wa',label:'#6g אישור כוח וגמישות',x:960,y:1060,w:150,lane:'adult'},
+  {id:'n_t8',type:'wa',label:'#8 טופס בריאות',x:1130,y:1060,w:120,link:'t8'},
 
   // Phase 3
   {id:'timerDay',type:'step',label:'⏰ יום לפני שיעור (09:00)',x:480,y:1200,w:170,timer:true},
@@ -537,22 +543,22 @@ const DEFAULT_NODES=[
   {id:'class3',type:'step',label:'🥋 שיעור סיום #3',x:480,y:2000,w:130,major:true},
   {id:'att3',type:'decision',label:'האם הגיע?',x:480,y:2100,w:110},
 
-  {id:'n_t12',type:'wa',label:'#12 הרשמה בוגר',x:340,y:2220,w:130,lane:'adult'},
-  {id:'n_t13',type:'wa',label:'#13 הרשמה הורה',x:500,y:2220,w:130,lane:'parent'},
-  {id:'n_t17b_3',type:'ghost',label:'#17b נעלם בסוף',x:660,y:2220,w:130},
+  {id:'n_t12',type:'wa',label:'#12 הרשמה בוגר',x:380,y:2220,w:130,lane:'adult'},
+  {id:'n_t13',type:'wa',label:'#13 הרשמה הורה',x:540,y:2220,w:130,lane:'parent'},
+  {id:'n_t17b_3',type:'ghost',label:'#17b נעלם בסוף',x:700,y:2220,w:130},
 
-  {id:'enrollQ',type:'decision',label:'החלטת לקוח?',x:420,y:2360,w:130},
-  {id:'enrolled',type:'step',label:'✅ נרשם למנוי!',x:260,y:2480,w:130,major:true},
-  {id:'n_t18',type:'wa',label:'#18 מתלבט כרגע',x:420,y:2480,w:130},
-  {id:'n_t17b_f',type:'ghost',label:'#17b הפסיק לענות',x:580,y:2480,w:130},
+  {id:'enrollQ',type:'decision',label:'החלטת לקוח?',x:480,y:2360,w:130},
+  {id:'enrolled',type:'step',label:'✅ נרשם למנוי!',x:320,y:2480,w:130,major:true},
+  {id:'n_t18',type:'wa',label:'#18 מתלבט כרגע',x:480,y:2480,w:130},
+  {id:'n_t17b_f',type:'ghost',label:'#17b הפסיק לענות',x:640,y:2480,w:130},
 
-  {id:'whoEnroll',type:'decision',label:'סוג לקוח?',x:260,y:2600,w:110},
-  {id:'n_t14',type:'wa',label:'#14 ברוכים הבאים\nלמבוגר + אפליקציה',x:220,y:2720,w:140,lane:'adult'},
-  {id:'n_t15',type:'wa',label:'#15 ברוכים הבאים\nלהורה + אפליקציה',x:400,y:2720,w:140,lane:'parent'},
+  {id:'whoEnroll',type:'decision',label:'סוג לקוח?',x:320,y:2600,w:110},
+  {id:'n_t14',type:'wa',label:'#14 ברוכים הבאים\nלמבוגר + אפליקציה',x:260,y:2720,w:140,lane:'adult'},
+  {id:'n_t15',type:'wa',label:'#15 ברוכים הבאים\nלהורה + אפליקציה',x:440,y:2720,w:140,lane:'parent'},
 
-  {id:'wait23w',type:'step',label:'⏰ אימון 2-3 שב׳',x:300,y:2860,w:130,timer:true},
-  {id:'n_t16',type:'wa',label:'#16 חבר מביא חבר',x:480,y:2860,w:130},
-  {id:'done',type:'end',label:'🎉 לקוח פעיל!',x:360,y:3000,w:140}
+  {id:'wait23w',type:'step',label:'⏰ אימון 2-3 שב׳',x:340,y:2860,w:130,timer:true},
+  {id:'n_t16',type:'wa',label:'#16 חבר מביא חבר',x:520,y:2860,w:130},
+  {id:'done',type:'end',label:'🎉 לקוח פעיל!',x:420,y:3000,w:140}
 ];
 
 // Cleaned up edges (Removed all default labels)
@@ -583,14 +589,19 @@ const DEFAULT_EDGES=[
   {from:'n_t4b',to:'n_t4c',fromAnchor:'r2',toAnchor:'l2',noHead:true},
   {from:'n_t4c',to:'n_t4d',fromAnchor:'r2',toAnchor:'l2',noHead:true},
   {from:'n_t4d',to:'n_t4e',fromAnchor:'r2',toAnchor:'l2',noHead:true},
+  {from:'n_t4e',to:'n_t4f',fromAnchor:'r2',toAnchor:'l2',noHead:true},
+  {from:'n_t4f',to:'n_t4g',fromAnchor:'r2',toAnchor:'l2',noHead:true},
   {from:'details',to:'payment',fromAnchor:'b2',toAnchor:'t2',main:true},
   {from:'details',to:'noResp1',fromAnchor:'r2',toAnchor:'t1'},
   
   // Phase 3 Routing
   {from:'payment',to:'n_t6a',fromAnchor:'b1',toAnchor:'t1'},
   {from:'n_t6a',to:'n_t6b',fromAnchor:'r2',toAnchor:'l2',noHead:true},
-  {from:'n_t6b',to:'n_t6d',fromAnchor:'r2',toAnchor:'l2',noHead:true},
+  {from:'n_t6b',to:'n_t6c',fromAnchor:'r2',toAnchor:'l2',noHead:true},
+  {from:'n_t6c',to:'n_t6d',fromAnchor:'r2',toAnchor:'l2',noHead:true},
   {from:'n_t6d',to:'n_t6e',fromAnchor:'r2',toAnchor:'l2',noHead:true},
+  {from:'n_t6e',to:'n_t6f',fromAnchor:'r2',toAnchor:'l2',noHead:true},
+  {from:'n_t6f',to:'n_t6g',fromAnchor:'r2',toAnchor:'l2',noHead:true},
   {from:'payment',to:'n_t8',fromAnchor:'r2',toAnchor:'t1'},
   
   {from:'payment',to:'timerDay',fromAnchor:'b2',toAnchor:'t2',main:true},
@@ -663,7 +674,11 @@ function bestA(f,t){
 
 // Advanced Smart Manhattan Router
 function smartOrthoP(p1, a1, p2, a2) {
-  const MARGIN = 40;
+  // Straight line for co-linear horizontal connections (e.g., chain edges)
+  if(Math.abs(p1.y-p2.y)<4 && ((a1.includes('r')&&a2.includes('l'))||(a1.includes('l')&&a2.includes('r')))) return `M${p1.x},${p1.y} L${p2.x},${p2.y}`;
+  // Straight line for co-linear vertical connections
+  if(Math.abs(p1.x-p2.x)<4 && ((a1.includes('b')&&a2.includes('t'))||(a1.includes('t')&&a2.includes('b')))) return `M${p1.x},${p1.y} L${p2.x},${p2.y}`;
+  const MARGIN = 30;
   const dx1 = a1.includes('r') ? 1 : a1.includes('l') ? -1 : 0;
   const dy1 = a1.includes('b') ? 1 : a1.includes('t') ? -1 : 0;
   const dx2 = a2.includes('r') ? 1 : a2.includes('l') ? -1 : 0;
@@ -674,15 +689,28 @@ function smartOrthoP(p1, a1, p2, a2) {
 
   let pts = [p1, c1];
 
-  if (dx1 !== 0 && dx2 !== 0) { 
-    const midX = (c1.x + c2.x) / 2;
-    pts.push({x: midX, y: c1.y}, {x: midX, y: c2.y});
-  } else if (dy1 !== 0 && dy2 !== 0) { 
-    const midY = (c1.y + c2.y) / 2;
-    pts.push({x: c1.x, y: midY}, {x: c2.x, y: midY});
-  } else if (dx1 !== 0 && dy2 !== 0) { 
+  if (dx1 !== 0 && dx2 !== 0) {
+    // Both horizontal: check if control points overlap (nodes too close)
+    if((dx1===1 && c1.x > c2.x) || (dx1===-1 && c1.x < c2.x)) {
+      // Control points crossed: route via vertical detour
+      const detourY = Math.min(p1.y, p2.y) - MARGIN;
+      pts.push({x: c1.x, y: detourY}, {x: c2.x, y: detourY});
+    } else {
+      const midX = (c1.x + c2.x) / 2;
+      pts.push({x: midX, y: c1.y}, {x: midX, y: c2.y});
+    }
+  } else if (dy1 !== 0 && dy2 !== 0) {
+    // Both vertical: check if control points overlap
+    if((dy1===1 && c1.y > c2.y) || (dy1===-1 && c1.y < c2.y)) {
+      const detourX = Math.min(p1.x, p2.x) - MARGIN;
+      pts.push({x: detourX, y: c1.y}, {x: detourX, y: c2.y});
+    } else {
+      const midY = (c1.y + c2.y) / 2;
+      pts.push({x: c1.x, y: midY}, {x: c2.x, y: midY});
+    }
+  } else if (dx1 !== 0 && dy2 !== 0) {
     pts.push({x: c2.x, y: c1.y});
-  } else if (dy1 !== 0 && dx2 !== 0) { 
+  } else if (dy1 !== 0 && dx2 !== 0) {
     pts.push({x: c1.x, y: c2.y});
   }
 
@@ -711,7 +739,7 @@ function smartOrthoP(p1, a1, p2, a2) {
 }
 
 // Storage & Undo (Version bumped to v61 to force fresh layout for user)
-const SK='element-flow-v63'; let svT;
+const SK='element-flow-v64'; let svT;
 function dSv(){clearTimeout(svT); svT=setTimeout(sv,800);}
 function toast(t){const el=document.getElementById('saveToast'); el.textContent=t||'נשמר בהצלחה 💾'; el.classList.add('show'); setTimeout(()=>el.classList.remove('show'),2000);}
 function pushU(){undoS.push(gS()); if(undoS.length>MU)undoS.shift(); redoS=[]; uUB();}
@@ -808,8 +836,8 @@ function onPhaseDragEnd(){
   document.removeEventListener('mouseup', onPhaseDragEnd);
   svPhases(); toast('גבולות שלב עודכנו ✅');
 }
-function svPhases(){try{localStorage.setItem('element-phases-v63',JSON.stringify(PHASES.map(p=>({id:p.id,y:p.y,h:p.h}))))}catch(e){}}
-function ldPhases(){try{const r=localStorage.getItem('element-phases-v63');if(!r)return;const d=JSON.parse(r);d.forEach(s=>{const p=PHASES.find(p=>p.id===s.id);if(p){p.y=s.y;p.h=s.h}})}catch(e){}}
+function svPhases(){try{localStorage.setItem('element-phases-v64',JSON.stringify(PHASES.map(p=>({id:p.id,y:p.y,h:p.h}))))}catch(e){}}
+function ldPhases(){try{const r=localStorage.getItem('element-phases-v64');if(!r)return;const d=JSON.parse(r);d.forEach(s=>{const p=PHASES.find(p=>p.id===s.id);if(p){p.y=s.y;p.h=s.h}})}catch(e){}}
 
 function renderNodes(){
   inner.querySelectorAll('.fnode').forEach(e=>e.remove());
@@ -828,7 +856,7 @@ function renderNodes(){
     const txt=document.createElement('span'); txt.className='node-text'; txt.innerHTML=n.label.replace(/\n/g,'<br>'); el.appendChild(txt);
     if(n.type==='wa'){const ic=document.createElement('div'); ic.className='wa-icon'; ic.textContent='💬'; el.appendChild(ic)}
     
-    if(n.ttBody){el.setAttribute('data-tt-title',n.ttTitle); el.setAttribute('data-tt-body',n.ttBody)}
+    if(n.type==='wa'){el.setAttribute('data-tt-title',n.ttTitle||n.label);el.setAttribute('data-tt-body',n.ttBody||(n.link?'טוען תבנית...':'תבנית טרם הוזנה'))}else if(n.ttBody){el.setAttribute('data-tt-title',n.ttTitle);el.setAttribute('data-tt-body',n.ttBody)}
     if(n.link) el.addEventListener('click', ()=>{if(!isDrag&&!drawA&&!editN) goTo(n.link)});
     
     AN.forEach(a=>{
@@ -954,12 +982,14 @@ function editEL(i){const e=EDGES[i]; const v=prompt('טקסט תווית לחי�
 
 svg.style.pointerEvents='auto';
 svg.addEventListener('click',function(e){const h=e.target.closest('[data-eidx]'); if(h){e.stopPropagation();selectE(parseInt(h.dataset.eidx));}});
+svg.addEventListener('contextmenu',function(e){const h=e.target.closest('[data-eidx]');if(h){e.preventDefault();e.stopPropagation();const idx=parseInt(h.dataset.eidx);selectE(idx);const edge=EDGES[idx];showCtx(e.clientX,e.clientY,[{i:'🔄',l:'הפוך כיוון חץ',a:()=>flipSelectedEdge()},{i:edge.noHead?'➡️':'➖',l:edge.noHead?'הוסף ראש חץ':'הסר ראש חץ',a:()=>toggleEdgeHead()},{i:edge.style==='dashed'?'—':'┄',l:edge.style==='dashed'?'קו רציף':'קו מקווקו',a:()=>{pushU();edge.style=edge.style==='dashed'?'':'dashed';dSv();renderEdges();}},{i:'🏷️',l:'ערוך תווית',a:()=>editEL(idx)},{i:'',l:'<div class="ctx-sep"></div>',a:()=>{}},{i:'🗑️',l:'מחק קשר',a:()=>deleteSelectedEdge(),d:true}]);}});
 scr.addEventListener('click',function(e){if(!e.target.closest('[data-eidx]')&&!e.target.closest('.anchor-point')&&!e.target.closest('.fnode')&&!e.target.closest('.edge-handle')&&!e.target.closest('.arrow-toolbar'))desel();});
 
 function selectE(i){selE=i; selN=null; renderAll(); const e=EDGES[i]; if(!e)return; const f=NM[e.from], t=NM[e.to]; if(!f||!t)return; let fA=e.fromAnchor, tA=e.toAnchor; if(!fA||!tA){const au=bestA(f,t); fA=fA||au.fA; tA=tA||au.tA;} const p1=aPos(f,fA), p2=aPos(t,tA); const mx=(p1.x+p2.x)/2, my=(p1.y+p2.y)/2; const sr=scr.getBoundingClientRect(); atb.style.left=(mx*zoom-scr.scrollLeft+sr.left)+'px'; atb.style.top=(my*zoom-scr.scrollTop+sr.top-60)+'px'; atb.classList.add('visible');}
 function selectN(id){selN=id; selE=-1; atb.classList.remove('visible'); renderAll();}
 function desel(){selE=-1; selN=null; atb.classList.remove('visible'); ctxEl.classList.remove('visible'); renderAll();}
 function flipSelectedEdge(){if(selE<0)return; pushU(); const e=EDGES[selE]; [e.from,e.to]=[e.to,e.from]; [e.fromAnchor,e.toAnchor]=[e.toAnchor,e.fromAnchor]; dSv(); selectE(selE);}
+function toggleEdgeHead(){if(selE<0)return; pushU(); EDGES[selE].noHead=!EDGES[selE].noHead; dSv(); renderEdges(); uMM();}
 function deleteSelectedEdge(){if(selE<0)return; pushU(); EDGES.splice(selE,1); desel(); dSv();}
 function delEdge(){deleteSelectedEdge()}
 
