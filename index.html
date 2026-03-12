@@ -739,7 +739,7 @@ h2 { font-size: 18px; font-weight: 800; color: var(--hdr); margin-top: 32px; mar
 
 <script>
 // ================================================================
-// DESKTOP ENGINE v6.6 — Ctrl+B bold, ctx-menu fix, grouped variant boxes
+// DESKTOP ENGINE v6.8 — User's preferred default layout baked in
 // ================================================================
 
 // UI Utilities
@@ -934,154 +934,152 @@ const LC={adult:'#d81b60',parent:'#2563eb'};
 
 // Visually Encapsulating Swimlanes based on the NEW exact layout
 const PHASES = [
-  { id: 'p1', y: 0, h: 580, title: 'שלב 1: איסוף לידים, קפסולציה ותגובה ראשונית', color: '#f8fafc', stroke: '#cbd5e1' },
-  { id: 'p2', y: 600, h: 540, title: 'שלב 2: תיאום שיעורי היכרות וגביית תשלום', color: '#f0f9ff', stroke: '#bae6fd' },
-  { id: 'p3', y: 1160, h: 1000, title: 'שלב 3: חווית לקוח במהלך 3 שיעורי ההיכרות', color: '#f0fdf4', stroke: '#bbf7d0' },
-  { id: 'p4', y: 2180, h: 900, title: 'שלב 4: הרשמה למנוי, שימור והפניות', color: '#fdf4ff', stroke: '#fbcfe8' }
+  { id: 'p1', y: 0, h: 620, title: 'שלב 1: איסוף לידים, קפסולציה ותגובה ראשונית', color: '#f8fafc', stroke: '#cbd5e1' },
+  { id: 'p2', y: 640, h: 500, title: 'שלב 2: תיאום שיעורי היכרות וגביית תשלום', color: '#f0f9ff', stroke: '#bae6fd' },
+  { id: 'p3', y: 1160, h: 800, title: 'שלב 3: חווית לקוח במהלך 3 שיעורי ההיכרות', color: '#f0fdf4', stroke: '#bbf7d0' },
+  { id: 'p4', y: 1980, h: 960, title: 'שלב 4: הרשמה למנוי, שימור והפניות', color: '#fdf4ff', stroke: '#fbcfe8' }
 ];
 
-// Clean, mathematically organized cascading layout (No overlaps)
+// User's preferred layout v6.8 — Phase 3 spine on RIGHT, 2-row variant groups
 const DEFAULT_NODES=[
-  {id:'entry',type:'step',label:'📥 ליד חדש נכנס\nלמערכת ה-CRM',x:520,y:40,w:180,major:true},
-  
-  {id:'widget',type:'source',label:'📱 ווידג׳ט אתר\n(טופס / Linktree)',x:280,y:160,w:160},
-  {id:'direct',type:'source',label:'💬 פנייה ישירה\n(WA / טלפון / רשתות)',x:760,y:160,w:180},
-  
-  {id:'wPaid',type:'step',label:'💳 שילם',x:160,y:280,w:120},
-  {id:'wNoPay',type:'step',label:'⏰ לא שילם\n(המתנה 24-48ש)',x:400,y:280,w:140},
-  
-  {id:'wCallback',type:'source',label:'📞 ביקש שנחזור',x:320,y:400,w:140},
-  {id:'wAbandoned',type:'source',label:'🚫 נטש / סגר חלון',x:480,y:400,w:140},
-  
-  {id:'n_t1',type:'wa',label:'#1 תגובה ראשונית',x:320,y:500,w:140,link:'t1',ttTitle:'#1 תגובה ווידג׳ט',ttBody:'היי [שם] 👋\nכאן צוות אלמנט.\nראינו שהשארתם פרטים ונשמח לעזור! 🙏'},
-  {id:'n_t19',type:'wa',label:'#19 הודעת מעקב',x:480,y:500,w:140,link:'t19',ttTitle:'#19 מעקב — לא שילם',ttBody:'היי [שם] 👋\nראינו שהתעניינתם — נשמח לעזור! 📞 🙏'},
-  
-  {id:'n_t2',type:'wa',label:'#2 תגובה: מבוגר/ת',x:640,y:300,w:140,link:'t2',lane:'adult',ttTitle:'#2 ליד ישיר — מבוגר',ttBody:'היי [שם] 👋\nתודה שפניתם! מה חיפשתם? 🙏'},
-  {id:'n_t3',type:'wa',label:'#3 תגובה: הורה',x:880,y:300,w:140,link:'t3',lane:'parent',ttTitle:'#3 ליד ישיר — הורה',ttBody:'היי [שם ההורה] 👋\nמה הגיל ומה חיפשתם? 💪'},
+  // Phase 1 — Lead collection & first response
+  {id:'entry',type:'step',label:'📥 ליד חדש נכנס\nלמערכת ה-CRM',x:420,y:40,w:180,major:true},
 
-  // Phase 2
-  {id:'details',type:'step',label:'📋 שליחת פרטי היכרות טכניים',x:480,y:640,w:220,major:true},
-  
-  {id:'n_t4a',type:'wa',label:'#4a ילדים 6-8',x:180,y:780,w:120,link:'t4a',lane:'parent'},
-  {id:'n_t4b',type:'wa',label:'#4b ילדים 9-11',x:320,y:780,w:120,link:'t4b',lane:'parent'},
-  {id:'n_t4c',type:'wa',label:'#4c נוער 12-15',x:460,y:780,w:120,link:'t4c',lane:'parent'},
-  {id:'n_t4d',type:'wa',label:'#4d לחימה בוגרים',x:600,y:780,w:130,link:'t4d',lane:'adult'},
-  {id:'n_t4e',type:'wa',label:'#4e כושר 38+',x:750,y:780,w:120,link:'t4e',lane:'adult'},
-  {id:'n_t4f',type:'wa',label:'#4f תנועה',x:890,y:780,w:110,link:'t4f',lane:'adult'},
-  {id:'n_t4g',type:'wa',label:'#4g כוח וגמישות',x:1020,y:780,w:140,link:'t4g',lane:'adult'},
-  {id:'noResp1',type:'ghost',label:'⛔ אין תגובה / סונן',x:1180,y:780,w:140},
+  {id:'widget',type:'source',label:'📱 ווידג׳ט אתר\n(טופס / Linktree)',x:160,y:160,w:180},
+  {id:'direct',type:'source',label:'💬 פנייה ישירה\n(WA / טלפון / רשתות)',x:580,y:160,w:200},
 
-  {id:'payment',type:'step',label:'💳 אימות תשלום וקליטה להכרות',x:480,y:920,w:240,major:true},
-  
-  {id:'n_t6a',type:'wa',label:'#6a אישור ילדים 6-8',x:100,y:1060,w:130,link:'t6a',lane:'parent'},
-  {id:'n_t6b',type:'wa',label:'#6b אישור ילדים 9-11',x:250,y:1060,w:140,link:'t6b',lane:'parent'},
-  {id:'n_t6c',type:'wa',label:'#6c אישור נוער',x:410,y:1060,w:120,link:'t6c',lane:'parent'},
-  {id:'n_t6d',type:'wa',label:'#6d אישור לחימה',x:550,y:1060,w:120,link:'t6d',lane:'adult'},
-  {id:'n_t6e',type:'wa',label:'#6e אישור כושר',x:690,y:1060,w:110,link:'t6e',lane:'adult'},
-  {id:'n_t6f',type:'wa',label:'#6f אישור תנועה',x:820,y:1060,w:120,link:'t6f',lane:'adult'},
-  {id:'n_t6g',type:'wa',label:'#6g אישור כוח וגמישות',x:960,y:1060,w:150,link:'t6g',lane:'adult'},
-  {id:'n_t8',type:'wa',label:'#8 טופס בריאות',x:1130,y:1060,w:120,link:'t8'},
+  {id:'wPaid',type:'step',label:'💳 שילם',x:140,y:280,w:120},
+  {id:'wNoPay',type:'step',label:'⏰ לא שילם\n(המתנה 24-48ש)',x:300,y:280,w:160},
+  {id:'n_t2',type:'wa',label:'#2 תגובה: מבוגר/ת',x:520,y:280,w:160,link:'t2',lane:'adult',ttTitle:'#2 ליד ישיר — מבוגר',ttBody:'היי [שם] 👋\nתודה שפניתם! מה חיפשתם? 🙏'},
+  {id:'n_t3',type:'wa',label:'#3 תגובה: הורה',x:700,y:280,w:150,link:'t3',lane:'parent',ttTitle:'#3 ליד ישיר — הורה',ttBody:'היי [שם ההורה] 👋\nמה הגיל ומה חיפשתם? 💪'},
 
-  // Phase 3
-  {id:'timerDay',type:'step',label:'⏰ יום לפני שיעור (09:00)',x:480,y:1200,w:170,timer:true},
-  {id:'n_t9',type:'wa',label:'#9 תזכורת הגעה',x:680,y:1200,w:120,link:'t9'},
+  {id:'wCallback',type:'source',label:'📞 ביקש שנחזור',x:200,y:390,w:160},
+  {id:'wAbandoned',type:'source',label:'🚫 נטש / סגר חלון',x:380,y:390,w:160},
 
-  {id:'class1',type:'step',label:'🥋 שיעור היכרות #1',x:480,y:1320,w:130,major:true},
-  {id:'att1',type:'decision',label:'האם הגיע?',x:480,y:1420,w:110},
-  
-  {id:'n_t10',type:'wa',label:'#10 מעקב שיעור 1',x:420,y:1540,w:140,link:'t10'},
-  {id:'n_t17a',type:'ghost',label:'#17a שילם ולא הגיע',x:700,y:1540,w:140,link:'t17a'},
+  {id:'n_t1',type:'wa',label:'#1 תגובה ראשונית',x:220,y:490,w:160,link:'t1',ttTitle:'#1 תגובה ווידג׳ט',ttBody:'היי [שם] 👋\nכאן צוות אלמנט.\nראינו שהשארתם פרטים ונשמח לעזור! 🙏'},
+  {id:'n_t19',type:'wa',label:'#19 הודעת מעקב',x:400,y:490,w:160,link:'t19',ttTitle:'#19 מעקב — לא שילם',ttBody:'היי [שם] 👋\nראינו שהתעניינתם — נשמח לעזור! 📞 🙏'},
 
-  {id:'class2',type:'step',label:'🥋 שיעור היכרות #2',x:420,y:1660,w:130},
-  {id:'att2',type:'decision',label:'האם הגיע?',x:420,y:1760,w:110},
+  {id:'details',type:'step',label:'📋 שליחת פרטי היכרות טכניים',x:360,y:580,w:280,major:true},
+  {id:'noResp1',type:'ghost',label:'⛔ אין תגובה / סונן',x:820,y:590,w:160},
 
-  {id:'n_t11',type:'wa',label:'#11 מתן ערך / שרירים',x:320,y:1880,w:140,link:'t11'},
-  {id:'n_t17b_2',type:'ghost',label:'#17b נעלם פתאום',x:560,y:1880,w:130,link:'t17b'},
+  // Phase 2 — Intro variants (2-row layout: adult-left, kids-right)
+  {id:'n_t4e',type:'wa',label:'#4e כושר 38+',x:370,y:720,w:130,link:'t4e',lane:'adult'},
+  {id:'n_t4g',type:'wa',label:'#4g כוח וגמישות',x:510,y:720,w:150,link:'t4g',lane:'adult'},
+  {id:'n_t4f',type:'wa',label:'#4f תנועה',x:370,y:770,w:110,link:'t4f',lane:'adult'},
+  {id:'n_t4a',type:'wa',label:'#4a ילדים 6-8',x:740,y:720,w:130,link:'t4a',lane:'parent'},
+  {id:'n_t4c',type:'wa',label:'#4c נוער 12-15',x:880,y:720,w:130,link:'t4c',lane:'parent'},
+  {id:'n_t4b',type:'wa',label:'#4b ילדים 9-11',x:740,y:770,w:140,link:'t4b',lane:'parent'},
+  {id:'n_t4d',type:'wa',label:'#4d לחימה בוגרים',x:880,y:770,w:140,link:'t4d',lane:'adult'},
 
-  // Phase 4
-  {id:'class3',type:'step',label:'🥋 שיעור סיום #3',x:480,y:2000,w:130,major:true},
-  {id:'att3',type:'decision',label:'האם הגיע?',x:480,y:2100,w:110},
+  {id:'payment',type:'step',label:'💳 אימות תשלום וקליטה להכרות',x:400,y:880,w:260,major:true},
+  {id:'n_t8',type:'wa',label:'#8 טופס בריאות',x:800,y:880,w:130,link:'t8'},
 
-  {id:'n_t12',type:'wa',label:'#12 הרשמה בוגר',x:380,y:2220,w:130,link:'t12',lane:'adult'},
-  {id:'n_t13',type:'wa',label:'#13 הרשמה הורה',x:540,y:2220,w:130,link:'t13',lane:'parent'},
-  {id:'n_t17b_3',type:'ghost',label:'#17b נעלם בסוף',x:700,y:2220,w:130,link:'t17b'},
+  // Payment variants (2-row layout: kids-left, adult-right)
+  {id:'n_t6a',type:'wa',label:'#6a אישור ילדים 6-8',x:340,y:980,w:140,link:'t6a',lane:'parent'},
+  {id:'n_t6c',type:'wa',label:'#6c אישור נוער',x:490,y:980,w:120,link:'t6c',lane:'parent'},
+  {id:'n_t6b',type:'wa',label:'#6b אישור ילדים 9-11',x:340,y:1030,w:150,link:'t6b',lane:'parent'},
+  {id:'n_t6d',type:'wa',label:'#6d אישור לחימה',x:680,y:980,w:130,link:'t6d',lane:'adult'},
+  {id:'n_t6g',type:'wa',label:'#6g אישור כוח וגמישות',x:820,y:980,w:160,link:'t6g',lane:'adult'},
+  {id:'n_t6e',type:'wa',label:'#6e אישור כושר',x:680,y:1030,w:120,link:'t6e',lane:'adult'},
+  {id:'n_t6f',type:'wa',label:'#6f אישור תנועה',x:820,y:1030,w:130,link:'t6f',lane:'adult'},
 
-  {id:'enrollQ',type:'decision',label:'החלטת לקוח?',x:480,y:2360,w:130},
-  {id:'enrolled',type:'step',label:'✅ נרשם למנוי!',x:320,y:2480,w:130,major:true},
-  {id:'n_t18',type:'wa',label:'#18 מתלבט כרגע',x:480,y:2480,w:130,link:'t18'},
-  {id:'n_t17b_f',type:'ghost',label:'#17b הפסיק לענות',x:640,y:2480,w:130,link:'t17b'},
+  // Phase 3 — RIGHT-spine layout: classes on right, decisions center, branches left
+  {id:'timerDay',type:'step',label:'⏰ יום לפני שיעור (09:00)',x:540,y:1200,w:180,timer:true},
+  {id:'n_t9',type:'wa',label:'#9 תזכורת הגעה',x:760,y:1200,w:140,link:'t9'},
 
-  {id:'whoEnroll',type:'decision',label:'סוג לקוח?',x:320,y:2600,w:110},
-  {id:'n_t14',type:'wa',label:'#14 ברוכים הבאים\nלמבוגר + אפליקציה',x:260,y:2720,w:140,link:'t14',lane:'adult'},
-  {id:'n_t15',type:'wa',label:'#15 ברוכים הבאים\nלהורה + אפליקציה',x:440,y:2720,w:140,link:'t15',lane:'parent'},
+  {id:'class1',type:'step',label:'🥋 שיעור היכרות #1',x:720,y:1320,w:160,major:true},
+  {id:'n_t10',type:'wa',label:'#10 מעקב שיעור 1',x:320,y:1300,w:160,link:'t10'},
+  {id:'att1',type:'decision',label:'האם הגיע?',x:520,y:1400,w:120},
+  {id:'n_t17a',type:'ghost',label:'#17a שילם ולא הגיע',x:320,y:1460,w:160,link:'t17a'},
 
-  {id:'wait23w',type:'step',label:'⏰ אימון 2-3 שב׳',x:340,y:2860,w:130,timer:true},
-  {id:'n_t16',type:'wa',label:'#16 חבר מביא חבר',x:520,y:2860,w:130,link:'t16'},
-  {id:'done',type:'end',label:'🎉 לקוח פעיל!',x:420,y:3000,w:140}
+  {id:'class2',type:'step',label:'🥋 שיעור היכרות #2',x:700,y:1540,w:160},
+  {id:'n_t11',type:'wa',label:'#11 מתן ערך / שרירים',x:300,y:1540,w:170,link:'t11'},
+  {id:'att2',type:'decision',label:'האם הגיע?',x:520,y:1620,w:120},
+  {id:'n_t17b_2',type:'ghost',label:'#17b נעלם פתאום',x:300,y:1680,w:150,link:'t17b'},
+
+  {id:'class3',type:'step',label:'🥋 שיעור סיום #3',x:720,y:1760,w:170,major:true},
+  {id:'att3',type:'decision',label:'האם הגיע?',x:520,y:1860,w:120},
+  {id:'n_t17b_3',type:'ghost',label:'#17b נעלם בסוף',x:300,y:1860,w:150,link:'t17b'},
+
+  // Phase 4 — Enrollment, retention, referrals
+  {id:'n_t12',type:'wa',label:'#12 הרשמה בוגר',x:470,y:2060,w:140,link:'t12',lane:'adult'},
+  {id:'n_t13',type:'wa',label:'#13 הרשמה הורה',x:630,y:2060,w:140,link:'t13',lane:'parent'},
+
+  {id:'enrollQ',type:'decision',label:'החלטת לקוח?',x:540,y:2200,w:140},
+  {id:'n_t17b_f',type:'ghost',label:'#17b הפסיק לענות',x:840,y:2160,w:150,link:'t17b'},
+  {id:'n_t18',type:'wa',label:'#18 מתלבט כרגע',x:760,y:2220,w:150,link:'t18'},
+
+  {id:'enrolled',type:'step',label:'✅ נרשם למנוי!',x:540,y:2340,w:160,major:true},
+
+  {id:'whoEnroll',type:'decision',label:'סוג לקוח?',x:400,y:2460,w:120},
+  {id:'n_t14',type:'wa',label:'#14 ברוכים הבאים\nלמבוגר + אפליקציה',x:300,y:2580,w:160,link:'t14',lane:'adult'},
+  {id:'n_t15',type:'wa',label:'#15 ברוכים הבאים\nלהורה + אפליקציה',x:500,y:2580,w:160,link:'t15',lane:'parent'},
+
+  {id:'wait23w',type:'step',label:'⏰ אימון 2-3 שב׳',x:380,y:2720,w:140,timer:true},
+  {id:'n_t16',type:'wa',label:'#16 חבר מביא חבר',x:560,y:2720,w:140,link:'t16'},
+  {id:'done',type:'end',label:'🎉 לקוח פעיל!',x:360,y:2860,w:160}
 ];
 
-// Cleaned up edges (Removed all default labels)
+// Edges v6.8 — Matches user's preferred layout (right-spine Phase 3, no variant entry arrows)
 const DEFAULT_EDGES=[
   {from:'entry',to:'widget',fromAnchor:'b1',toAnchor:'t2'},
   {from:'entry',to:'direct',fromAnchor:'b2',toAnchor:'t1'},
-  
+
   {from:'widget',to:'wPaid',fromAnchor:'b1',toAnchor:'t1'},
   {from:'widget',to:'wNoPay',fromAnchor:'b2',toAnchor:'t1'},
   {from:'wNoPay',to:'wCallback',fromAnchor:'b1',toAnchor:'t2'},
   {from:'wNoPay',to:'wAbandoned',fromAnchor:'b2',toAnchor:'t1'},
-  {from:'wCallback',to:'n_t1',fromAnchor:'b1',toAnchor:'t1'}, 
+  {from:'wCallback',to:'n_t1',fromAnchor:'b1',toAnchor:'t1'},
   {from:'wAbandoned',to:'n_t19',fromAnchor:'b1',toAnchor:'t1'},
   {from:'wPaid',to:'payment',style:'dashed',fromAnchor:'b1',toAnchor:'l1'},
-  
-  {from:'n_t1',to:'details',style:'dashed',fromAnchor:'b2',toAnchor:'l1'},
-  {from:'n_t19',to:'details',style:'dashed',fromAnchor:'b1',toAnchor:'l2'},
-  
+
+  {from:'n_t1',to:'details',style:'dashed',fromAnchor:'r1',toAnchor:'l1'},
+  {from:'n_t19',to:'details',style:'dashed',fromAnchor:'r1',toAnchor:'l2'},
+
   {from:'direct',to:'n_t2',fromAnchor:'b1',toAnchor:'t2',lane:'adult'},
   {from:'direct',to:'n_t3',fromAnchor:'b2',toAnchor:'t1',lane:'parent'},
-  
+
   {from:'n_t2',to:'details',style:'dashed',fromAnchor:'b1',toAnchor:'r1',lane:'adult'},
   {from:'n_t3',to:'details',style:'dashed',fromAnchor:'b1',toAnchor:'r2',lane:'parent'},
-  
-  // Phase 2 Routing
-  {from:'details',to:'n_t4d',fromAnchor:'b1',toAnchor:'t1',main:true},
-  {from:'details',to:'payment',fromAnchor:'b2',toAnchor:'t2',main:true},
-  {from:'details',to:'noResp1',fromAnchor:'r2',toAnchor:'t1'},
-  
-  // Phase 3 Routing
-  {from:'payment',to:'n_t6d',fromAnchor:'b1',toAnchor:'t1'},
-  {from:'payment',to:'n_t8',fromAnchor:'r2',toAnchor:'t1'},
-  
-  {from:'payment',to:'timerDay',fromAnchor:'b2',toAnchor:'t2',main:true},
+
+  // Phase 2 — main flow: details → payment (variant boxes are visual-only, no entry arrows)
+  {from:'details',to:'payment',fromAnchor:'b1',toAnchor:'t1',main:true},
+  {from:'details',to:'noResp1',fromAnchor:'r2',toAnchor:'l1'},
+
+  {from:'payment',to:'n_t8',fromAnchor:'r2',toAnchor:'l1'},
+  {from:'payment',to:'timerDay',fromAnchor:'b1',toAnchor:'t1',main:true},
+
+  // Phase 3 — RIGHT-spine: classes right, decisions center, branches left
   {from:'timerDay',to:'n_t9',fromAnchor:'r2',toAnchor:'l1'},
-  {from:'timerDay',to:'class1',main:true},
-  
-  {from:'class1',to:'att1',main:true},
-  {from:'att1',to:'n_t10',fromAnchor:'b1',toAnchor:'t2'},
-  {from:'att1',to:'n_t17a',fromAnchor:'b2',toAnchor:'t1'},
-  {from:'n_t10',to:'class2',main:true},
-  
-  {from:'class2',to:'att2',main:true},
-  {from:'att2',to:'n_t11',fromAnchor:'b1',toAnchor:'t2'},
-  {from:'att2',to:'n_t17b_2',fromAnchor:'b2',toAnchor:'t1'},
-  {from:'n_t11',to:'class3',main:true},
-  
-  // Phase 4 Routing
-  {from:'class3',to:'att3',main:true},
+  {from:'timerDay',to:'class1',fromAnchor:'b1',toAnchor:'t1',main:true},
+
+  {from:'class1',to:'att1',fromAnchor:'l1',toAnchor:'r1'},
+  {from:'att1',to:'n_t10',fromAnchor:'l1',toAnchor:'r1'},
+  {from:'att1',to:'n_t17a',fromAnchor:'b1',toAnchor:'t1'},
+  {from:'n_t10',to:'class2',fromAnchor:'b1',toAnchor:'t1'},
+
+  {from:'class2',to:'att2',fromAnchor:'l1',toAnchor:'r1'},
+  {from:'att2',to:'n_t11',fromAnchor:'l1',toAnchor:'r1'},
+  {from:'att2',to:'n_t17b_2',fromAnchor:'b1',toAnchor:'t1'},
+  {from:'n_t11',to:'class3',fromAnchor:'b1',toAnchor:'t1'},
+
+  {from:'class3',to:'att3',fromAnchor:'l1',toAnchor:'r1'},
   {from:'att3',to:'n_t12',fromAnchor:'b1',toAnchor:'t2',lane:'adult'},
   {from:'att3',to:'n_t13',fromAnchor:'b2',toAnchor:'t1',lane:'parent'},
-  {from:'att3',to:'n_t17b_3',fromAnchor:'r2',toAnchor:'t1'},
-  
+  {from:'att3',to:'n_t17b_3',fromAnchor:'l1',toAnchor:'r1'},
+
+  // Phase 4 — Enrollment flow
   {from:'n_t12',to:'enrollQ',fromAnchor:'b1',toAnchor:'t1'},
   {from:'n_t13',to:'enrollQ',fromAnchor:'b1',toAnchor:'t2'},
-  
-  {from:'enrollQ',to:'enrolled',fromAnchor:'b1',toAnchor:'t2',main:true},
-  {from:'enrollQ',to:'n_t18',fromAnchor:'b2',toAnchor:'t1'},
-  {from:'enrollQ',to:'n_t17b_f',fromAnchor:'r2',toAnchor:'t1'},
-  
+
+  {from:'enrollQ',to:'enrolled',fromAnchor:'b1',toAnchor:'t1',main:true},
+  {from:'enrollQ',to:'n_t18',fromAnchor:'r2',toAnchor:'l1'},
+  {from:'enrollQ',to:'n_t17b_f',fromAnchor:'r1',toAnchor:'l1'},
+
   {from:'enrolled',to:'whoEnroll',main:true},
   {from:'whoEnroll',to:'n_t14',fromAnchor:'b1',toAnchor:'t2',lane:'adult'},
   {from:'whoEnroll',to:'n_t15',fromAnchor:'b2',toAnchor:'t1',lane:'parent'},
-  
+
   {from:'n_t14',to:'wait23w',fromAnchor:'b1',toAnchor:'t1'},
   {from:'n_t15',to:'wait23w',fromAnchor:'b1',toAnchor:'t2'},
   {from:'wait23w',to:'n_t16',fromAnchor:'r2',toAnchor:'l1'},
@@ -1196,7 +1194,7 @@ function smartOrthoP(p1, a1, p2, a2) {
 }
 
 // Storage & Undo (Version bumped to v61 to force fresh layout for user)
-const SK='element-flow-v66'; let svT;
+const SK='element-flow-v68'; let svT;
 function dSv(){clearTimeout(svT); svT=setTimeout(sv,800);}
 function toast(t){const el=document.getElementById('saveToast'); el.textContent=t||'נשמר בהצלחה 💾'; el.classList.add('show'); setTimeout(()=>el.classList.remove('show'),2000);}
 function pushU(){undoS.push(gS()); if(undoS.length>MU)undoS.shift(); redoS=[]; uUB();}
@@ -1307,8 +1305,8 @@ function onPhaseDragEnd(){
   document.removeEventListener('mouseup', onPhaseDragEnd);
   svPhases(); toast('גבולות שלב עודכנו ✅');
 }
-function svPhases(){try{localStorage.setItem('element-phases-v66',JSON.stringify(PHASES.map(p=>({id:p.id,y:p.y,h:p.h}))))}catch(e){}}
-function ldPhases(){try{const r=localStorage.getItem('element-phases-v66');if(!r)return;const d=JSON.parse(r);d.forEach(s=>{const p=PHASES.find(p=>p.id===s.id);if(p){p.y=s.y;p.h=s.h}})}catch(e){}}
+function svPhases(){try{localStorage.setItem('element-phases-v68',JSON.stringify(PHASES.map(p=>({id:p.id,y:p.y,h:p.h}))))}catch(e){}}
+function ldPhases(){try{const r=localStorage.getItem('element-phases-v68');if(!r)return;const d=JSON.parse(r);d.forEach(s=>{const p=PHASES.find(p=>p.id===s.id);if(p){p.y=s.y;p.h=s.h}})}catch(e){}}
 
 function renderNodes(){
   inner.querySelectorAll('.fnode').forEach(e=>e.remove());
