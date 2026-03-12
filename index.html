@@ -182,25 +182,28 @@ h2 { font-size: 18px; font-weight: 800; color: var(--hdr); margin-top: 32px; mar
 .template-body { padding: 16px; }
 .message { background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px; padding: 12px 16px; margin: 8px 0; white-space: pre-wrap; line-height: 1.6; font-size: 13px; position: relative; cursor: pointer; transition: all 0.2s; color: #064e3b; }
 .message:hover { box-shadow: 0 4px 12px rgba(37,211,102,0.15); border-color: #86efac; background: #ecfdf5; }
-.cbtn { position: absolute; top: 8px; left: 8px; background: #fff; color: var(--accent2); border: 1px solid var(--accent2); border-radius: 6px; padding: 4px 10px; font-size: 11px; font-weight: 700; font-family: 'Heebo', sans-serif; cursor: pointer; opacity: 0; transition: all 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
-.message:hover .cbtn { opacity: 1; }
+.msg-actions { position: absolute; top: 8px; left: 8px; display: flex; gap: 6px; opacity: 0; transition: opacity 0.2s; z-index: 5; }
+.message:hover .msg-actions { opacity: 1; }
+.cbtn { background: #fff; color: var(--accent2); border: 1px solid var(--accent2); border-radius: 6px; padding: 4px 10px; font-size: 11px; font-weight: 700; font-family: 'Heebo', sans-serif; cursor: pointer; transition: all 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.05); white-space: nowrap; }
 .cbtn:hover { background: var(--accent2); color: #fff; }
 .cbtn.copied { background: var(--accent); color: #fff; border-color: var(--accent); }
 .placeholder { background: #fef3c7; padding: 2px 4px; border-radius: 4px; font-weight: 700; color: #92400e; font-size: 12px; border: 1px dashed #fcd34d; font-family: monospace; }
+.var-filled { background: #ecfdf5; padding: 2px 4px; border-radius: 4px; font-weight: 700; color: #065f46; font-size: 12px; border: 1px solid #86efac; }
 .note { background: #fffbeb; border: 1px solid #fde68a; border-radius: 8px; padding: 10px 12px; margin: 12px 0 0; font-size: 11px; color: #92400e; }
 .note strong { color: #b45309; }
 
 /* Template Edit Mode */
 .message.editing { cursor: text; user-select: text; background: #fff; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(37,211,102,0.2); }
-.message.editing .cbtn, .message.editing .edit-btn, .message.editing .reset-btn { display: none; }
-.edit-btn { position: absolute; top: 8px; left: 56px; background: #fff; color: #64748b; border: 1px solid var(--border); border-radius: 6px; padding: 4px 10px; font-size: 11px; font-weight: 700; font-family: 'Heebo', sans-serif; cursor: pointer; opacity: 0; transition: all 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
-.message:hover .edit-btn { opacity: 1; }
+.message.editing .msg-actions { display: none; }
+.edit-btn { background: #fff; color: #64748b; border: 1px solid var(--border); border-radius: 6px; padding: 4px 10px; font-size: 11px; font-weight: 700; font-family: 'Heebo', sans-serif; cursor: pointer; transition: all 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.05); white-space: nowrap; }
 .edit-btn:hover { background: #f1f5f9; color: var(--hdr); }
 .save-edit-btn { position: absolute; top: 8px; left: 8px; background: var(--accent); color: #fff; border: none; border-radius: 6px; padding: 4px 14px; font-size: 11px; font-weight: 700; font-family: 'Heebo', sans-serif; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.1); transition: background 0.2s; z-index: 5; }
 .save-edit-btn:hover { background: #16a34a; }
-.reset-btn { position: absolute; top: 8px; left: 108px; background: #fff; color: #ef4444; border: 1px solid #fca5a5; border-radius: 6px; padding: 4px 10px; font-size: 11px; font-weight: 700; font-family: 'Heebo', sans-serif; cursor: pointer; opacity: 0; transition: all 0.2s; }
-.message:hover .reset-btn { opacity: 1; }
+.reset-btn { background: #fff; color: #ef4444; border: 1px solid #fca5a5; border-radius: 6px; padding: 4px 10px; font-size: 11px; font-weight: 700; font-family: 'Heebo', sans-serif; cursor: pointer; transition: all 0.2s; white-space: nowrap; }
 .reset-btn:hover { background: #fef2f2; }
+.var-field.warning select, .var-field.warning input { border-color: #f59e0b; background: #fffbeb; }
+.var-field .field-hint { font-size: 9px; color: #f59e0b; font-weight: 600; display: none; }
+.var-field.warning .field-hint { display: inline; }
 
 /* Table */
 .ref-table { width: 100%; border-collapse: separate; border-spacing: 0; margin: 16px 0 32px; font-size: 13px; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
@@ -290,7 +293,13 @@ h2 { font-size: 18px; font-weight: 800; color: var(--hdr); margin-top: 32px; mar
 .wizard-btn .btn-sub { font-size: 10px; font-weight: 400; color: var(--text2); margin-top: 4px; display: block; }
 .wizard-btn.small { min-width: 100px; padding: 10px 12px; font-size: 12px; }
 .wizard-btn.small .btn-icon { font-size: 18px; margin-bottom: 4px; }
-.wizard-result { margin-top: 16px; }
+.wizard-result { margin-top: 16px; animation: wizPulse 0.6s ease-out; }
+@keyframes wizPulse { 0%{box-shadow:0 0 0 0 rgba(37,211,102,0.4)} 70%{box-shadow:0 0 0 12px rgba(37,211,102,0)} 100%{box-shadow:none} }
+.wizard-subtitle { font-size: 13px; color: var(--text2); text-align: center; padding: 10px 0 6px; }
+.var-field input[type="date"] { font-family: 'Heebo', sans-serif; font-size: 11px; padding: 3px 6px; border: 1px solid transparent; border-radius: 14px; background: #fef3c7; outline: none; min-width: 120px; transition: all 0.2s; direction: ltr; text-align: center; }
+.var-field input[type="date"]:focus { border-color: var(--accent); background: #fff; box-shadow: 0 0 0 2px rgba(37,211,102,0.15); }
+.var-field input[type="date"].filled { background: #ecfdf5; border-color: #86efac; }
+.session-badge { background: var(--accent); color: #fff; border-radius: 50%; font-size: 9px; font-weight: 800; padding: 1px 5px; margin-right: 4px; }
 .wizard-result .template-card { margin: 0; }
 
 @media print {
@@ -422,6 +431,7 @@ h2 { font-size: 18px; font-weight: 800; color: var(--hdr); margin-top: 32px; mar
         <h2>אשף הודעות וואטסאפ</h2>
         <span class="wizard-collapse-icon">▲</span>
       </div>
+      <div class="wizard-subtitle">בחרו שלב במסע הלקוח כדי למצוא את ההודעה המתאימה</div>
       <div class="wizard-body" id="wizardBody"></div>
     </div>
   </div>
@@ -840,10 +850,10 @@ h2 { font-size: 18px; font-weight: 800; color: var(--hdr); margin-top: 32px; mar
 // ================================================================
 
 // UI Utilities
-function copyMsg(el){const c=el.cloneNode(true);c.querySelectorAll('.cbtn,.edit-btn,.reset-btn,.save-edit-btn').forEach(b=>b.remove());c.querySelectorAll('.placeholder').forEach(s=>s.replaceWith(s.textContent));doCopy(c.innerText.trim(),el.querySelector('.cbtn'))}
-function doCopy(t,btn){try{navigator.clipboard.writeText(t).then(()=>flash(btn)).catch(()=>fb(t,btn))}catch(e){fb(t,btn)}}
-function fb(t,btn){const a=document.createElement('textarea');a.value=t;a.style.cssText='position:fixed;left:-9999px';document.body.appendChild(a);a.select();try{document.execCommand('copy');flash(btn)}catch(e){}document.body.removeChild(a)}
-function flash(btn){if(!btn)return;const orig=btn.textContent;btn.textContent='✅ הועתק';btn.classList.add('copied');setTimeout(()=>{btn.textContent=orig;btn.classList.remove('copied')},1500)}
+function copyMsg(el){const c=el.cloneNode(true);c.querySelectorAll('.cbtn,.edit-btn,.reset-btn,.save-edit-btn,.msg-actions').forEach(b=>b.remove());const unfilled=c.querySelectorAll('.placeholder');unfilled.forEach(s=>s.replaceWith(s.textContent));const txt=c.innerText.trim();const btn=el.querySelector('.cbtn');if(unfilled.length>0){doCopy(txt,btn,unfilled.length)}else{doCopy(txt,btn)}}
+function doCopy(t,btn,unfilledCount){try{navigator.clipboard.writeText(t).then(()=>flash(btn,unfilledCount)).catch(()=>fb(t,btn,unfilledCount))}catch(e){fb(t,btn,unfilledCount)}}
+function fb(t,btn,unfilledCount){const a=document.createElement('textarea');a.value=t;a.style.cssText='position:fixed;left:-9999px';document.body.appendChild(a);a.select();try{document.execCommand('copy');flash(btn,unfilledCount)}catch(e){}document.body.removeChild(a)}
+function flash(btn,unfilledCount){if(!btn)return;const orig=btn.textContent;if(unfilledCount>0){btn.textContent='⚠️ הועתק עם '+unfilledCount+' שדות ריקים';btn.style.color='#d97706';btn.classList.add('copied');setTimeout(()=>{btn.textContent=orig;btn.style.color='';btn.classList.remove('copied')},2500)}else{btn.textContent='✅ הועתק';btn.classList.add('copied');setTimeout(()=>{btn.textContent=orig;btn.classList.remove('copied')},1500)}}
 
 // ================================================================
 // SETTINGS PANEL v7.0
@@ -905,13 +915,65 @@ function initSettings(){loadSettings();renderSettingsUI()}
 // ================================================================
 // VARIABLE FORM SYSTEM v7.0
 // ================================================================
+// Hebrew day names lookup
+const HEB_DAYS=['ראשון','שני','שלישי','רביעי','חמישי','שישי','שבת'];
+// Parse schedule strings to extract day→startTime mappings per group
+function parseGroupSchedule(groupKey){
+  const scheds=appSettings.schedules[groupKey]||[];
+  const result=[];// [{dayIndex, startTime, endTime, dayName}]
+  const dayMap={'ראשון':0,'שני':1,'שלישי':2,'רביעי':3,'חמישי':4,'שישי':5,'שבת':6};
+  scheds.forEach(s=>{
+    // Extract times: look for *HH:MM* pattern for start, "עד HH:MM" for end
+    const startMatch=s.match(/\*(\d{2}:\d{2})\*/);
+    const endMatch=s.match(/עד\s+(\d{2}:\d{2})/);
+    const startTime=startMatch?startMatch[1]:'';
+    const endTime=endMatch?endMatch[1]:'';
+    // Extract day names
+    Object.keys(dayMap).forEach(dn=>{
+      if(s.includes(dn)){result.push({dayIndex:dayMap[dn],dayName:dn,startTime,endTime})}
+    });
+  });
+  return result;
+}
+// Get all unique start times from all group schedules
+function getAllStartTimes(){
+  const times=new Set();
+  GROUP_KEYS.forEach(gk=>{parseGroupSchedule(gk).forEach(s=>{ if(s.startTime)times.add(s.startTime) })});
+  return [...times].sort();
+}
+// Resolve payment link based on group
+function resolvePaymentLink(groupKey){
+  if(!groupKey)return '';
+  const links=appSettings.paymentLinks;
+  if(groupKey==='kids-6-8'||groupKey==='kids-9-11'){
+    const l=links.find(l=>l.url.includes('dmcrM2NxNlhY'));return l?l.url:(links[1]?links[1].url:'');
+  }
+  const l=links.find(l=>l.url.includes('MkxOaWFZZ0p'));return l?l.url:(links[2]?links[2].url:'');
+}
+// Get group key from session (reverse lookup groupName → key)
+function getSessionGroupKey(){
+  const gn=sessionData.groupName;if(!gn)return null;
+  const entry=Object.entries(GROUP_LABELS).find(([k,v])=>v===gn);
+  return entry?entry[0]:null;
+}
+// Update session badge count
+function updateSessionBadge(){
+  const btn=document.querySelector('.session-clear-btn');if(!btn)return;
+  const count=Object.keys(sessionData).filter(k=>sessionData[k]).length;
+  const badge=btn.querySelector('.session-badge');
+  if(count>0){
+    if(badge){badge.textContent=count}
+    else{const b=document.createElement('span');b.className='session-badge';b.textContent=count;btn.appendChild(b)}
+  } else { if(badge)badge.remove() }
+}
+
 const VAR_REGISTRY={
   '[שם]':{type:'text',key:'name',label:'שם'},
   '[שם ההורה]':{type:'text',key:'name',label:'שם ההורה'},
   '[שם הילד/ה]':{type:'text',key:'childName',label:'שם הילד/ה'},
   '[שם הנער/ה]':{type:'text',key:'childName',label:'שם הנער/ה'},
-  '[יום ותאריך]':{type:'text',key:'dayDate',label:'יום ותאריך'},
-  '[שעה]':{type:'text',key:'time',label:'שעה'},
+  '[יום ותאריך]':{type:'date',key:'dayDate',label:'יום ותאריך',rawKey:'dayDateRaw'},
+  '[שעה]':{type:'time',key:'time',label:'שעה'},
   '[מחיר]':{type:'text',key:'price',label:'מחיר'},
   '[מספר]':{type:'text',key:'sessionCount',label:'מספר אימונים'},
   '[אפשרות 1]':{type:'text',key:'option1',label:'אפשרות 1'},
@@ -930,7 +992,7 @@ const VAR_REGISTRY={
 let sessionData={};
 function loadSession(){try{const d=localStorage.getItem(SESSION_KEY);sessionData=d?JSON.parse(d):{}}catch(e){sessionData={}}}
 function saveSession(){try{localStorage.setItem(SESSION_KEY,JSON.stringify(sessionData))}catch(e){}}
-function clearSession(){sessionData={};saveSession();document.querySelectorAll('.var-field input, .var-field select').forEach(el=>{if(el.tagName==='INPUT')el.value='';if(el.tagName==='SELECT')el.selectedIndex=0;el.classList.remove('filled')});applyAllVarsToMessages();updateAllIndicators();toast('סשן נוקה 🗑️')}
+function clearSession(){sessionData={};saveSession();document.querySelectorAll('.var-field input, .var-field select').forEach(el=>{if(el.tagName==='INPUT')el.value='';if(el.tagName==='SELECT')el.selectedIndex=0;el.classList.remove('filled')});document.querySelectorAll('.var-field.warning').forEach(f=>{f.classList.remove('warning');const h=f.querySelector('.field-hint');if(h)h.textContent=''});applyAllVarsToMessages();updateAllIndicators();updateSessionBadge();toast('סשן נוקה 🗑️')}
 
 function applyStaticVars(){
   document.querySelectorAll('.template-card').forEach(card=>{
@@ -970,7 +1032,28 @@ function initVarForms(){
       const f=document.createElement('div');f.className='var-field';
       const lbl=document.createElement('label');lbl.textContent=v.reg.label+':';
       f.appendChild(lbl);
-      if(v.reg.type==='text'){
+      if(v.reg.type==='date'){
+        const inp=document.createElement('input');inp.type='date';
+        inp.dataset.varKey=v.reg.key;inp.dataset.varText=v.text;inp.dataset.cardId=card.id;
+        if(v.reg.rawKey&&sessionData[v.reg.rawKey])inp.value=sessionData[v.reg.rawKey];
+        if(inp.value)inp.classList.add('filled');
+        inp.addEventListener('change',onDateChange);
+        f.appendChild(inp);
+        const hint=document.createElement('span');hint.className='field-hint';hint.textContent='';f.appendChild(hint);
+      } else if(v.reg.type==='time'){
+        const sel=document.createElement('select');sel.dataset.varKey=v.reg.key;sel.dataset.varText=v.text;sel.dataset.cardId=card.id;
+        sel.innerHTML='<option value="">— בחר שעה —</option>';
+        getAllStartTimes().forEach(t=>{const o=document.createElement('option');o.value='*'+t+'*';o.textContent=t;sel.appendChild(o)});
+        const manualOpt=document.createElement('option');manualOpt.value='__manual__';manualOpt.textContent='הזן ידנית...';sel.appendChild(manualOpt);
+        if(sessionData[v.reg.key]){const match=[...sel.options].find(o=>o.value===sessionData[v.reg.key]);if(match)sel.value=sessionData[v.reg.key];else sel.value='__manual__';if(sel.value)sel.classList.add('filled')}
+        sel.addEventListener('change',onVarSelect);
+        f.appendChild(sel);
+        const mInp=document.createElement('input');mInp.type='text';mInp.className='manual-input';mInp.placeholder='HH:MM';
+        mInp.dataset.varKey=v.reg.key;mInp.dataset.varText=v.text;mInp.dataset.cardId=card.id;
+        if(sel.value==='__manual__'&&sessionData[v.reg.key]){mInp.value=sessionData[v.reg.key];mInp.classList.add('active','filled')}
+        mInp.addEventListener('input',onVarInput);
+        f.appendChild(mInp);
+      } else if(v.reg.type==='text'){
         const inp=document.createElement('input');inp.type='text';inp.placeholder=v.text.replace(/[\[\]]/g,'');
         inp.dataset.varKey=v.reg.key;inp.dataset.varText=v.text;inp.dataset.cardId=card.id;
         if(sessionData[v.reg.key])inp.value=sessionData[v.reg.key];
@@ -1020,6 +1103,7 @@ function onVarInput(e){
   sessionData[key]=val;saveSession();
   e.target.classList.toggle('filled',!!val);
   propagateVar(key,val);
+  updateSessionBadge();
 }
 
 function onVarSelect(e){
@@ -1034,6 +1118,53 @@ function onVarSelect(e){
   sessionData[key]=val;saveSession();
   sel.classList.toggle('filled',!!val);
   propagateVar(key,val);
+  // Cascade: group selection → auto-resolve payment link & time
+  if(key==='groupName'){
+    const gk=getSessionGroupKey();
+    if(gk){
+      const pLink=resolvePaymentLink(gk);
+      if(pLink){sessionData.trialLink=pLink;saveSession();propagateVar('trialLink',pLink)}
+      // If date already selected, cascade time
+      if(sessionData.dayDateRaw){const d=new Date(sessionData.dayDateRaw+'T12:00:00');cascadeDateToTime(d.getDay())}
+    }
+  }
+  updateSessionBadge();
+}
+
+function onDateChange(e){
+  const inp=e.target;const key=inp.dataset.varKey;const rawVal=inp.value;// YYYY-MM-DD
+  if(!rawVal){sessionData[key]='';sessionData.dayDateRaw='';saveSession();inp.classList.remove('filled');propagateVar(key,'');return}
+  const d=new Date(rawVal+'T12:00:00');// noon to avoid timezone issues
+  const dayName=HEB_DAYS[d.getDay()];
+  const dd=String(d.getDate()).padStart(2,'0');
+  const mm=String(d.getMonth()+1).padStart(2,'0');
+  const yyyy=d.getFullYear();
+  const display='יום '+dayName+' '+dd+'/'+mm+'/'+yyyy;
+  sessionData[key]=display;
+  sessionData.dayDateRaw=rawVal;
+  saveSession();
+  inp.classList.add('filled');
+  propagateVar(key,display);
+  // Cascade: validate day against group schedule & auto-fill time
+  cascadeDateToTime(d.getDay());
+  updateSessionBadge();
+}
+
+function cascadeDateToTime(dayIndex){
+  const gk=getSessionGroupKey();if(!gk)return;
+  const scheds=parseGroupSchedule(gk);
+  const match=scheds.find(s=>s.dayIndex===dayIndex);
+  // Update date field warnings
+  document.querySelectorAll('.var-field input[type="date"]').forEach(inp=>{
+    const field=inp.closest('.var-field');const hint=field.querySelector('.field-hint');
+    if(!match){field.classList.add('warning');if(hint)hint.textContent='⚠ הקבוצה לא מתאמנת ביום הזה'}
+    else{field.classList.remove('warning');if(hint)hint.textContent=''}
+  });
+  if(match&&match.startTime){
+    const timeVal='*'+match.startTime+'*';
+    sessionData.time=timeVal;saveSession();
+    propagateVar('time',timeVal);
+  }
 }
 
 function propagateVar(key,val){
@@ -1243,7 +1374,28 @@ function renderWizardTemplate(tid){
     vars.forEach(v=>{
       const f=document.createElement('div');f.className='var-field';
       const lbl=document.createElement('label');lbl.textContent=v.reg.label+':';f.appendChild(lbl);
-      if(v.reg.type==='text'){
+      if(v.reg.type==='date'){
+        const inp=document.createElement('input');inp.type='date';
+        inp.dataset.varKey=v.reg.key;inp.dataset.varText=v.text;inp.dataset.cardId=clone.id;
+        if(v.reg.rawKey&&sessionData[v.reg.rawKey])inp.value=sessionData[v.reg.rawKey];
+        if(inp.value)inp.classList.add('filled');
+        inp.addEventListener('change',function(e){onDateChange(e);applyWizVars(clone)});
+        f.appendChild(inp);
+        const hint=document.createElement('span');hint.className='field-hint';hint.textContent='';f.appendChild(hint);
+      } else if(v.reg.type==='time'){
+        const sel=document.createElement('select');sel.dataset.varKey=v.reg.key;sel.dataset.varText=v.text;sel.dataset.cardId=clone.id;
+        sel.innerHTML='<option value="">— בחר שעה —</option>';
+        getAllStartTimes().forEach(t=>{const o=document.createElement('option');o.value='*'+t+'*';o.textContent=t;sel.appendChild(o)});
+        const manualOpt=document.createElement('option');manualOpt.value='__manual__';manualOpt.textContent='הזן ידנית...';sel.appendChild(manualOpt);
+        if(sessionData[v.reg.key]){const match=[...sel.options].find(o=>o.value===sessionData[v.reg.key]);if(match)sel.value=sessionData[v.reg.key];else sel.value='__manual__';if(sel.value)sel.classList.add('filled')}
+        sel.addEventListener('change',function(e){onVarSelect(e);applyWizVars(clone)});
+        f.appendChild(sel);
+        const mInp=document.createElement('input');mInp.type='text';mInp.className='manual-input';mInp.placeholder='HH:MM';
+        mInp.dataset.varKey=v.reg.key;mInp.dataset.varText=v.text;mInp.dataset.cardId=clone.id;
+        if(sel.value==='__manual__'&&sessionData[v.reg.key]){mInp.value=sessionData[v.reg.key];mInp.classList.add('active','filled')}
+        mInp.addEventListener('input',function(e){onVarInput(e);applyWizVars(clone)});
+        f.appendChild(mInp);
+      } else if(v.reg.type==='text'){
         const inp=document.createElement('input');inp.type='text';inp.placeholder=v.text.replace(/[\[\]]/g,'');
         inp.dataset.varKey=v.reg.key;inp.dataset.varText=v.text;inp.dataset.cardId=clone.id;
         if(sessionData[v.reg.key])inp.value=sessionData[v.reg.key];
@@ -1322,27 +1474,31 @@ function initMsgEditing(){
   });
   // Load saved edits
   loadMsgEdits();
-  // Inject edit + reset buttons into every .message
+  // Inject action buttons wrapped in flex container
   document.querySelectorAll('.template-card').forEach(card=>{
     const msg=card.querySelector('.message');
     if(!msg)return;
+    const actions=document.createElement('div');actions.className='msg-actions';
+    const copyBtn=msg.querySelector('.cbtn');
+    if(copyBtn){actions.appendChild(copyBtn)}
     const editBtn=document.createElement('button');
     editBtn.className='edit-btn';
     editBtn.textContent='✏️ עריכה';
     editBtn.onclick=function(e){e.stopPropagation();startMsgEdit(msg,card.id)};
-    msg.appendChild(editBtn);
+    actions.appendChild(editBtn);
     if(getMsgEdits()[card.id]){
       const rb=document.createElement('button');
       rb.className='reset-btn';
       rb.textContent='↺ שחזור';
       rb.onclick=function(e){e.stopPropagation();resetMsg(card.id,msg)};
-      msg.appendChild(rb);
+      actions.appendChild(rb);
     }
+    msg.appendChild(actions);
     // Replace inline onclick with listener that respects edit mode
     msg.removeAttribute('onclick');
     msg.addEventListener('click',function(e){
       if(editingMsg===msg)return;
-      if(e.target.closest('.edit-btn,.reset-btn,.save-edit-btn'))return;
+      if(e.target.closest('.msg-actions,.save-edit-btn'))return;
       copyMsg(msg);
     });
   });
@@ -2094,7 +2250,7 @@ scr.addEventListener('scroll',uMM);
 
 // Initialization — fit tree width to canvas so no horizontal scroll needed
 (function(){
-  NODES.forEach(n=>NM[n.id]=n); ldPhases(); ld(); renderAll(); initSettings(); initVarForms(); initWizard(); initMsgEditing();
+  NODES.forEach(n=>NM[n.id]=n); ldPhases(); ld(); renderAll(); initSettings(); initVarForms(); initWizard(); initMsgEditing(); updateSessionBadge();
   // Calculate tree width and zoom to fit horizontally
   let mx=0; NODES.forEach(n=>{mx=Math.max(mx,n.x+(n._w||160))});
   mx+=120; // padding
