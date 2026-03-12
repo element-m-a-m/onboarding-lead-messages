@@ -190,6 +190,18 @@ h2 { font-size: 18px; font-weight: 800; color: var(--hdr); margin-top: 32px; mar
 .note { background: #fffbeb; border: 1px solid #fde68a; border-radius: 8px; padding: 10px 12px; margin: 12px 0 0; font-size: 11px; color: #92400e; }
 .note strong { color: #b45309; }
 
+/* Template Edit Mode */
+.message.editing { cursor: text; user-select: text; background: #fff; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(37,211,102,0.2); }
+.message.editing .cbtn, .message.editing .edit-btn, .message.editing .reset-btn { display: none; }
+.edit-btn { position: absolute; top: 8px; left: 56px; background: #fff; color: #64748b; border: 1px solid var(--border); border-radius: 6px; padding: 4px 10px; font-size: 11px; font-weight: 700; font-family: 'Heebo', sans-serif; cursor: pointer; opacity: 0; transition: all 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+.message:hover .edit-btn { opacity: 1; }
+.edit-btn:hover { background: #f1f5f9; color: var(--hdr); }
+.save-edit-btn { position: absolute; top: 8px; left: 8px; background: var(--accent); color: #fff; border: none; border-radius: 6px; padding: 4px 14px; font-size: 11px; font-weight: 700; font-family: 'Heebo', sans-serif; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.1); transition: background 0.2s; z-index: 5; }
+.save-edit-btn:hover { background: #16a34a; }
+.reset-btn { position: absolute; top: 8px; left: 108px; background: #fff; color: #ef4444; border: 1px solid #fca5a5; border-radius: 6px; padding: 4px 10px; font-size: 11px; font-weight: 700; font-family: 'Heebo', sans-serif; cursor: pointer; opacity: 0; transition: all 0.2s; }
+.message:hover .reset-btn { opacity: 1; }
+.reset-btn:hover { background: #fef2f2; }
+
 /* Table */
 .ref-table { width: 100%; border-collapse: separate; border-spacing: 0; margin: 16px 0 32px; font-size: 13px; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
 .ref-table th { background: #f1f5f9; color: var(--hdr); padding: 12px 16px; text-align: right; font-weight: 700; border-bottom: 2px solid var(--border); }
@@ -217,7 +229,7 @@ h2 { font-size: 18px; font-weight: 800; color: var(--hdr); margin-top: 32px; mar
 .edge-path.main-glow { filter: drop-shadow(0 0 4px rgba(71,85,105,0.3)); }
 
 @media print {
-  .search-bar, .nav-tabs, .back-top, .cbtn, #tooltip, .canvas-toolbar, .minimap, .canvas-info, .save-toast, .arrow-toolbar, .ctx-menu { display: none !important; }
+  .search-bar, .nav-tabs, .back-top, .cbtn, .edit-btn, .reset-btn, .save-edit-btn, #tooltip, .canvas-toolbar, .minimap, .canvas-info, .save-toast, .arrow-toolbar, .ctx-menu { display: none !important; }
   .template-card { break-inside: avoid; }
 }
 </style>
@@ -227,7 +239,7 @@ h2 { font-size: 18px; font-weight: 800; color: var(--hdr); margin-top: 32px; mar
 <div class="page-header">
   <h1>אלמנט — חוברת תבניות וואטסאפ</h1>
   <div class="sub">Element — WhatsApp Templates Playbook & Flow Engine (Desktop Pro)</div>
-  <div class="ver">גרסה 6.5 | כל 26 התבניות עם תוכן מלא, טולטיפ לכל הצמתים, קווים חדים</div>
+  <div class="ver">גרסה 6.6 | עריכת תבניות בדפדפן, כל 26 התבניות עם תוכן מלא</div>
 </div>
 
 <div class="search-bar">
@@ -727,14 +739,169 @@ h2 { font-size: 18px; font-weight: 800; color: var(--hdr); margin-top: 32px; mar
 
 <script>
 // ================================================================
-// DESKTOP ENGINE v6.4 — Enhanced Tooltips, Missing Groups, Sharp Lines, Arrow Controls
+// DESKTOP ENGINE v6.6 — Ctrl+B bold, ctx-menu fix, grouped variant boxes
 // ================================================================
 
 // UI Utilities
-function copyMsg(el){const c=el.cloneNode(true);c.querySelector('.cbtn')?.remove();c.querySelectorAll('.placeholder').forEach(s=>s.replaceWith(s.textContent));doCopy(c.innerText.trim(),el.querySelector('.cbtn'))}
+function copyMsg(el){const c=el.cloneNode(true);c.querySelectorAll('.cbtn,.edit-btn,.reset-btn,.save-edit-btn').forEach(b=>b.remove());c.querySelectorAll('.placeholder').forEach(s=>s.replaceWith(s.textContent));doCopy(c.innerText.trim(),el.querySelector('.cbtn'))}
 function doCopy(t,btn){try{navigator.clipboard.writeText(t).then(()=>flash(btn)).catch(()=>fb(t,btn))}catch(e){fb(t,btn)}}
 function fb(t,btn){const a=document.createElement('textarea');a.value=t;a.style.cssText='position:fixed;left:-9999px';document.body.appendChild(a);a.select();try{document.execCommand('copy');flash(btn)}catch(e){}document.body.removeChild(a)}
 function flash(btn){if(!btn)return;const orig=btn.textContent;btn.textContent='✅ הועתק';btn.classList.add('copied');setTimeout(()=>{btn.textContent=orig;btn.classList.remove('copied')},1500)}
+
+// === Template Message Editing ===
+const TK='element-tpl-v65';
+let editingMsg=null;
+const origMessages={};
+
+function initMsgEditing(){
+  // Capture original HTML before applying saved edits
+  document.querySelectorAll('.template-card').forEach(card=>{
+    const msg=card.querySelector('.message');
+    if(!msg)return;
+    origMessages[card.id]=msg.innerHTML;
+  });
+  // Load saved edits
+  loadMsgEdits();
+  // Inject edit + reset buttons into every .message
+  document.querySelectorAll('.template-card').forEach(card=>{
+    const msg=card.querySelector('.message');
+    if(!msg)return;
+    const editBtn=document.createElement('button');
+    editBtn.className='edit-btn';
+    editBtn.textContent='✏️ עריכה';
+    editBtn.onclick=function(e){e.stopPropagation();startMsgEdit(msg,card.id)};
+    msg.appendChild(editBtn);
+    if(getMsgEdits()[card.id]){
+      const rb=document.createElement('button');
+      rb.className='reset-btn';
+      rb.textContent='↺ שחזור';
+      rb.onclick=function(e){e.stopPropagation();resetMsg(card.id,msg)};
+      msg.appendChild(rb);
+    }
+    // Replace inline onclick with listener that respects edit mode
+    msg.removeAttribute('onclick');
+    msg.addEventListener('click',function(e){
+      if(editingMsg===msg)return;
+      if(e.target.closest('.edit-btn,.reset-btn,.save-edit-btn'))return;
+      copyMsg(msg);
+    });
+  });
+}
+
+function startMsgEdit(msgEl,cardId){
+  if(editingMsg)finishMsgEdit(false);
+  editingMsg=msgEl;
+  msgEl.classList.add('editing');
+  msgEl.dataset.cardId=cardId;
+  // Save pre-edit state for Escape cancel
+  msgEl._preEdit=msgEl.innerHTML;
+  const saveBtn=document.createElement('button');
+  saveBtn.className='save-edit-btn';
+  saveBtn.textContent='💾 שמור';
+  saveBtn.onclick=function(e){e.stopPropagation();finishMsgEdit(true)};
+  msgEl.appendChild(saveBtn);
+  msgEl.contentEditable='true';
+  msgEl.querySelectorAll('button').forEach(b=>{b.contentEditable='false'});
+  msgEl.addEventListener('paste',handlePaste);
+  // Ctrl+B: WhatsApp bold (*text*) instead of HTML bold
+  msgEl._boldHandler=function(ev){
+    if((ev.ctrlKey||ev.metaKey)&&ev.key.toLowerCase()==='b'){
+      ev.preventDefault(); ev.stopPropagation();
+      const sel=window.getSelection(); if(!sel.rangeCount)return;
+      const txt=sel.getRangeAt(0).toString();
+      document.execCommand('insertText',false,'*'+txt+'*');
+    }
+  };
+  msgEl.addEventListener('keydown',msgEl._boldHandler);
+  // Focus at end of content
+  const r=document.createRange();r.selectNodeContents(msgEl);r.collapse(false);
+  const s=window.getSelection();s.removeAllRanges();s.addRange(r);
+}
+
+function handlePaste(e){e.preventDefault();const t=e.clipboardData.getData('text/plain');document.execCommand('insertText',false,t)}
+
+function finishMsgEdit(save){
+  if(!editingMsg)return;
+  const msgEl=editingMsg;
+  const cardId=msgEl.dataset.cardId;
+  msgEl.contentEditable='false';
+  msgEl.classList.remove('editing');
+  msgEl.removeEventListener('paste',handlePaste);
+  if(msgEl._boldHandler){msgEl.removeEventListener('keydown',msgEl._boldHandler);delete msgEl._boldHandler;}
+  msgEl.querySelector('.save-edit-btn')?.remove();
+  if(save){
+    saveMsgEdit(cardId,msgEl);
+    toast('תבנית נשמרה ✏️');
+    // Ensure reset button exists
+    if(!msgEl.querySelector('.reset-btn')){
+      const rb=document.createElement('button');
+      rb.className='reset-btn';
+      rb.textContent='↺ שחזור';
+      rb.onclick=function(e){e.stopPropagation();resetMsg(cardId,msgEl)};
+      msgEl.appendChild(rb);
+    }
+  } else {
+    // Cancel — restore pre-edit state
+    if(msgEl._preEdit) msgEl.innerHTML=msgEl._preEdit;
+    reattachMsgButtons(msgEl,cardId);
+  }
+  delete msgEl._preEdit;
+  editingMsg=null;
+}
+
+function saveMsgEdit(cardId,msgEl){
+  const edits=getMsgEdits();
+  const cl=msgEl.cloneNode(true);
+  cl.querySelectorAll('.cbtn,.edit-btn,.reset-btn,.save-edit-btn').forEach(b=>b.remove());
+  edits[cardId]=cl.innerHTML;
+  try{localStorage.setItem(TK,JSON.stringify(edits))}catch(e){}
+}
+
+function getMsgEdits(){try{return JSON.parse(localStorage.getItem(TK))||{}}catch(e){return{}}}
+
+function loadMsgEdits(){
+  const edits=getMsgEdits();
+  Object.entries(edits).forEach(([cardId,html])=>{
+    const card=document.getElementById(cardId);
+    if(!card)return;
+    const msg=card.querySelector('.message');
+    if(!msg)return;
+    const cbtn=msg.querySelector('.cbtn');
+    const btnHTML=cbtn?cbtn.outerHTML:'';
+    msg.innerHTML=btnHTML+html;
+  });
+}
+
+function resetMsg(cardId,msgEl){
+  if(!confirm('לשחזר את ההודעה למקור? השינויים שלך יימחקו.'))return;
+  const orig=origMessages[cardId];
+  if(!orig)return;
+  msgEl.innerHTML=orig;
+  const edits=getMsgEdits();
+  delete edits[cardId];
+  try{localStorage.setItem(TK,JSON.stringify(edits))}catch(e){}
+  reattachMsgButtons(msgEl,cardId);
+  toast('שוחזר למקור ↺');
+}
+
+function reattachMsgButtons(msgEl,cardId){
+  // Re-inject edit button after innerHTML replacement
+  if(!msgEl.querySelector('.edit-btn')){
+    const eb=document.createElement('button');
+    eb.className='edit-btn';
+    eb.textContent='✏️ עריכה';
+    eb.onclick=function(e){e.stopPropagation();startMsgEdit(msgEl,cardId)};
+    msgEl.appendChild(eb);
+  }
+  // Re-attach click listener
+  msgEl.removeAttribute('onclick');
+  msgEl.onclick=null;
+  msgEl.addEventListener('click',function handler(e){
+    if(editingMsg===msgEl)return;
+    if(e.target.closest('.edit-btn,.reset-btn,.save-edit-btn'))return;
+    copyMsg(msgEl);
+  });
+}
 
 const tt=document.getElementById('tooltip');let ttT;
 document.addEventListener('mouseover',function(e){const nd=e.target.closest('[data-tt-body]');if(!nd)return;clearTimeout(ttT);tt.querySelector('.tt-title').textContent=nd.getAttribute('data-tt-title');
@@ -744,7 +911,7 @@ document.addEventListener('mouseover',function(e){const nd=e.target.closest('[da
   const nodeData=nodeId&&NM[nodeId];
   if(nodeData&&nodeData.link){
     const card=document.getElementById(nodeData.link);
-    if(card){const msg=card.querySelector('.message');if(msg){const cl=msg.cloneNode(true);cl.querySelector('.cbtn')?.remove();cl.querySelectorAll('.placeholder').forEach(s=>s.replaceWith('['+s.textContent.replace(/[\[\]]/g,'')+']'));b=cl.innerText.trim()}}
+    if(card){const msg=card.querySelector('.message');if(msg){const cl=msg.cloneNode(true);cl.querySelectorAll('.cbtn,.edit-btn,.reset-btn,.save-edit-btn').forEach(b2=>b2.remove());cl.querySelectorAll('.placeholder').forEach(s=>s.replaceWith('['+s.textContent.replace(/[\[\]]/g,'')+']'));b=cl.innerText.trim()}}
   }
   if(!b) b=nd.getAttribute('data-tt-body').replace(/\\n/g,'\n');
   tt.querySelector('.tt-body').innerHTML=b.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>').replace(/\[([^\]]+)\]/g,'<span class="ph">[$1]</span>');const r=nd.getBoundingClientRect();tt.style.top='0';tt.style.left='0';tt.classList.add('visible');let top=r.top-tt.offsetHeight-12,left=r.left+r.width/2-150;if(top<16)top=r.bottom+12;if(left<16)left=16;if(left+320>window.innerWidth)left=window.innerWidth-336;tt.style.top=top+'px';tt.style.left=left+'px'});
@@ -876,24 +1043,12 @@ const DEFAULT_EDGES=[
   {from:'n_t3',to:'details',style:'dashed',fromAnchor:'b1',toAnchor:'r2',lane:'parent'},
   
   // Phase 2 Routing
-  {from:'details',to:'n_t4a',fromAnchor:'b1',toAnchor:'t1',main:true},
-  {from:'n_t4a',to:'n_t4b',fromAnchor:'r2',toAnchor:'l2',noHead:true},
-  {from:'n_t4b',to:'n_t4c',fromAnchor:'r2',toAnchor:'l2',noHead:true},
-  {from:'n_t4c',to:'n_t4d',fromAnchor:'r2',toAnchor:'l2',noHead:true},
-  {from:'n_t4d',to:'n_t4e',fromAnchor:'r2',toAnchor:'l2',noHead:true},
-  {from:'n_t4e',to:'n_t4f',fromAnchor:'r2',toAnchor:'l2',noHead:true},
-  {from:'n_t4f',to:'n_t4g',fromAnchor:'r2',toAnchor:'l2',noHead:true},
+  {from:'details',to:'n_t4d',fromAnchor:'b1',toAnchor:'t1',main:true},
   {from:'details',to:'payment',fromAnchor:'b2',toAnchor:'t2',main:true},
   {from:'details',to:'noResp1',fromAnchor:'r2',toAnchor:'t1'},
   
   // Phase 3 Routing
-  {from:'payment',to:'n_t6a',fromAnchor:'b1',toAnchor:'t1'},
-  {from:'n_t6a',to:'n_t6b',fromAnchor:'r2',toAnchor:'l2',noHead:true},
-  {from:'n_t6b',to:'n_t6c',fromAnchor:'r2',toAnchor:'l2',noHead:true},
-  {from:'n_t6c',to:'n_t6d',fromAnchor:'r2',toAnchor:'l2',noHead:true},
-  {from:'n_t6d',to:'n_t6e',fromAnchor:'r2',toAnchor:'l2',noHead:true},
-  {from:'n_t6e',to:'n_t6f',fromAnchor:'r2',toAnchor:'l2',noHead:true},
-  {from:'n_t6f',to:'n_t6g',fromAnchor:'r2',toAnchor:'l2',noHead:true},
+  {from:'payment',to:'n_t6d',fromAnchor:'b1',toAnchor:'t1'},
   {from:'payment',to:'n_t8',fromAnchor:'r2',toAnchor:'t1'},
   
   {from:'payment',to:'timerDay',fromAnchor:'b2',toAnchor:'t2',main:true},
@@ -931,6 +1086,16 @@ const DEFAULT_EDGES=[
   {from:'n_t15',to:'wait23w',fromAnchor:'b1',toAnchor:'t2'},
   {from:'wait23w',to:'n_t16',fromAnchor:'r2',toAnchor:'l1'},
   {from:'wait23w',to:'done',main:true}
+];
+
+// Node Groups — dashed bounding boxes for "choose one of many" variant sets
+const NODE_GROUPS=[
+  {id:'intro-variants',label:'שליחת פרטי היכרות — בחר לפי סוג שיעור',
+   nodes:['n_t4a','n_t4b','n_t4c','n_t4d','n_t4e','n_t4f','n_t4g'],
+   color:'#e0f2fe',stroke:'#7dd3fc',labelColor:'#0369a1'},
+  {id:'payment-variants',label:'אישור תשלום — בחר לפי סוג שיעור',
+   nodes:['n_t6a','n_t6b','n_t6c','n_t6d','n_t6e','n_t6f','n_t6g'],
+   color:'#f0fdf4',stroke:'#86efac',labelColor:'#15803d'}
 ];
 
 // Core Engine State
@@ -1031,7 +1196,7 @@ function smartOrthoP(p1, a1, p2, a2) {
 }
 
 // Storage & Undo (Version bumped to v61 to force fresh layout for user)
-const SK='element-flow-v64'; let svT;
+const SK='element-flow-v66'; let svT;
 function dSv(){clearTimeout(svT); svT=setTimeout(sv,800);}
 function toast(t){const el=document.getElementById('saveToast'); el.textContent=t||'נשמר בהצלחה 💾'; el.classList.add('show'); setTimeout(()=>el.classList.remove('show'),2000);}
 function pushU(){undoS.push(gS()); if(undoS.length>MU)undoS.shift(); redoS=[]; uUB();}
@@ -1048,7 +1213,7 @@ function toggleSnap(){snapOn=!snapOn; document.getElementById('snapBtn').classLi
 
 // Desktop Keyboard Shortcuts (Include Paste functionality)
 document.addEventListener('keydown',function(e){
-  if(editN||e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA')return;
+  if(editN||editingMsg||e.target.isContentEditable||e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA')return;
   if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='z'){e.preventDefault(); e.shiftKey?redo():undo();}
   if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='y'){e.preventDefault(); redo();}
   if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='c'&&selN){clip=JSON.parse(JSON.stringify(NM[selN])); toast('הועתק ללוח 📋')}
@@ -1060,6 +1225,8 @@ document.addEventListener('keydown',function(e){
   if(e.key==='Delete'||e.key==='Backspace'){if(selN){e.preventDefault();delN(selN)}else if(selE>=0){e.preventDefault();delEdge()}}
   if(e.key==='Escape'){if(editN)finishEdit(); desel();}
 });
+// Escape to cancel message template editing (separate listener so it works even with the guard above)
+document.addEventListener('keydown',function(e){if(e.key==='Escape'&&editingMsg)finishMsgEdit(false)});
 
 function pasteNode(clipData, cx, cy) {
   pushU();
@@ -1081,6 +1248,18 @@ function renderBackground() {
   PHASES.forEach(p => {
     bgHtml += `<rect x="-150" y="${p.y}" width="${maxX + 200}" height="${p.h}" fill="${p.color}" rx="12" stroke="${p.stroke}" stroke-dasharray="8,4" stroke-width="2"/>`;
     bgHtml += `<text x="${maxX/2}" y="${p.y + 24}" font-weight="800" font-size="14" fill="${p.stroke}" text-anchor="middle" style="opacity:0.9" direction="rtl">${p.title}</text>`;
+  });
+
+  // Render group bounding boxes (dashed rectangles around variant clusters)
+  NODE_GROUPS.forEach(g=>{
+    const gn=g.nodes.map(id=>NM[id]).filter(Boolean);
+    if(!gn.length)return;
+    const PAD=20, LBL_H=28;
+    let x1=Infinity,y1=Infinity,x2=-Infinity,y2=-Infinity;
+    gn.forEach(n=>{x1=Math.min(x1,n.x);y1=Math.min(y1,n.y);x2=Math.max(x2,n.x+(n._w||n.w||140));y2=Math.max(y2,n.y+(n._h||44))});
+    const bx=x1-PAD,by=y1-PAD-LBL_H,bw=x2-x1+2*PAD,bh=y2-y1+2*PAD+LBL_H;
+    bgHtml+=`<rect x="${bx}" y="${by}" width="${bw}" height="${bh}" fill="${g.color}" fill-opacity="0.45" rx="12" stroke="${g.stroke}" stroke-dasharray="6,4" stroke-width="2"/>`;
+    bgHtml+=`<text x="${bx+bw/2}" y="${by+19}" font-weight="700" font-size="12" fill="${g.labelColor}" text-anchor="middle" font-family="Heebo,sans-serif" direction="rtl">${g.label}</text>`;
   });
 
   svgBg.setAttribute('width', maxX + 200);
@@ -1128,8 +1307,8 @@ function onPhaseDragEnd(){
   document.removeEventListener('mouseup', onPhaseDragEnd);
   svPhases(); toast('גבולות שלב עודכנו ✅');
 }
-function svPhases(){try{localStorage.setItem('element-phases-v64',JSON.stringify(PHASES.map(p=>({id:p.id,y:p.y,h:p.h}))))}catch(e){}}
-function ldPhases(){try{const r=localStorage.getItem('element-phases-v64');if(!r)return;const d=JSON.parse(r);d.forEach(s=>{const p=PHASES.find(p=>p.id===s.id);if(p){p.y=s.y;p.h=s.h}})}catch(e){}}
+function svPhases(){try{localStorage.setItem('element-phases-v66',JSON.stringify(PHASES.map(p=>({id:p.id,y:p.y,h:p.h}))))}catch(e){}}
+function ldPhases(){try{const r=localStorage.getItem('element-phases-v66');if(!r)return;const d=JSON.parse(r);d.forEach(s=>{const p=PHASES.find(p=>p.id===s.id);if(p){p.y=s.y;p.h=s.h}})}catch(e){}}
 
 function renderNodes(){
   inner.querySelectorAll('.fnode').forEach(e=>e.remove());
@@ -1327,7 +1506,14 @@ scr.addEventListener('contextmenu',function(e){
   showCtx(e.clientX,e.clientY,items);
 });
 
-function showCtx(x,y,items){ctxEl.innerHTML=''; items.forEach(it=>{const b=document.createElement('button'); b.innerHTML=it.i+' '+it.l; if(it.d)b.classList.add('danger'); b.onclick=()=>{ctxEl.classList.remove('visible'); it.a()}; ctxEl.appendChild(b);}); ctxEl.style.left=x+'px'; ctxEl.style.top=y+'px'; ctxEl.classList.add('visible');}
+function showCtx(x,y,items){ctxEl.innerHTML=''; items.forEach(it=>{const b=document.createElement('button'); b.innerHTML=it.i+' '+it.l; if(it.d)b.classList.add('danger'); b.onclick=()=>{ctxEl.classList.remove('visible'); it.a()}; ctxEl.appendChild(b);});
+  // Position off-screen to measure, then clamp to viewport
+  ctxEl.style.left='-9999px'; ctxEl.style.top='-9999px'; ctxEl.classList.add('visible');
+  const mw=ctxEl.offsetWidth, mh=ctxEl.offsetHeight;
+  let px=x+window.scrollX, py=y+window.scrollY;
+  px=Math.max(window.scrollX+8, Math.min(px, window.scrollX+window.innerWidth-mw-8));
+  py=Math.max(window.scrollY+8, Math.min(py, window.scrollY+window.innerHeight-mh-8));
+  ctxEl.style.left=px+'px'; ctxEl.style.top=py+'px';}
 document.addEventListener('click',()=>ctxEl.classList.remove('visible'));
 
 function onAncDown(e){e.stopPropagation(); e.preventDefault(); const a=e.target.dataset.anchor, nid=e.target.dataset.nodeId, node=NM[nid]; if(!node)return; e.target.classList.add('active'); drawA={fn:node,fa:a,tempPath:null,el:e.target}; document.addEventListener('mousemove',onAMove); document.addEventListener('mouseup',onAUp);}
@@ -1350,7 +1536,7 @@ scr.addEventListener('scroll',uMM);
 
 // Initialization — fit tree width to canvas so no horizontal scroll needed
 (function(){
-  NODES.forEach(n=>NM[n.id]=n); ldPhases(); ld(); renderAll();
+  NODES.forEach(n=>NM[n.id]=n); ldPhases(); ld(); renderAll(); initMsgEditing();
   // Calculate tree width and zoom to fit horizontally
   let mx=0; NODES.forEach(n=>{mx=Math.max(mx,n.x+(n._w||160))});
   mx+=120; // padding
