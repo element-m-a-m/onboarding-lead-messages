@@ -228,8 +228,73 @@ h2 { font-size: 18px; font-weight: 800; color: var(--hdr); margin-top: 32px; mar
 .edge-path.hover-glow { stroke: #3b82f6 !important; stroke-width: 4px !important; filter: drop-shadow(0 0 6px rgba(59,130,246,0.6)); z-index: 100; }
 .edge-path.main-glow { filter: drop-shadow(0 0 4px rgba(71,85,105,0.3)); }
 
+/* === SETTINGS PANEL === */
+.settings-toggle { background: none; border: 1px solid var(--border); border-radius: 8px; padding: 6px 12px; cursor: pointer; font-size: 14px; display: flex; align-items: center; gap: 4px; transition: all 0.2s; font-family: 'Heebo', sans-serif; font-weight: 600; color: var(--text2); font-size: 12px; }
+.settings-toggle:hover { background: #f1f5f9; border-color: #94a3b8; }
+#settingsPanel { display: none; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; margin: 16px 0; padding: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.06); }
+#settingsPanel.visible { display: block; }
+#settingsPanel h3 { font-size: 15px; font-weight: 800; color: var(--hdr); margin: 16px 0 8px; }
+#settingsPanel h3:first-child { margin-top: 0; }
+.settings-row { display: flex; gap: 8px; align-items: center; margin: 6px 0; flex-wrap: wrap; }
+.settings-row label { font-size: 12px; font-weight: 600; color: var(--text2); min-width: 80px; }
+.settings-row input, .settings-row select { font-family: 'Heebo', sans-serif; font-size: 12px; padding: 6px 10px; border: 1px solid var(--border); border-radius: 6px; flex: 1; min-width: 180px; }
+.settings-row input:focus, .settings-row select:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 2px rgba(37,211,102,0.15); }
+.settings-save-btn { background: var(--accent); color: #fff; border: none; border-radius: 8px; padding: 8px 20px; font-size: 13px; font-weight: 700; font-family: 'Heebo', sans-serif; cursor: pointer; margin-top: 12px; transition: background 0.2s; }
+.settings-save-btn:hover { background: #16a34a; }
+.settings-link-row { display: flex; gap: 6px; align-items: center; margin: 4px 0; padding: 6px 8px; background: #f8fafc; border-radius: 6px; border: 1px solid #e2e8f0; }
+.settings-link-row input { font-family: 'Heebo', sans-serif; font-size: 11px; padding: 4px 8px; border: 1px solid var(--border); border-radius: 4px; }
+.settings-link-row input.link-label { width: 160px; flex: none; }
+.settings-link-row input.link-url { flex: 1; direction: ltr; text-align: left; }
+.settings-link-row select { font-family: 'Heebo', sans-serif; font-size: 11px; padding: 4px 6px; border: 1px solid var(--border); border-radius: 4px; }
+.settings-link-row .remove-link { background: none; border: none; color: #ef4444; cursor: pointer; font-size: 14px; padding: 2px 6px; border-radius: 4px; }
+.settings-link-row .remove-link:hover { background: #fef2f2; }
+.add-link-btn { background: #f1f5f9; border: 1px dashed var(--border); border-radius: 6px; padding: 6px 12px; font-size: 11px; font-weight: 600; font-family: 'Heebo', sans-serif; cursor: pointer; color: var(--text2); margin: 6px 0; }
+.add-link-btn:hover { background: #e2e8f0; }
+.sched-group { margin: 4px 0; padding: 6px 8px; background: #f8fafc; border-radius: 6px; border: 1px solid #e2e8f0; }
+.sched-group .sched-label { font-size: 12px; font-weight: 700; color: var(--hdr); margin-bottom: 4px; }
+.sched-group input { font-family: 'Heebo', sans-serif; font-size: 11px; padding: 4px 8px; border: 1px solid var(--border); border-radius: 4px; width: 100%; margin: 2px 0; }
+.session-clear-btn { background: #fff; border: 1px solid #fca5a5; color: #ef4444; border-radius: 6px; padding: 6px 14px; font-size: 12px; font-weight: 600; font-family: 'Heebo', sans-serif; cursor: pointer; margin-top: 8px; }
+.session-clear-btn:hover { background: #fef2f2; }
+
+/* === VARIABLE FORMS === */
+.var-form { display: flex; flex-wrap: wrap; gap: 6px; padding: 8px 12px; margin: 0 0 4px; background: #fefce8; border: 1px solid #fde68a; border-radius: 8px 8px 0 0; align-items: center; }
+.var-field { display: inline-flex; align-items: center; gap: 4px; background: #fff; border: 1px solid #e2e8f0; border-radius: 20px; padding: 3px 4px 3px 10px; font-size: 11px; white-space: nowrap; }
+.var-field label { font-weight: 600; color: #92400e; font-size: 10px; cursor: default; }
+.var-field input, .var-field select { font-family: 'Heebo', sans-serif; font-size: 11px; padding: 3px 8px; border: 1px solid transparent; border-radius: 14px; background: #fef3c7; outline: none; min-width: 80px; max-width: 160px; transition: all 0.2s; }
+.var-field input:focus, .var-field select:focus { border-color: var(--accent); background: #fff; box-shadow: 0 0 0 2px rgba(37,211,102,0.15); }
+.var-field input.filled, .var-field select.filled { background: #ecfdf5; border-color: #86efac; }
+.var-field .manual-input { display: none; }
+.var-field .manual-input.active { display: inline-block; }
+.var-field select.hidden-select { display: none; }
+.fill-indicator { font-size: 10px; font-weight: 600; margin-right: auto; background: rgba(0,0,0,0.15); padding: 2px 8px; border-radius: 10px; }
+.fill-indicator.complete { background: rgba(255,255,255,0.25); }
+
+/* === WIZARD === */
+#wizard { scroll-margin-top: 80px; margin: 24px 0; }
+.wizard-panel { background: var(--surface); border: 2px solid var(--accent); border-radius: 14px; overflow: hidden; box-shadow: 0 6px 20px rgba(37,211,102,0.12); }
+.wizard-header { display: flex; align-items: center; gap: 10px; padding: 14px 20px; background: linear-gradient(135deg, var(--accent2), var(--accent)); color: #fff; cursor: pointer; user-select: none; }
+.wizard-header h2 { font-size: 17px; font-weight: 800; margin: 0; border: none; display: inline; padding: 0; }
+.wizard-header .wizard-collapse-icon { margin-right: auto; font-size: 18px; transition: transform 0.3s; }
+.wizard-panel.collapsed .wizard-collapse-icon { transform: rotate(180deg); }
+.wizard-panel.collapsed .wizard-body { display: none; }
+.wizard-body { padding: 20px; }
+.wizard-breadcrumb { display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 500; color: var(--text2); margin-bottom: 16px; flex-wrap: wrap; }
+.wizard-breadcrumb .crumb { color: var(--accent2); font-weight: 700; }
+.wizard-breadcrumb .crumb-sep { color: #cbd5e1; }
+.wizard-back-btn { background: #f1f5f9; border: 1px solid var(--border); border-radius: 8px; padding: 6px 14px; font-size: 12px; font-weight: 700; font-family: 'Heebo', sans-serif; cursor: pointer; color: var(--text); display: inline-flex; align-items: center; gap: 4px; transition: all 0.2s; }
+.wizard-back-btn:hover { background: #e2e8f0; }
+.wizard-steps { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
+.wizard-btn { flex: 1; min-width: 140px; padding: 16px 14px; border: 2px solid #e2e8f0; border-radius: 12px; background: #fff; cursor: pointer; text-align: center; font-family: 'Heebo', sans-serif; font-size: 13px; font-weight: 700; color: var(--hdr); transition: all 0.2s; }
+.wizard-btn:hover { border-color: var(--accent); background: #ecfdf5; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(37,211,102,0.15); }
+.wizard-btn .btn-icon { font-size: 24px; display: block; margin-bottom: 6px; }
+.wizard-btn .btn-sub { font-size: 10px; font-weight: 400; color: var(--text2); margin-top: 4px; display: block; }
+.wizard-btn.small { min-width: 100px; padding: 10px 12px; font-size: 12px; }
+.wizard-btn.small .btn-icon { font-size: 18px; margin-bottom: 4px; }
+.wizard-result { margin-top: 16px; }
+.wizard-result .template-card { margin: 0; }
+
 @media print {
-  .search-bar, .nav-tabs, .back-top, .cbtn, .edit-btn, .reset-btn, .save-edit-btn, #tooltip, .canvas-toolbar, .minimap, .canvas-info, .save-toast, .arrow-toolbar, .ctx-menu { display: none !important; }
+  .search-bar, .nav-tabs, .back-top, .cbtn, .edit-btn, .reset-btn, .save-edit-btn, #tooltip, .canvas-toolbar, .minimap, .canvas-info, .save-toast, .arrow-toolbar, .ctx-menu, #settingsPanel, .var-form, .settings-toggle, #wizard { display: none !important; }
   .template-card { break-inside: avoid; }
 }
 </style>
@@ -239,17 +304,20 @@ h2 { font-size: 18px; font-weight: 800; color: var(--hdr); margin-top: 32px; mar
 <div class="page-header">
   <h1>אלמנט — חוברת תבניות וואטסאפ</h1>
   <div class="sub">Element — WhatsApp Templates Playbook & Flow Engine (Desktop Pro)</div>
-  <div class="ver">גרסה 6.6 | עריכת תבניות בדפדפן, כל 26 התבניות עם תוכן מלא</div>
+  <div class="ver">גרסה 7.0 | אשף הודעות + טפסים חכמים + זיכרון סשן</div>
 </div>
 
 <div class="search-bar">
   <span style="font-size: 16px;">🔍</span>
   <input type="text" id="searchInput" placeholder="חיפוש תבניות, הודעות או מילות מפתח..." oninput="filterTemplates()">
   <span id="searchCount"></span>
+  <button class="settings-toggle" onclick="toggleSettings()">⚙️ הגדרות</button>
+  <button class="session-clear-btn" onclick="clearSession()" style="font-size:11px;padding:4px 10px;">🗑️ נקה סשן</button>
 </div>
 
 <div class="nav-tabs">
   <a href="#flowcharts">📊 תרשים זרימה אינטראקטיבי</a>
+  <a href="#wizard" style="background:var(--accent);color:#fff;border-color:var(--accent);">🧙 אשף הודעות</a>
   <a href="#group1">1️⃣ תגובה ראשונה</a>
   <a href="#group2">2️⃣ פרטי היכרות</a>
   <a href="#group3">3️⃣ אישור תשלום</a>
@@ -281,6 +349,23 @@ h2 { font-size: 18px; font-weight: 800; color: var(--hdr); margin-top: 32px; mar
       <li><kbd>גרירה</kbd> מנקודת עיגול יוצרת קשר חדש. <kbd>לחיצה</kbd> על חץ לבחירה ושינוי חיבורים.</li>
       <li><kbd>Ctrl+C / V</kbd> העתק/הדבק | <kbd>Ctrl+Z / Y</kbd> ביטול/שחזור | <kbd>Delete</kbd> מחיקה.</li>
     </ul>
+  </div>
+
+  <!-- SETTINGS PANEL -->
+  <div id="settingsPanel">
+    <h3>🔗 לינקים לתשלום</h3>
+    <div id="paymentLinksContainer"></div>
+    <button class="add-link-btn" onclick="addPaymentLinkRow()">+ הוסף לינק תשלום</button>
+
+    <h3>🌐 לינקים קבועים</h3>
+    <div class="settings-row"><label>לינק אפליקציה</label><input id="set-appLink" placeholder="https://..." dir="ltr"></div>
+    <div class="settings-row"><label>טופס בריאות</label><input id="set-healthFormLink" placeholder="https://..." dir="ltr"></div>
+    <div class="settings-row"><label>לינק הפניה</label><input id="set-referralLink" placeholder="https://..." dir="ltr"></div>
+
+    <h3>📅 לוחות זמנים לפי קבוצה</h3>
+    <div id="schedulesContainer"></div>
+
+    <button class="settings-save-btn" onclick="saveSettingsFromUI()">💾 שמור הגדרות</button>
   </div>
 
   <div id="flowcharts">
@@ -327,6 +412,18 @@ h2 { font-size: 18px; font-weight: 800; color: var(--hdr); margin-top: 32px; mar
   <div class="no-results" id="noResults" style="display:none; text-align:center; padding: 40px; color: var(--text2);">
     <div style="font-size:48px; margin-bottom: 10px;">🔍</div>
     <p style="font-size: 16px; font-weight: 500;">לא נמצאו תבניות תואמות לחיפוש.</p>
+  </div>
+
+  <!-- WIZARD -->
+  <div id="wizard">
+    <div class="wizard-panel" id="wizardPanel">
+      <div class="wizard-header" onclick="toggleWizard()">
+        <span style="font-size:22px;">🧙</span>
+        <h2>אשף הודעות וואטסאפ</h2>
+        <span class="wizard-collapse-icon">▲</span>
+      </div>
+      <div class="wizard-body" id="wizardBody"></div>
+    </div>
   </div>
 
   <!-- TEXT TEMPLATES SECTION -->
@@ -748,8 +845,471 @@ function doCopy(t,btn){try{navigator.clipboard.writeText(t).then(()=>flash(btn))
 function fb(t,btn){const a=document.createElement('textarea');a.value=t;a.style.cssText='position:fixed;left:-9999px';document.body.appendChild(a);a.select();try{document.execCommand('copy');flash(btn)}catch(e){}document.body.removeChild(a)}
 function flash(btn){if(!btn)return;const orig=btn.textContent;btn.textContent='✅ הועתק';btn.classList.add('copied');setTimeout(()=>{btn.textContent=orig;btn.classList.remove('copied')},1500)}
 
+// ================================================================
+// SETTINGS PANEL v7.0
+// ================================================================
+const SETTINGS_KEY='element-settings-v70';
+const SESSION_KEY='element-session-v70';
+
+const GROUP_KEYS=['kids-6-8','kids-9-11','teens-12-15','combat-adults','fitness-38','movement','strength-mobility'];
+const GROUP_LABELS={'kids-6-8':'ילדים 6-8','kids-9-11':'ילדים 9-11','teens-12-15':'נוער 12-15','combat-adults':'לחימה בוגרים','fitness-38':'כושר 38+','movement':'תנועה','strength-mobility':'כוח וגמישות'};
+
+// Map template card IDs to their group key (for contextual schedule dropdowns)
+const CARD_GROUP_MAP={t4a:'kids-6-8',t4b:'kids-9-11',t4c:'teens-12-15',t4d:'combat-adults',t4e:'fitness-38',t4f:'movement',t4g:'strength-mobility',t6a:'kids-6-8',t6b:'kids-9-11',t6c:'teens-12-15',t6d:'combat-adults',t6e:'fitness-38',t6f:'movement',t6g:'strength-mobility'};
+
+function defaultSettings(){return{paymentLinks:[{label:'3 שיעורי היכרות — כל הקבוצות',url:'https://letts.co.il/payment/WXZycXZLa09XMlp3QzhJS2hhNHFkdz09',type:'trial'},{label:'שיעור היכרות בודד — ילדים 6-8 / 9-11',url:'https://letts.co.il/payment/dmcrM2NxNlhYYzR6aGRnWm4ybGdCZz09',type:'trial'},{label:'שיעור היכרות בודד — נוער / מבוגרים / תנועה / כוח',url:'https://letts.co.il/payment/MkxOaWFZZ0pjajBrY2I2V0d0cGdpZz09',type:'trial'}],semiStatic:{appLink:'https://1pa.co/app',healthFormLink:'https://forms.gle/YUfdx6rxZcSfsKQj7',referralLink:''},schedules:{'kids-6-8':['ראשון ורביעי משעה *17:00* עד 17:45'],'kids-9-11':['ראשון ורביעי משעה *17:45* עד 18:45'],'teens-12-15':['ראשון ורביעי משעה *18:45* עד 20:00'],'combat-adults':['ראשון ורביעי משעה *18:45* עד 20:00'],'fitness-38':['שני וחמישי משעה *18:15* עד 19:30'],'movement':['שלישי משעה *19:45* עד 21:00','שישי משעה *14:30* עד 15:45'],'strength-mobility':['שלישי משעה *18:30* עד 19:45','שישי משעה *15:45* עד 17:00']}}}
+
+let appSettings;
+function loadSettings(){try{const d=localStorage.getItem(SETTINGS_KEY);appSettings=d?JSON.parse(d):defaultSettings()}catch(e){appSettings=defaultSettings()}}
+function saveSettings(){try{localStorage.setItem(SETTINGS_KEY,JSON.stringify(appSettings))}catch(e){}}
+
+function toggleSettings(){document.getElementById('settingsPanel').classList.toggle('visible')}
+
+function renderSettingsUI(){
+  // Payment links
+  const c=document.getElementById('paymentLinksContainer');c.innerHTML='';
+  appSettings.paymentLinks.forEach((lnk,i)=>{
+    const r=document.createElement('div');r.className='settings-link-row';
+    r.innerHTML=`<input class="link-label" value="${lnk.label}" data-i="${i}" data-f="label" oninput="updateLinkField(this)"><input class="link-url" value="${lnk.url}" data-i="${i}" data-f="url" oninput="updateLinkField(this)"><select data-i="${i}" onchange="updateLinkType(this)"><option value="trial"${lnk.type==='trial'?' selected':''}>היכרות</option><option value="subscription"${lnk.type==='subscription'?' selected':''}>מנוי</option></select><button class="remove-link" onclick="removePaymentLink(${i})">✕</button>`;
+    c.appendChild(r);
+  });
+  // Semi-static
+  document.getElementById('set-appLink').value=appSettings.semiStatic.appLink||'';
+  document.getElementById('set-healthFormLink').value=appSettings.semiStatic.healthFormLink||'';
+  document.getElementById('set-referralLink').value=appSettings.semiStatic.referralLink||'';
+  // Schedules
+  const sc=document.getElementById('schedulesContainer');sc.innerHTML='';
+  GROUP_KEYS.forEach(k=>{
+    const g=document.createElement('div');g.className='sched-group';
+    const scheds=appSettings.schedules[k]||[''];
+    g.innerHTML=`<div class="sched-label">${GROUP_LABELS[k]}</div>${scheds.map((s,i)=>`<input value="${s}" data-gk="${k}" data-si="${i}" oninput="updateSchedule(this)">`).join('')}`;
+    sc.appendChild(g);
+  });
+}
+function updateLinkField(el){const i=+el.dataset.i,f=el.dataset.f;appSettings.paymentLinks[i][f]=el.value}
+function updateLinkType(el){appSettings.paymentLinks[+el.dataset.i].type=el.value}
+function removePaymentLink(i){appSettings.paymentLinks.splice(i,1);renderSettingsUI()}
+function addPaymentLinkRow(){appSettings.paymentLinks.push({label:'',url:'',type:'trial'});renderSettingsUI()}
+function updateSchedule(el){const k=el.dataset.gk,i=+el.dataset.si;if(!appSettings.schedules[k])appSettings.schedules[k]=[''];appSettings.schedules[k][i]=el.value}
+function saveSettingsFromUI(){
+  appSettings.semiStatic.appLink=document.getElementById('set-appLink').value;
+  appSettings.semiStatic.healthFormLink=document.getElementById('set-healthFormLink').value;
+  appSettings.semiStatic.referralLink=document.getElementById('set-referralLink').value;
+  saveSettings();
+  applyStaticVars();
+  refreshAllForms();
+  toast('הגדרות נשמרו ⚙️');
+}
+function initSettings(){loadSettings();renderSettingsUI()}
+
+// ================================================================
+// VARIABLE FORM SYSTEM v7.0
+// ================================================================
+const VAR_REGISTRY={
+  '[שם]':{type:'text',key:'name',label:'שם'},
+  '[שם ההורה]':{type:'text',key:'name',label:'שם ההורה'},
+  '[שם הילד/ה]':{type:'text',key:'childName',label:'שם הילד/ה'},
+  '[שם הנער/ה]':{type:'text',key:'childName',label:'שם הנער/ה'},
+  '[יום ותאריך]':{type:'text',key:'dayDate',label:'יום ותאריך'},
+  '[שעה]':{type:'text',key:'time',label:'שעה'},
+  '[מחיר]':{type:'text',key:'price',label:'מחיר'},
+  '[מספר]':{type:'text',key:'sessionCount',label:'מספר אימונים'},
+  '[אפשרות 1]':{type:'text',key:'option1',label:'אפשרות 1'},
+  '[אפשרות 2]':{type:'text',key:'option2',label:'אפשרות 2'},
+  '[הטבה / הנחה / בונוס]':{type:'text',key:'benefit',label:'הטבה'},
+  '[הטבה — הנחה / שיעור נוסף / מתנה]':{type:'text',key:'benefitVariant',label:'הטבה'},
+  '[שם הקבוצה]':{type:'dropdown',key:'groupName',label:'קבוצה',optionsFn:()=>Object.values(GROUP_LABELS)},
+  '[ימים ושעות]':{type:'dropdown',key:'schedule',label:'ימים ושעות',optionsFn:(cardId)=>{const gk=CARD_GROUP_MAP[cardId];return gk&&appSettings.schedules[gk]?appSettings.schedules[gk]:Object.values(appSettings.schedules).flat()},contextual:true},
+  '[לינק פייבוקס/אשראי]':{type:'dropdown',key:'trialLink',label:'לינק תשלום',optionsFn:()=>appSettings.paymentLinks.filter(l=>l.type==='trial').map(l=>({label:l.label,value:l.url}))},
+  '[לינק תשלום מנוי]':{type:'dropdown',key:'subLink',label:'לינק מנוי',optionsFn:()=>appSettings.paymentLinks.filter(l=>l.type==='subscription').map(l=>({label:l.label,value:l.url}))},
+  '[לינק אפליקציה]':{type:'static',settingsKey:'appLink'},
+  '[לינק לטופס]':{type:'static',settingsKey:'healthFormLink'},
+  '[לינק הפניה]':{type:'static',settingsKey:'referralLink'}
+};
+
+let sessionData={};
+function loadSession(){try{const d=localStorage.getItem(SESSION_KEY);sessionData=d?JSON.parse(d):{}}catch(e){sessionData={}}}
+function saveSession(){try{localStorage.setItem(SESSION_KEY,JSON.stringify(sessionData))}catch(e){}}
+function clearSession(){sessionData={};saveSession();document.querySelectorAll('.var-field input, .var-field select').forEach(el=>{if(el.tagName==='INPUT')el.value='';if(el.tagName==='SELECT')el.selectedIndex=0;el.classList.remove('filled')});applyAllVarsToMessages();updateAllIndicators();toast('סשן נוקה 🗑️')}
+
+function applyStaticVars(){
+  document.querySelectorAll('.template-card').forEach(card=>{
+    const msg=card.querySelector('.message');if(!msg)return;
+    msg.querySelectorAll('.placeholder').forEach(ph=>{
+      const txt=ph.textContent;
+      const reg=VAR_REGISTRY[txt];
+      if(reg&&reg.type==='static'){
+        const val=appSettings.semiStatic[reg.settingsKey];
+        if(val){ph.textContent=val;ph.classList.remove('placeholder');ph.classList.add('var-filled');ph.dataset.varOriginal=txt}
+      }
+    });
+  });
+}
+
+function initVarForms(){
+  loadSession();
+  applyStaticVars();
+  document.querySelectorAll('.template-card').forEach(card=>{
+    const msg=card.querySelector('.message');if(!msg)return;
+    const body=card.querySelector('.template-body');
+    const phs=msg.querySelectorAll('.placeholder');
+    if(!phs.length)return;
+    // Collect unique vars for this card
+    const seen=new Set();const vars=[];
+    phs.forEach(ph=>{
+      const txt=ph.textContent;
+      const reg=VAR_REGISTRY[txt];
+      if(!reg||reg.type==='static')return;
+      const ukey=reg.key+'_'+txt;
+      if(seen.has(ukey))return;seen.add(ukey);
+      vars.push({text:txt,reg});
+    });
+    if(!vars.length)return;
+    const form=document.createElement('div');form.className='var-form';form.dataset.cardId=card.id;
+    vars.forEach(v=>{
+      const f=document.createElement('div');f.className='var-field';
+      const lbl=document.createElement('label');lbl.textContent=v.reg.label+':';
+      f.appendChild(lbl);
+      if(v.reg.type==='text'){
+        const inp=document.createElement('input');inp.type='text';inp.placeholder=v.text.replace(/[\[\]]/g,'');
+        inp.dataset.varKey=v.reg.key;inp.dataset.varText=v.text;inp.dataset.cardId=card.id;
+        if(sessionData[v.reg.key])inp.value=sessionData[v.reg.key];
+        if(inp.value)inp.classList.add('filled');
+        inp.addEventListener('input',onVarInput);
+        f.appendChild(inp);
+      } else if(v.reg.type==='dropdown'){
+        const sel=document.createElement('select');sel.dataset.varKey=v.reg.key;sel.dataset.varText=v.text;sel.dataset.cardId=card.id;
+        const opts=v.reg.optionsFn?v.reg.optionsFn(card.id):[];
+        sel.innerHTML='<option value="">— בחר —</option>';
+        opts.forEach(o=>{
+          const opt=document.createElement('option');
+          if(typeof o==='object'){opt.value=o.value;opt.textContent=o.label}
+          else{opt.value=o;opt.textContent=o}
+          sel.appendChild(opt);
+        });
+        const manualOpt=document.createElement('option');manualOpt.value='__manual__';manualOpt.textContent='הזן ידנית...';sel.appendChild(manualOpt);
+        if(sessionData[v.reg.key]){
+          // Check if value exists in options
+          const match=[...sel.options].find(o=>o.value===sessionData[v.reg.key]);
+          if(match)sel.value=sessionData[v.reg.key];
+          else sel.value='__manual__';
+          if(sel.value)sel.classList.add('filled');
+        }
+        sel.addEventListener('change',onVarSelect);
+        f.appendChild(sel);
+        // Manual input (hidden by default)
+        const mInp=document.createElement('input');mInp.type='text';mInp.className='manual-input';mInp.placeholder='הקלד כאן...';
+        mInp.dataset.varKey=v.reg.key;mInp.dataset.varText=v.text;mInp.dataset.cardId=card.id;
+        if(sel.value==='__manual__'&&sessionData[v.reg.key]){mInp.value=sessionData[v.reg.key];mInp.classList.add('active','filled')}
+        mInp.addEventListener('input',onVarInput);
+        f.appendChild(mInp);
+      }
+      form.appendChild(f);
+    });
+    body.insertBefore(form,msg);
+    // Fill indicator
+    addFillIndicator(card);
+    // Apply session data to message placeholders
+    applyVarsToMessage(card);
+  });
+  updateAllIndicators();
+}
+
+function onVarInput(e){
+  const key=e.target.dataset.varKey;const val=e.target.value;
+  sessionData[key]=val;saveSession();
+  e.target.classList.toggle('filled',!!val);
+  propagateVar(key,val);
+}
+
+function onVarSelect(e){
+  const sel=e.target;const key=sel.dataset.varKey;const val=sel.value;
+  const field=sel.closest('.var-field');const mInp=field.querySelector('.manual-input');
+  if(val==='__manual__'){
+    mInp.classList.add('active');mInp.focus();
+    sel.classList.add('hidden-select');
+    return;
+  }
+  if(mInp){mInp.classList.remove('active');sel.classList.remove('hidden-select')}
+  sessionData[key]=val;saveSession();
+  sel.classList.toggle('filled',!!val);
+  propagateVar(key,val);
+}
+
+function propagateVar(key,val){
+  // Update all inputs/selects with same key
+  document.querySelectorAll('.var-field input[data-var-key="'+key+'"], .var-field select[data-var-key="'+key+'"]').forEach(el=>{
+    if(el.tagName==='INPUT'){el.value=val;el.classList.toggle('filled',!!val)}
+    else if(el.tagName==='SELECT'){
+      const match=[...el.options].find(o=>o.value===val);
+      if(match){el.value=val;el.classList.remove('hidden-select');const mInp=el.closest('.var-field')?.querySelector('.manual-input');if(mInp)mInp.classList.remove('active')}
+      else if(val){el.value='__manual__';el.classList.add('hidden-select');const mInp=el.closest('.var-field')?.querySelector('.manual-input');if(mInp){mInp.value=val;mInp.classList.add('active','filled')}}
+      el.classList.toggle('filled',!!val);
+    }
+  });
+  // Update all message placeholders with matching key
+  applyAllVarsToMessages();
+  updateAllIndicators();
+}
+
+function applyVarsToMessage(card){
+  const msg=card.querySelector('.message');if(!msg)return;
+  msg.querySelectorAll('.placeholder, .var-filled').forEach(ph=>{
+    const orig=ph.dataset.varOriginal||ph.textContent;
+    const reg=VAR_REGISTRY[orig];
+    if(!reg)return;
+    ph.dataset.varOriginal=orig;
+    if(reg.type==='static'){
+      const val=appSettings.semiStatic[reg.settingsKey];
+      if(val){ph.textContent=val;ph.classList.remove('placeholder');ph.classList.add('var-filled')}
+      return;
+    }
+    const val=sessionData[reg.key];
+    if(val){ph.textContent=val;ph.classList.remove('placeholder');ph.classList.add('var-filled')}
+    else{ph.textContent=orig;ph.classList.add('placeholder');ph.classList.remove('var-filled')}
+  });
+}
+
+function applyAllVarsToMessages(){
+  document.querySelectorAll('.template-card').forEach(card=>applyVarsToMessage(card));
+}
+
+function addFillIndicator(card){
+  const hdr=card.querySelector('.template-header');
+  if(!hdr||hdr.querySelector('.fill-indicator'))return;
+  const ind=document.createElement('span');ind.className='fill-indicator';
+  hdr.appendChild(ind);
+}
+
+function updateFillIndicator(card){
+  const ind=card.querySelector('.fill-indicator');if(!ind)return;
+  const msg=card.querySelector('.message');if(!msg)return;
+  const all=msg.querySelectorAll('.placeholder, .var-filled');
+  const total=all.length;
+  const filled=[...all].filter(el=>el.classList.contains('var-filled')).length;
+  if(total===0){ind.textContent='';return}
+  ind.textContent=`${filled}/${total} שדות`;
+  ind.classList.toggle('complete',filled===total);
+}
+
+function updateAllIndicators(){document.querySelectorAll('.template-card').forEach(card=>updateFillIndicator(card))}
+
+function refreshAllForms(){
+  // Refresh dropdown options after settings change
+  document.querySelectorAll('.var-field select[data-var-key]').forEach(sel=>{
+    const varText=sel.dataset.varText;const reg=VAR_REGISTRY[varText];
+    if(!reg||reg.type!=='dropdown')return;
+    const cardId=sel.dataset.cardId;const curVal=sel.value;
+    const opts=reg.optionsFn?reg.optionsFn(cardId):[];
+    sel.innerHTML='<option value="">— בחר —</option>';
+    opts.forEach(o=>{
+      const opt=document.createElement('option');
+      if(typeof o==='object'){opt.value=o.value;opt.textContent=o.label}
+      else{opt.value=o;opt.textContent=o}
+      sel.appendChild(opt);
+    });
+    const manualOpt=document.createElement('option');manualOpt.value='__manual__';manualOpt.textContent='הזן ידנית...';sel.appendChild(manualOpt);
+    if(curVal&&curVal!=='__manual__')sel.value=curVal;
+  });
+  applyStaticVars();
+  applyAllVarsToMessages();
+  updateAllIndicators();
+}
+
+// ================================================================
+// WIZARD v7.0
+// ================================================================
+const WIZARD_STAGES=[
+  {id:'1',icon:'📞',label:'פנייה ראשונה',sub:'#1, #2, #3, #19'},
+  {id:'2',icon:'📅',label:'תיאום שיעור',sub:'#4, #6, #8'},
+  {id:'3',icon:'🥋',label:'תקופת ניסיון',sub:'#9-#11, #17'},
+  {id:'4',icon:'✅',label:'הרשמה ושימור',sub:'#12-#16, #18'}
+];
+const WIZARD_ACTIONS={
+  '1':[{id:'callback',label:'ביקש שנחזור',icon:'📞',target:'t1'},{id:'direct-adult',label:'פנייה ישירה — מבוגר',icon:'💬',target:'t2'},{id:'direct-parent',label:'פנייה ישירה — הורה',icon:'👨‍👧',target:'t3'},{id:'widget-nopay',label:'ווידג׳ט — לא שילם',icon:'⏰',target:'t19'}],
+  '2':[{id:'intro',label:'שליחת פרטי היכרות',icon:'📋',hasVariants:true},{id:'payment',label:'אישור תשלום',icon:'💳',hasVariants:true},{id:'health',label:'טופס הצהרת בריאות',icon:'🏥',target:'t8'}],
+  '3':[{id:'reminder',label:'תזכורת יום לפני',icon:'⏰',target:'t9'},{id:'followup1',label:'מעקב שיעור 1',icon:'📝',target:'t10'},{id:'followup2',label:'מעקב שיעור 2',icon:'📝',target:'t11'},{id:'noshow',label:'שילם ולא הגיע',icon:'❌',target:'t17a'},{id:'ghosted',label:'נעלם / הפסיק לענות',icon:'👻',target:'t17b'}],
+  '4':[{id:'enroll-adult',label:'הרשמה — מבוגר',icon:'📋',target:'t12'},{id:'enroll-parent',label:'הרשמה — הורה',icon:'👨‍👧',target:'t13'},{id:'welcome-adult',label:'ברוכים הבאים — מבוגר',icon:'🎉',target:'t14'},{id:'welcome-parent',label:'ברוכים הבאים — הורה',icon:'🎉',target:'t15'},{id:'referral',label:'חבר מביא חבר',icon:'🎁',target:'t16'},{id:'hesitant',label:'מתלבט כרגע',icon:'🤔',target:'t18'}]
+};
+const WIZARD_VARIANTS=[
+  {id:'kids-6-8',label:'ילדים 6-8',icon:'👦'},
+  {id:'kids-9-11',label:'ילדים 9-11',icon:'🧒'},
+  {id:'teens-12-15',label:'נוער 12-15',icon:'🧑'},
+  {id:'combat-adults',label:'לחימה בוגרים',icon:'🥋'},
+  {id:'fitness-38',label:'כושר 38+',icon:'💪'},
+  {id:'movement',label:'תנועה',icon:'🤸'},
+  {id:'strength-mobility',label:'כוח וגמישות',icon:'🏋️'}
+];
+const VARIANT_TEMPLATE_MAP={
+  intro:{'kids-6-8':'t4a','kids-9-11':'t4b','teens-12-15':'t4c','combat-adults':'t4d','fitness-38':'t4e','movement':'t4f','strength-mobility':'t4g'},
+  payment:{'kids-6-8':'t6a','kids-9-11':'t6b','teens-12-15':'t6c','combat-adults':'t6d','fitness-38':'t6e','movement':'t6f','strength-mobility':'t6g'}
+};
+
+const wizState={stage:null,action:null,variant:null};
+
+function toggleWizard(){document.getElementById('wizardPanel').classList.toggle('collapsed')}
+
+function renderWizard(){
+  const body=document.getElementById('wizardBody');
+  let html='';
+  // Breadcrumb
+  const crumbs=[];
+  crumbs.push('<span class="crumb">אשף הודעות</span>');
+  if(wizState.stage){const s=WIZARD_STAGES.find(s=>s.id===wizState.stage);crumbs.push('<span class="crumb-sep">←</span><span class="crumb">'+s.label+'</span>')}
+  if(wizState.action){const a=WIZARD_ACTIONS[wizState.stage].find(a=>a.id===wizState.action);crumbs.push('<span class="crumb-sep">←</span><span class="crumb">'+a.label+'</span>')}
+  if(wizState.variant){const v=WIZARD_VARIANTS.find(v=>v.id===wizState.variant);crumbs.push('<span class="crumb-sep">←</span><span class="crumb">'+v.label+'</span>')}
+  html+='<div class="wizard-breadcrumb">'+crumbs.join('')+'</div>';
+
+  if(!wizState.stage){
+    // Step 1: stages
+    html+='<div class="wizard-steps">';
+    WIZARD_STAGES.forEach(s=>{
+      html+=`<button class="wizard-btn" onclick="wizSetStage('${s.id}')"><span class="btn-icon">${s.icon}</span>${s.label}<span class="btn-sub">${s.sub}</span></button>`;
+    });
+    html+='</div>';
+  } else if(!wizState.action){
+    // Step 2: actions
+    html+=`<button class="wizard-back-btn" onclick="wizBack()">→ חזרה</button>`;
+    html+='<div class="wizard-steps">';
+    WIZARD_ACTIONS[wizState.stage].forEach(a=>{
+      html+=`<button class="wizard-btn small" onclick="wizSetAction('${a.id}')"><span class="btn-icon">${a.icon}</span>${a.label}</button>`;
+    });
+    html+='</div>';
+  } else {
+    const act=WIZARD_ACTIONS[wizState.stage].find(a=>a.id===wizState.action);
+    if(act.hasVariants&&!wizState.variant){
+      // Step 3: variants
+      html+=`<button class="wizard-back-btn" onclick="wizBack()">→ חזרה</button>`;
+      html+='<div class="wizard-steps">';
+      WIZARD_VARIANTS.forEach(v=>{
+        html+=`<button class="wizard-btn small" onclick="wizSetVariant('${v.id}')"><span class="btn-icon">${v.icon}</span>${v.label}</button>`;
+      });
+      html+='</div>';
+    } else {
+      // Step 4: show template
+      let tid=act.target;
+      if(act.hasVariants&&wizState.variant){tid=VARIANT_TEMPLATE_MAP[wizState.action]?.[wizState.variant]}
+      html+=`<button class="wizard-back-btn" onclick="wizBack()">→ חזרה</button>`;
+      if(tid){
+        html+='<div class="wizard-result" id="wizardResult"></div>';
+        body.innerHTML=html;
+        renderWizardTemplate(tid);
+        return;
+      } else {
+        html+='<div style="padding:20px;text-align:center;color:var(--text2);">לא נמצאה תבנית מתאימה</div>';
+      }
+    }
+  }
+  body.innerHTML=html;
+}
+
+function renderWizardTemplate(tid){
+  const orig=document.getElementById(tid);if(!orig)return;
+  const container=document.getElementById('wizardResult');
+  // Clone the entire template card
+  const clone=orig.cloneNode(true);
+  clone.id='wiz_'+tid;
+  clone.style.margin='0';
+  // Remove old var-form if cloned
+  const oldForm=clone.querySelector('.var-form');if(oldForm)oldForm.remove();
+  // Remove old fill-indicator if cloned
+  const oldInd=clone.querySelector('.fill-indicator');if(oldInd)oldInd.remove();
+  container.appendChild(clone);
+  // Build a fresh var-form for the wizard clone
+  const msg=clone.querySelector('.message');if(!msg)return;
+  const body=clone.querySelector('.template-body');
+  // Re-apply vars from session
+  msg.querySelectorAll('.placeholder, .var-filled').forEach(ph=>{
+    const origText=ph.dataset.varOriginal||ph.textContent;
+    const reg=VAR_REGISTRY[origText];
+    if(!reg)return;
+    ph.dataset.varOriginal=origText;
+    if(reg.type==='static'){const val=appSettings.semiStatic[reg.settingsKey];if(val){ph.textContent=val;ph.classList.remove('placeholder');ph.classList.add('var-filled')}return}
+    const val=sessionData[reg.key];
+    if(val){ph.textContent=val;ph.classList.remove('placeholder');ph.classList.add('var-filled')}
+    else{ph.textContent=origText;ph.classList.add('placeholder');ph.classList.remove('var-filled')}
+  });
+  // Build var form
+  const phs=msg.querySelectorAll('.placeholder');
+  const seen=new Set();const vars=[];
+  phs.forEach(ph=>{
+    const txt=ph.dataset.varOriginal||ph.textContent;
+    const reg=VAR_REGISTRY[txt];if(!reg||reg.type==='static')return;
+    const ukey=reg.key+'_'+txt;if(seen.has(ukey))return;seen.add(ukey);
+    vars.push({text:txt,reg});
+  });
+  if(vars.length){
+    const form=document.createElement('div');form.className='var-form';form.dataset.cardId=clone.id;
+    vars.forEach(v=>{
+      const f=document.createElement('div');f.className='var-field';
+      const lbl=document.createElement('label');lbl.textContent=v.reg.label+':';f.appendChild(lbl);
+      if(v.reg.type==='text'){
+        const inp=document.createElement('input');inp.type='text';inp.placeholder=v.text.replace(/[\[\]]/g,'');
+        inp.dataset.varKey=v.reg.key;inp.dataset.varText=v.text;inp.dataset.cardId=clone.id;
+        if(sessionData[v.reg.key])inp.value=sessionData[v.reg.key];
+        if(inp.value)inp.classList.add('filled');
+        inp.addEventListener('input',function(e){onVarInput(e);applyWizVars(clone)});
+        f.appendChild(inp);
+      } else if(v.reg.type==='dropdown'){
+        const sel=document.createElement('select');sel.dataset.varKey=v.reg.key;sel.dataset.varText=v.text;sel.dataset.cardId=clone.id;
+        const opts=v.reg.optionsFn?v.reg.optionsFn(tid):[];
+        sel.innerHTML='<option value="">— בחר —</option>';
+        opts.forEach(o=>{const opt=document.createElement('option');if(typeof o==='object'){opt.value=o.value;opt.textContent=o.label}else{opt.value=o;opt.textContent=o}sel.appendChild(opt)});
+        const manualOpt=document.createElement('option');manualOpt.value='__manual__';manualOpt.textContent='הזן ידנית...';sel.appendChild(manualOpt);
+        if(sessionData[v.reg.key]){const match=[...sel.options].find(o=>o.value===sessionData[v.reg.key]);if(match)sel.value=sessionData[v.reg.key];else sel.value='__manual__';if(sel.value)sel.classList.add('filled')}
+        sel.addEventListener('change',function(e){onVarSelect(e);applyWizVars(clone)});
+        f.appendChild(sel);
+        const mInp=document.createElement('input');mInp.type='text';mInp.className='manual-input';mInp.placeholder='הקלד כאן...';
+        mInp.dataset.varKey=v.reg.key;mInp.dataset.varText=v.text;mInp.dataset.cardId=clone.id;
+        if(sel.value==='__manual__'&&sessionData[v.reg.key]){mInp.value=sessionData[v.reg.key];mInp.classList.add('active','filled')}
+        mInp.addEventListener('input',function(e){onVarInput(e);applyWizVars(clone)});
+        f.appendChild(mInp);
+      }
+      form.appendChild(f);
+    });
+    body.insertBefore(form,msg);
+  }
+  // Wire copy for wizard clone
+  msg.removeAttribute('onclick');
+  msg.addEventListener('click',function(e){
+    if(e.target.closest('.cbtn,.edit-btn,.reset-btn,.save-edit-btn'))return;
+    copyMsg(msg);
+  });
+  // Add fill indicator
+  addFillIndicator(clone);
+  updateFillIndicator(clone);
+  // Also scroll wizard into view
+  container.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+function applyWizVars(card){
+  const msg=card.querySelector('.message');if(!msg)return;
+  msg.querySelectorAll('.placeholder, .var-filled').forEach(ph=>{
+    const orig=ph.dataset.varOriginal||ph.textContent;
+    const reg=VAR_REGISTRY[orig];if(!reg)return;
+    ph.dataset.varOriginal=orig;
+    if(reg.type==='static'){const val=appSettings.semiStatic[reg.settingsKey];if(val){ph.textContent=val;ph.classList.remove('placeholder');ph.classList.add('var-filled')}return}
+    const val=sessionData[reg.key];
+    if(val){ph.textContent=val;ph.classList.remove('placeholder');ph.classList.add('var-filled')}
+    else{ph.textContent=orig;ph.classList.add('placeholder');ph.classList.remove('var-filled')}
+  });
+  updateFillIndicator(card);
+}
+
+function wizSetStage(id){wizState.stage=id;wizState.action=null;wizState.variant=null;renderWizard()}
+function wizSetAction(id){
+  const act=WIZARD_ACTIONS[wizState.stage].find(a=>a.id===id);
+  wizState.action=id;wizState.variant=null;
+  if(act&&!act.hasVariants&&act.target){renderWizard()}
+  else{renderWizard()}
+}
+function wizSetVariant(id){wizState.variant=id;renderWizard()}
+function wizBack(){if(wizState.variant){wizState.variant=null}else if(wizState.action){wizState.action=null}else if(wizState.stage){wizState.stage=null}renderWizard()}
+function initWizard(){renderWizard()}
+
+// ================================================================
 // === Template Message Editing ===
-const TK='element-tpl-v65';
+const TK='element-tpl-v70';
 let editingMsg=null;
 const origMessages={};
 
@@ -1194,7 +1754,7 @@ function smartOrthoP(p1, a1, p2, a2) {
 }
 
 // Storage & Undo (Version bumped to v61 to force fresh layout for user)
-const SK='element-flow-v68'; let svT;
+const SK='element-flow-v70'; let svT;
 function dSv(){clearTimeout(svT); svT=setTimeout(sv,800);}
 function toast(t){const el=document.getElementById('saveToast'); el.textContent=t||'נשמר בהצלחה 💾'; el.classList.add('show'); setTimeout(()=>el.classList.remove('show'),2000);}
 function pushU(){undoS.push(gS()); if(undoS.length>MU)undoS.shift(); redoS=[]; uUB();}
@@ -1305,8 +1865,8 @@ function onPhaseDragEnd(){
   document.removeEventListener('mouseup', onPhaseDragEnd);
   svPhases(); toast('גבולות שלב עודכנו ✅');
 }
-function svPhases(){try{localStorage.setItem('element-phases-v68',JSON.stringify(PHASES.map(p=>({id:p.id,y:p.y,h:p.h}))))}catch(e){}}
-function ldPhases(){try{const r=localStorage.getItem('element-phases-v68');if(!r)return;const d=JSON.parse(r);d.forEach(s=>{const p=PHASES.find(p=>p.id===s.id);if(p){p.y=s.y;p.h=s.h}})}catch(e){}}
+function svPhases(){try{localStorage.setItem('element-phases-v70',JSON.stringify(PHASES.map(p=>({id:p.id,y:p.y,h:p.h}))))}catch(e){}}
+function ldPhases(){try{const r=localStorage.getItem('element-phases-v70');if(!r)return;const d=JSON.parse(r);d.forEach(s=>{const p=PHASES.find(p=>p.id===s.id);if(p){p.y=s.y;p.h=s.h}})}catch(e){}}
 
 function renderNodes(){
   inner.querySelectorAll('.fnode').forEach(e=>e.remove());
@@ -1534,7 +2094,7 @@ scr.addEventListener('scroll',uMM);
 
 // Initialization — fit tree width to canvas so no horizontal scroll needed
 (function(){
-  NODES.forEach(n=>NM[n.id]=n); ldPhases(); ld(); renderAll(); initMsgEditing();
+  NODES.forEach(n=>NM[n.id]=n); ldPhases(); ld(); renderAll(); initSettings(); initVarForms(); initWizard(); initMsgEditing();
   // Calculate tree width and zoom to fit horizontally
   let mx=0; NODES.forEach(n=>{mx=Math.max(mx,n.x+(n._w||160))});
   mx+=120; // padding
