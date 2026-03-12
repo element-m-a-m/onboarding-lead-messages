@@ -302,8 +302,39 @@ h2 { font-size: 18px; font-weight: 800; color: var(--hdr); margin-top: 32px; mar
 .session-badge { background: var(--accent); color: #fff; border-radius: 50%; font-size: 9px; font-weight: 800; padding: 1px 5px; margin-right: 4px; }
 .wizard-result .template-card { margin: 0; }
 
+/* === v8.0 — Audience Toggle === */
+.audience-toggle { display:flex; gap:4px; padding:6px 12px; background:#f0f4f8; border-bottom:1px solid var(--border); }
+.aud-btn { padding:5px 14px; border:1.5px solid var(--border); border-radius:20px; background:#fff; font-family:'Heebo',sans-serif; font-size:11px; font-weight:700; cursor:pointer; color:var(--text2); transition:all 0.2s; }
+.aud-btn.active { background:var(--accent); color:#fff; border-color:var(--accent); }
+.aud-btn:hover:not(.active) { background:#e2e8f0; }
+
+/* === v8.0 — Swap Block Selector === */
+.swap-selector { display:flex; flex-wrap:wrap; gap:4px; padding:6px 12px; background:#fef3c7; border-bottom:1px solid #fde68a; }
+.swap-chip { padding:4px 10px; border:1px solid #fcd34d; border-radius:16px; background:#fff; font-family:'Heebo',sans-serif; font-size:10px; font-weight:600; cursor:pointer; color:#92400e; transition:all 0.2s; }
+.swap-chip.active { background:#f59e0b; color:#fff; border-color:#f59e0b; }
+.swap-chip:hover:not(.active) { background:#fef3c7; }
+.swap-slot { min-height:20px; transition:opacity 0.2s; }
+.swap-slot.loading { opacity:0.5; }
+
+/* === v8.0 — Tip Rotation Chips === */
+.tip-selector { display:flex; gap:6px; padding:8px 12px; background:#eff6ff; border-bottom:1px solid #bfdbfe; }
+.tip-chip { padding:4px 12px; border:1.5px solid #93c5fd; border-radius:20px; background:#fff; font-family:'Heebo',sans-serif; font-size:11px; font-weight:600; cursor:pointer; color:#1e40af; transition:all 0.2s; }
+.tip-chip.active { background:#3b82f6; color:#fff; border-color:#3b82f6; }
+.tip-chip:hover:not(.active) { background:#dbeafe; }
+
+/* === v8.0 — Manual Placeholders <...> === */
+.manual-placeholder { background:#fef9c3; padding:2px 6px; border-radius:4px; font-weight:700; color:#854d0e; font-size:12px; border:1px dashed #facc15; }
+
+/* === v8.0 — FAQ Cards === */
+.faq-card { background:var(--surface); border:1px solid var(--border); border-radius:12px; margin:12px 0; overflow:hidden; }
+.faq-q { padding:12px 16px; background:#f0f9ff; border-bottom:1px solid #bfdbfe; font-weight:700; font-size:13px; color:#1e3a8a; cursor:pointer; user-select:none; }
+.faq-q:hover { background:#dbeafe; }
+.faq-a { padding:12px 16px; white-space:pre-wrap; line-height:1.6; font-size:13px; color:var(--text); display:none; }
+.faq-card.open .faq-a { display:block; }
+.faq-card.open .faq-q { border-bottom-color:#93c5fd; }
+
 @media print {
-  .search-bar, .nav-tabs, .back-top, .cbtn, .edit-btn, .reset-btn, .save-edit-btn, #tooltip, .canvas-toolbar, .minimap, .canvas-info, .save-toast, .arrow-toolbar, .ctx-menu, #settingsPanel, .var-form, .settings-toggle, #wizard { display: none !important; }
+  .search-bar, .nav-tabs, .back-top, .cbtn, .edit-btn, .reset-btn, .save-edit-btn, #tooltip, .canvas-toolbar, .minimap, .canvas-info, .save-toast, .arrow-toolbar, .ctx-menu, #settingsPanel, .var-form, .settings-toggle, #wizard, .audience-toggle, .swap-selector, .tip-selector { display: none !important; }
   .template-card { break-inside: avoid; }
 }
 </style>
@@ -313,7 +344,7 @@ h2 { font-size: 18px; font-weight: 800; color: var(--hdr); margin-top: 32px; mar
 <div class="page-header">
   <h1>אלמנט — חוברת תבניות וואטסאפ</h1>
   <div class="sub">Element — WhatsApp Templates Playbook & Flow Engine (Desktop Pro)</div>
-  <div class="ver">גרסה 7.0 | אשף הודעות + טפסים חכמים + זיכרון סשן</div>
+  <div class="ver">גרסה 8.0 | מנוע חכם + בלוקים מתחלפים + מתג קהל + סיבוב טיפים</div>
 </div>
 
 <div class="search-bar">
@@ -325,15 +356,15 @@ h2 { font-size: 18px; font-weight: 800; color: var(--hdr); margin-top: 32px; mar
 </div>
 
 <div class="nav-tabs">
-  <a href="#flowcharts">📊 תרשים זרימה אינטראקטיבי</a>
-  <a href="#wizard" style="background:var(--accent);color:#fff;border-color:var(--accent);">🧙 אשף הודעות</a>
-  <a href="#group1">1️⃣ תגובה ראשונה</a>
-  <a href="#group2">2️⃣ פרטי היכרות</a>
-  <a href="#group3">3️⃣ אישור תשלום</a>
-  <a href="#group4">4️⃣ מעקב שיעורים</a>
-  <a href="#group5">5️⃣ הרשמה</a>
-  <a href="#group6">6️⃣ שימור</a>
-  <a href="#ref-section">📎 טבלת עזר</a>
+  <a href="#flowcharts">📊 תרשים</a>
+  <a href="#wizard" style="background:var(--accent);color:#fff;border-color:var(--accent);">🧙 אשף</a>
+  <a href="#stage1">1️⃣ פנייה</a>
+  <a href="#stage2">2️⃣ תיאום</a>
+  <a href="#stage3">3️⃣ ניסיון</a>
+  <a href="#stage4">4️⃣ הרשמה</a>
+  <a href="#stage5">5️⃣ מיוחדים</a>
+  <a href="#faq-section">❓ FAQ</a>
+  <a href="#ref-section">📎 עזר</a>
 </div>
 
 <div id="tooltip">
@@ -370,6 +401,9 @@ h2 { font-size: 18px; font-weight: 800; color: var(--hdr); margin-top: 32px; mar
     <div class="settings-row"><label>לינק אפליקציה</label><input id="set-appLink" placeholder="https://..." dir="ltr"></div>
     <div class="settings-row"><label>טופס בריאות</label><input id="set-healthFormLink" placeholder="https://..." dir="ltr"></div>
     <div class="settings-row"><label>לינק הפניה</label><input id="set-referralLink" placeholder="https://..." dir="ltr"></div>
+    <div class="settings-row"><label>לינק ווידג׳ט</label><input id="set-widgetLink" placeholder="https://..." dir="ltr"></div>
+    <div class="settings-row"><label>שאלון רקע / יעדים</label><input id="set-goalsFormLink" placeholder="https://..." dir="ltr"></div>
+    <div class="settings-row"><label>לינק סרטון</label><input id="set-videoLink" placeholder="https://..." dir="ltr"></div>
 
     <h3>📅 לוחות זמנים לפי קבוצה</h3>
     <div id="schedulesContainer"></div>
@@ -437,407 +471,467 @@ h2 { font-size: 18px; font-weight: 800; color: var(--hdr); margin-top: 32px; mar
   </div>
 
   <!-- TEXT TEMPLATES SECTION -->
-  <div class="section-divider" id="group1"><span class="gnum">1</span> תגובה ראשונה</div>
-  
-  <div class="template-card" id="t1" data-search="ווידג'ט חזרה callback תגובה ראשונה"><div class="template-header"><span class="tnum-badge">#1</span><span class="ttitle">ווידג׳ט — ביקש שנחזור</span><span class="tbadge">🟢</span></div><div class="template-meta"><span>⏰ ביקש ״שנחזור אליו״ דרך האתר</span><span>📋 קליקאפ: CONSIDERING</span></div><div class="template-body">
-  <div class="message" onclick="copyMsg(this)"><button class="cbtn">📋 העתק הודעה</button>היי <span class="placeholder">[שם]</span> 👋
-  כאן צוות אלמנט — אומנויות לחימה ותנועה.
-  ראינו שהשארתם פרטים ונשמח לעזור!
-  
-  ראינו שהתעניינתם ב<span class="placeholder">[שם הקבוצה]</span>.
-  יש לכם שאלות? נשמח לספר עוד ולתאם שיעור היכרות 🙏</div>
+  <div class="section-divider" id="stage1"><span class="gnum">1</span> פנייה ראשונה</div>
+
+  <div class="template-card" id="t0" data-search="away אוטומטי מחוץ לשעות פעילות"><div class="template-header"><span class="tnum-badge">#0</span><span class="ttitle">הודעת Away (אוטומטית)</span><span class="tbadge">⚪</span></div><div class="template-meta"><span>⏰ אוטומטית — מחוץ לשעות פעילות</span><span>📋 קליקאפ: לא רלוונטי</span></div><div class="template-body">
+  <div class="message" onclick="copyMsg(this)"><button class="cbtn">📋 העתק הודעה</button>היי 🙂 תודה שפנית אלינו!
+
+אנחנו *אלמנט — אומנויות לחימה ותנועה*, מרכז אימונים בהובלת ליאור ורדי בחולון.
+
+המשרד שלנו פעיל בימים א'-ה' ונחזור אליך בהקדם.
+
+בינתיים, הנה כל מה שצריך לדעת על האימונים שלנו:
+🔗 https://element-m-a-m.landy-ai.com/
+
+ואם כבר בא לך להתחיל — אפשר להזמין שיעורי היכרות ישירות כאן:
+📝 https://element-m-a-m.github.io/book-first-classes/</div>
   </div></div>
 
-  <div class="template-card" id="t2" data-search="וואטסאפ ישיר מבוגר בוגר טלפון מייל"><div class="template-header"><span class="tnum-badge">#2</span><span class="ttitle">פנייה ישירה (מבוגר/ת)</span><span class="tbadge">🟢</span></div><div class="template-meta"><span>⏰ פנה ביוזמתו (WA / טלפון / סושיאל)</span><span>📋 קליקאפ: NEW LEADS</span></div><div class="template-body">
+  <div class="template-card" id="t1" data-search="וואטסאפ ישיר מבוגר בוגר טלפון מייל"><div class="template-header"><span class="tnum-badge">#1</span><span class="ttitle">פנייה ישירה (מבוגר/ת)</span><span class="tbadge">🟢</span></div><div class="template-meta"><span>⏰ פנה ביוזמתו (WA / טלפון / סושיאל)</span><span>📋 קליקאפ: NEW LEADS</span></div><div class="template-body">
   <div class="message" onclick="copyMsg(this)"><button class="cbtn">📋 העתק הודעה</button>היי <span class="placeholder">[שם]</span> 👋
-  תודה שפניתם אלינו!
-  כאן צוות אלמנט — אומנויות לחימה ותנועה בחולון.
-  נשמח להכיר ולשמוע מה מעניין אתכם 🙏
-  
-  מה חיפשתם? אומנויות לחימה, שיעורי תנועה, אימוני כוח וגמישות — או שאולי עדיין בשלב של להבין מה מתאים?</div>
+
+תודה שפניתם אלינו!
+
+כאן צוות אלמנט — אומנויות לחימה ותנועה בחולון.
+
+נשמח להכיר ולשמוע מה מעניין אתכם 🙏
+
+מה חיפשתם? אומנויות לחימה, שיעורי תנועה, אימוני כוח וגמישות — או שאולי עדיין בשלב של להבין מה מתאים?</div>
   </div></div>
 
-  <div class="template-card" id="t3" data-search="וואטסאפ ישיר הורה ילד טלפון מייל"><div class="template-header"><span class="tnum-badge">#3</span><span class="ttitle">פנייה ישירה (הורה)</span><span class="tbadge">🟢</span></div><div class="template-meta"><span>⏰ פנה ביוזמתו (WA / טלפון / סושיאל)</span><span>📋 קליקאפ: NEW LEADS (+ עדכון שם הילד)</span></div><div class="template-body">
+  <div class="template-card" id="t1b" data-search="מעקב ראשון לא ענו follow-up"><div class="template-header"><span class="tnum-badge">#1b</span><span class="ttitle">מעקב ראשון (אם לא ענו)</span><span class="tbadge">🟡</span></div><div class="template-meta"><span>⏰ 24 שעות אחרי #1 או #2 בלי תשובה</span><span>📋 קליקאפ: NOT ANSWERED YET</span></div><div class="template-body">
+  <div class="message" onclick="copyMsg(this)"><button class="cbtn">📋 העתק הודעה</button>היי <span class="placeholder">[שם]</span> 🙂
+
+רציתי לוודא שקיבלתם את ההודעה.
+אשמח לעזור למצוא את השיעור המתאים — פשוט ספרו לי בקצרה ואכוון 🙏</div>
+  </div></div>
+
+  <div class="template-card" id="t1c" data-search="מעקב אחרון סגירה lost"><div class="template-header"><span class="tnum-badge">#1c</span><span class="ttitle">מעקב אחרון (סגירה)</span><span class="tbadge">🟡</span></div><div class="template-meta"><span>⏰ 72 שעות מההודעה הראשונה</span><span>📋 קליקאפ: → LOST — NEVER ENGAGED</span></div><div class="template-body">
+  <div class="message" onclick="copyMsg(this)"><button class="cbtn">📋 העתק הודעה</button>היי <span class="placeholder">[שם]</span> 🙂
+
+רק רציתי להשאיר את האפשרות פתוחה — אם בעתיד תרצו לנסות שיעור היכרות אצלנו, אנחנו כאן.
+
+שיהיה יום טוב! ✌️</div>
+  </div></div>
+
+  <div class="template-card" id="t2" data-search="וואטסאפ ישיר הורה ילד טלפון מייל"><div class="template-header"><span class="tnum-badge">#2</span><span class="ttitle">פנייה ישירה (הורה)</span><span class="tbadge">🟢</span></div><div class="template-meta"><span>⏰ פנה ביוזמתו (WA / טלפון / סושיאל)</span><span>📋 קליקאפ: NEW LEADS</span></div><div class="template-body">
   <div class="message" onclick="copyMsg(this)"><button class="cbtn">📋 העתק הודעה</button>היי <span class="placeholder">[שם ההורה]</span> 👋
-  תודה שפניתם אלינו!
-  כאן צוות אלמנט — אומנויות לחימה ותנועה בחולון.
-  
-  נשמח לשמוע קצת על הילד/ה — מה הגיל, ומה חיפשתם? אנחנו מלמדים אומנויות לחימה לילדים ונוער מגיל 6, עם דגש על בטיחות, כושר, התפתחות אישית ובניית ביטחון עצמי 💪</div>
+
+תודה שפניתם אלינו!
+
+כאן צוות אלמנט — אומנויות לחימה ותנועה בחולון.
+
+נשמח לשמוע קצת על הילד/ה — מה הגיל, ומה חיפשתם? אנחנו מלמדים אומנויות לחימה לילדים ונוער מגיל 6, עם דגש על בטיחות, כושר, התפתחות אישית ובניית ביטחון עצמי 💪</div>
   </div></div>
 
-  <div class="template-card" id="t19" data-search="ווידג'ט לא שילם מעקב follow"><div class="template-header"><span class="tnum-badge">#19</span><span class="ttitle">ווידג׳ט — לא שילם (מעקב)</span><span class="tbadge">🟡</span></div><div class="template-meta"><span>⏰ 24-48 שעות אחרי שניסה לשלם ונכשל/נטש</span><span>📋 קליקאפ: NEAR PURCHASE</span></div><div class="template-body">
+  <div class="template-card" id="t3" data-search="ווידג'ט חזרה callback תגובה ראשונה"><div class="template-header"><span class="tnum-badge">#3</span><span class="ttitle">ווידג׳ט — ביקש שנחזור</span><span class="tbadge">🟢</span></div><div class="template-meta"><span>⏰ ביקש ״שנחזור אליו״ דרך האתר</span><span>📋 קליקאפ: CONSIDERING</span></div><div class="template-body">
   <div class="message" onclick="copyMsg(this)"><button class="cbtn">📋 העתק הודעה</button>היי <span class="placeholder">[שם]</span> 👋
-  ראינו שהתעניינתם באימונים אצלנו — נשמח לעזור!
-  
-  נתקעתם עם משהו? יש שאלות? אנחנו כאן.
-  אפשר גם שיחה קצרה בטלפון 📞
-  
-  מחכים! 🙏</div>
+
+כאן צוות אלמנט — אומנויות לחימה ותנועה.
+
+ראינו שהשארתם פרטים ונשמח לעזור!
+
+ראינו שהתעניינתם ב<span class="placeholder">[שם הקבוצה]</span>.
+
+יש לכם שאלות? נשמח לספר עוד ולתאם שיעור היכרות 🙏</div>
   </div></div>
 
-  <div class="section-divider" id="group2"><span class="gnum">2</span> פרטי היכרות — לפי קבוצה</div>
+  <div class="template-card" id="t4" data-search="ווידג'ט לא שילם עגלה נטושה מעקב follow"><div class="template-header"><span class="tnum-badge">#4</span><span class="ttitle">ווידג׳ט — לא שילם (עגלה נטושה)</span><span class="tbadge">🟡</span></div><div class="template-meta"><span>⏰ 24-48 שעות אחרי שלא השלים תשלום</span><span>📋 קליקאפ: NEAR PURCHASE</span></div><div class="template-body">
+  <div class="message" onclick="copyMsg(this)"><button class="cbtn">📋 העתק הודעה</button>היי <span class="placeholder">[שם]</span> 👋
+
+ראינו שהתעניינתם באימונים אצלנו — נשמח לעזור!
+
+נתקעתם עם משהו? יש שאלות? אנחנו כאן.
+
+אפשר גם שיחה קצרה בטלפון 📞
+
+מחכים! 🙏</div>
+  </div></div>
+
+  <div class="section-divider" id="stage2"><span class="gnum">2</span> תיאום שיעור</div>
   <p style="font-size: 13px; color: var(--text2); margin-bottom: 16px;">שליחת פרטים טכניים ולינק תשלום לאחר בירור צרכים בסיסי.</p>
 
-  <div class="template-card" id="t4a" data-search="היכרות ילדים 6 8 kids פרטים"><div class="template-header"><span class="tnum-badge">#4a</span><span class="ttitle">פרטי היכרות — ילדים 6-8</span><span class="tbadge">🔵</span></div><div class="template-meta"><span>📋 קליקאפ: CONSIDERING</span></div><div class="template-body">
-  <div class="message" onclick="copyMsg(this)"><button class="cbtn">📋 העתק הודעה</button>מעולה, נשמח לראות את <span class="placeholder">[שם הילד/ה]</span> אצלנו! 🙏
-  
-  🥋 קבוצת ילדים 6-8
-  📅 <span class="placeholder">[ימים ושעות]</span>
-  📍 אולם "המגינים", רח׳ חזית חמש 2, חולון
-  💰 שיעור היכרות: 60₪
-  
-  🔗 לתשלום ורישום מראש: <span class="placeholder">[לינק פייבוקס/אשראי]</span>
-  מומלץ להגיע 5-10 דק׳ לפני. מחכים! 🙏</div></div></div>
+  <div class="template-card" id="t5" data-search="היכרות פרטים קבוצה trial details swap"><div class="template-header"><span class="tnum-badge">#5</span><span class="ttitle">פרטי שיעורי היכרות</span><span class="tbadge">🔵</span></div><div class="template-meta"><span>⏰ אחרי שהליד ענה ואנחנו יודעים מה רלוונטי</span><span>📋 קליקאפ: CONSIDERING</span></div><div class="template-body">
+  <div class="message" onclick="copyMsg(this)"><button class="cbtn">📋 העתק הודעה</button><span class="aud-opening">מעולה, נשמח לראות אותך אצלנו! 🙏</span>
 
-  <div class="template-card" id="t4b" data-search="היכרות ילדים 9 11 kids פרטים"><div class="template-header"><span class="tnum-badge">#4b</span><span class="ttitle">פרטי היכרות — ילדים 9-11</span><span class="tbadge">🔵</span></div><div class="template-meta"><span>📋 קליקאפ: CONSIDERING</span></div><div class="template-body">
-  <div class="message" onclick="copyMsg(this)"><button class="cbtn">📋 העתק הודעה</button>מעולה, נשמח לראות את <span class="placeholder">[שם הילד/ה]</span> אצלנו! 🙏
+<div class="swap-slot"></div>
 
-🥋 קבוצת ילדים 9-11
-📅 <span class="placeholder">[ימים ושעות]</span>
 📍 אולם "המגינים", רח׳ חזית חמש 2, חולון
-💰 שיעור היכרות: 60₪
+💰 שיעור בודד: <span class="placeholder">[מחיר היכרות בודד]</span>₪ | כרטיסיית 3 שיעורים: 99₪
 
-🔗 לתשלום ורישום מראש: <span class="placeholder">[לינק פייבוקס/אשראי]</span>
-מומלץ להגיע 5-10 דק׳ לפני. מחכים! 🙏</div></div></div>
+🔗 לצפייה בלוח השיעורים ורישום:
+https://element-m-a-m.github.io/book-first-classes/
 
-  <div class="template-card" id="t4c" data-search="היכרות נוער 12 15 teens פרטים"><div class="template-header"><span class="tnum-badge">#4c</span><span class="ttitle">פרטי היכרות — נוער 12-15</span><span class="tbadge">🔵</span></div><div class="template-meta"><span>📋 קליקאפ: CONSIDERING</span></div><div class="template-body">
-  <div class="message" onclick="copyMsg(this)"><button class="cbtn">📋 העתק הודעה</button>מעולה, נשמח לראות את <span class="placeholder">[שם הנער/ה]</span> אצלנו! 🙏
+מומלץ להגיע 5-10 דק׳ לפני. מחכים! 🙏</div>
+  </div></div>
 
-🥋 קבוצת נוער 12-15
-📅 <span class="placeholder">[ימים ושעות]</span>
-📍 אולם "המגינים", רח׳ חזית חמש 2, חולון
-💰 שיעור היכרות: 60₪
-
-🔗 לתשלום ורישום מראש: <span class="placeholder">[לינק פייבוקס/אשראי]</span>
-מומלץ להגיע 5-10 דק׳ לפני. מחכים! 🙏</div></div></div>
-
-  <div class="template-card" id="t4d" data-search="היכרות לחימה בוגרים מבוגרים adults combat פרטים"><div class="template-header"><span class="tnum-badge">#4d</span><span class="ttitle">פרטי היכרות — לחימה בוגרים</span><span class="tbadge">🔵</span></div><div class="template-meta"><span>📋 קליקאפ: CONSIDERING</span></div><div class="template-body">
-  <div class="message" onclick="copyMsg(this)"><button class="cbtn">📋 העתק הודעה</button>מעולה, נשמח לראות אותך אצלנו! 🙏
-
-🥋 קבוצת לחימה — בוגרים
-📅 <span class="placeholder">[ימים ושעות]</span>
-📍 אולם "המגינים", רח׳ חזית חמש 2, חולון
-💰 שיעור היכרות: 60₪
-
-אין צורך בניסיון קודם — מתאים לכל הרמות.
-
-🔗 לתשלום ורישום מראש: <span class="placeholder">[לינק פייבוקס/אשראי]</span>
-מומלץ להגיע 5-10 דק׳ לפני. מחכים! 🙏</div></div></div>
-
-  <div class="template-card" id="t4e" data-search="היכרות כושר 38 פיטנס fitness פרטים"><div class="template-header"><span class="tnum-badge">#4e</span><span class="ttitle">פרטי היכרות — כושר 38+</span><span class="tbadge">🔵</span></div><div class="template-meta"><span>📋 קליקאפ: CONSIDERING</span></div><div class="template-body">
-  <div class="message" onclick="copyMsg(this)"><button class="cbtn">📋 העתק הודעה</button>מעולה, נשמח לראות אותך אצלנו! 🙏
-
-💪 קבוצת כושר 38+
-📅 <span class="placeholder">[ימים ושעות]</span>
-📍 אולם "המגינים", רח׳ חזית חמש 2, חולון
-💰 שיעור היכרות: 60₪
-
-אימון מותאם לכל רמה — מתאים גם למי שלא התאמן הרבה זמן.
-
-🔗 לתשלום ורישום מראש: <span class="placeholder">[לינק פייבוקס/אשראי]</span>
-מומלץ להגיע 5-10 דק׳ לפני. מחכים! 🙏</div></div></div>
-
-  <div class="template-card" id="t4f" data-search="היכרות תנועה movement פרטים"><div class="template-header"><span class="tnum-badge">#4f</span><span class="ttitle">פרטי היכרות — תנועה</span><span class="tbadge">🔵</span></div><div class="template-meta"><span>📋 קליקאפ: CONSIDERING</span></div><div class="template-body">
-  <div class="message" onclick="copyMsg(this)"><button class="cbtn">📋 העתק הודעה</button>מעולה, נשמח לראות אותך אצלנו! 🙏
-
-🤸 קבוצת תנועה
-📅 <span class="placeholder">[ימים ושעות]</span>
-📍 אולם "המגינים", רח׳ חזית חמש 2, חולון
-💰 שיעור היכרות: 60₪
-
-שיעורי תנועה המשלבים ניידות, קואורדינציה ושליטה בגוף — מתאים לכל רמה.
-
-🔗 לתשלום ורישום מראש: <span class="placeholder">[לינק פייבוקס/אשראי]</span>
-מומלץ להגיע 5-10 דק׳ לפני. מחכים! 🙏</div></div></div>
-
-  <div class="template-card" id="t4g" data-search="היכרות כוח גמישות strength mobility פרטים"><div class="template-header"><span class="tnum-badge">#4g</span><span class="ttitle">פרטי היכרות — כוח וגמישות</span><span class="tbadge">🔵</span></div><div class="template-meta"><span>📋 קליקאפ: CONSIDERING</span></div><div class="template-body">
-  <div class="message" onclick="copyMsg(this)"><button class="cbtn">📋 העתק הודעה</button>מעולה, נשמח לראות אותך אצלנו! 🙏
-
-🏋️ קבוצת כוח וגמישות
-📅 <span class="placeholder">[ימים ושעות]</span>
-📍 אולם "המגינים", רח׳ חזית חמש 2, חולון
-💰 שיעור היכרות: 60₪
-
-אימוני כוח פונקציונליים בשילוב עבודת גמישות — מתאים לכל רמה, בקצב אישי.
-
-🔗 לתשלום ורישום מראש: <span class="placeholder">[לינק פייבוקס/אשראי]</span>
-מומלץ להגיע 5-10 דק׳ לפני. מחכים! 🙏</div></div></div>
-
-  <div class="section-divider" id="group3"><span class="gnum">3</span> אישור תשלום והכנה לשיעור</div>
-  
-  <div class="template-card" id="t6a" data-search="אישור תשלום ילדים 6 8 להביא"><div class="template-header"><span class="tnum-badge">#6a</span><span class="ttitle">אישור תשלום והכוונה: ילדים 6-8</span><span class="tbadge">🟢</span></div><div class="template-meta"><span>⏰ מיד אחרי שהתקבל התשלום</span><span>📋 קליקאפ: PURCHASED</span></div><div class="template-body">
+  <div class="template-card" id="t6" data-search="אישור תשלום הכוונה להביא payment confirmation swap"><div class="template-header"><span class="tnum-badge">#6</span><span class="ttitle">אישור תשלום + הכוונה לשיעור</span><span class="tbadge">🟢</span></div><div class="template-meta"><span>⏰ מיד אחרי שהתקבל תשלום</span><span>📋 קליקאפ: PURCHASED FIRST CLASSES</span></div><div class="template-body">
   <div class="message" onclick="copyMsg(this)"><button class="cbtn">📋 העתק הודעה</button>מעולה, התשלום התקבל! 🙌
-  שמחים ש-<span class="placeholder">[שם הילד/ה]</span> מצטרף/ת לשיעור!
-  
-  🗓️ נתראה בשיעור הקרוב: <span class="placeholder">[יום ותאריך]</span>, בשעה <span class="placeholder">[שעה]</span>.
-  
-  מה חשוב להביא?
-  👕 חולצה שחורה + מכנסיים ארוכים (טרנינג/טייץ).
-  💧 בקבוק מים אישי.
-  💍 חשוב להסיר שעונים ותכשיטים לפני האימון.
-  
-  📍 אולם "המגינים", רח׳ חזית חמש 2, חולון.
-  הגיעו 5-10 דקות לפני תחילת השיעור להתארגנות 🙏</div></div></div>
 
-  <div class="template-card" id="t6b" data-search="אישור תשלום ילדים 9 11 להביא"><div class="template-header"><span class="tnum-badge">#6b</span><span class="ttitle">אישור תשלום והכוונה: ילדים 9-11</span><span class="tbadge">🟢</span></div><div class="template-meta"><span>⏰ מיד אחרי שהתקבל התשלום</span><span>📋 קליקאפ: PURCHASED</span></div><div class="template-body">
-  <div class="message" onclick="copyMsg(this)"><button class="cbtn">📋 העתק הודעה</button>מעולה, התשלום התקבל! 🙌
-שמחים ש-<span class="placeholder">[שם הילד/ה]</span> מצטרף/ת לשיעור!
+<span class="aud-opening">שמחים שאתם מצטרפים לשיעור היכרות!</span>
 
 🗓️ נתראה בשיעור הקרוב: <span class="placeholder">[יום ותאריך]</span>, בשעה <span class="placeholder">[שעה]</span>.
 
-מה חשוב להביא?
-👕 חולצה שחורה + מכנסיים ארוכים (טרנינג/טייץ).
-💧 בקבוק מים אישי.
-💍 חשוב להסיר שעונים ותכשיטים לפני האימון.
+<div class="swap-slot"></div>
 
-📍 אולם "המגינים", רח׳ חזית חמש 2, חולון.
-הגיעו 5-10 דקות לפני תחילת השיעור להתארגנות 🙏</div></div></div>
+📍 אולם "המגינים", רח׳ חזית חמש 2, חולון
 
-  <div class="template-card" id="t6c" data-search="אישור תשלום נוער 12 15 teens להביא"><div class="template-header"><span class="tnum-badge">#6c</span><span class="ttitle">אישור תשלום והכוונה: נוער 12-15</span><span class="tbadge">🟢</span></div><div class="template-meta"><span>⏰ מיד אחרי שהתקבל התשלום</span><span>📋 קליקאפ: PURCHASED</span></div><div class="template-body">
-  <div class="message" onclick="copyMsg(this)"><button class="cbtn">📋 העתק הודעה</button>מעולה, התשלום התקבל! 🙌
-שמחים ש-<span class="placeholder">[שם הנער/ה]</span> מצטרף/ת לשיעור!
+הגיעו 5-10 דקות לפני תחילת השיעור להתארגנות 🙏</div>
+  </div></div>
 
-🗓️ נתראה בשיעור הקרוב: <span class="placeholder">[יום ותאריך]</span>, בשעה <span class="placeholder">[שעה]</span>.
-
-מה חשוב להביא?
-👕 חולצה שחורה + מכנסיים ארוכים (טרנינג/טייץ).
-💧 בקבוק מים אישי.
-💍 חשוב להסיר שעונים ותכשיטים לפני האימון.
-
-📍 אולם "המגינים", רח׳ חזית חמש 2, חולון.
-הגיעו 5-10 דקות לפני תחילת השיעור להתארגנות 🙏</div></div></div>
-
-  <div class="template-card" id="t6d" data-search="אישור תשלום לחימה בוגרים combat adults להביא"><div class="template-header"><span class="tnum-badge">#6d</span><span class="ttitle">אישור תשלום והכוונה: לחימה בוגרים</span><span class="tbadge">🟢</span></div><div class="template-meta"><span>⏰ מיד אחרי שהתקבל התשלום</span><span>📋 קליקאפ: PURCHASED</span></div><div class="template-body">
-  <div class="message" onclick="copyMsg(this)"><button class="cbtn">📋 העתק הודעה</button>מעולה, התשלום התקבל! 🙌
-שמחים שאתם מצטרפים לשיעור היכרות!
-
-🗓️ נתראה בשיעור הקרוב: <span class="placeholder">[יום ותאריך]</span>, בשעה <span class="placeholder">[שעה]</span>.
-
-מה חשוב להביא?
-👕 חולצה שחורה + מכנסיים ארוכים (טרנינג).
-💧 בקבוק מים אישי.
-💍 חשוב להסיר שעונים ותכשיטים לפני האימון.
-🩹 אם יש בעיות רפואיות או פציעות — ספרו למדריך לפני תחילת השיעור.
-
-📍 אולם "המגינים", רח׳ חזית חמש 2, חולון.
-הגיעו 5-10 דקות לפני תחילת השיעור להתארגנות 🙏</div></div></div>
-
-  <div class="template-card" id="t6e" data-search="אישור תשלום כושר 38 fitness להביא"><div class="template-header"><span class="tnum-badge">#6e</span><span class="ttitle">אישור תשלום והכוונה: כושר 38+</span><span class="tbadge">🟢</span></div><div class="template-meta"><span>⏰ מיד אחרי שהתקבל התשלום</span><span>📋 קליקאפ: PURCHASED</span></div><div class="template-body">
-  <div class="message" onclick="copyMsg(this)"><button class="cbtn">📋 העתק הודעה</button>מעולה, התשלום התקבל! 🙌
-שמחים שאתם מצטרפים לשיעור היכרות!
-
-🗓️ נתראה בשיעור הקרוב: <span class="placeholder">[יום ותאריך]</span>, בשעה <span class="placeholder">[שעה]</span>.
-
-מה חשוב להביא?
-👕 בגדי אימון נוחים.
-💧 בקבוק מים אישי.
-🧘 מגבת קטנה (אופציונלי).
-🩹 אם יש מגבלות רפואיות — ספרו למדריך לפני תחילת השיעור.
-
-📍 אולם "המגינים", רח׳ חזית חמש 2, חולון.
-הגיעו 5-10 דקות לפני תחילת השיעור להתארגנות 🙏</div></div></div>
-
-  <div class="template-card" id="t6f" data-search="אישור תשלום תנועה movement להביא"><div class="template-header"><span class="tnum-badge">#6f</span><span class="ttitle">אישור תשלום והכוונה: תנועה</span><span class="tbadge">🟢</span></div><div class="template-meta"><span>⏰ מיד אחרי שהתקבל התשלום</span><span>📋 קליקאפ: PURCHASED</span></div><div class="template-body">
-  <div class="message" onclick="copyMsg(this)"><button class="cbtn">📋 העתק הודעה</button>מעולה, התשלום התקבל! 🙌
-שמחים שאתם מצטרפים לשיעור היכרות!
-
-🗓️ נתראה בשיעור הקרוב: <span class="placeholder">[יום ותאריך]</span>, בשעה <span class="placeholder">[שעה]</span>.
-
-מה חשוב להביא?
-👕 בגדי אימון נוחים ומאפשרים תנועה חופשית.
-💧 בקבוק מים אישי.
-🧦 גרביים (עובדים יחפים / בגרביים).
-
-📍 אולם "המגינים", רח׳ חזית חמש 2, חולון.
-הגיעו 5-10 דקות לפני תחילת השיעור להתארגנות 🙏</div></div></div>
-
-  <div class="template-card" id="t6g" data-search="אישור תשלום כוח גמישות strength mobility להביא"><div class="template-header"><span class="tnum-badge">#6g</span><span class="ttitle">אישור תשלום והכוונה: כוח וגמישות</span><span class="tbadge">🟢</span></div><div class="template-meta"><span>⏰ מיד אחרי שהתקבל התשלום</span><span>📋 קליקאפ: PURCHASED</span></div><div class="template-body">
-  <div class="message" onclick="copyMsg(this)"><button class="cbtn">📋 העתק הודעה</button>מעולה, התשלום התקבל! 🙌
-שמחים שאתם מצטרפים לשיעור היכרות!
-
-🗓️ נתראה בשיעור הקרוב: <span class="placeholder">[יום ותאריך]</span>, בשעה <span class="placeholder">[שעה]</span>.
-
-מה חשוב להביא?
-👕 בגדי אימון נוחים.
-💧 בקבוק מים אישי.
-🩹 אם יש מגבלות רפואיות — ספרו למדריך לפני תחילת השיעור. הכל מותאם לרמה שלכם.
-
-📍 אולם "המגינים", רח׳ חזית חמש 2, חולון.
-הגיעו 5-10 דקות לפני תחילת השיעור להתארגנות 🙏</div></div></div>
-
-  <div class="template-card" id="t8" data-search="טופס בריאות הצהרה health"><div class="template-header"><span class="tnum-badge">#8</span><span class="ttitle">טופס הצהרת בריאות</span><span class="tbadge">🟢</span></div><div class="template-meta"><span>⏰ שולחים מיד אחרי אישור התשלום</span></div><div class="template-body">
+  <div class="template-card" id="t7" data-search="טופס בריאות הצהרה health"><div class="template-header"><span class="tnum-badge">#7</span><span class="ttitle">הצהרת בריאות</span><span class="tbadge">🟢</span></div><div class="template-meta"><span>⏰ הודעה נפרדת, מיד אחרי #6</span><span>📋 קליקאפ: PURCHASED FIRST CLASSES</span></div><div class="template-body">
   <div class="message" onclick="copyMsg(this)"><button class="cbtn">📋 העתק הודעה</button>עוד דבר קטן וחשוב 📋
-  
-  לפני השיעור הראשון, נבקש למלא טופס הצהרת בריאות דיגיטלי קצר.
-  חשוב לנו לדאוג לבטיחות ולבריאות שלכם.
-  
-  🔗 <span class="placeholder">[לינק לטופס]</span>
-  
-  לוקח פחות מ-2 דקות. תודה רבה! 🙏</div></div></div>
 
-  <div class="section-divider" id="group4"><span class="gnum">4</span> מעקב שיעורי היכרות</div>
+לפני השיעור הראשון, נבקש למלא טופס הצהרת בריאות דיגיטלי קצר.
 
-  <div class="template-card" id="t9" data-search="תזכורת הגעה יום לפני reminder"><div class="template-header"><span class="tnum-badge">#9</span><span class="ttitle">תזכורת הגעה — יום לפני שיעור</span><span class="tbadge">🟢</span></div><div class="template-meta"><span>⏰ יום לפני השיעור (09:00-11:00)</span><span>📋 קליקאפ: PURCHASED</span></div><div class="template-body">
+חשוב לנו לדאוג לבטיחות ולבריאות שלכם.
+
+🔗 https://forms.gle/YUfdx6rxZcSfsKQj7
+
+לוקח פחות מ-2 דקות. תודה רבה! 🙏</div>
+  </div></div>
+
+  <div class="section-divider" id="stage3"><span class="gnum">3</span> תקופת ניסיון</div>
+
+  <div class="template-card" id="t8" data-search="תזכורת הגעה יום לפני reminder"><div class="template-header"><span class="tnum-badge">#8</span><span class="ttitle">תזכורת הגעה — יום לפני שיעור</span><span class="tbadge">🟢</span></div><div class="template-meta"><span>⏰ יום לפני השיעור (09:00-11:00)</span><span>📋 קליקאפ: PURCHASED FIRST CLASSES</span></div><div class="template-body">
   <div class="message" onclick="copyMsg(this)"><button class="cbtn">📋 העתק הודעה</button>היי <span class="placeholder">[שם]</span> 👋
+
 תזכורת קטנה — מחר יש לכם שיעור! 🥋
 
 🗓️ <span class="placeholder">[יום ותאריך]</span>, בשעה <span class="placeholder">[שעה]</span>
 📍 אולם "המגינים", רח׳ חזית חמש 2, חולון
 
 זכרו להביא: בגדי אימון, בקבוק מים, ולהסיר תכשיטים.
+
 הגיעו 5-10 דקות לפני. נתראה! 💪</div>
-  <div class="note"><strong>להורים:</strong> שנו ל-״תזכורת — מחר <span class="placeholder">[שם הילד/ה]</span> מגיע/ה לשיעור!״</div>
   </div></div>
 
-  <div class="template-card" id="t10" data-search="מעקב שיעור ראשון 1 first"><div class="template-header"><span class="tnum-badge">#10</span><span class="ttitle">מעקב לאחר שיעור 1</span><span class="tbadge">🟡</span></div><div class="template-meta"><span>⏰ למחרת השיעור (09:00-11:00)</span><span>📋 קליקאפ: MADE 1ST</span></div><div class="template-body">
+  <div class="template-card" id="t9" data-search="מעקב שיעור ראשון 1 first"><div class="template-header"><span class="tnum-badge">#9</span><span class="ttitle">מעקב לאחר שיעור 1</span><span class="tbadge">🟡</span></div><div class="template-meta"><span>⏰ למחרת השיעור הראשון (09:00-11:00)</span><span>📋 קליקאפ: MADE 1ST CLASS</span></div><div class="template-body">
   <div class="message" onclick="copyMsg(this)"><button class="cbtn">📋 העתק הודעה</button>היי <span class="placeholder">[שם]</span> 👋
-  איך הרגשתם אחרי השיעור הראשון אתמול?
-  
-  השיעורים הראשונים תמיד מאתגרים את הגוף — וזה סימן מצוין שיש לאן לגדול ולהתחזק 💪
-  יש שאלות, תחושות מיוחדות או כאבי שרירים שחשוב שנדע עליהם?
-  
-  השיעור הבא שלכם: <span class="placeholder">[יום ותאריך]</span>, בשעה <span class="placeholder">[שעה]</span>. מחכים לראותכם! 🙏</div>
-  <div class="note"><strong>להורים:</strong> שנו את הניסוח ל-״איך <span class="placeholder">[שם הילד/ה]</span> הרגיש/ה אחרי השיעור הראשון?״</div>
+
+איך הרגשתם אחרי השיעור הראשון אתמול?
+
+השיעורים הראשונים תמיד מאתגרים את הגוף — סימן מצוין שיש לאן לגדול 💪
+
+שאלות, תחושות מיוחדות או כאבי שרירים שחשוב שנדע עליהם?
+
+הבא: <span class="placeholder">[יום ותאריך]</span>, בשעה <span class="placeholder">[שעה]</span> — מחכים! 🙏</div>
   </div></div>
 
-  <div class="template-card" id="t11" data-search="מעקב שיעור שני 2 second ערך שרירים"><div class="template-header"><span class="tnum-badge">#11</span><span class="ttitle">מעקב לאחר שיעור 2 — מתן ערך</span><span class="tbadge">🟡</span></div><div class="template-meta"><span>⏰ למחרת השיעור השני (09:00-11:00)</span><span>📋 קליקאפ: MADE 2ND</span></div><div class="template-body">
+  <div class="template-card" id="t10" data-search="מעקב שיעור שני 2 second ערך טיפ"><div class="template-header"><span class="tnum-badge">#10</span><span class="ttitle">מעקב לאחר שיעור 2 — טיפ ערך</span><span class="tbadge">🟡</span></div><div class="template-meta"><span>⏰ למחרת השיעור השני (09:00-11:00)</span><span>📋 קליקאפ: MADE 2ND CLASS</span></div><div class="template-body">
   <div class="message" onclick="copyMsg(this)"><button class="cbtn">📋 העתק הודעה</button>היי <span class="placeholder">[שם]</span> 👋
-איך הרגשתם אחרי השיעור השני?
 
-רוב האנשים מרגישים שיפור כבר מהשיעור השני — הגוף מתחיל להבין את התנועות והשרירים מסתגלים 💪
+שיעור שני מאחורי — יפה! 💪
 
-טיפ קטן: שתו הרבה מים היום, ואל תדלגו על ארוחת בוקר לפני האימון הבא.
+טיפ קטן: הקפידו לשתות לפחות ליטר וחצי מים ב-3 השעות שלפני האימון. זה הדבר שהכי משפיע על ההרגשה באימון.
 
-השיעור הבא (והאחרון בהיכרות): <span class="placeholder">[יום ותאריך]</span>, בשעה <span class="placeholder">[שעה]</span>.
-מחכים לראותכם! 🙏</div>
-  <div class="note"><strong>להורים:</strong> שנו ל-״איך <span class="placeholder">[שם הילד/ה]</span> הרגיש/ה? ראינו התקדמות יפה בשיעור!״</div>
+<span class="placeholder">[יום ותאריך]</span>, בשעה <span class="placeholder">[שעה]</span> — מחכים! 🙏</div>
   </div></div>
 
-  <div class="template-card" id="t17a" data-search="שילם לא הגיע no show paid"><div class="template-header"><span class="tnum-badge">#17a</span><span class="ttitle">שילם ולא הגיע לשיעור</span><span class="tbadge">🔴</span></div><div class="template-meta"><span>⏰ למחרת השיעור שפספס</span><span>📋 קליקאפ: PURCHASED / MADE 1ST</span></div><div class="template-body">
+  <div class="template-card" id="t11" data-search="שילם לא הגיע no show paid"><div class="template-header"><span class="tnum-badge">#11</span><span class="ttitle">שילם ולא הגיע</span><span class="tbadge">🔴</span></div><div class="template-meta"><span>⏰ למחרת השיעור שפספס</span><span>📋 קליקאפ: PURCHASED / MADE 1ST CLASS</span></div><div class="template-body">
   <div class="message" onclick="copyMsg(this)"><button class="cbtn">📋 העתק הודעה</button>היי <span class="placeholder">[שם]</span> 👋
-שמנו לב שלא הצלחתם להגיע לשיעור אתמול — הכל בסדר?
+
+שמנו לב שלא הצלחתם להגיע — הכל בסדר?
 
 אין בעיה בכלל, זה קורה 🙏
-נשמח לתאם שיעור חלופי במועד שנוח לכם.
 
-מתי טוב לכם? הנה הזמנים הזמינים:
+נשמח לתאם שיעור חלופי. מתי נוח?
+
 📅 <span class="placeholder">[אפשרות 1]</span>
 📅 <span class="placeholder">[אפשרות 2]</span>
 
-מחכים לשמוע! 💪</div>
+מחכים! 💪</div>
   </div></div>
 
-  <div class="template-card" id="t17b" data-search="נעלם הפסיק לענות נטישה ghost disappeared"><div class="template-header"><span class="tnum-badge">#17b</span><span class="ttitle">נעלם / הפסיק לענות</span><span class="tbadge">🔴</span></div><div class="template-meta"><span>⏰ 3-5 ימים אחרי הניסיון האחרון ליצור קשר</span><span>📋 קליקאפ: GHOSTED</span></div><div class="template-body">
+  <div class="template-card" id="t12" data-search="נעלם הפסיק לענות נטישה ghost disappeared"><div class="template-header"><span class="tnum-badge">#12</span><span class="ttitle">הגיע 1-2 שיעורים ונעלם</span><span class="tbadge">🔴</span></div><div class="template-meta"><span>⏰ 5-7 ימים אחרי ניסיון אחרון ליצור קשר</span><span>📋 קליקאפ: LOST — STOPPED RESPONDING</span></div><div class="template-body">
   <div class="message" onclick="copyMsg(this)"><button class="cbtn">📋 העתק הודעה</button>היי <span class="placeholder">[שם]</span> 👋
+
 לא שמענו מכם כבר כמה ימים — רצינו לוודא שהכל בסדר.
 
 אם ההתלבטות היא בגלל זמנים, מחיר, או כל דבר אחר — דברו איתנו, ננסה למצוא פתרון.
 
-אם זה פשוט לא הזמן — אין בעיה בכלל. אנחנו כאן כשתהיו מוכנים 🙏</div>
+אם זה פשוט לא הזמן — אין בעיה. אנחנו כאן כשתהיו מוכנים 🙏</div>
   </div></div>
 
-  <div class="section-divider" id="group5"><span class="gnum">5</span> הרשמה למנוי</div>
-  <p style="font-size: 13px; color: var(--text2); margin-bottom: 16px;">הודעות הרשמה ללקוחות שסיימו 3 שיעורי היכרות, וברוכים הבאים לנרשמים חדשים.</p>
+  <div class="section-divider" id="stage4"><span class="gnum">4</span> הרשמה ושימור</div>
+  <p style="font-size: 13px; color: var(--text2); margin-bottom: 16px;">הודעות הרשמה, ברוכים הבאים, שאלונים, טיפים, ציוד והפניות.</p>
 
-  <div class="template-card" id="t12" data-search="הרשמה מנוי בוגר adult enrollment"><div class="template-header"><span class="tnum-badge">#12</span><span class="ttitle">הרשמה למנוי — מבוגר/ת</span><span class="tbadge">🟠</span></div><div class="template-meta"><span>⏰ אחרי שיעור 3 (שיחה או הודעה)</span><span>📋 קליקאפ: MADE 3RD</span></div><div class="template-body">
+  <div class="template-card" id="t13" data-search="הרשמה מנוי בוגר adult enrollment"><div class="template-header"><span class="tnum-badge">#13</span><span class="ttitle">הרשמה למנוי — מבוגר/ת</span><span class="tbadge">🟠</span></div><div class="template-meta"><span>⏰ אחרי שיעור 3 (שיחה או הודעה)</span><span>📋 קליקאפ: MADE 3RD CLASS</span></div><div class="template-body">
   <div class="message" onclick="copyMsg(this)"><button class="cbtn">📋 העתק הודעה</button>היי <span class="placeholder">[שם]</span> 👋
-ראשית — כל הכבוד שהשלמתם את 3 שיעורי ההיכרות! 🎉
 
-ראינו התקדמות יפה, ונשמח שתמשיכו איתנו.
-הנה מה שאנחנו מציעים:
+סיימתם 3 שיעורי היכרות — כל הכבוד! 🎉
+
+מקווים שהרגשתם את האווירה ומה שהאימונים נותנים.
+נשמח שתמשיכו — לפתח את מה שהתחלתם.
 
 📋 מנוי חודשי: <span class="placeholder">[מחיר]</span>₪/חודש
-✅ כולל <span class="placeholder">[מספר]</span> אימונים בשבוע
-✅ גישה לאפליקציה עם תוכנית אימונים אישית
 
-🔗 להרשמה: <span class="placeholder">[לינק תשלום מנוי]</span>
+🔗 <span class="placeholder">[לינק תשלום מנוי]</span>
 
-יש שאלות? רוצים לשמוע על מסלולים נוספים? אנחנו כאן 🙏</div>
+לדבר קודם? 📞 אנחנו כאן 🙏</div>
   </div></div>
 
-  <div class="template-card" id="t13" data-search="הרשמה מנוי הורה ילד parent enrollment"><div class="template-header"><span class="tnum-badge">#13</span><span class="ttitle">הרשמה למנוי — הורה</span><span class="tbadge">🟠</span></div><div class="template-meta"><span>⏰ אחרי שיעור 3 (שיחה או הודעה)</span><span>📋 קליקאפ: MADE 3RD</span></div><div class="template-body">
+  <div class="template-card" id="t14" data-search="הרשמה מנוי הורה ילד parent enrollment"><div class="template-header"><span class="tnum-badge">#14</span><span class="ttitle">הרשמה למנוי — הורה</span><span class="tbadge">🟠</span></div><div class="template-meta"><span>⏰ אחרי שיעור 3</span><span>📋 קליקאפ: MADE 3RD CLASS</span></div><div class="template-body">
   <div class="message" onclick="copyMsg(this)"><button class="cbtn">📋 העתק הודעה</button>היי <span class="placeholder">[שם ההורה]</span> 👋
-כל הכבוד ל-<span class="placeholder">[שם הילד/ה]</span> שהשלים/ה את 3 שיעורי ההיכרות! 🎉
+
+כל הכבוד ל-<span class="placeholder">[שם הילד/ה]</span> שהשלים/ה 3 שיעורי היכרות! 🎉
 
 ראינו התקדמות יפה — <span class="placeholder">[שם הילד/ה]</span> משתלב/ת מצוין בקבוצה.
 נשמח שימשיך/תמשיך איתנו!
 
 📋 מנוי חודשי: <span class="placeholder">[מחיר]</span>₪/חודש
-✅ <span class="placeholder">[מספר]</span> אימונים בשבוע
-✅ סביבה בטוחה עם דגש על התפתחות אישית
 
-🔗 להרשמה: <span class="placeholder">[לינק תשלום מנוי]</span>
+🔗 <span class="placeholder">[לינק תשלום מנוי]</span>
 
 יש שאלות? אנחנו כאן 🙏</div>
   </div></div>
 
-  <div class="template-card" id="t14" data-search="ברוכים הבאים מבוגר welcome adult אפליקציה"><div class="template-header"><span class="tnum-badge">#14</span><span class="ttitle">ברוכים הבאים — מבוגר/ת + אפליקציה</span><span class="tbadge">🟢</span></div><div class="template-meta"><span>⏰ מיד אחרי אישור תשלום מנוי</span><span>📋 קליקאפ: ENROLLED</span></div><div class="template-body">
-  <div class="message" onclick="copyMsg(this)"><button class="cbtn">📋 העתק הודעה</button>ברוכים הבאים למשפחת אלמנט! 🎉🥋
+  <div class="template-card" id="t15" data-search="ברוכים הבאים מבוגר welcome adult אפליקציה"><div class="template-header"><span class="tnum-badge">#15</span><span class="ttitle">ברוכים הבאים — מבוגר/ת</span><span class="tbadge">🟢</span></div><div class="template-meta"><span>⏰ מיד אחרי אישור תשלום מנוי</span><span>📋 קליקאפ: ENROLLED</span></div><div class="template-body">
+  <div class="message" onclick="copyMsg(this)"><button class="cbtn">📋 העתק הודעה</button>ברוכים הבאים למשפחת אלמנט! 🙌
 
-שמחים שהחלטתם להצטרף. מכאן מתחיל המסע שלכם.
+שמחים שהחלטתם להצטרף. מכאן מתחיל המסע.
 
-כמה דברים חשובים:
-📱 הורידו את האפליקציה שלנו: <span class="placeholder">[לינק אפליקציה]</span>
-באפליקציה תמצאו את לוח הזמנים, תוכנית אימונים אישית, ותקשורת ישירה עם הצוות.
+📱 הורידו את אפליקציית BoostApp Business — לרישום לשיעורים מראש
+📋 שאלון רקע ומטרות: https://forms.gle/piXKhuJLkjBAV8mM6
+📍 אולם "המגינים", רח׳ חזית חמש 2, חולון
 
-🗓️ השיעור הקרוב שלכם: <span class="placeholder">[יום ותאריך]</span>, בשעה <span class="placeholder">[שעה]</span>
+💳 המנוי מתחדש אוטומטית כל 30 יום
+🔒 3 חודשי יסודות — תקופה שמאפשרת לבנות בסיס ולהרגיש את הערך האמיתי
+📝 ביטול לאחר מכן: בהודעה מראש של 30 יום
+🧊 הקפאה: שבועיים-חודש, פעם בחצי שנה, בהודעה מראש
 
-יש שאלות? תמיד אפשר לפנות אלינו כאן.
-אנחנו כאן בשבילכם — בהצלחה! 💪</div>
+חברים שיתאימו? יש מבצע חבר מביא חבר!
+
+שאלות? תמיד כאן. יאללה 💪</div>
   </div></div>
 
-  <div class="template-card" id="t15" data-search="ברוכים הבאים הורה ילד welcome parent אפליקציה"><div class="template-header"><span class="tnum-badge">#15</span><span class="ttitle">ברוכים הבאים — הורה + אפליקציה</span><span class="tbadge">🟢</span></div><div class="template-meta"><span>⏰ מיד אחרי אישור תשלום מנוי</span><span>📋 קליקאפ: ENROLLED</span></div><div class="template-body">
-  <div class="message" onclick="copyMsg(this)"><button class="cbtn">📋 העתק הודעה</button>ברוכים הבאים למשפחת אלמנט! 🎉🥋
-שמחים ש-<span class="placeholder">[שם הילד/ה]</span> מצטרף/ת אלינו באופן קבוע!
+  <div class="template-card" id="t16" data-search="ברוכים הבאים הורה ילד welcome parent אפליקציה"><div class="template-header"><span class="tnum-badge">#16</span><span class="ttitle">ברוכים הבאים — הורה</span><span class="tbadge">🟢</span></div><div class="template-meta"><span>⏰ מיד אחרי אישור תשלום מנוי</span><span>📋 קליקאפ: ENROLLED</span></div><div class="template-body">
+  <div class="message" onclick="copyMsg(this)"><button class="cbtn">📋 העתק הודעה</button>ברוכים הבאים למשפחת אלמנט! 🙌
 
-כמה דברים חשובים:
-📱 הורידו את האפליקציה שלנו: <span class="placeholder">[לינק אפליקציה]</span>
-באפליקציה תמצאו לוח זמנים, עדכונים, ותקשורת ישירה עם הצוות.
+שמחים ש-<span class="placeholder">[שם הילד/ה]</span> מצטרף/ת באופן קבוע!
 
-🗓️ השיעור הקרוב: <span class="placeholder">[יום ותאריך]</span>, בשעה <span class="placeholder">[שעה]</span>
+📱 הורידו את אפליקציית BoostApp Business — לוח שיעורים ועדכונים
+📋 שאלון רקע: https://forms.gle/piXKhuJLkjBAV8mM6
+📍 אולם "המגינים", רח׳ חזית חמש 2, חולון
 
-יש שאלות? תמיד אפשר לפנות אלינו כאן.
+💳 המנוי מתחדש אוטומטית כל 30 יום
+🔒 3 חודשי יסודות
+📝 ביטול לאחר מכן: הודעה מראש של 30 יום
+
+חברים מהכיתה? יש מבצע חבר מביא חבר!
+
 מחכים לראות את <span class="placeholder">[שם הילד/ה]</span>! 💪</div>
   </div></div>
 
-  <div class="template-card" id="t18" data-search="מתלבט כרגע undecided hesitant thinking"><div class="template-header"><span class="tnum-badge">#18</span><span class="ttitle">מתלבט כרגע — מעקב רך</span><span class="tbadge">🟡</span></div><div class="template-meta"><span>⏰ 2-3 ימים אחרי שאמר ״אני חושב על זה״</span><span>📋 קליקאפ: MADE 3RD</span></div><div class="template-body">
+  <div class="template-card" id="t17" data-search="שאלון רקע מטרות questionnaire goals"><div class="template-header"><span class="tnum-badge">#17</span><span class="ttitle">שאלון רקע ומטרות</span><span class="tbadge">🔵</span></div><div class="template-meta"><span>⏰ אחרי ההרשמה (אם לא מילאו דרך #15/#16)</span><span>📋 קליקאפ: ENROLLED</span></div><div class="template-body">
   <div class="message" onclick="copyMsg(this)"><button class="cbtn">📋 העתק הודעה</button>היי <span class="placeholder">[שם]</span> 👋
+
+עכשיו שאתם חלק מאלמנט, נשמח להכיר טוב יותר 🙏
+
+יש לנו שאלון קצר על הרקע והמטרות שלכם — עוזר לנו להתאים את האימונים בדיוק אליכם.
+
+📋 https://forms.gle/piXKhuJLkjBAV8mM6
+
+לוקח כ-10 דקות. תודה! 💪</div>
+  </div></div>
+
+  <div class="template-card" id="t18" data-search="טיפ ערך עקרון תקשורת התמדה ראש פתוח"><div class="template-header"><span class="tnum-badge">#18</span><span class="ttitle">טיפ ערך (עקרון אחד)</span><span class="tbadge">🔵</span></div><div class="template-meta"><span>⏰ אחרי 2-3 שיעורים כמנוי</span><span>📋 קליקאפ: ENROLLED (פעיל)</span></div><div class="template-body">
+  <div class="message" onclick="copyMsg(this)"><button class="cbtn">📋 העתק הודעה</button>היי <span class="placeholder">[שם]</span> 👋
+
+טיפ קצר שעוזר להתקדם 📱
+
+שמרו על תקשורת עם המאמן — אם יש פציעה, קושי, או אם משהו לא ברור. אנחנו כאן בשביל זה.
+
+גם אם נפצעתם מחוץ לאימון — ספרו לנו. לעתים קרובות אפשר עדיין להתאמן בבטחה עם התאמות.
+
+מחכים! 💪</div>
+  </div></div>
+
+  <div class="template-card" id="t19" data-search="ציוד כפפות מגן שיניים equipment gear"><div class="template-header"><span class="tnum-badge">#19</span><span class="ttitle">הצעת ציוד</span><span class="tbadge">🔵</span></div><div class="template-meta"><span>⏰ כשרלוונטי (2-4 שיעורים כמנוי)</span><span>📋 קליקאפ: ENROLLED (פעיל)</span></div><div class="template-body">
+  <div class="message" onclick="copyMsg(this)"><button class="cbtn">📋 העתק הודעה</button>היי <span class="placeholder">[שם]</span> 👋
+
+עכשיו שאתם כבר בקצב — כדאי לחשוב על ציוד 🥊
+
+<div class="swap-slot"></div>
+
+מעוניינים? שלחו הודעה ונסדר 🙏</div>
+  </div></div>
+
+  <div class="template-card" id="t20" data-search="חבר מביא חבר הפניה referral friend"><div class="template-header"><span class="tnum-badge">#20</span><span class="ttitle">חבר מביא חבר</span><span class="tbadge">🟢</span></div><div class="template-meta"><span>⏰ אחרי כ-4 שיעורים כמנוי (2-3 שבועות)</span><span>📋 קליקאפ: ENROLLED (פעיל)</span></div><div class="template-body">
+  <div class="message" onclick="copyMsg(this)"><button class="cbtn">📋 העתק הודעה</button>היי <span class="placeholder">[שם]</span> 👋
+
+שמחים לראות שמתקדמים! 💪
+
+מכירים מישהו שיכול ליהנות מאימונים אצלנו?
+
+🎁 מבצע חבר מביא חבר:
+חבר/ה ירשם למנוי → גם אתם וגם הם 50% על חודש ראשון!
+
+אין כמו להתאמן עם מישהו שמכירים 🙏</div>
+  </div></div>
+
+  <div class="template-card" id="t21" data-search="חיבור רשתות חברתיות אינסטגרם פייסבוק social"><div class="template-header"><span class="tnum-badge">#21</span><span class="ttitle">חיבור לרשתות חברתיות</span><span class="tbadge">🔵</span></div><div class="template-meta"><span>⏰ אחרי כ-5 שיעורים כמנוי</span><span>📋 קליקאפ: ENROLLED (פעיל)</span></div><div class="template-body">
+  <div class="message" onclick="copyMsg(this)"><button class="cbtn">📋 העתק הודעה</button>היי <span class="placeholder">[שם]</span> 👋
+
+עוד שיעור מעולה! 💪
+
+יש לנו קהילה גם ברשתות — תוכן, עדכונים, ומאחורי הקלעים:
+
+📸 https://www.instagram.com/element.holon
+📘 https://www.facebook.com/elementmm
+
+עוקבים ולייק עוזרים לנו להגיע ליותר אנשים 🙏</div>
+  </div></div>
+
+  <div class="section-divider" id="stage5"><span class="gnum">5</span> מצבים מיוחדים</div>
+  <p style="font-size: 13px; color: var(--text2); margin-bottom: 16px;">תבניות למצבים שלא נופלים בזרימה הרגילה.</p>
+
+  <div class="template-card" id="t22" data-search="מתלבט כרגע undecided hesitant thinking"><div class="template-header"><span class="tnum-badge">#22</span><span class="ttitle">מתלבט / ״אני חושב על זה״</span><span class="tbadge">🟡</span></div><div class="template-meta"><span>⏰ 2-3 ימים אחרי שאמר ״אני חושב על זה״</span><span>📋 קליקאפ: MADE 3RD CLASS / NOT READY</span></div><div class="template-body">
+  <div class="message" onclick="copyMsg(this)"><button class="cbtn">📋 העתק הודעה</button>היי <span class="placeholder">[שם]</span> 👋
+
 רצינו לבדוק — חשבתם על ההמשך?
 
-לגמרי מבינים שצריך זמן להחליט. רצינו רק לספר שאם נרשמים השבוע, <span class="placeholder">[הטבה / הנחה / בונוס]</span>.
+לגמרי מבינים שצריך זמן להחליט.
 
-ואם יש משהו שמטריד אתכם — שאלות, התלבטויות — דברו איתנו. ננסה לעזור.
+ואם יש משהו שמטריד — שאלות, התלבטויות — דברו איתנו. ננסה לעזור.
 
 אנחנו כאן 🙏</div>
   </div></div>
 
-  <div class="section-divider" id="group6"><span class="gnum">6</span> שימור והפניות</div>
-  <p style="font-size: 13px; color: var(--text2); margin-bottom: 16px;">הודעות שימור ללקוחות פעילים, בקשת הפניות (חבר מביא חבר), ומעקב נטישה.</p>
-
-  <div class="template-card" id="t16" data-search="חבר מביא חבר הפניה referral friend"><div class="template-header"><span class="tnum-badge">#16</span><span class="ttitle">חבר מביא חבר — הפניה</span><span class="tbadge">🟢</span></div><div class="template-meta"><span>⏰ אחרי 2-3 שבועות אימון קבוע</span><span>📋 קליקאפ: ENROLLED (פעיל)</span></div><div class="template-body">
+  <div class="template-card" id="t23" data-search="צריך לבדוק בן זוג בת זוג spouse check"><div class="template-header"><span class="tnum-badge">#23</span><span class="ttitle">״צריך לבדוק עם בן/בת זוג״</span><span class="tbadge">🟡</span></div><div class="template-meta"><span>⏰ למחרת, מעקב רך</span><span>📋 קליקאפ: MADE 3RD CLASS</span></div><div class="template-body">
   <div class="message" onclick="copyMsg(this)"><button class="cbtn">📋 העתק הודעה</button>היי <span class="placeholder">[שם]</span> 👋
-נהנים מהאימונים? 💪
 
-יש לנו הצעה קטנה — מכירים מישהו שיכול ליהנות מאימונים אצלנו?
+החלטתם? 😊
 
-🎁 במסגרת "חבר מביא חבר":
-• החבר/ה שלכם מקבל/ת שיעור היכרות חינם
-• ואתם מקבלים <span class="placeholder">[הטבה — הנחה / שיעור נוסף / מתנה]</span>
-
-פשוט שלחו להם את הקישור הזה: <span class="placeholder">[לינק הפניה]</span>
-או תנו לנו את השם ונפנה אליהם בעצמנו 🙏</div>
+אין לחץ — אנחנו כאן כשתהיו מוכנים 🙏</div>
   </div></div>
+
+  <div class="template-card" id="t24" data-search="ממשיך לדחות דחייה postpone future"><div class="template-header"><span class="tnum-badge">#24</span><span class="ttitle">ליד שממשיך לדחות</span><span class="tbadge">🟡</span></div><div class="template-meta"><span>⏰ אחרי 2-3 דחיות</span><span>📋 קליקאפ: → NOT READY / FUTURE</span></div><div class="template-body">
+  <div class="message" onclick="copyMsg(this)"><button class="cbtn">📋 העתק הודעה</button>היי <span class="placeholder">[שם]</span> 👋
+
+אנחנו מבינים לגמרי — לפעמים התזמון לא מושלם.
+
+רצינו רק להגיד שהדלת תמיד פתוחה. כשתרגישו מוכנים — הודעה קצרה ונסדר.
+
+בהצלחה עם הכל! 🙏</div>
+  </div></div>
+
+  <div class="template-card" id="t25" data-search="לא רלוונטי לא מתאים אבחון diagnostic"><div class="template-header"><span class="tnum-badge">#25</span><span class="ttitle">ליד אומר ״לא רלוונטי״ — שאלת אבחון</span><span class="tbadge">🟡</span></div><div class="template-meta"><span>⏰ כשליד אומר ״לא״ בלי לפרט</span><span>📋 קליקאפ: לפי התשובה</span></div><div class="template-body">
+  <div class="message" onclick="copyMsg(this)"><button class="cbtn">📋 העתק הודעה</button>תודה על התשובה 🙏
+
+אם לא קשה — זה לא סוג האימונים שחיפשתם, או שאתם לא מהאזור?
+
+ככה נוכל להשתפר 😊</div>
+  </div></div>
+
+  <div class="template-card" id="t26" data-search="סגירה חמה איבדנו לא רלוונטי warm close"><div class="template-header"><span class="tnum-badge">#26</span><span class="ttitle">סגירה חמה (ליד שאיבדנו)</span><span class="tbadge">🟢</span></div><div class="template-meta"><span>⏰ אחרי שהתברר שלא רלוונטי</span><span>📋 קליקאפ: → NOT A FIT / IRRELEVANT</span></div><div class="template-body">
+  <div class="message" onclick="copyMsg(this)"><button class="cbtn">📋 העתק הודעה</button>בהצלחה במציאת מקום מתאים!
+
+ואם יש חברים מאזור חולון שמחפשים אימונים — נשמח שתפנו אותם אלינו 🙏</div>
+  </div></div>
+
+  <div class="template-card" id="t27" data-search="ליד חוזר returning lead"><div class="template-header"><span class="tnum-badge">#27</span><span class="ttitle">ליד חוזר (פנה בעבר)</span><span class="tbadge">🟢</span></div><div class="template-meta"><span>⏰ כשמישהו שדיברנו איתו בעבר חוזר</span><span>📋 קליקאפ: בדקו היסטוריה, עדכנו</span></div><div class="template-body">
+  <div class="message" onclick="copyMsg(this)"><button class="cbtn">📋 העתק הודעה</button>היי <span class="placeholder">[שם]</span> 👋
+
+שמחים לשמוע ממך שוב!
+
+מה השתנה מאז? עדיין מעוניינים ב-<span class="manual-placeholder">&lt;מה שהתעניין בו — למלא ידנית&gt;</span>?
+
+נשמח לעדכן ולתאם 🙏</div>
+  </div></div>
+
+  <div class="template-card" id="t28" data-search="הסכים הירשם לא השלים תשלום agreed didnt pay"><div class="template-header"><span class="tnum-badge">#28</span><span class="ttitle">הסכים להירשם אבל לא שילם</span><span class="tbadge">🟡</span></div><div class="template-meta"><span>⏰ 1-2 ימים אחרי שאמר ״אני רוצה להצטרף״</span><span>📋 קליקאפ: MADE 3RD CLASS</span></div><div class="template-body">
+  <div class="message" onclick="copyMsg(this)"><button class="cbtn">📋 העתק הודעה</button>היי <span class="placeholder">[שם]</span> 👋
+
+שמחנו לשמוע שאתם רוצים להמשיך!
+
+רציתי לוודא שהכל תקין עם ההרשמה — נתקעתם עם משהו?
+
+🔗 <span class="placeholder">[לינק תשלום מנוי]</span>
+
+אם יש שאלות על המנוי או התשלום — אנחנו כאן 🙏</div>
+  </div></div>
+
+  <div class="section-divider" id="faq-section"><span class="gnum">❓</span> שאלות נפוצות (FAQ)</div>
+  <div id="faqContainer" style="padding:8px 0;">
+
+  <div class="faq-card" onclick="toggleFaq(this)"><div class="faq-q">מה אומנויות הלחימה שמלמדים אצלכם?</div><div class="faq-a"><div class="message" onclick="event.stopPropagation();copyMsg(this)"><button class="cbtn">📋 העתק</button>אנחנו לא מתמקדים בסגנון אחד — אלא משלבים כלים מכמה תחומי לחימה, עם דגש על הגנה עצמית מעשית, פיתוח כושר, ומנטליות חיובית.
+
+השיטה פותחה ע"י ליאור ורדי על בסיס 20+ שנות ניסיון.
+
+רוצים לראות איך זה נראה?
+🎥 https://youtu.be/V0vIJ2uXv9I</div></div></div>
+
+  <div class="faq-card" onclick="toggleFaq(this)"><div class="faq-q">יש אגרוף / קראב מגע / BJJ / MMA / קיקבוקסינג?</div><div class="faq-a"><div class="message" onclick="event.stopPropagation();copyMsg(this)"><button class="cbtn">📋 העתק</button>אנחנו לא מלמדים <span class="manual-placeholder">&lt;סגנון&gt;</span> כסגנון בודד — אבל שיעורי הלחימה שלנו כוללים עבודה <span class="manual-placeholder">&lt;עם ידיים / בקרקע / עם בעיטות / במצבי הגנה&gt;</span> כחלק מהשילוב.
+
+הדרך הטובה ביותר להבין אם זה מתאים — לבוא לשיעור היכרות ולהרגיש בעצמך.
+
+🔗 https://element-m-a-m.github.io/book-first-classes/</div></div></div>
+
+  <div class="faq-card" onclick="toggleFaq(this)"><div class="faq-q">מי המאמן? מה הניסיון שלו?</div><div class="faq-a"><div class="message" onclick="event.stopPropagation();copyMsg(this)"><button class="cbtn">📋 העתק</button>המרכז הוקם ע"י ליאור ורדי — עם 20+ שנות ניסיון באומנויות לחימה, תואר בפיזיותרפיה (אוניברסיטת ת"א), ולימודי תנועה עם עידו פורטל.
+
+כל הצוות מאומן ומפוקח ישירות ע"י ליאור.
+
+🎥 https://youtu.be/V0vIJ2uXv9I
+📸 https://www.instagram.com/element.holon</div></div></div>
+
+  <div class="faq-card" onclick="toggleFaq(this)"><div class="faq-q">כמה זה עולה? / יש מחיר חודשי?</div><div class="faq-a"><div class="message" onclick="event.stopPropagation();copyMsg(this)"><button class="cbtn">📋 העתק</button>שיעורי היכרות:
+💰 ילדים (6-11): שיעור בודד 60₪ | כרטיסיית 3 שיעורים 99₪
+💰 נוער ובוגרים: שיעור בודד 70₪ | כרטיסיית 3 שיעורים 99₪
+
+מנוי חודשי (אחרי היכרות):
+💰 בוגרים: 450₪/חודש (ללא הגבלה)
+💰 נוער: 380₪/חודש
+💰 ילדים: 300₪/חודש
+
+🔗 להתחיל עם שיעורי היכרות:
+https://element-m-a-m.github.io/book-first-classes/</div></div></div>
+
+  <div class="faq-card" onclick="toggleFaq(this)"><div class="faq-q">יש התחייבות? / מה אם ארצה לבטל?</div><div class="faq-a"><div class="message" onclick="event.stopPropagation();copyMsg(this)"><button class="cbtn">📋 העתק</button>ההרשמה הראשונה: 3 חודשי יסודות — תקופה שנועדה לאפשר לכם לחוות את התהליך ולהרגיש את הערך של האימונים.
+
+אחרי 3 חודשים: אפשר לבטל בהודעה מראש של 30 יום.
+
+הקפאה: אפשרית לשבועיים-חודש, פעם בחצי שנה, בהודעה מראש.</div></div></div>
+
+  <div class="faq-card" onclick="toggleFaq(this)"><div class="faq-q">אפשר לשלם במזומן?</div><div class="faq-a"><div class="message" onclick="event.stopPropagation();copyMsg(this)"><button class="cbtn">📋 העתק</button>התשלום על מנוי מתבצע בהוראת קבע באשראי בלבד.
+שיעורי היכרות אפשר לרכוש גם בלינק תשלום מאובטח.</div></div></div>
+
+  <div class="faq-card" onclick="toggleFaq(this)"><div class="faq-q">האם יש סבסוד עירייה / רווחה?</div><div class="faq-a"><div class="message" onclick="event.stopPropagation();copyMsg(this)"><button class="cbtn">📋 העתק</button>אנחנו מקום פרטי ולא מוכרים לסבסוד עירייה.</div></div></div>
+
+  <div class="faq-card" onclick="toggleFaq(this)"><div class="faq-q">האם הילד שלי יקבל מכות? / דאגה לגבי בטיחות</div><div class="faq-a"><div class="message" onclick="event.stopPropagation();copyMsg(this)"><button class="cbtn">📋 העתק</button>מובן לגמרי שזה מטריד — זו שאלה חשובה 🙏
+
+הבטיחות היא עדיפות עליונה אצלנו. ליאור הוא פיזיותרפיסט מוסמך, וכל האימונים מותאמים לגיל ולרמה.
+
+בשיעורים הראשונים הגוף עדיין לא מכיר את התנועות — זה טבעי. אנחנו מתאימים את העוצמה לכל ילד/ה, ועם הזמן הם לומדים גם לעבוד נכון וגם להרגיש בנוח.
+
+בואו לראות שיעור — ככה תרגישו את האווירה בעצמכם.</div></div></div>
+
+  <div class="faq-card" onclick="toggleFaq(this)"><div class="faq-q">שלח סרטונים / תראה לי איך נראה שיעור</div><div class="faq-a"><div class="message" onclick="event.stopPropagation();copyMsg(this)"><button class="cbtn">📋 העתק</button>בטח! הנה סרטון שמציג את האימונים שלנו:
+🎥 https://youtu.be/V0vIJ2uXv9I
+
+ועוד תוכן באינסטגרם:
+📸 https://www.instagram.com/element.holon</div></div></div>
+
+  <div class="faq-card" onclick="toggleFaq(this)"><div class="faq-q">איך מגיעים? / יש חניה?</div><div class="faq-a"><div class="message" onclick="event.stopPropagation();copyMsg(this)"><button class="cbtn">📋 העתק</button>📍 אולם "המגינים", רח׳ חזית חמש 2, חולון
+📌 https://maps.app.goo.gl/Ru3awL6neiGsfMky5
+
+יש חניה ברחוב. מומלץ להגיע 5-10 דקות לפני.</div></div></div>
+
+  <div class="faq-card" onclick="toggleFaq(this)"><div class="faq-q">יש שיעור היום?</div><div class="faq-a"><div class="message" onclick="event.stopPropagation();copyMsg(this)"><button class="cbtn">📋 העתק</button>בדקו באפליקציית BoostApp — שם תמיד מעודכן לוח השיעורים.</div></div></div>
+
+  </div>
 
   <h2 id="ref-section">📎 טבלת מצבים ב-ClickUp (מקוצרת)</h2>
   <table class="ref-table">
     <thead><tr><th>שלב בלקוח</th><th>תגית שלב במערכת</th><th>פעולה דרושה / תבנית</th></tr></thead>
     <tbody>
-      <tr><td>ליד חדש נכנס וטרם ענה</td><td><span style="color:#94a3b8;font-weight:700">NEW LEADS</span></td><td>שליחת הודעה #2 או #3 (תלוי גיל)</td></tr>
-      <tr><td>הליד ענה ומתעניין</td><td><span style="color:#f87171;font-weight:700">CONSIDERING</span></td><td>מענה אנושי + שליחת פרטים ותשלום #4</td></tr>
-      <tr><td>הליד שילם להיכרות</td><td><span style="color:#60a5fa;font-weight:700">PURCHASED</span></td><td>אישור #6 + בריאות #8 + תזכורת #9</td></tr>
-      <tr><td>הגיע לשיעור ראשון/שני</td><td><span style="color:#4ade80;font-weight:700">MADE 1ST / 2ND</span></td><td>שליחת מעקב #10 / #11 למחרת השיעור</td></tr>
-      <tr><td>הגיע לשיעור שלישי</td><td><span style="color:#fb923c;font-weight:700">MADE 3RD</span></td><td>שיחת מכירה או הודעת הרשמה #12 / #13</td></tr>
-      <tr><td>נרשם למנוי</td><td><span style="color:#22c55e;font-weight:700">ENROLLED</span></td><td>ברוכים הבאים #14 / #15</td></tr>
+      <tr><td>ליד חדש נכנס וטרם ענה</td><td><span style="color:#94a3b8;font-weight:700">NEW LEADS</span></td><td>שליחת הודעה #1 או #2 (תלוי קהל)</td></tr>
+      <tr><td>הליד ענה ומתעניין</td><td><span style="color:#f87171;font-weight:700">CONSIDERING</span></td><td>מענה אנושי + שליחת פרטים #5</td></tr>
+      <tr><td>הליד שילם להיכרות</td><td><span style="color:#60a5fa;font-weight:700">PURCHASED FIRST CLASSES</span></td><td>אישור #6 + בריאות #7 + תזכורת #8</td></tr>
+      <tr><td>הגיע לשיעור ראשון</td><td><span style="color:#4ade80;font-weight:700">MADE 1ST CLASS</span></td><td>מעקב #9 למחרת</td></tr>
+      <tr><td>הגיע לשיעור שני</td><td><span style="color:#4ade80;font-weight:700">MADE 2ND CLASS</span></td><td>מעקב #10 למחרת (טיפ ערך)</td></tr>
+      <tr><td>הגיע לשיעור שלישי</td><td><span style="color:#fb923c;font-weight:700">MADE 3RD CLASS</span></td><td>שיחת מכירה או הרשמה #13 / #14</td></tr>
+      <tr><td>נרשם למנוי</td><td><span style="color:#22c55e;font-weight:700">ENROLLED</span></td><td>ברוכים הבאים #15 / #16</td></tr>
     </tbody>
   </table>
 
@@ -850,7 +944,7 @@ h2 { font-size: 18px; font-weight: 800; color: var(--hdr); margin-top: 32px; mar
 // ================================================================
 
 // UI Utilities
-function copyMsg(el){const c=el.cloneNode(true);c.querySelectorAll('.cbtn,.edit-btn,.reset-btn,.save-edit-btn,.msg-actions').forEach(b=>b.remove());const unfilled=c.querySelectorAll('.placeholder');unfilled.forEach(s=>s.replaceWith(s.textContent));const txt=c.innerText.trim();const btn=el.querySelector('.cbtn');if(unfilled.length>0){doCopy(txt,btn,unfilled.length)}else{doCopy(txt,btn)}}
+function copyMsg(el){const c=el.cloneNode(true);c.querySelectorAll('.cbtn,.edit-btn,.reset-btn,.save-edit-btn,.msg-actions').forEach(b=>b.remove());c.querySelectorAll('.manual-placeholder').forEach(s=>s.replaceWith(s.textContent));const unfilled=c.querySelectorAll('.placeholder');unfilled.forEach(s=>s.replaceWith(s.textContent));const txt=c.innerText.trim();const btn=el.querySelector('.cbtn');if(unfilled.length>0){doCopy(txt,btn,unfilled.length)}else{doCopy(txt,btn)}}
 function doCopy(t,btn,unfilledCount){try{navigator.clipboard.writeText(t).then(()=>flash(btn,unfilledCount)).catch(()=>fb(t,btn,unfilledCount))}catch(e){fb(t,btn,unfilledCount)}}
 function fb(t,btn,unfilledCount){const a=document.createElement('textarea');a.value=t;a.style.cssText='position:fixed;left:-9999px';document.body.appendChild(a);a.select();try{document.execCommand('copy');flash(btn,unfilledCount)}catch(e){}document.body.removeChild(a)}
 function flash(btn,unfilledCount){if(!btn)return;const orig=btn.textContent;if(unfilledCount>0){btn.textContent='⚠️ הועתק עם '+unfilledCount+' שדות ריקים';btn.style.color='#d97706';btn.classList.add('copied');setTimeout(()=>{btn.textContent=orig;btn.style.color='';btn.classList.remove('copied')},2500)}else{btn.textContent='✅ הועתק';btn.classList.add('copied');setTimeout(()=>{btn.textContent=orig;btn.classList.remove('copied')},1500)}}
@@ -858,16 +952,116 @@ function flash(btn,unfilledCount){if(!btn)return;const orig=btn.textContent;if(u
 // ================================================================
 // SETTINGS PANEL v7.0
 // ================================================================
-const SETTINGS_KEY='element-settings-v70';
-const SESSION_KEY='element-session-v70';
+const SETTINGS_KEY='element-settings-v80';
+const SESSION_KEY='element-session-v80';
 
 const GROUP_KEYS=['kids-6-8','kids-9-11','teens-12-15','combat-adults','fitness-38','movement','strength-mobility'];
 const GROUP_LABELS={'kids-6-8':'ילדים 6-8','kids-9-11':'ילדים 9-11','teens-12-15':'נוער 12-15','combat-adults':'לחימה בוגרים','fitness-38':'כושר 38+','movement':'תנועה','strength-mobility':'כוח וגמישות'};
 
 // Map template card IDs to their group key (for contextual schedule dropdowns)
-const CARD_GROUP_MAP={t4a:'kids-6-8',t4b:'kids-9-11',t4c:'teens-12-15',t4d:'combat-adults',t4e:'fitness-38',t4f:'movement',t4g:'strength-mobility',t6a:'kids-6-8',t6b:'kids-9-11',t6c:'teens-12-15',t6d:'combat-adults',t6e:'fitness-38',t6f:'movement',t6g:'strength-mobility'};
+// Legacy entries for backward compat; new swap-block cards use getSessionGroupKey() dynamically
+const CARD_GROUP_MAP={};
 
-function defaultSettings(){return{paymentLinks:[{label:'3 שיעורי היכרות — כל הקבוצות',url:'https://letts.co.il/payment/WXZycXZLa09XMlp3QzhJS2hhNHFkdz09',type:'trial'},{label:'שיעור היכרות בודד — ילדים 6-8 / 9-11',url:'https://letts.co.il/payment/dmcrM2NxNlhYYzR6aGRnWm4ybGdCZz09',type:'trial'},{label:'שיעור היכרות בודד — נוער / מבוגרים / תנועה / כוח',url:'https://letts.co.il/payment/MkxOaWFZZ0pjajBrY2I2V0d0cGdpZz09',type:'trial'}],semiStatic:{appLink:'https://1pa.co/app',healthFormLink:'https://forms.gle/YUfdx6rxZcSfsKQj7',referralLink:''},schedules:{'kids-6-8':['ראשון ורביעי משעה *17:00* עד 17:45'],'kids-9-11':['ראשון ורביעי משעה *17:45* עד 18:45'],'teens-12-15':['ראשון ורביעי משעה *18:45* עד 20:00'],'combat-adults':['ראשון ורביעי משעה *18:45* עד 20:00'],'fitness-38':['שני וחמישי משעה *18:15* עד 19:30'],'movement':['שלישי משעה *19:45* עד 21:00','שישי משעה *14:30* עד 15:45'],'strength-mobility':['שלישי משעה *18:30* עד 19:45','שישי משעה *15:45* עד 17:00']}}}
+// ================================================================
+// v8.0 — SWAP BLOCKS (group-dependent content injected per template)
+// ================================================================
+const SWAP_BLOCKS = {
+  5: { // template #5 — trial details: 7 group blocks
+    'kids-6-8':     {emoji:'🥋',title:'קבוצת ילדים 6-8',schedLine:'📅 ראשון + רביעי, *17:00* עד 17:45',extra:''},
+    'kids-9-11':    {emoji:'🥋',title:'קבוצת ילדים 9-11',schedLine:'📅 ראשון + רביעי, *17:45* עד 18:45',extra:''},
+    'teens-12-15':  {emoji:'🥋',title:'קבוצת נוער 12-15',schedLine:'📅 ראשון + רביעי, *18:45* עד 20:00',extra:''},
+    'combat-adults':{emoji:'🥋',title:'קבוצת לחימה — בוגרים',schedLine:'📅 ראשון + רביעי, *18:45* עד 20:00',extra:'אין צורך בניסיון קודם — מתאים לכל הרמות.'},
+    'fitness-38':   {emoji:'💪',title:'קבוצת כושר ואומנויות לחימה 38+',schedLine:'📅 שני + חמישי, *18:15* עד 19:30',extra:'אימון מותאם לכל רמה — מתאים גם למי שלא התאמן הרבה זמן.'},
+    'movement':     {emoji:'🤸',title:'קבוצת מובמנט',schedLine:'📅 שלישי *19:45* עד 21:00 | שישי *14:30* עד 15:45',extra:'שיעורי תנועה המשלבים ניידות, קואורדינציה ושליטה בגוף — מתאים לכל רמה.'},
+    'strength-mobility':{emoji:'🏋️',title:'קבוצת כוח וגמישות',schedLine:'📅 שלישי *18:30* עד 19:45 | שישי *15:45* עד 17:00',extra:'אימוני כוח פונקציונליים בשילוב עבודת גמישות — מתאים לכל רמה.'}
+  },
+  6: { // template #6 — payment confirmation: 4 "what to bring" blocks
+    combat:   {applies:['kids-6-8','kids-9-11','teens-12-15','combat-adults'],title:'מה חשוב להביא?',items:['👕 חולצה שחורה + מכנסיים ארוכים (טרנינג/טייץ)','💧 בקבוק מים אישי','💍 חשוב להסיר שעונים ותכשיטים לפני האימון'],adultExtra:'🩹 אם יש בעיות רפואיות או פציעות — ספרו למדריך לפני תחילת השיעור'},
+    fitness38:{applies:['fitness-38'],title:'מה חשוב להביא?',items:['👕 בגדי אימון נוחים','💧 בקבוק מים אישי','🧘 מגבת קטנה (אופציונלי)','🩹 אם יש מגבלות רפואיות — ספרו למדריך לפני תחילת השיעור']},
+    movement: {applies:['movement'],title:'מה חשוב להביא?',items:['👕 בגדי אימון נוחים ומאפשרים תנועה חופשית','💧 בקבוק מים אישי','🧦 גרביים (עובדים יחפים / בגרביים)']},
+    strength: {applies:['strength-mobility'],title:'מה חשוב להביא?',items:['👕 בגדי אימון נוחים','💧 בקבוק מים אישי','🩹 אם יש מגבלות רפואיות — ספרו למדריך. הכל מותאם לרמה שלכם']}
+  },
+  19: { // template #19 — equipment recommendation per group
+    'combat-adults':{title:'ציוד מומלץ:',items:['🥊 כפפות אגרוף: 250₪','🦷 מגן שיניים: 60₪','📦 חבילה (כפפות + מגן): 290₪ במקום 310₪']},
+    'teens-12-15':  {title:'ציוד מומלץ:',items:['🥊 כפפות אגרוף: 250₪','🦷 מגן שיניים: 60₪','📦 חבילה (כפפות + מגן): 290₪ במקום 310₪']},
+    'kids-6-8':     {title:'ציוד מומלץ:',items:['🦷 מגן שיניים: 60₪','(כפפות — עם הזמן, לפי המלצת המאמן)']},
+    'kids-9-11':    {title:'ציוד מומלץ:',items:['🦷 מגן שיניים: 60₪','(כפפות — עם הזמן, לפי המלצת המאמן)']},
+    'movement':     {title:'',items:['(ציוד אישי לא נדרש בדרך כלל)']},
+    'strength-mobility':{title:'',items:['(ציוד אישי לא נדרש בדרך כלל)']},
+    'fitness-38':   {title:'',items:['(ציוד אישי לא נדרש בדרך כלל)']}
+  }
+};
+
+// ================================================================
+// v8.0 — AUDIENCE VARIANTS (adult / parent branching per template)
+// ================================================================
+const AUDIENCE_VARIANTS = {
+  5: {type:'opening',adult:{opening:'מעולה, נשמח לראות אותך אצלנו! 🙏'},parent:{opening:'מעולה, נשמח לראות את <span class="placeholder">[שם הילד/ה]</span> אצלנו! 🙏'}},
+  6: {type:'opening',adult:{opening:'שמחים שאתם מצטרפים לשיעור היכרות!'},parent:{opening:'שמחים ש-<span class="placeholder">[שם הילד/ה]</span> מצטרף/ת לשיעור!'}},
+  8: {type:'full',
+    adult:{content:'<button class="cbtn">📋 העתק</button>היי <span class="placeholder">[שם]</span> 👋\n\nתזכורת קטנה — מחר יש לכם שיעור! 🥋\n\n🗓️ <span class="placeholder">[יום ותאריך]</span>, בשעה <span class="placeholder">[שעה]</span>\n📍 אולם "המגינים", רח׳ חזית חמש 2, חולון\n\nזכרו להביא: בגדי אימון, בקבוק מים, ולהסיר תכשיטים.\n\nהגיעו 5-10 דקות לפני. נתראה! 💪'},
+    parent:{content:'<button class="cbtn">📋 העתק</button>היי <span class="placeholder">[שם ההורה]</span> 👋\n\nתזכורת — מחר <span class="placeholder">[שם הילד/ה]</span> מגיע/ה לשיעור! 🥋\n\n🗓️ <span class="placeholder">[יום ותאריך]</span>, בשעה <span class="placeholder">[שעה]</span>\n📍 אולם "המגינים", רח׳ חזית חמש 2, חולון\n\nזכרו להביא: בגדי אימון, בקבוק מים, ולהסיר תכשיטים.\n\nהגיעו 5-10 דקות לפני. מחכים! 💪'}},
+  9: {type:'full',
+    adult:{content:'<button class="cbtn">📋 העתק</button>היי <span class="placeholder">[שם]</span> 👋\n\nאיך הרגשתם אחרי השיעור הראשון אתמול?\n\nהשיעורים הראשונים תמיד מאתגרים את הגוף — סימן מצוין שיש לאן לגדול 💪\n\nשאלות, תחושות מיוחדות או כאבי שרירים שחשוב שנדע עליהם?\n\nהבא: <span class="placeholder">[יום ותאריך]</span>, בשעה <span class="placeholder">[שעה]</span> — מחכים! 🙏'},
+    parent:{content:'<button class="cbtn">📋 העתק</button>היי <span class="placeholder">[שם ההורה]</span> 👋\n\nאיך <span class="placeholder">[שם הילד/ה]</span> הרגיש/ה אחרי השיעור הראשון?\n\nאתגר פיזי וחברתי — חלק מהתהליך 💪\nמשהו שחשוב שנדע? אנחנו כאן.\n\nהבא: <span class="placeholder">[יום ותאריך]</span>, בשעה <span class="placeholder">[שעה]</span> — מחכים! 🙏'}},
+  11:{type:'full',
+    adult:{content:'<button class="cbtn">📋 העתק</button>היי <span class="placeholder">[שם]</span> 👋\n\nשמנו לב שלא הצלחתם להגיע — הכל בסדר?\n\nאין בעיה בכלל, זה קורה 🙏\n\nנשמח לתאם שיעור חלופי. מתי נוח?\n\n📅 <span class="placeholder">[אפשרות 1]</span>\n📅 <span class="placeholder">[אפשרות 2]</span>\n\nמחכים! 💪'},
+    parent:{content:'<button class="cbtn">📋 העתק</button>היי <span class="placeholder">[שם ההורה]</span> 👋\n\nשמנו לב ש-<span class="placeholder">[שם הילד/ה]</span> לא הגיע/ה — הכל בסדר?\n\nאין בעיה, זה קורה 🙏\n\nנשמח לתאם שיעור חלופי. מתי נוח?\n\n📅 <span class="placeholder">[אפשרות 1]</span>\n📅 <span class="placeholder">[אפשרות 2]</span>\n\nמחכים! 💪'}},
+  12:{type:'full',
+    adult:{content:'<button class="cbtn">📋 העתק</button>היי <span class="placeholder">[שם]</span> 👋\n\nלא שמענו מכם כבר כמה ימים — רצינו לוודא שהכל בסדר.\n\nאם ההתלבטות היא בגלל זמנים, מחיר, או כל דבר אחר — דברו איתנו, ננסה למצוא פתרון.\n\nאם זה פשוט לא הזמן — אין בעיה. אנחנו כאן כשתהיו מוכנים 🙏'},
+    parent:{content:'<button class="cbtn">📋 העתק</button>היי <span class="placeholder">[שם ההורה]</span> 👋\n\nלא שמענו מכם כבר כמה ימים — רצינו לוודא שהכל בסדר עם <span class="placeholder">[שם הילד/ה]</span>.\n\nאם משהו לא התאים — דברו איתנו, ננסה למצוא פתרון.\n\nאם זה פשוט לא הזמן — אין בעיה. אנחנו כאן כשתהיו מוכנים 🙏'}},
+  17:{type:'full',
+    adult:{content:'<button class="cbtn">📋 העתק</button>היי <span class="placeholder">[שם]</span> 👋\n\nעכשיו שאתם חלק מאלמנט, נשמח להכיר טוב יותר 🙏\n\nיש לנו שאלון קצר על הרקע והמטרות שלכם — עוזר לנו להתאים את האימונים בדיוק אליכם.\n\n📋 https://forms.gle/piXKhuJLkjBAV8mM6\n\nלוקח כ-10 דקות. תודה! 💪'},
+    parent:{content:'<button class="cbtn">📋 העתק</button>היי <span class="placeholder">[שם ההורה]</span> 👋\n\nעכשיו ש-<span class="placeholder">[שם הילד/ה]</span> חלק מאלמנט, נשמח להכיר טוב יותר 🙏\n\nיש לנו שאלון קצר על הרקע והמטרות — עוזר לנו להתאים את האימונים בדיוק ל-<span class="placeholder">[שם הילד/ה]</span>.\n\n📋 https://forms.gle/piXKhuJLkjBAV8mM6\n\nלוקח כ-10 דקות. תודה! 💪'}}
+};
+
+// ================================================================
+// v8.0 — TIP ROTATION (rotating message variants)
+// ================================================================
+const TIP_ROTATION = {
+  10: [
+    {id:'hydration',label:'טיפ: שתייה',audience:'adult',body:'<button class="cbtn">📋 העתק</button>היי <span class="placeholder">[שם]</span> 👋\n\nשיעור שני מאחורי — יפה! 💪\n\nטיפ קטן: הקפידו לשתות לפחות ליטר וחצי מים ב-3 השעות שלפני האימון. זה הדבר שהכי משפיע על ההרגשה באימון.\n\n<span class="placeholder">[יום ותאריך]</span>, בשעה <span class="placeholder">[שעה]</span> — מחכים! 🙏'},
+    {id:'soreness',label:'טיפ: כאבי שרירים',audience:'adult',body:'<button class="cbtn">📋 העתק</button>היי <span class="placeholder">[שם]</span> 👋\n\nשיעור שני מאחורי — יפה! 💪\n\nאם יש כאבי שרירים — זו תופעה טבעית בהתחלה. חולפת תוך כמה ימים, ומשתפרת עם כל אימון.\n\n<span class="placeholder">[יום ותאריך]</span>, בשעה <span class="placeholder">[שעה]</span> — מחכים! 🙏'},
+    {id:'parent',label:'גרסת הורה',audience:'parent',body:'<button class="cbtn">📋 העתק</button>היי <span class="placeholder">[שם ההורה]</span> 👋\n\n<span class="placeholder">[שם הילד/ה]</span> אחרי 2 שיעורים — מעולה! 💪\n\nהילדים בדרך כלל מרגישים בבית אחרי 3-4 שיעורים. כאבי שרירים קלים בהתחלה — טבעי ועובר.\n\nהבא: <span class="placeholder">[יום ותאריך]</span>, בשעה <span class="placeholder">[שעה]</span> 🙏'}
+  ],
+  18: [
+    {id:'communication',label:'תקשורת',body:'<button class="cbtn">📋 העתק</button>היי <span class="placeholder">[שם]</span> 👋\n\nטיפ קצר שעוזר להתקדם 📱\n\nשמרו על תקשורת עם המאמן — אם יש פציעה, קושי, או אם משהו לא ברור. אנחנו כאן בשביל זה.\n\nגם אם נפצעתם מחוץ לאימון — ספרו לנו. לעתים קרובות אפשר עדיין להתאמן בבטחה עם התאמות.\n\nמחכים! 💪'},
+    {id:'persistence',label:'התמדה',body:'<button class="cbtn">📋 העתק</button>היי <span class="placeholder">[שם]</span> 👋\n\nטיפ קצר שעוזר להתקדם 📈\n\nההתמדה היא הגורם הכי חשוב להתקדמות. לא הכישרון, לא הכוח — אלא ההחלטה שזה חשוב לכם.\n\nגם בימים עייפים — ברגע שמגיעים ומתחילים, האנרגיה חוזרת. זה תמיד שווה את זה.\n\nמחכים! 💪'},
+    {id:'openMind',label:'ראש פתוח',body:'<button class="cbtn">📋 העתק</button>היי <span class="placeholder">[שם]</span> 👋\n\nטיפ קצר שעוזר להתקדם 📖\n\nגשו לכל תרגיל בראש פתוח — גם כשזה חדש, גם כשזה לא מצליח בהתחלה. התלמידים הכי וותיקים שלנו עדיין לומדים דברים חדשים.\n\nהגישה של "איך אפשר להשתפר?" הופכת כל אתגר לחוויה שמחזקת.\n\nמחכים! 💪'}
+  ]
+};
+
+// ================================================================
+// v8.0 — SETTINGS
+// ================================================================
+function defaultSettings(){return{
+  paymentLinks:[
+    {label:'3 שיעורי היכרות — כל הקבוצות',url:'https://letts.co.il/payment/WXZycXZLa09XMlp3QzhJS2hhNHFkdz09',type:'trial'},
+    {label:'שיעור היכרות בודד — ילדים 6-8 / 9-11',url:'https://letts.co.il/payment/dmcrM2NxNlhYYzR6aGRnWm4ybGdCZz09',type:'trial'},
+    {label:'שיעור היכרות בודד — נוער / מבוגרים / תנועה / כוח',url:'https://letts.co.il/payment/MkxOaWFZZ0pjajBrY2I2V0d0cGdpZz09',type:'trial'}
+  ],
+  semiStatic:{
+    appLink:'https://1pa.co/app',
+    healthFormLink:'https://forms.gle/YUfdx6rxZcSfsKQj7',
+    referralLink:'',
+    widgetLink:'https://element-m-a-m.github.io/book-first-classes/',
+    goalsFormLink:'https://forms.gle/piXKhuJLkjBAV8mM6',
+    videoLink:'https://youtu.be/V0vIJ2uXv9I'
+  },
+  schedules:{
+    'kids-6-8':['ראשון ורביעי משעה *17:00* עד 17:45'],
+    'kids-9-11':['ראשון ורביעי משעה *17:45* עד 18:45'],
+    'teens-12-15':['ראשון ורביעי משעה *18:45* עד 20:00'],
+    'combat-adults':['ראשון ורביעי משעה *18:45* עד 20:00'],
+    'fitness-38':['שני וחמישי משעה *18:15* עד 19:30'],
+    'movement':['שלישי משעה *19:45* עד 21:00','שישי משעה *14:30* עד 15:45'],
+    'strength-mobility':['שלישי משעה *18:30* עד 19:45','שישי משעה *15:45* עד 17:00']
+  },
+  pricing:{
+    trialSingle:{'kids-6-8':60,'kids-9-11':60,default:70},
+    trial3Card:99
+  }
+}}
 
 let appSettings;
 function loadSettings(){try{const d=localStorage.getItem(SETTINGS_KEY);appSettings=d?JSON.parse(d):defaultSettings()}catch(e){appSettings=defaultSettings()}}
@@ -887,6 +1081,9 @@ function renderSettingsUI(){
   document.getElementById('set-appLink').value=appSettings.semiStatic.appLink||'';
   document.getElementById('set-healthFormLink').value=appSettings.semiStatic.healthFormLink||'';
   document.getElementById('set-referralLink').value=appSettings.semiStatic.referralLink||'';
+  document.getElementById('set-widgetLink').value=appSettings.semiStatic.widgetLink||'';
+  document.getElementById('set-goalsFormLink').value=appSettings.semiStatic.goalsFormLink||'';
+  document.getElementById('set-videoLink').value=appSettings.semiStatic.videoLink||'';
   // Schedules
   const sc=document.getElementById('schedulesContainer');sc.innerHTML='';
   GROUP_KEYS.forEach(k=>{
@@ -905,6 +1102,9 @@ function saveSettingsFromUI(){
   appSettings.semiStatic.appLink=document.getElementById('set-appLink').value;
   appSettings.semiStatic.healthFormLink=document.getElementById('set-healthFormLink').value;
   appSettings.semiStatic.referralLink=document.getElementById('set-referralLink').value;
+  appSettings.semiStatic.widgetLink=document.getElementById('set-widgetLink').value;
+  appSettings.semiStatic.goalsFormLink=document.getElementById('set-goalsFormLink').value;
+  appSettings.semiStatic.videoLink=document.getElementById('set-videoLink').value;
   saveSettings();
   applyStaticVars();
   refreshAllForms();
@@ -953,6 +1153,9 @@ function resolvePaymentLink(groupKey){
 // Get group key from session (reverse lookup groupName → key)
 function getSessionGroupKey(){
   const gn=sessionData.groupName;if(!gn)return null;
+  // Direct key match (v8.0 swap-block uses keys directly)
+  if(GROUP_LABELS[gn])return gn;
+  // Legacy: match by display label
   const entry=Object.entries(GROUP_LABELS).find(([k,v])=>v===gn);
   return entry?entry[0]:null;
 }
@@ -969,30 +1172,43 @@ function updateSessionBadge(){
 
 const VAR_REGISTRY={
   '[שם]':{type:'text',key:'name',label:'שם'},
-  '[שם ההורה]':{type:'text',key:'name',label:'שם ההורה'},
+  '[שם ההורה]':{type:'text',key:'parentName',label:'שם ההורה'},
   '[שם הילד/ה]':{type:'text',key:'childName',label:'שם הילד/ה'},
   '[שם הנער/ה]':{type:'text',key:'childName',label:'שם הנער/ה'},
-  '[יום ותאריך]':{type:'date',key:'dayDate',label:'יום ותאריך',rawKey:'dayDateRaw'},
-  '[שעה]':{type:'time',key:'time',label:'שעה'},
+  '[יום ותאריך]':{type:'date',key:'classDate',label:'יום ותאריך',rawKey:'classDateRaw'},
+  '[שעה]':{type:'time',key:'classTime',label:'שעה'},
   '[מחיר]':{type:'text',key:'price',label:'מחיר'},
+  '[מחיר היכרות בודד]':{type:'derived',key:'trialSinglePrice',label:'מחיר היכרות',
+    deriveFn:()=>{const gk=getSessionGroupKey();const p=appSettings.pricing?.trialSingle;if(!p||!gk)return '';return (p[gk]||p.default||70)+'₪'}},
   '[מספר]':{type:'text',key:'sessionCount',label:'מספר אימונים'},
   '[אפשרות 1]':{type:'text',key:'option1',label:'אפשרות 1'},
   '[אפשרות 2]':{type:'text',key:'option2',label:'אפשרות 2'},
   '[הטבה / הנחה / בונוס]':{type:'text',key:'benefit',label:'הטבה'},
   '[הטבה — הנחה / שיעור נוסף / מתנה]':{type:'text',key:'benefitVariant',label:'הטבה'},
   '[שם הקבוצה]':{type:'dropdown',key:'groupName',label:'קבוצה',optionsFn:()=>Object.values(GROUP_LABELS)},
-  '[ימים ושעות]':{type:'dropdown',key:'schedule',label:'ימים ושעות',optionsFn:(cardId)=>{const gk=CARD_GROUP_MAP[cardId];return gk&&appSettings.schedules[gk]?appSettings.schedules[gk]:Object.values(appSettings.schedules).flat()},contextual:true},
+  '[ימים ושעות]':{type:'dropdown',key:'schedule',label:'ימים ושעות',optionsFn:(cardId)=>{const gk=CARD_GROUP_MAP[cardId]||getSessionGroupKey();return gk&&appSettings.schedules[gk]?appSettings.schedules[gk]:Object.values(appSettings.schedules).flat()},contextual:true},
   '[לינק פייבוקס/אשראי]':{type:'dropdown',key:'trialLink',label:'לינק תשלום',optionsFn:()=>appSettings.paymentLinks.filter(l=>l.type==='trial').map(l=>({label:l.label,value:l.url}))},
   '[לינק תשלום מנוי]':{type:'dropdown',key:'subLink',label:'לינק מנוי',optionsFn:()=>appSettings.paymentLinks.filter(l=>l.type==='subscription').map(l=>({label:l.label,value:l.url}))},
   '[לינק אפליקציה]':{type:'static',settingsKey:'appLink'},
   '[לינק לטופס]':{type:'static',settingsKey:'healthFormLink'},
-  '[לינק הפניה]':{type:'static',settingsKey:'referralLink'}
+  '[לינק לטופס בריאות]':{type:'static',settingsKey:'healthFormLink'},
+  '[לינק הפניה]':{type:'static',settingsKey:'referralLink'},
+  '[לינק ווידג\'ט]':{type:'static',settingsKey:'widgetLink'},
+  '[לינק שאלון רקע]':{type:'static',settingsKey:'goalsFormLink'},
+  '[לינק סרטון]':{type:'static',settingsKey:'videoLink'}
 };
 
 let sessionData={};
 function loadSession(){try{const d=localStorage.getItem(SESSION_KEY);sessionData=d?JSON.parse(d):{}}catch(e){sessionData={}}}
 function saveSession(){try{localStorage.setItem(SESSION_KEY,JSON.stringify(sessionData))}catch(e){}}
-function clearSession(){sessionData={};saveSession();document.querySelectorAll('.var-field input, .var-field select').forEach(el=>{if(el.tagName==='INPUT')el.value='';if(el.tagName==='SELECT')el.selectedIndex=0;el.classList.remove('filled')});document.querySelectorAll('.var-field.warning').forEach(f=>{f.classList.remove('warning');const h=f.querySelector('.field-hint');if(h)h.textContent=''});applyAllVarsToMessages();updateAllIndicators();updateSessionBadge();toast('סשן נוקה 🗑️')}
+function clearSession(){sessionData={};saveSession();document.querySelectorAll('.var-field input, .var-field select').forEach(el=>{if(el.tagName==='INPUT')el.value='';if(el.tagName==='SELECT')el.selectedIndex=0;el.classList.remove('filled')});document.querySelectorAll('.var-field.warning').forEach(f=>{f.classList.remove('warning');const h=f.querySelector('.field-hint');if(h)h.textContent=''});
+  // Reset audience toggles
+  document.querySelectorAll('.aud-btn').forEach(b=>{b.classList.toggle('active',b.dataset.aud==='adult')});
+  // Reset swap selectors
+  document.querySelectorAll('.swap-chip.active').forEach(c=>c.classList.remove('active'));
+  // Reset tip selectors
+  document.querySelectorAll('.tip-chip').forEach((c,i)=>c.classList.toggle('active',i===0));
+  applyAllVarsToMessages();updateAllIndicators();updateSessionBadge();toast('סשן נוקה 🗑️')}
 
 function applyStaticVars(){
   document.querySelectorAll('.template-card').forEach(card=>{
@@ -1094,6 +1310,13 @@ function initVarForms(){
     addFillIndicator(card);
     // Apply session data to message placeholders
     applyVarsToMessage(card);
+    // v8.0: Render interactive components (swap, audience, tip) on sidebar cards too
+    const tNum=getTemplateNum(card);
+    if(tNum){
+      if(SWAP_BLOCKS[tNum])renderSwapSelector(card,tNum);
+      if(AUDIENCE_VARIANTS[tNum])renderAudienceToggle(card,tNum);
+      if(TIP_ROTATION[tNum])renderTipSelector(card,tNum);
+    }
   });
   updateAllIndicators();
 }
@@ -1125,7 +1348,15 @@ function onVarSelect(e){
       const pLink=resolvePaymentLink(gk);
       if(pLink){sessionData.trialLink=pLink;saveSession();propagateVar('trialLink',pLink)}
       // If date already selected, cascade time
-      if(sessionData.dayDateRaw){const d=new Date(sessionData.dayDateRaw+'T12:00:00');cascadeDateToTime(d.getDay())}
+      if(sessionData.classDateRaw){const d=new Date(sessionData.classDateRaw+'T12:00:00');cascadeDateToTime(d.getDay())}
+      // v8.0: update swap blocks when group changes
+      document.querySelectorAll('.swap-selector').forEach(sel=>{
+        const sc=sel.closest('.template-card');if(!sc)return;
+        const tNum=getTemplateNum(sc);
+        if(tNum&&SWAP_BLOCKS[tNum])injectSwapContent(sc,tNum,gk);
+        // Update active chip
+        sel.querySelectorAll('.swap-chip').forEach(ch=>ch.classList.toggle('active',ch.dataset.group===gk));
+      });
     }
   }
   updateSessionBadge();
@@ -1133,7 +1364,7 @@ function onVarSelect(e){
 
 function onDateChange(e){
   const inp=e.target;const key=inp.dataset.varKey;const rawVal=inp.value;// YYYY-MM-DD
-  if(!rawVal){sessionData[key]='';sessionData.dayDateRaw='';saveSession();inp.classList.remove('filled');propagateVar(key,'');return}
+  if(!rawVal){sessionData[key]='';sessionData.classDateRaw='';saveSession();inp.classList.remove('filled');propagateVar(key,'');return}
   const d=new Date(rawVal+'T12:00:00');// noon to avoid timezone issues
   const dayName=HEB_DAYS[d.getDay()];
   const dd=String(d.getDate()).padStart(2,'0');
@@ -1141,7 +1372,7 @@ function onDateChange(e){
   const yyyy=d.getFullYear();
   const display='יום '+dayName+' '+dd+'/'+mm+'/'+yyyy;
   sessionData[key]=display;
-  sessionData.dayDateRaw=rawVal;
+  sessionData.classDateRaw=rawVal;
   saveSession();
   inp.classList.add('filled');
   propagateVar(key,display);
@@ -1162,8 +1393,8 @@ function cascadeDateToTime(dayIndex){
   });
   if(match&&match.startTime){
     const timeVal='*'+match.startTime+'*';
-    sessionData.time=timeVal;saveSession();
-    propagateVar('time',timeVal);
+    sessionData.classTime=timeVal;saveSession();
+    propagateVar('classTime',timeVal);
   }
 }
 
@@ -1186,6 +1417,8 @@ function propagateVar(key,val){
 function applyVarsToMessage(card){
   const msg=card.querySelector('.message');if(!msg)return;
   msg.querySelectorAll('.placeholder, .var-filled').forEach(ph=>{
+    // Skip manual placeholders (<...>) — they are not system-managed
+    if(ph.classList.contains('manual-placeholder'))return;
     const orig=ph.dataset.varOriginal||ph.textContent;
     const reg=VAR_REGISTRY[orig];
     if(!reg)return;
@@ -1193,6 +1426,13 @@ function applyVarsToMessage(card){
     if(reg.type==='static'){
       const val=appSettings.semiStatic[reg.settingsKey];
       if(val){ph.textContent=val;ph.classList.remove('placeholder');ph.classList.add('var-filled')}
+      return;
+    }
+    // v8.0: derived variables — compute value from function
+    if(reg.type==='derived'){
+      const val=reg.deriveFn();
+      if(val){ph.textContent=val;ph.classList.remove('placeholder');ph.classList.add('var-filled')}
+      else{ph.textContent=orig;ph.classList.add('placeholder');ph.classList.remove('var-filled')}
       return;
     }
     const val=sessionData[reg.key];
@@ -1248,35 +1488,236 @@ function refreshAllForms(){
 }
 
 // ================================================================
-// WIZARD v7.0
+// v8.0 COMPONENT FUNCTIONS (Audience, Swap, Tip, FAQ)
+// ================================================================
+
+function getTemplateNum(card){
+  if(!card||!card.id)return null;
+  const m=card.id.replace(/^wiz_/,'').match(/^t(\d+)/);
+  return m?parseInt(m[1]):null;
+}
+
+function renderAudienceToggle(card,tNum){
+  const body=card.querySelector('.template-body');if(!body)return;
+  const existing=card.querySelector('.audience-toggle');if(existing)existing.remove();
+  const div=document.createElement('div');div.className='audience-toggle';
+  const mode=sessionData.audienceMode||'adult';
+  ['adult','parent'].forEach(a=>{
+    const btn=document.createElement('button');btn.className='aud-btn'+(a===mode?' active':'');
+    btn.textContent=a==='adult'?'מבוגר/ת':'הורה';
+    btn.dataset.audience=a;
+    btn.addEventListener('click',function(){
+      sessionData.audienceMode=a;saveSession();
+      div.querySelectorAll('.aud-btn').forEach(b=>b.classList.toggle('active',b.dataset.audience===a));
+      applyAudienceVariant(card,tNum,a);
+    });
+    div.appendChild(btn);
+  });
+  body.insertBefore(div,body.firstChild);
+}
+
+function applyAudienceVariant(card,tNum,audience){
+  const variants=AUDIENCE_VARIANTS[tNum];if(!variants)return;
+  const msg=card.querySelector('.message');if(!msg)return;
+  const av=variants[audience];if(!av)return;
+
+  if(variants.type==='opening'){
+    // Swap just the .aud-opening span
+    const span=msg.querySelector('.aud-opening');
+    if(span&&av.opening)span.innerHTML=av.opening;
+  } else if(variants.type==='full'){
+    // Swap entire message innerHTML
+    if(av.content)msg.innerHTML=av.content;
+  }
+  // Re-apply variable fills after content swap
+  applyVarsToMessage(card);
+  updateFillIndicator(card);
+}
+
+function renderSwapSelector(card,tNum){
+  const body=card.querySelector('.template-body');if(!body)return;
+  const existing=card.querySelector('.swap-selector');if(existing)existing.remove();
+  const blocks=SWAP_BLOCKS[tNum];if(!blocks)return;
+  const div=document.createElement('div');div.className='swap-selector';
+  const currentGroup=sessionData.groupName||'';
+  // For #6, block keys are categories not groups — always show group-level chips
+  const chipKeys=(tNum===6)?GROUP_KEYS:Object.keys(blocks);
+  chipKeys.forEach(gk=>{
+    const chip=document.createElement('button');chip.className='swap-chip'+(gk===currentGroup?' active':'');
+    chip.dataset.group=gk;
+    chip.textContent=(GROUP_LABELS[gk]||gk);
+    chip.addEventListener('click',function(){
+      div.querySelectorAll('.swap-chip').forEach(c=>c.classList.remove('active'));
+      chip.classList.add('active');
+      injectSwapContent(card,tNum,gk);
+    });
+    div.appendChild(chip);
+  });
+  // Insert after audience toggle if present, else as first child
+  const audToggle=body.querySelector('.audience-toggle');
+  if(audToggle)audToggle.after(div);else body.insertBefore(div,body.firstChild);
+  // Ensure a .swap-slot exists inside the message
+  const msg=card.querySelector('.message');
+  if(msg&&!msg.querySelector('.swap-slot')){
+    const slot=document.createElement('div');slot.className='swap-slot';
+    msg.appendChild(slot);
+  }
+  // Auto-inject if group is pre-selected
+  if(currentGroup)injectSwapContent(card,tNum,currentGroup);
+}
+
+function injectSwapContent(card,tNum,groupKey){
+  const msg=card.querySelector('.message');if(!msg)return;
+  let slot=msg.querySelector('.swap-slot');
+  if(!slot){slot=document.createElement('div');slot.className='swap-slot';msg.appendChild(slot)}
+  const blocks=SWAP_BLOCKS[tNum];if(!blocks)return;
+
+  if(tNum===5){
+    // Template #5 — group block: emoji + title + schedLine + extra
+    const blk=blocks[groupKey];
+    if(!blk){slot.innerHTML='';return}
+    let html='';
+    if(blk.emoji)html+=blk.emoji+' ';
+    if(blk.title)html+='<strong>'+blk.title+'</strong>';
+    if(blk.schedLine)html+='<br>'+blk.schedLine;
+    if(blk.extra)html+='<br>'+blk.extra;
+    slot.innerHTML=html;
+  } else if(tNum===6){
+    // Template #6 — "what to bring" block: find matching category for groupKey
+    let blk=null;
+    for(const cat of Object.values(blocks)){
+      if(cat.applies&&cat.applies.includes(groupKey)){blk=cat;break}
+    }
+    if(!blk){slot.innerHTML='';return}
+    let html='';
+    if(blk.title)html+=blk.title+'<br>';
+    if(blk.items&&blk.items.length){blk.items.forEach(item=>{html+=item+'<br>'})}
+    // Add adult-only extra line for combat adults when audience is adult
+    const audience=sessionData.audienceMode||'adult';
+    if(blk.adultExtra&&audience==='adult'&&groupKey==='combat-adults'){
+      html+=blk.adultExtra;
+    }
+    slot.innerHTML=html;
+  } else if(tNum===19){
+    // Template #19 — equipment block
+    const blk=blocks[groupKey];
+    if(!blk){slot.innerHTML='';return}
+    let html='';
+    if(blk.title)html+='<strong>'+blk.title+'</strong><br>';
+    if(blk.items&&blk.items.length){blk.items.forEach(item=>{html+=item+'<br>'})}
+    slot.innerHTML=html;
+  } else {
+    // Generic fallback
+    const blk=blocks[groupKey];
+    if(!blk){slot.innerHTML='';return}
+    let html='';
+    if(blk.emoji)html+=blk.emoji+' ';
+    if(blk.title)html+='<strong>'+blk.title+'</strong>';
+    if(blk.items&&blk.items.length){html+='<br>';blk.items.forEach(item=>{html+='• '+item+'<br>'})}
+    slot.innerHTML=html;
+  }
+  // Re-apply vars after swap
+  applyVarsToMessage(card);
+  updateFillIndicator(card);
+}
+
+function renderTipSelector(card,tNum){
+  const body=card.querySelector('.template-body');if(!body)return;
+  const existing=card.querySelector('.tip-selector');if(existing)existing.remove();
+  const tips=TIP_ROTATION[tNum];if(!tips||!tips.length)return;
+  const div=document.createElement('div');div.className='tip-selector';
+  const currentTip=sessionData['tip_'+tNum]||tips[0].id;
+  tips.forEach((tip,i)=>{
+    const chip=document.createElement('button');chip.className='tip-chip'+(tip.id===currentTip?' active':'');
+    chip.dataset.tipId=tip.id;
+    chip.textContent=tip.label;
+    chip.addEventListener('click',function(){
+      sessionData['tip_'+tNum]=tip.id;saveSession();
+      div.querySelectorAll('.tip-chip').forEach(c=>c.classList.remove('active'));
+      chip.classList.add('active');
+      applyTipVariant(card,tNum,tip.id);
+    });
+    div.appendChild(chip);
+  });
+  // Insert after swap-selector or audience-toggle, else first child
+  const swapSel=body.querySelector('.swap-selector');
+  const audToggle=body.querySelector('.audience-toggle');
+  if(swapSel)swapSel.after(div);
+  else if(audToggle)audToggle.after(div);
+  else body.insertBefore(div,body.firstChild);
+}
+
+function applyTipVariant(card,tNum,tipId){
+  const tips=TIP_ROTATION[tNum];if(!tips)return;
+  const tip=tips.find(t=>t.id===tipId);if(!tip)return;
+  if(tip.body){
+    const msg=card.querySelector('.message');if(!msg)return;
+    msg.innerHTML=tip.body;
+    applyVarsToMessage(card);
+    updateFillIndicator(card);
+  }
+}
+
+function toggleFaq(el){
+  const faqCard=el.closest('.faq-card');
+  if(faqCard)faqCard.classList.toggle('open');
+}
+
+// ================================================================
+// WIZARD v8.0 — 5-Stage, Direct Actions (no variant step)
 // ================================================================
 const WIZARD_STAGES=[
-  {id:'1',icon:'📞',label:'פנייה ראשונה',sub:'#1, #2, #3, #19'},
-  {id:'2',icon:'📅',label:'תיאום שיעור',sub:'#4, #6, #8'},
-  {id:'3',icon:'🥋',label:'תקופת ניסיון',sub:'#9-#11, #17'},
-  {id:'4',icon:'✅',label:'הרשמה ושימור',sub:'#12-#16, #18'}
+  {id:'1',icon:'📞',label:'פנייה ראשונה',sub:'#0-#4'},
+  {id:'2',icon:'📅',label:'תיאום שיעור',sub:'#5-#8'},
+  {id:'3',icon:'🥋',label:'תקופת ניסיון',sub:'#9-#12'},
+  {id:'4',icon:'✅',label:'הרשמה ושימור',sub:'#13-#21'},
+  {id:'5',icon:'⚡',label:'מצבים מיוחדים',sub:'#22-#28'}
 ];
 const WIZARD_ACTIONS={
-  '1':[{id:'callback',label:'ביקש שנחזור',icon:'📞',target:'t1'},{id:'direct-adult',label:'פנייה ישירה — מבוגר',icon:'💬',target:'t2'},{id:'direct-parent',label:'פנייה ישירה — הורה',icon:'👨‍👧',target:'t3'},{id:'widget-nopay',label:'ווידג׳ט — לא שילם',icon:'⏰',target:'t19'}],
-  '2':[{id:'intro',label:'שליחת פרטי היכרות',icon:'📋',hasVariants:true},{id:'payment',label:'אישור תשלום',icon:'💳',hasVariants:true},{id:'health',label:'טופס הצהרת בריאות',icon:'🏥',target:'t8'}],
-  '3':[{id:'reminder',label:'תזכורת יום לפני',icon:'⏰',target:'t9'},{id:'followup1',label:'מעקב שיעור 1',icon:'📝',target:'t10'},{id:'followup2',label:'מעקב שיעור 2',icon:'📝',target:'t11'},{id:'noshow',label:'שילם ולא הגיע',icon:'❌',target:'t17a'},{id:'ghosted',label:'נעלם / הפסיק לענות',icon:'👻',target:'t17b'}],
-  '4':[{id:'enroll-adult',label:'הרשמה — מבוגר',icon:'📋',target:'t12'},{id:'enroll-parent',label:'הרשמה — הורה',icon:'👨‍👧',target:'t13'},{id:'welcome-adult',label:'ברוכים הבאים — מבוגר',icon:'🎉',target:'t14'},{id:'welcome-parent',label:'ברוכים הבאים — הורה',icon:'🎉',target:'t15'},{id:'referral',label:'חבר מביא חבר',icon:'🎁',target:'t16'},{id:'hesitant',label:'מתלבט כרגע',icon:'🤔',target:'t18'}]
-};
-const WIZARD_VARIANTS=[
-  {id:'kids-6-8',label:'ילדים 6-8',icon:'👦'},
-  {id:'kids-9-11',label:'ילדים 9-11',icon:'🧒'},
-  {id:'teens-12-15',label:'נוער 12-15',icon:'🧑'},
-  {id:'combat-adults',label:'לחימה בוגרים',icon:'🥋'},
-  {id:'fitness-38',label:'כושר 38+',icon:'💪'},
-  {id:'movement',label:'תנועה',icon:'🤸'},
-  {id:'strength-mobility',label:'כוח וגמישות',icon:'🏋️'}
-];
-const VARIANT_TEMPLATE_MAP={
-  intro:{'kids-6-8':'t4a','kids-9-11':'t4b','teens-12-15':'t4c','combat-adults':'t4d','fitness-38':'t4e','movement':'t4f','strength-mobility':'t4g'},
-  payment:{'kids-6-8':'t6a','kids-9-11':'t6b','teens-12-15':'t6c','combat-adults':'t6d','fitness-38':'t6e','movement':'t6f','strength-mobility':'t6g'}
+  '1':[
+    {id:'away',label:'מענה מחוץ לשעות',icon:'🌙',target:'t0'},
+    {id:'direct-adult',label:'פנייה ישירה — מבוגר',icon:'💬',target:'t1'},
+    {id:'followup1b',label:'מעקב 1 (לא ענה)',icon:'🔁',target:'t1b'},
+    {id:'followup1c',label:'מעקב 2 (לא ענה)',icon:'🔁',target:'t1c'},
+    {id:'direct-parent',label:'פנייה ישירה — הורה',icon:'👨‍👧',target:'t2'},
+    {id:'callback',label:'ווידג׳ט — ביקש שנחזור',icon:'📞',target:'t3'},
+    {id:'widget-nopay',label:'ווידג׳ט — לא שילם',icon:'⏰',target:'t4'}
+  ],
+  '2':[
+    {id:'intro',label:'פרטי היכרות (כל הקבוצות)',icon:'📋',target:'t5',hasSwap:true},
+    {id:'payment',label:'אישור תשלום והכוונה',icon:'💳',target:'t6',hasSwap:true},
+    {id:'health',label:'טופס הצהרת בריאות',icon:'🏥',target:'t7'},
+    {id:'reminder',label:'תזכורת יום לפני',icon:'⏰',target:'t8'}
+  ],
+  '3':[
+    {id:'followup1',label:'מעקב שיעור 1',icon:'📝',target:'t9'},
+    {id:'followup2',label:'מעקב שיעור 2 (טיפ)',icon:'📝',target:'t10',hasTips:true},
+    {id:'noshow',label:'שילם ולא הגיע',icon:'❌',target:'t11'},
+    {id:'ghost',label:'הגיע ונעלם',icon:'👻',target:'t12'}
+  ],
+  '4':[
+    {id:'enroll-adult',label:'הרשמה — מבוגר',icon:'📋',target:'t13'},
+    {id:'enroll-parent',label:'הרשמה — הורה',icon:'📋',target:'t14'},
+    {id:'welcome-adult',label:'ברוכים הבאים — מבוגר',icon:'🎉',target:'t15'},
+    {id:'welcome-parent',label:'ברוכים הבאים — הורה',icon:'🎉',target:'t16'},
+    {id:'questionnaire',label:'שאלון רקע ומטרות',icon:'📋',target:'t17'},
+    {id:'valuetip',label:'טיפ ערך (עקרון)',icon:'💡',target:'t18',hasTips:true},
+    {id:'equipment',label:'ציוד מומלץ',icon:'🎒',target:'t19',hasSwap:true},
+    {id:'referral',label:'חבר מביא חבר',icon:'🎁',target:'t20'},
+    {id:'social',label:'רשתות חברתיות',icon:'📸',target:'t21'}
+  ],
+  '5':[
+    {id:'hesitant',label:'מתלבט / חושב על זה',icon:'🤔',target:'t22'},
+    {id:'spouse',label:'צריך לבדוק עם בן/בת זוג',icon:'👫',target:'t23'},
+    {id:'postponing',label:'ממשיך לדחות',icon:'📅',target:'t24'},
+    {id:'not-relevant',label:'לא רלוונטי — אבחון',icon:'❓',target:'t25'},
+    {id:'warm-close',label:'סגירה חמה',icon:'👋',target:'t26'},
+    {id:'returning',label:'ליד חוזר',icon:'🔙',target:'t27'},
+    {id:'didnt-pay',label:'הסכים ולא שילם',icon:'💳',target:'t28'}
+  ]
 };
 
-const wizState={stage:null,action:null,variant:null};
+const wizState={stage:null,action:null};
 
 function toggleWizard(){document.getElementById('wizardPanel').classList.toggle('collapsed')}
 
@@ -1288,18 +1729,17 @@ function renderWizard(){
   crumbs.push('<span class="crumb">אשף הודעות</span>');
   if(wizState.stage){const s=WIZARD_STAGES.find(s=>s.id===wizState.stage);crumbs.push('<span class="crumb-sep">←</span><span class="crumb">'+s.label+'</span>')}
   if(wizState.action){const a=WIZARD_ACTIONS[wizState.stage].find(a=>a.id===wizState.action);crumbs.push('<span class="crumb-sep">←</span><span class="crumb">'+a.label+'</span>')}
-  if(wizState.variant){const v=WIZARD_VARIANTS.find(v=>v.id===wizState.variant);crumbs.push('<span class="crumb-sep">←</span><span class="crumb">'+v.label+'</span>')}
   html+='<div class="wizard-breadcrumb">'+crumbs.join('')+'</div>';
 
   if(!wizState.stage){
-    // Step 1: stages
+    // Step 1: pick stage
     html+='<div class="wizard-steps">';
     WIZARD_STAGES.forEach(s=>{
       html+=`<button class="wizard-btn" onclick="wizSetStage('${s.id}')"><span class="btn-icon">${s.icon}</span>${s.label}<span class="btn-sub">${s.sub}</span></button>`;
     });
     html+='</div>';
   } else if(!wizState.action){
-    // Step 2: actions
+    // Step 2: pick action
     html+=`<button class="wizard-back-btn" onclick="wizBack()">→ חזרה</button>`;
     html+='<div class="wizard-steps">';
     WIZARD_ACTIONS[wizState.stage].forEach(a=>{
@@ -1307,28 +1747,17 @@ function renderWizard(){
     });
     html+='</div>';
   } else {
+    // Step 3: show template directly (no variant step)
     const act=WIZARD_ACTIONS[wizState.stage].find(a=>a.id===wizState.action);
-    if(act.hasVariants&&!wizState.variant){
-      // Step 3: variants
-      html+=`<button class="wizard-back-btn" onclick="wizBack()">→ חזרה</button>`;
-      html+='<div class="wizard-steps">';
-      WIZARD_VARIANTS.forEach(v=>{
-        html+=`<button class="wizard-btn small" onclick="wizSetVariant('${v.id}')"><span class="btn-icon">${v.icon}</span>${v.label}</button>`;
-      });
-      html+='</div>';
+    const tid=act?act.target:null;
+    html+=`<button class="wizard-back-btn" onclick="wizBack()">→ חזרה</button>`;
+    if(tid){
+      html+='<div class="wizard-result" id="wizardResult"></div>';
+      body.innerHTML=html;
+      renderWizardTemplate(tid);
+      return;
     } else {
-      // Step 4: show template
-      let tid=act.target;
-      if(act.hasVariants&&wizState.variant){tid=VARIANT_TEMPLATE_MAP[wizState.action]?.[wizState.variant]}
-      html+=`<button class="wizard-back-btn" onclick="wizBack()">→ חזרה</button>`;
-      if(tid){
-        html+='<div class="wizard-result" id="wizardResult"></div>';
-        body.innerHTML=html;
-        renderWizardTemplate(tid);
-        return;
-      } else {
-        html+='<div style="padding:20px;text-align:center;color:var(--text2);">לא נמצאה תבנית מתאימה</div>';
-      }
+      html+='<div style="padding:20px;text-align:center;color:var(--text2);">לא נמצאה תבנית מתאימה</div>';
     }
   }
   body.innerHTML=html;
@@ -1351,11 +1780,13 @@ function renderWizardTemplate(tid){
   const body=clone.querySelector('.template-body');
   // Re-apply vars from session
   msg.querySelectorAll('.placeholder, .var-filled').forEach(ph=>{
+    if(ph.classList.contains('manual-placeholder'))return;
     const origText=ph.dataset.varOriginal||ph.textContent;
     const reg=VAR_REGISTRY[origText];
     if(!reg)return;
     ph.dataset.varOriginal=origText;
     if(reg.type==='static'){const val=appSettings.semiStatic[reg.settingsKey];if(val){ph.textContent=val;ph.classList.remove('placeholder');ph.classList.add('var-filled')}return}
+    if(reg.type==='derived'){const val=reg.deriveFn();if(val){ph.textContent=val;ph.classList.remove('placeholder');ph.classList.add('var-filled')}return}
     const val=sessionData[reg.key];
     if(val){ph.textContent=val;ph.classList.remove('placeholder');ph.classList.add('var-filled')}
     else{ph.textContent=origText;ph.classList.add('placeholder');ph.classList.remove('var-filled')}
@@ -1365,7 +1796,7 @@ function renderWizardTemplate(tid){
   const seen=new Set();const vars=[];
   phs.forEach(ph=>{
     const txt=ph.dataset.varOriginal||ph.textContent;
-    const reg=VAR_REGISTRY[txt];if(!reg||reg.type==='static')return;
+    const reg=VAR_REGISTRY[txt];if(!reg||reg.type==='static'||reg.type==='derived')return;
     const ukey=reg.key+'_'+txt;if(seen.has(ukey))return;seen.add(ukey);
     vars.push({text:txt,reg});
   });
@@ -1430,6 +1861,13 @@ function renderWizardTemplate(tid){
   // Add fill indicator
   addFillIndicator(clone);
   updateFillIndicator(clone);
+  // v8.0: Render component overlays (swap, audience, tip)
+  const tNum=getTemplateNum(clone);
+  if(tNum){
+    if(SWAP_BLOCKS[tNum])renderSwapSelector(clone,tNum);
+    if(AUDIENCE_VARIANTS[tNum])renderAudienceToggle(clone,tNum);
+    if(TIP_ROTATION[tNum])renderTipSelector(clone,tNum);
+  }
   // Also scroll wizard into view
   container.scrollIntoView({behavior:'smooth',block:'nearest'});
 }
@@ -1437,10 +1875,17 @@ function renderWizardTemplate(tid){
 function applyWizVars(card){
   const msg=card.querySelector('.message');if(!msg)return;
   msg.querySelectorAll('.placeholder, .var-filled').forEach(ph=>{
+    if(ph.classList.contains('manual-placeholder'))return;
     const orig=ph.dataset.varOriginal||ph.textContent;
     const reg=VAR_REGISTRY[orig];if(!reg)return;
     ph.dataset.varOriginal=orig;
     if(reg.type==='static'){const val=appSettings.semiStatic[reg.settingsKey];if(val){ph.textContent=val;ph.classList.remove('placeholder');ph.classList.add('var-filled')}return}
+    if(reg.type==='derived'){
+      const val=reg.deriveFn();
+      if(val){ph.textContent=val;ph.classList.remove('placeholder');ph.classList.add('var-filled')}
+      else{ph.textContent=orig;ph.classList.add('placeholder');ph.classList.remove('var-filled')}
+      return;
+    }
     const val=sessionData[reg.key];
     if(val){ph.textContent=val;ph.classList.remove('placeholder');ph.classList.add('var-filled')}
     else{ph.textContent=orig;ph.classList.add('placeholder');ph.classList.remove('var-filled')}
@@ -1448,20 +1893,14 @@ function applyWizVars(card){
   updateFillIndicator(card);
 }
 
-function wizSetStage(id){wizState.stage=id;wizState.action=null;wizState.variant=null;renderWizard()}
-function wizSetAction(id){
-  const act=WIZARD_ACTIONS[wizState.stage].find(a=>a.id===id);
-  wizState.action=id;wizState.variant=null;
-  if(act&&!act.hasVariants&&act.target){renderWizard()}
-  else{renderWizard()}
-}
-function wizSetVariant(id){wizState.variant=id;renderWizard()}
-function wizBack(){if(wizState.variant){wizState.variant=null}else if(wizState.action){wizState.action=null}else if(wizState.stage){wizState.stage=null}renderWizard()}
+function wizSetStage(id){wizState.stage=id;wizState.action=null;renderWizard()}
+function wizSetAction(id){wizState.action=id;renderWizard()}
+function wizBack(){if(wizState.action){wizState.action=null}else if(wizState.stage){wizState.stage=null}renderWizard()}
 function initWizard(){renderWizard()}
 
 // ================================================================
 // === Template Message Editing ===
-const TK='element-tpl-v70';
+const TK='element-tpl-v80';
 let editingMsg=null;
 const origMessages={};
 
@@ -1645,7 +2084,7 @@ function toggleFullscreen() {
 }
 
 // Meta Data
-const CU={t1:{l:'CONSIDERING',c:'#f87171'},t2:{l:'NEW LEADS',c:'#94a3b8'},t3:{l:'NEW LEADS',c:'#94a3b8'},t4a:{l:'CONSIDERING',c:'#f87171'},t4b:{l:'CONSIDERING',c:'#f87171'},t4c:{l:'CONSIDERING',c:'#f87171'},t4d:{l:'CONSIDERING',c:'#f87171'},t4e:{l:'CONSIDERING',c:'#f87171'},t4f:{l:'CONSIDERING',c:'#f87171'},t4g:{l:'CONSIDERING',c:'#f87171'},t6a:{l:'PURCHASED',c:'#60a5fa'},t6b:{l:'PURCHASED',c:'#60a5fa'},t6c:{l:'PURCHASED',c:'#60a5fa'},t6d:{l:'PURCHASED',c:'#60a5fa'},t6e:{l:'PURCHASED',c:'#60a5fa'},t6f:{l:'PURCHASED',c:'#60a5fa'},t6g:{l:'PURCHASED',c:'#60a5fa'},t8:{l:'PURCHASED',c:'#60a5fa'},t9:{l:'PURCHASED',c:'#60a5fa'},t10:{l:'MADE 1ST',c:'#4ade80'},t11:{l:'MADE 2ND',c:'#4ade80'},t12:{l:'MADE 3RD',c:'#fb923c'},t13:{l:'MADE 3RD',c:'#fb923c'},t14:{l:'ENROLLED',c:'#22c55e'},t15:{l:'ENROLLED',c:'#22c55e'},t16:{l:'ENROLLED',c:'#22c55e'},t17a:{l:'GHOSTED',c:'#ef4444'},t17b:{l:'GHOSTED',c:'#ef4444'},t18:{l:'MADE 3RD',c:'#fb923c'},t19:{l:'NEAR PURCHASE',c:'#f472b6'}};
+const CU={t0:{l:'—',c:'#94a3b8'},t1:{l:'NEW LEADS',c:'#94a3b8'},t1b:{l:'NEW LEADS',c:'#94a3b8'},t1c:{l:'NEW LEADS',c:'#94a3b8'},t2:{l:'NEW LEADS',c:'#94a3b8'},t3:{l:'NEW LEADS',c:'#94a3b8'},t4:{l:'NEW LEADS',c:'#94a3b8'},t5:{l:'CONSIDERING',c:'#f87171'},t6:{l:'PURCHASED',c:'#60a5fa'},t7:{l:'PURCHASED',c:'#60a5fa'},t8:{l:'PURCHASED',c:'#60a5fa'},t9:{l:'MADE 1ST',c:'#4ade80'},t10:{l:'MADE 2ND',c:'#4ade80'},t11:{l:'PURCHASED',c:'#60a5fa'},t12:{l:'LOST',c:'#ef4444'},t13:{l:'MADE 3RD',c:'#fb923c'},t14:{l:'MADE 3RD',c:'#fb923c'},t15:{l:'ENROLLED',c:'#22c55e'},t16:{l:'ENROLLED',c:'#22c55e'},t17:{l:'ENROLLED',c:'#22c55e'},t18:{l:'ENROLLED',c:'#22c55e'},t19:{l:'ENROLLED',c:'#22c55e'},t20:{l:'ENROLLED',c:'#22c55e'},t21:{l:'ENROLLED',c:'#22c55e'},t22:{l:'MADE 3RD',c:'#fb923c'},t23:{l:'MADE 3RD',c:'#fb923c'},t24:{l:'NOT READY',c:'#fbbf24'},t25:{l:'—',c:'#94a3b8'},t26:{l:'NOT A FIT',c:'#94a3b8'},t27:{l:'—',c:'#94a3b8'},t28:{l:'MADE 3RD',c:'#fb923c'}};
 const LC={adult:'#d81b60',parent:'#2563eb'};
 
 // Visually Encapsulating Swimlanes based on the NEW exact layout
