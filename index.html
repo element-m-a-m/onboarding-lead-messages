@@ -280,31 +280,31 @@ h2 { font-size: 18px; font-weight: 800; color: var(--hdr); margin-top: 32px; mar
 .wizard-header .wizard-collapse-icon { margin-right: auto; font-size: 18px; transition: transform 0.3s; }
 .wizard-panel.collapsed .wizard-collapse-icon { transform: rotate(180deg); }
 .wizard-panel.collapsed .wizard-body { display: none; }
-.wizard-body { padding: 20px; }
+.wizard-body { padding: 12px 16px; }
 .wizard-breadcrumb { display: none; }
-.wizard-progress { display: flex; align-items: center; justify-content: center; margin-bottom: 20px; direction: ltr; }
-.wizard-progress .prog-step { display: flex; flex-direction: column; align-items: center; gap: 4px; position: relative; z-index: 1; }
-.wizard-progress .prog-circle { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800; border: 2.5px solid #cbd5e1; background: #fff; color: #94a3b8; transition: all 0.3s; }
+.wizard-progress { display: flex; align-items: center; justify-content: center; margin-bottom: 10px; direction: rtl; }
+.wizard-progress .prog-step { display: flex; flex-direction: column; align-items: center; gap: 3px; position: relative; z-index: 1; }
+.wizard-progress .prog-circle { width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; border: 2.5px solid #cbd5e1; background: #fff; color: #94a3b8; transition: all 0.3s; }
 .wizard-progress .prog-step.completed .prog-circle { background: var(--accent); border-color: var(--accent); color: #fff; }
-.wizard-progress .prog-step.active .prog-circle { border-color: var(--accent); color: var(--accent); box-shadow: 0 0 0 4px rgba(37,211,102,0.15); animation: progPulse 2s ease-in-out infinite; }
-@keyframes progPulse { 0%,100%{box-shadow:0 0 0 4px rgba(37,211,102,0.15)} 50%{box-shadow:0 0 0 8px rgba(37,211,102,0.08)} }
+.wizard-progress .prog-step.active .prog-circle { border-color: var(--accent); color: var(--accent); box-shadow: 0 0 0 3px rgba(37,211,102,0.15); animation: progPulse 2s ease-in-out infinite; }
+@keyframes progPulse { 0%,100%{box-shadow:0 0 0 3px rgba(37,211,102,0.15)} 50%{box-shadow:0 0 0 6px rgba(37,211,102,0.08)} }
 .wizard-progress .prog-label { font-size: 10px; font-weight: 600; color: #94a3b8; white-space: nowrap; transition: color 0.3s; }
 .wizard-progress .prog-step.completed .prog-label { color: var(--accent2); }
 .wizard-progress .prog-step.active .prog-label { color: var(--accent2); font-weight: 700; }
-.wizard-progress .prog-line { flex: 1; height: 2.5px; background: #cbd5e1; margin: 0 8px; margin-bottom: 18px; min-width: 30px; max-width: 80px; transition: background 0.3s; }
+.wizard-progress .prog-line { flex: 1; height: 2px; background: #cbd5e1; margin: 0 6px; margin-bottom: 14px; min-width: 30px; max-width: 80px; transition: background 0.3s; }
 .wizard-progress .prog-line.done { background: var(--accent); }
-.wizard-back-btn { background: #f1f5f9; border: 1px solid var(--border); border-radius: 8px; padding: 6px 14px; font-size: 12px; font-weight: 700; font-family: 'Heebo', sans-serif; cursor: pointer; color: var(--text); display: inline-flex; align-items: center; gap: 4px; transition: all 0.2s; }
+.wizard-back-btn { background: #f1f5f9; border: 1px solid var(--border); border-radius: 8px; padding: 5px 12px; font-size: 11px; font-weight: 700; font-family: 'Heebo', sans-serif; cursor: pointer; color: var(--text); display: inline-flex; align-items: center; gap: 4px; transition: all 0.2s; margin-bottom: 4px; }
 .wizard-back-btn:hover { background: #e2e8f0; }
-.wizard-steps { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
-.wizard-btn { flex: 1; min-width: 140px; padding: 16px 14px; border: 2px solid #e2e8f0; border-radius: 12px; background: #fff; cursor: pointer; text-align: center; font-family: 'Heebo', sans-serif; font-size: 13px; font-weight: 700; color: var(--hdr); transition: all 0.2s; }
+.wizard-steps { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
+.wizard-btn { flex: 1; min-width: 130px; padding: 10px 10px; border: 2px solid #e2e8f0; border-radius: 10px; background: #fff; cursor: pointer; text-align: center; font-family: 'Heebo', sans-serif; font-size: 12px; font-weight: 700; color: var(--hdr); transition: all 0.2s; }
 .wizard-btn:hover { border-color: var(--accent); background: #ecfdf5; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(37,211,102,0.15); }
-.wizard-btn .btn-icon { font-size: 24px; display: block; margin-bottom: 6px; }
-.wizard-btn .btn-sub { font-size: 10px; font-weight: 400; color: var(--text2); margin-top: 4px; display: block; }
-.wizard-btn.small { min-width: 100px; padding: 10px 12px; font-size: 12px; }
-.wizard-btn.small .btn-icon { font-size: 18px; margin-bottom: 4px; }
-.wizard-result { margin-top: 16px; animation: wizPulse 0.6s ease-out; }
+.wizard-btn .btn-icon { font-size: 20px; display: block; margin-bottom: 3px; }
+.wizard-btn .btn-sub { font-size: 10px; font-weight: 400; color: var(--text2); margin-top: 2px; display: block; }
+.wizard-btn.small { min-width: 100px; padding: 8px 10px; font-size: 11px; }
+.wizard-btn.small .btn-icon { font-size: 16px; margin-bottom: 2px; }
+.wizard-result { margin-top: 8px; animation: wizPulse 0.6s ease-out; }
 @keyframes wizPulse { 0%{box-shadow:0 0 0 0 rgba(37,211,102,0.4)} 70%{box-shadow:0 0 0 12px rgba(37,211,102,0)} 100%{box-shadow:none} }
-.wizard-subtitle { font-size: 13px; color: var(--text2); text-align: center; padding: 10px 0 6px; }
+.wizard-subtitle { font-size: 13px; color: var(--text2); text-align: center; padding: 4px 0 2px; }
 .var-field input[type="date"] { font-family: 'Heebo', sans-serif; font-size: 11px; padding: 3px 6px; border: 1px solid transparent; border-radius: 14px; background: #fef3c7; outline: none; min-width: 120px; transition: all 0.2s; direction: ltr; text-align: center; }
 .var-field input[type="date"]:focus { border-color: var(--accent); background: #fff; box-shadow: 0 0 0 2px rgba(37,211,102,0.15); }
 .var-field input[type="date"].filled { background: #ecfdf5; border-color: #86efac; }
@@ -313,14 +313,14 @@ h2 { font-size: 18px; font-weight: 800; color: var(--hdr); margin-top: 32px; mar
 .wizard-result .template-card .template-body { padding: 0; }
 
 /* === WhatsApp Chat Preview in Wizard === */
-.wiz-chat-container { background: #e5ddd5; background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 5 L35 15 L30 10 L25 15Z' fill='%23d4cfc4' opacity='0.3'/%3E%3C/svg%3E"); border-radius: 0 0 12px 12px; padding: 24px 16px 16px; min-height: 80px; }
+.wiz-chat-container { background: #e5ddd5; background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 5 L35 15 L30 10 L25 15Z' fill='%23d4cfc4' opacity='0.3'/%3E%3C/svg%3E"); border-radius: 0 0 12px 12px; padding: 14px 12px 10px; min-height: 80px; }
 .wiz-chat-bubble { background: #dcf8c6; border-radius: 0 8px 8px 8px; padding: 10px 14px 6px; max-width: 88%; margin-left: auto; margin-right: 12px; position: relative; box-shadow: 0 1px 2px rgba(0,0,0,0.13); white-space: pre-wrap; line-height: 1.7; font-size: 13.5px; color: #303030; }
 .wiz-chat-bubble::before { content:''; position:absolute; top:0; right:-8px; width:0; height:0; border-left:8px solid #dcf8c6; border-top:8px solid transparent; }
 .wiz-chat-bubble .placeholder { background:#fef3c7; padding:2px 4px; border-radius:4px; font-weight:700; color:#92400e; font-size:12px; border:1px dashed #fcd34d; font-family:monospace; }
 .wiz-chat-bubble .var-filled { background:#c6f6d5; padding:2px 4px; border-radius:4px; font-weight:700; color:#065f46; font-size:12px; border:1px solid #86efac; }
 .wiz-chat-bubble .manual-placeholder { background:#fed7aa; padding:2px 4px; border-radius:4px; font-weight:600; color:#9a3412; font-size:12px; }
 .wiz-chat-time { text-align: left; font-size: 10px; color: #8c9a8e; margin-top: 4px; direction: ltr; }
-.wiz-chat-actions { display: flex; gap: 10px; justify-content: center; padding: 16px 12px 8px; }
+.wiz-chat-actions { display: flex; gap: 10px; justify-content: center; padding: 10px 12px 6px; }
 .wiz-copy-btn { background: #25D366; color: #fff; border: none; border-radius: 24px; padding: 11px 28px; font-size: 14px; font-weight: 700; font-family: 'Heebo', sans-serif; cursor: pointer; display: flex; align-items: center; gap: 8px; box-shadow: 0 3px 10px rgba(37,211,102,0.3); transition: all 0.2s; }
 .wiz-copy-btn:hover { background: #128C7E; transform: translateY(-1px); box-shadow: 0 5px 14px rgba(37,211,102,0.35); }
 .wiz-copy-btn.copied { background: #065f46; }
@@ -408,17 +408,6 @@ h2 { font-size: 18px; font-weight: 800; color: var(--hdr); margin-top: 32px; mar
 <div class="ctx-menu" id="ctxMenu"></div>
 
 <div class="container">
-  <div class="instructions">
-    <h3>📌 הוראות עבודה למערכת הזרימה החכמה (Desktop)</h3>
-    <ul>
-      <li><kbd>Hover</kbd> על צומת מזהיב את כל החיבורים שלה.</li>
-      <li><kbd>דאבל-קליק</kbd> על צומת לעריכת טקסט (אנטר לשמירה, Shift+Enter לשורה חדשה).</li>
-      <li><kbd>קליק ימני</kbd> לפתיחת תפריט פעולות (העתק, הדבק, שכפל, מחק).</li>
-      <li><kbd>גרירה</kbd> מנקודת עיגול יוצרת קשר חדש. <kbd>לחיצה</kbd> על חץ לבחירה ושינוי חיבורים.</li>
-      <li><kbd>Ctrl+C / V</kbd> העתק/הדבק | <kbd>Ctrl+Z / Y</kbd> ביטול/שחזור | <kbd>Delete</kbd> מחיקה.</li>
-    </ul>
-  </div>
-
   <!-- WIZARD -->
   <div id="wizard">
     <div class="wizard-panel" id="wizardPanel">
@@ -450,6 +439,17 @@ h2 { font-size: 18px; font-weight: 800; color: var(--hdr); margin-top: 32px; mar
     <div id="schedulesContainer"></div>
 
     <button class="settings-save-btn" onclick="saveSettingsFromUI()">💾 שמור הגדרות</button>
+  </div>
+
+  <div class="instructions">
+    <h3>📌 הוראות עבודה למערכת הזרימה החכמה (Desktop)</h3>
+    <ul>
+      <li><kbd>Hover</kbd> על צומת מזהיב את כל החיבורים שלה.</li>
+      <li><kbd>דאבל-קליק</kbd> על צומת לעריכת טקסט (אנטר לשמירה, Shift+Enter לשורה חדשה).</li>
+      <li><kbd>קליק ימני</kbd> לפתיחת תפריט פעולות (העתק, הדבק, שכפל, מחק).</li>
+      <li><kbd>גרירה</kbd> מנקודת עיגול יוצרת קשר חדש. <kbd>לחיצה</kbd> על חץ לבחירה ושינוי חיבורים.</li>
+      <li><kbd>Ctrl+C / V</kbd> העתק/הדבק | <kbd>Ctrl+Z / Y</kbd> ביטול/שחזור | <kbd>Delete</kbd> מחיקה.</li>
+    </ul>
   </div>
 
   <div id="flowcharts">
@@ -687,16 +687,15 @@ https://element-m-a-m.github.io/book-first-classes/
   <div class="template-card" id="t13" data-search="הרשמה מנוי בוגר adult enrollment"><div class="template-header"><span class="tnum-badge">#13</span><span class="ttitle">הרשמה למנוי — מבוגר/ת</span><span class="tbadge">🟠</span></div><div class="template-meta"><span>⏰ אחרי שיעור 3 (שיחה או הודעה)</span><span>📋 קליקאפ: MADE 3RD CLASS</span></div><div class="template-body">
   <div class="message" onclick="copyMsg(this)"><button class="cbtn">📋 העתק הודעה</button>היי <span class="placeholder">[שם]</span> 👋
 
-סיימתם 3 שיעורי היכרות — כל הכבוד! 🎉
+3 שיעורי היכרות מאחורי — כל הכבוד 🎉
 
-מקווים שהרגשתם את האווירה ומה שהאימונים נותנים.
-נשמח שתמשיכו — לפתח את מה שהתחלתם.
+מה שעשיתם בשיעורי ההיכרות האלה זה הצעד הכי משמעותי — להתחיל. עכשיו מתחיל החלק המעניין: לבנות בסיס, לראות התקדמות אמיתית, ולהרגיש את השינוי.
 
 📋 מנוי חודשי: <span class="placeholder">[מחיר]</span>₪/חודש
 
 🔗 <span class="placeholder">[לינק תשלום מנוי]</span>
 
-לדבר קודם? 📞 אנחנו כאן 🙏</div>
+רוצים לשמוע עוד לפני שמחליטים? אני כאן 📞🙏</div>
   </div></div>
 
   <div class="template-card" id="t14" data-search="הרשמה מנוי הורה ילד parent enrollment"><div class="template-header"><span class="tnum-badge">#14</span><span class="ttitle">הרשמה למנוי — הורה</span><span class="tbadge">🟠</span></div><div class="template-meta"><span>⏰ אחרי שיעור 3</span><span>📋 קליקאפ: MADE 3RD CLASS</span></div><div class="template-body">
@@ -717,20 +716,21 @@ https://element-m-a-m.github.io/book-first-classes/
   <div class="template-card" id="t15" data-search="ברוכים הבאים מבוגר welcome adult אפליקציה"><div class="template-header"><span class="tnum-badge">#15</span><span class="ttitle">ברוכים הבאים — מבוגר/ת</span><span class="tbadge">🟢</span></div><div class="template-meta"><span>⏰ מיד אחרי אישור תשלום מנוי</span><span>📋 קליקאפ: ENROLLED</span></div><div class="template-body">
   <div class="message" onclick="copyMsg(this)"><button class="cbtn">📋 העתק הודעה</button>ברוכים הבאים למשפחת אלמנט! 🙌
 
-שמחים שהחלטתם להצטרף. מכאן מתחיל המסע.
+מכאן מתחילים 3 חודשי יסודות — התקופה שבה אתם בונים את הבסיס לכל מה שיבוא אחרי. זה הולך להיות שווה.
 
-📱 הורידו את אפליקציית BoostApp Business — לרישום לשיעורים מראש
-📋 שאלון רקע ומטרות: https://forms.gle/piXKhuJLkjBAV8mM6
-📍 אולם בית ספר "המגינים", רחוב "חזית חמש" 2, חולון
+📱 דבר ראשון — הורידו את אפליקציית Boostapp, כך נוכל לשמור אתכם מעודכנים.
+
+חולצת Element מחכה לכם בשיעור הבא 💪</div>
+  <div class="message" onclick="copyMsg(this)"><button class="cbtn">📋 העתק הודעה</button>וכמה דברים טכניים חשובים:
+
+📋 שאלון רקע ומטרות — עוזר לנו להתאים את האימון אליכם:
+https://forms.gle/piXKhuJLkjBAV8mM6
 
 💳 המנוי מתחדש אוטומטית כל 30 יום
-🔒 3 חודשי יסודות — תקופה שמאפשרת לבנות בסיס ולהרגיש את הערך האמיתי
-📝 ביטול לאחר מכן: בהודעה מראש של 30 יום
-🧊 הקפאה: שבועיים-חודש, פעם בחצי שנה, בהודעה מראש
+📝 ביטול אחרי 3 חודשים: הודעה מראש של 30 יום
+🧊 הקפאה: שבועיים-חודש, פעם בחצי שנה
 
-חברים שיתאימו? יש מבצע חבר מביא חבר!
-
-שאלות? תמיד כאן. יאללה 💪</div>
+חברים שיתאימו? יש מבצע חבר מביא חבר — שאלו אותי 🙏</div>
   </div></div>
 
   <div class="template-card" id="t16" data-search="ברוכים הבאים הורה ילד welcome parent אפליקציה"><div class="template-header"><span class="tnum-badge">#16</span><span class="ttitle">ברוכים הבאים — הורה</span><span class="tbadge">🟢</span></div><div class="template-meta"><span>⏰ מיד אחרי אישור תשלום מנוי</span><span>📋 קליקאפ: ENROLLED</span></div><div class="template-body">
@@ -788,14 +788,18 @@ https://element-m-a-m.github.io/book-first-classes/
   <div class="template-card" id="t20" data-search="חבר מביא חבר הפניה referral friend"><div class="template-header"><span class="tnum-badge">#20</span><span class="ttitle">חבר מביא חבר</span><span class="tbadge">🟢</span></div><div class="template-meta"><span>⏰ אחרי כ-4 שיעורים כמנוי (2-3 שבועות)</span><span>📋 קליקאפ: ENROLLED (פעיל)</span></div><div class="template-body">
   <div class="message" onclick="copyMsg(this)"><button class="cbtn">📋 העתק הודעה</button>היי <span class="placeholder">[שם]</span> 👋
 
-שמחים לראות שמתקדמים! 💪
+שמחים לראות שמתקדמים 💪
 
-מכירים מישהו שיכול ליהנות מאימונים אצלנו?
+שאלה — יש לכם חבר/ה שתמיד אומר/ת "אני צריך/ה להתחיל להתאמן"?
 
-🎁 מבצע חבר מביא חבר:
-חבר/ה ירשם למנוי → גם אתם וגם הם 50% על חודש ראשון!
+🎁 חבר מביא חבר: אם ירשמו למנוי, גם אתם וגם הם מקבלים 50% על חודש ראשון.
 
-אין כמו להתאמן עם מישהו שמכירים 🙏</div>
+להתאמן עם מישהו שמכירים זה סיפור אחר לגמרי — גם באימון וגם בהתמדה.
+
+שלחו לנו שם ונפנה אליהם, או שתפו את הלינק:
+🔗 https://element-m-a-m.github.io/book-first-classes/
+
+🙏</div>
   </div></div>
 
   <div class="template-card" id="t21" data-search="חיבור רשתות חברתיות אינסטגרם פייסבוק social"><div class="template-header"><span class="tnum-badge">#21</span><span class="ttitle">חיבור לרשתות חברתיות</span><span class="tbadge">🔵</span></div><div class="template-meta"><span>⏰ אחרי כ-5 שיעורים כמנוי</span><span>📋 קליקאפ: ENROLLED (פעיל)</span></div><div class="template-body">
@@ -817,13 +821,11 @@ https://element-m-a-m.github.io/book-first-classes/
   <div class="template-card" id="t22" data-search="מתלבט כרגע undecided hesitant thinking"><div class="template-header"><span class="tnum-badge">#22</span><span class="ttitle">מתלבט / ״אני חושב על זה״</span><span class="tbadge">🟡</span></div><div class="template-meta"><span>⏰ 2-3 ימים אחרי שאמר ״אני חושב על זה״</span><span>📋 קליקאפ: MADE 3RD CLASS / NOT READY</span></div><div class="template-body">
   <div class="message" onclick="copyMsg(this)"><button class="cbtn">📋 העתק הודעה</button>היי <span class="placeholder">[שם]</span> 👋
 
-רצינו לבדוק — חשבתם על ההמשך?
+חשבתם על ההמשך?
 
-לגמרי מבינים שצריך זמן להחליט.
+לפעמים מה שעוזר להחליט זה פשוט לדבר — אם יש שאלות שנשארו פתוחות, אני כאן ואשמח לענות.
 
-ואם יש משהו שמטריד — שאלות, התלבטויות — דברו איתנו. ננסה לעזור.
-
-אנחנו כאן 🙏</div>
+ואם זה עניין של תזמון — גם את זה אפשר לפתור 🙏</div>
   </div></div>
 
   <div class="template-card" id="t23" data-search="צריך לבדוק בן זוג בת זוג spouse check"><div class="template-header"><span class="tnum-badge">#23</span><span class="ttitle">״צריך לבדוק עם בן/בת זוג״</span><span class="tbadge">🟡</span></div><div class="template-meta"><span>⏰ למחרת, מעקב רך</span><span>📋 קליקאפ: MADE 3RD CLASS</span></div><div class="template-body">
@@ -1029,8 +1031,8 @@ const AUDIENCE_VARIANTS = {
     adult:{content:'<button class="cbtn">📋 העתק</button>היי <span class="placeholder">[שם]</span> 👋\n\nתזכורת קטנה — מחר יש לכם שיעור! 🥋\n\n🗓️ <span class="placeholder">[יום ותאריך]</span>, בשעה <span class="placeholder">[שעה]</span>\n📍 אולם בית ספר "המגינים", רחוב "חזית חמש" 2, חולון\n\nזכרו להביא: בגדי אימון, בקבוק מים, ולהסיר תכשיטים.\n\nהגיעו 10 דקות לפני. נתראה! 💪'},
     parent:{content:'<button class="cbtn">📋 העתק</button>היי <span class="placeholder">[שם ההורה]</span> 👋\n\nתזכורת — מחר <span class="placeholder">[שם הילד/ה]</span> מגיע/ה לשיעור! 🥋\n\n🗓️ <span class="placeholder">[יום ותאריך]</span>, בשעה <span class="placeholder">[שעה]</span>\n📍 אולם בית ספר "המגינים", רחוב "חזית חמש" 2, חולון\n\nזכרו להביא: בגדי אימון, בקבוק מים, ולהסיר תכשיטים.\n\nהגיעו 10 דקות לפני. מחכים! 💪'}},
   9: {type:'full',
-    adult:{content:'<button class="cbtn">📋 העתק</button>היי <span class="placeholder">[שם]</span> 👋\n\nאיך הרגשתם אחרי השיעור הראשון אתמול?\n\nהשיעורים הראשונים תמיד מאתגרים את הגוף — סימן מצוין שיש לאן לגדול 💪\n\nשאלות, תחושות מיוחדות או כאבי שרירים שחשוב שנדע עליהם?\n\nהבא: <span class="placeholder">[יום ותאריך]</span>, בשעה <span class="placeholder">[שעה]</span> — מחכים! 🙏'},
-    parent:{content:'<button class="cbtn">📋 העתק</button>היי <span class="placeholder">[שם ההורה]</span> 👋\n\nאיך <span class="placeholder">[שם הילד/ה]</span> הרגיש/ה אחרי השיעור הראשון?\n\nאתגר פיזי וחברתי — חלק מהתהליך 💪\nמשהו שחשוב שנדע? אנחנו כאן.\n\nהבא: <span class="placeholder">[יום ותאריך]</span>, בשעה <span class="placeholder">[שעה]</span> — מחכים! 🙏'}},
+    adult:{content:'<button class="cbtn">📋 העתק</button>היי <span class="placeholder">[שם]</span> 👋\n\nאיך הרגשתם אחרי אתמול?\n\nהשיעור הראשון הוא תמיד הכי קשה — הגוף מגלה שרירים שלא ידע שיש לו, והראש מנסה לעקוב אחרי הרבה דברים חדשים. זה בדיוק ככה אצל כולם.\n\nאם יש כאבים או שאלות — ספרו לי, אני כאן בשביל זה.\n\nהבא: <span class="placeholder">[יום ותאריך]</span>, בשעה <span class="placeholder">[שעה]</span> 🙏'},
+    parent:{content:'<button class="cbtn">📋 העתק</button>היי <span class="placeholder">[שם ההורה]</span> 👋\n\nאיך <span class="placeholder">[שם הילד/ה]</span> חזר/ה מהשיעור?\n\nילדים מגיבים לשיעור הראשון בכל מיני דרכים — יש שמדברים על זה בלי הפסקה ויש שצריכים קצת זמן לעבד. שניהם בסדר גמור.\n\nאם עלה משהו שחשוב שנדע — ספרו לי.\n\nהבא: <span class="placeholder">[יום ותאריך]</span>, בשעה <span class="placeholder">[שעה]</span> 🙏'}},
   11:{type:'full',
     adult:{content:'<button class="cbtn">📋 העתק</button>היי <span class="placeholder">[שם]</span> 👋\n\nשמנו לב שלא הצלחתם להגיע — הכל בסדר?\n\nאין בעיה בכלל, זה קורה 🙏\n\nנשמח לתאם שיעור חלופי. מתי נוח?\n\n📅 <span class="placeholder">[אפשרות 1]</span>\n📅 <span class="placeholder">[אפשרות 2]</span>\n\nמחכים! 💪'},
     parent:{content:'<button class="cbtn">📋 העתק</button>היי <span class="placeholder">[שם ההורה]</span> 👋\n\nשמנו לב ש-<span class="placeholder">[שם הילד/ה]</span> לא הגיע/ה — הכל בסדר?\n\nאין בעיה, זה קורה 🙏\n\nנשמח לתאם שיעור חלופי. מתי נוח?\n\n📅 <span class="placeholder">[אפשרות 1]</span>\n📅 <span class="placeholder">[אפשרות 2]</span>\n\nמחכים! 💪'}},
@@ -1052,9 +1054,9 @@ const TIP_ROTATION = {
     {id:'parent',label:'גרסת הורה',audience:'parent',body:'<button class="cbtn">📋 העתק</button>היי <span class="placeholder">[שם ההורה]</span> 👋\n\n<span class="placeholder">[שם הילד/ה]</span> אחרי 2 שיעורים — מעולה! 💪\n\nהילדים בדרך כלל מרגישים בבית אחרי 3-4 שיעורים. כאבי שרירים קלים בהתחלה — טבעי ועובר.\n\nהבא: <span class="placeholder">[יום ותאריך]</span>, בשעה <span class="placeholder">[שעה]</span> 🙏'}
   ],
   18: [
-    {id:'communication',label:'תקשורת',body:'<button class="cbtn">📋 העתק</button>היי <span class="placeholder">[שם]</span> 👋\n\nטיפ קצר שעוזר להתקדם 📱\n\nשמרו על תקשורת עם המאמן — אם יש פציעה, קושי, או אם משהו לא ברור. אנחנו כאן בשביל זה.\n\nגם אם נפצעתם מחוץ לאימון — ספרו לנו. לעתים קרובות אפשר עדיין להתאמן בבטחה עם התאמות.\n\nמחכים! 💪'},
+    {id:'communication',label:'תקשורת',body:'<button class="cbtn">📋 העתק</button>היי <span class="placeholder">[שם]</span> 👋\n\nמשהו שראינו שוב ושוב לאורך השנים 📱\n\nמתאמנים שמתקשרים עם המאמן — מתקדמים מהר יותר. פשוט ככה.\n\nנפצעתם? ספרו לנו — ברוב המקרים אפשר להתאים את האימון ולהמשיך.\nמשהו לא ברור מהשיעור? שאלו — אין שאלות טפשיות באימונים.\nצריכים להיעדר? עדכנו — ככה אנחנו יודעים שהכל בסדר.\n\nזה לא ביורוקרטיה, זה שותפות 🙏'},
     {id:'persistence',label:'התמדה',body:'<button class="cbtn">📋 העתק</button>היי <span class="placeholder">[שם]</span> 👋\n\nטיפ קצר שעוזר להתקדם 📈\n\nההתמדה היא הגורם הכי חשוב להתקדמות. לא הכישרון, לא הכוח — אלא ההחלטה שזה חשוב לכם.\n\nגם בימים עייפים — ברגע שמגיעים ומתחילים, האנרגיה חוזרת. זה תמיד שווה את זה.\n\nמחכים! 💪'},
-    {id:'openMind',label:'ראש פתוח',body:'<button class="cbtn">📋 העתק</button>היי <span class="placeholder">[שם]</span> 👋\n\nטיפ קצר שעוזר להתקדם 📖\n\nגשו לכל תרגיל בראש פתוח — גם כשזה חדש, גם כשזה לא מצליח בהתחלה. התלמידים הכי וותיקים שלנו עדיין לומדים דברים חדשים.\n\nהגישה של "איך אפשר להשתפר?" הופכת כל אתגר לחוויה שמחזקת.\n\nמחכים! 💪'}
+    {id:'openMind',label:'ראש פתוח',body:'<button class="cbtn">📋 העתק</button>היי <span class="placeholder">[שם]</span> 👋\n\nמשהו שחשוב שתדעו 📖\n\nיהיו שיעורים שתרגישו שכולם מבינים את התרגיל חוץ מכם. זה נורמלי. גם לתלמידים שאיתנו כבר שנים יש רגעים כאלה.\n\nההבדל בין מי שמתקדם לבין מי שנתקע — הוא לא הכישרון. זה הנכונות לעשות את התרגיל גם כשהוא לא יוצא מושלם. שוב ושוב. עד שפתאום — הגוף מבין.\n\nזה תהליך. תנו לו זמן 🙏'}
   ]
 };
 
