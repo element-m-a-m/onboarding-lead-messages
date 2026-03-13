@@ -2105,73 +2105,73 @@ const DEFAULT_NODES=[
 
   {id:'wPaid',type:'step',label:'💳 שילם',x:140,y:280,w:120},
   {id:'wNoPay',type:'step',label:'⏰ לא שילם\n(המתנה 24-48ש)',x:300,y:280,w:160},
-  {id:'n_t2',type:'wa',label:'#2 תגובה: מבוגר/ת',x:520,y:280,w:160,link:'t2',lane:'adult',ttTitle:'#2 ליד ישיר — מבוגר',ttBody:'היי [שם] 👋\nתודה שפניתם! מה חיפשתם? 🙏'},
-  {id:'n_t3',type:'wa',label:'#3 תגובה: הורה',x:700,y:280,w:150,link:'t3',lane:'parent',ttTitle:'#3 ליד ישיר — הורה',ttBody:'היי [שם ההורה] 👋\nמה הגיל ומה חיפשתם? 💪'},
+  {id:'n_t2',type:'wa',label:'#1 תגובה: מבוגר/ת',x:520,y:280,w:160,link:'t1',lane:'adult',ttTitle:'#1 ליד ישיר — מבוגר'},
+  {id:'n_t3',type:'wa',label:'#2 תגובה: הורה',x:700,y:280,w:150,link:'t2',lane:'parent',ttTitle:'#2 ליד ישיר — הורה'},
 
   {id:'wCallback',type:'source',label:'📞 ביקש שנחזור',x:200,y:390,w:160},
   {id:'wAbandoned',type:'source',label:'🚫 נטש / סגר חלון',x:380,y:390,w:160},
 
-  {id:'n_t1',type:'wa',label:'#1 תגובה ראשונית',x:220,y:490,w:160,link:'t1',ttTitle:'#1 תגובה ווידג׳ט',ttBody:'היי [שם] 👋\nכאן צוות אלמנט.\nראינו שהשארתם פרטים ונשמח לעזור! 🙏'},
-  {id:'n_t19',type:'wa',label:'#19 הודעת מעקב',x:400,y:490,w:160,link:'t19',ttTitle:'#19 מעקב — לא שילם',ttBody:'היי [שם] 👋\nראינו שהתעניינתם — נשמח לעזור! 📞 🙏'},
+  {id:'n_t1',type:'wa',label:'#3 תגובה ווידג׳ט',x:220,y:490,w:160,link:'t3',ttTitle:'#3 תגובה ווידג׳ט'},
+  {id:'n_t19',type:'wa',label:'#4 מעקב — לא שילם',x:400,y:490,w:160,link:'t4',ttTitle:'#4 מעקב — לא שילם'},
 
   {id:'details',type:'step',label:'📋 שליחת פרטי היכרות טכניים',x:360,y:580,w:280,major:true},
   {id:'noResp1',type:'ghost',label:'⛔ אין תגובה / סונן',x:820,y:590,w:160},
 
   // Phase 2 — Intro variants (2-row layout: adult-left, kids-right)
-  {id:'n_t4e',type:'wa',label:'#4e כושר 38+',x:370,y:720,w:130,link:'t4e',lane:'adult'},
-  {id:'n_t4g',type:'wa',label:'#4g כוח וגמישות',x:510,y:720,w:150,link:'t4g',lane:'adult'},
-  {id:'n_t4f',type:'wa',label:'#4f תנועה',x:370,y:770,w:110,link:'t4f',lane:'adult'},
-  {id:'n_t4a',type:'wa',label:'#4a ילדים 6-8',x:740,y:720,w:130,link:'t4a',lane:'parent'},
-  {id:'n_t4c',type:'wa',label:'#4c נוער 12-15',x:880,y:720,w:130,link:'t4c',lane:'parent'},
-  {id:'n_t4b',type:'wa',label:'#4b ילדים 9-11',x:740,y:770,w:140,link:'t4b',lane:'parent'},
-  {id:'n_t4d',type:'wa',label:'#4d לחימה בוגרים',x:880,y:770,w:140,link:'t4d',lane:'adult'},
+  {id:'n_t4e',type:'wa',label:'#5 כושר 38+',x:370,y:720,w:130,link:'t5',lane:'adult'},
+  {id:'n_t4g',type:'wa',label:'#5 כוח וגמישות',x:510,y:720,w:150,link:'t5',lane:'adult'},
+  {id:'n_t4f',type:'wa',label:'#5 תנועה',x:370,y:770,w:110,link:'t5',lane:'adult'},
+  {id:'n_t4a',type:'wa',label:'#5 ילדים 6-8',x:740,y:720,w:130,link:'t5',lane:'parent'},
+  {id:'n_t4c',type:'wa',label:'#5 נוער 12-15',x:880,y:720,w:130,link:'t5',lane:'parent'},
+  {id:'n_t4b',type:'wa',label:'#5 ילדים 9-11',x:740,y:770,w:140,link:'t5',lane:'parent'},
+  {id:'n_t4d',type:'wa',label:'#5 לחימה בוגרים',x:880,y:770,w:140,link:'t5',lane:'adult'},
 
   {id:'payment',type:'step',label:'💳 אימות תשלום וקליטה להכרות',x:400,y:880,w:260,major:true},
-  {id:'n_t8',type:'wa',label:'#8 טופס בריאות',x:800,y:880,w:130,link:'t8'},
+  {id:'n_t8',type:'wa',label:'#7 הצהרת בריאות',x:800,y:880,w:140,link:'t7'},
 
   // Payment variants (2-row layout: kids-left, adult-right)
-  {id:'n_t6a',type:'wa',label:'#6a אישור ילדים 6-8',x:340,y:980,w:140,link:'t6a',lane:'parent'},
-  {id:'n_t6c',type:'wa',label:'#6c אישור נוער',x:490,y:980,w:120,link:'t6c',lane:'parent'},
-  {id:'n_t6b',type:'wa',label:'#6b אישור ילדים 9-11',x:340,y:1030,w:150,link:'t6b',lane:'parent'},
-  {id:'n_t6d',type:'wa',label:'#6d אישור לחימה',x:680,y:980,w:130,link:'t6d',lane:'adult'},
-  {id:'n_t6g',type:'wa',label:'#6g אישור כוח וגמישות',x:820,y:980,w:160,link:'t6g',lane:'adult'},
-  {id:'n_t6e',type:'wa',label:'#6e אישור כושר',x:680,y:1030,w:120,link:'t6e',lane:'adult'},
-  {id:'n_t6f',type:'wa',label:'#6f אישור תנועה',x:820,y:1030,w:130,link:'t6f',lane:'adult'},
+  {id:'n_t6a',type:'wa',label:'#6 אישור ילדים 6-8',x:340,y:980,w:140,link:'t6',lane:'parent'},
+  {id:'n_t6c',type:'wa',label:'#6 אישור נוער',x:490,y:980,w:120,link:'t6',lane:'parent'},
+  {id:'n_t6b',type:'wa',label:'#6 אישור ילדים 9-11',x:340,y:1030,w:150,link:'t6',lane:'parent'},
+  {id:'n_t6d',type:'wa',label:'#6 אישור לחימה',x:680,y:980,w:130,link:'t6',lane:'adult'},
+  {id:'n_t6g',type:'wa',label:'#6 אישור כוח וגמישות',x:820,y:980,w:160,link:'t6',lane:'adult'},
+  {id:'n_t6e',type:'wa',label:'#6 אישור כושר',x:680,y:1030,w:120,link:'t6',lane:'adult'},
+  {id:'n_t6f',type:'wa',label:'#6 אישור תנועה',x:820,y:1030,w:130,link:'t6',lane:'adult'},
 
   // Phase 3 — RIGHT-spine layout: classes on right, decisions center, branches left
   {id:'timerDay',type:'step',label:'⏰ יום לפני שיעור (09:00)',x:540,y:1200,w:180,timer:true},
-  {id:'n_t9',type:'wa',label:'#9 תזכורת הגעה',x:760,y:1200,w:140,link:'t9'},
+  {id:'n_t9',type:'wa',label:'#8 תזכורת הגעה',x:760,y:1200,w:140,link:'t8'},
 
   {id:'class1',type:'step',label:'🥋 שיעור היכרות #1',x:720,y:1320,w:160,major:true},
-  {id:'n_t10',type:'wa',label:'#10 מעקב שיעור 1',x:320,y:1300,w:160,link:'t10'},
+  {id:'n_t10',type:'wa',label:'#9 מעקב שיעור 1',x:320,y:1300,w:160,link:'t9'},
   {id:'att1',type:'decision',label:'האם הגיע?',x:520,y:1400,w:120},
-  {id:'n_t17a',type:'ghost',label:'#17a שילם ולא הגיע',x:320,y:1460,w:160,link:'t17a'},
+  {id:'n_t17a',type:'ghost',label:'#11 שילם ולא הגיע',x:320,y:1460,w:160,link:'t11'},
 
   {id:'class2',type:'step',label:'🥋 שיעור היכרות #2',x:700,y:1540,w:160},
-  {id:'n_t11',type:'wa',label:'#11 מתן ערך / שרירים',x:300,y:1540,w:170,link:'t11'},
+  {id:'n_t11',type:'wa',label:'#10 מעקב שיעור 2',x:300,y:1540,w:170,link:'t10'},
   {id:'att2',type:'decision',label:'האם הגיע?',x:520,y:1620,w:120},
-  {id:'n_t17b_2',type:'ghost',label:'#17b נעלם פתאום',x:300,y:1680,w:150,link:'t17b'},
+  {id:'n_t17b_2',type:'ghost',label:'#12 נעלם פתאום',x:300,y:1680,w:150,link:'t12'},
 
   {id:'class3',type:'step',label:'🥋 שיעור סיום #3',x:720,y:1760,w:170,major:true},
   {id:'att3',type:'decision',label:'האם הגיע?',x:520,y:1860,w:120},
-  {id:'n_t17b_3',type:'ghost',label:'#17b נעלם בסוף',x:300,y:1860,w:150,link:'t17b'},
+  {id:'n_t17b_3',type:'ghost',label:'#12 נעלם בסוף',x:300,y:1860,w:150,link:'t12'},
 
   // Phase 4 — Enrollment, retention, referrals
-  {id:'n_t12',type:'wa',label:'#12 הרשמה בוגר',x:470,y:2060,w:140,link:'t12',lane:'adult'},
-  {id:'n_t13',type:'wa',label:'#13 הרשמה הורה',x:630,y:2060,w:140,link:'t13',lane:'parent'},
+  {id:'n_t12',type:'wa',label:'#13 הרשמה בוגר',x:470,y:2060,w:140,link:'t13',lane:'adult'},
+  {id:'n_t13',type:'wa',label:'#14 הרשמה הורה',x:630,y:2060,w:140,link:'t14',lane:'parent'},
 
   {id:'enrollQ',type:'decision',label:'החלטת לקוח?',x:540,y:2200,w:140},
-  {id:'n_t17b_f',type:'ghost',label:'#17b הפסיק לענות',x:840,y:2160,w:150,link:'t17b'},
-  {id:'n_t18',type:'wa',label:'#18 מתלבט כרגע',x:760,y:2220,w:150,link:'t18'},
+  {id:'n_t17b_f',type:'ghost',label:'#12 הפסיק לענות',x:840,y:2160,w:150,link:'t12'},
+  {id:'n_t18',type:'wa',label:'#22 מתלבט כרגע',x:760,y:2220,w:150,link:'t22'},
 
   {id:'enrolled',type:'step',label:'✅ נרשם למנוי!',x:540,y:2340,w:160,major:true},
 
   {id:'whoEnroll',type:'decision',label:'סוג לקוח?',x:400,y:2460,w:120},
-  {id:'n_t14',type:'wa',label:'#14 ברוכים הבאים\nלמבוגר + אפליקציה',x:300,y:2580,w:160,link:'t14',lane:'adult'},
-  {id:'n_t15',type:'wa',label:'#15 ברוכים הבאים\nלהורה + אפליקציה',x:500,y:2580,w:160,link:'t15',lane:'parent'},
+  {id:'n_t14',type:'wa',label:'#15 ברוכים הבאים\nלמבוגר + אפליקציה',x:300,y:2580,w:160,link:'t15',lane:'adult'},
+  {id:'n_t15',type:'wa',label:'#16 ברוכים הבאים\nלהורה + אפליקציה',x:500,y:2580,w:160,link:'t16',lane:'parent'},
 
   {id:'wait23w',type:'step',label:'⏰ אימון 2-3 שב׳',x:380,y:2720,w:140,timer:true},
-  {id:'n_t16',type:'wa',label:'#16 חבר מביא חבר',x:560,y:2720,w:140,link:'t16'},
+  {id:'n_t16',type:'wa',label:'#20 חבר מביא חבר',x:560,y:2720,w:140,link:'t20'},
   {id:'done',type:'end',label:'🎉 לקוח פעיל!',x:360,y:2860,w:160}
 ];
 
