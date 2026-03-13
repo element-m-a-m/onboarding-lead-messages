@@ -1208,7 +1208,7 @@ const VAR_REGISTRY={
   '[שעה]':{type:'time',key:'classTime',label:'שעה'},
   '[מחיר]':{type:'text',key:'price',label:'מחיר'},
   '[מחיר היכרות בודד]':{type:'derived',key:'trialSinglePrice',label:'מחיר היכרות',
-    deriveFn:()=>{const gk=getSessionGroupKey();const p=appSettings.pricing?.trialSingle;if(!p||!gk)return '';return (p[gk]||p.default||70)+'₪'}},
+    deriveFn:()=>{const gk=getSessionGroupKey();const p=appSettings.pricing?.trialSingle;if(!p||!gk)return '';return (p[gk]||p.default||70)+''}},
   '[מספר]':{type:'text',key:'sessionCount',label:'מספר אימונים'},
   '[אפשרות 1]':{type:'text',key:'option1',label:'אפשרות 1'},
   '[אפשרות 2]':{type:'text',key:'option2',label:'אפשרות 2'},
