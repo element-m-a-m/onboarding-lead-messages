@@ -301,6 +301,25 @@ h2 { font-size: 18px; font-weight: 800; color: var(--hdr); margin-top: 32px; mar
 .var-field input[type="date"].filled { background: #ecfdf5; border-color: #86efac; }
 .session-badge { background: var(--accent); color: #fff; border-radius: 50%; font-size: 9px; font-weight: 800; padding: 1px 5px; margin-right: 4px; }
 .wizard-result .template-card { margin: 0; }
+.wizard-result .template-card .template-body { padding: 0; }
+
+/* === WhatsApp Chat Preview in Wizard === */
+.wiz-chat-container { background: #e5ddd5; background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 5 L35 15 L30 10 L25 15Z' fill='%23d4cfc4' opacity='0.3'/%3E%3C/svg%3E"); border-radius: 0 0 12px 12px; padding: 24px 16px 16px; min-height: 80px; }
+.wiz-chat-bubble { background: #dcf8c6; border-radius: 0 8px 8px 8px; padding: 10px 14px 6px; max-width: 88%; margin-left: auto; margin-right: 12px; position: relative; box-shadow: 0 1px 2px rgba(0,0,0,0.13); white-space: pre-wrap; line-height: 1.7; font-size: 13.5px; color: #303030; }
+.wiz-chat-bubble::before { content:''; position:absolute; top:0; right:-8px; width:0; height:0; border-left:8px solid #dcf8c6; border-top:8px solid transparent; }
+.wiz-chat-bubble .placeholder { background:#fef3c7; padding:2px 4px; border-radius:4px; font-weight:700; color:#92400e; font-size:12px; border:1px dashed #fcd34d; font-family:monospace; }
+.wiz-chat-bubble .var-filled { background:#c6f6d5; padding:2px 4px; border-radius:4px; font-weight:700; color:#065f46; font-size:12px; border:1px solid #86efac; }
+.wiz-chat-bubble .manual-placeholder { background:#fed7aa; padding:2px 4px; border-radius:4px; font-weight:600; color:#9a3412; font-size:12px; }
+.wiz-chat-time { text-align: left; font-size: 10px; color: #8c9a8e; margin-top: 4px; direction: ltr; }
+.wiz-chat-actions { display: flex; gap: 10px; justify-content: center; padding: 16px 12px 8px; }
+.wiz-copy-btn { background: #25D366; color: #fff; border: none; border-radius: 24px; padding: 11px 28px; font-size: 14px; font-weight: 700; font-family: 'Heebo', sans-serif; cursor: pointer; display: flex; align-items: center; gap: 8px; box-shadow: 0 3px 10px rgba(37,211,102,0.3); transition: all 0.2s; }
+.wiz-copy-btn:hover { background: #128C7E; transform: translateY(-1px); box-shadow: 0 5px 14px rgba(37,211,102,0.35); }
+.wiz-copy-btn.copied { background: #065f46; }
+.wiz-edit-btn { background: #fff; color: #475569; border: 2px solid #e2e8f0; border-radius: 24px; padding: 10px 22px; font-size: 13px; font-weight: 700; font-family: 'Heebo', sans-serif; cursor: pointer; transition: all 0.2s; }
+.wiz-edit-btn:hover { border-color: #94a3b8; background: #f8fafc; }
+.wiz-reset-btn { background: #fff; color: #ef4444; border: 2px solid #fca5a5; border-radius: 24px; padding: 10px 18px; font-size: 13px; font-weight: 700; font-family: 'Heebo', sans-serif; cursor: pointer; transition: all 0.2s; }
+.wiz-reset-btn:hover { background: #fef2f2; }
+.wiz-chat-bubble.editing { background: #fff; box-shadow: 0 0 0 3px rgba(37,211,102,0.3); cursor: text; user-select: text; }
 
 /* === v8.0 — Audience Toggle === */
 .audience-toggle { display:flex; gap:4px; padding:6px 12px; background:#f0f4f8; border-bottom:1px solid var(--border); }
@@ -356,8 +375,8 @@ h2 { font-size: 18px; font-weight: 800; color: var(--hdr); margin-top: 32px; mar
 </div>
 
 <div class="nav-tabs">
-  <a href="#flowcharts">📊 תרשים</a>
   <a href="#wizard" style="background:var(--accent);color:#fff;border-color:var(--accent);">🧙 אשף</a>
+  <a href="#flowcharts">📊 תרשים</a>
   <a href="#stage1">1️⃣ פנייה</a>
   <a href="#stage2">2️⃣ תיאום</a>
   <a href="#stage3">3️⃣ ניסיון</a>
@@ -389,6 +408,19 @@ h2 { font-size: 18px; font-weight: 800; color: var(--hdr); margin-top: 32px; mar
       <li><kbd>גרירה</kbd> מנקודת עיגול יוצרת קשר חדש. <kbd>לחיצה</kbd> על חץ לבחירה ושינוי חיבורים.</li>
       <li><kbd>Ctrl+C / V</kbd> העתק/הדבק | <kbd>Ctrl+Z / Y</kbd> ביטול/שחזור | <kbd>Delete</kbd> מחיקה.</li>
     </ul>
+  </div>
+
+  <!-- WIZARD -->
+  <div id="wizard">
+    <div class="wizard-panel" id="wizardPanel">
+      <div class="wizard-header" onclick="toggleWizard()">
+        <span style="font-size:22px;">🧙</span>
+        <h2>אשף הודעות וואטסאפ</h2>
+        <span class="wizard-collapse-icon">▲</span>
+      </div>
+      <div class="wizard-subtitle">בחרו שלב במסע הלקוח כדי למצוא את ההודעה המתאימה</div>
+      <div class="wizard-body" id="wizardBody"></div>
+    </div>
   </div>
 
   <!-- SETTINGS PANEL -->
@@ -455,19 +487,6 @@ h2 { font-size: 18px; font-weight: 800; color: var(--hdr); margin-top: 32px; mar
   <div class="no-results" id="noResults" style="display:none; text-align:center; padding: 40px; color: var(--text2);">
     <div style="font-size:48px; margin-bottom: 10px;">🔍</div>
     <p style="font-size: 16px; font-weight: 500;">לא נמצאו תבניות תואמות לחיפוש.</p>
-  </div>
-
-  <!-- WIZARD -->
-  <div id="wizard">
-    <div class="wizard-panel" id="wizardPanel">
-      <div class="wizard-header" onclick="toggleWizard()">
-        <span style="font-size:22px;">🧙</span>
-        <h2>אשף הודעות וואטסאפ</h2>
-        <span class="wizard-collapse-icon">▲</span>
-      </div>
-      <div class="wizard-subtitle">בחרו שלב במסע הלקוח כדי למצוא את ההודעה המתאימה</div>
-      <div class="wizard-body" id="wizardBody"></div>
-    </div>
   </div>
 
   <!-- TEXT TEMPLATES SECTION -->
@@ -1852,12 +1871,35 @@ function renderWizardTemplate(tid){
     });
     body.insertBefore(form,msg);
   }
-  // Wire copy for wizard clone
+  // Remove old copy button and msg-actions from cloned message
   msg.removeAttribute('onclick');
-  msg.addEventListener('click',function(e){
-    if(e.target.closest('.cbtn,.edit-btn,.reset-btn,.save-edit-btn'))return;
-    copyMsg(msg);
-  });
+  msg.querySelectorAll('.cbtn,.msg-actions').forEach(el=>el.remove());
+  // Wrap message in WhatsApp chat bubble UI
+  const chatContainer=document.createElement('div');chatContainer.className='wiz-chat-container';
+  const bubble=document.createElement('div');bubble.className='wiz-chat-bubble';
+  // Move message content into bubble
+  while(msg.firstChild)bubble.appendChild(msg.firstChild);
+  msg.appendChild(bubble);
+  // Timestamp decoration
+  const timeSpan=document.createElement('div');timeSpan.className='wiz-chat-time';timeSpan.textContent='עכשיו ✓✓';
+  bubble.appendChild(timeSpan);
+  // Wrap the whole template-body's message area in the chat container
+  chatContainer.appendChild(msg);
+  // Action buttons below the chat area
+  const chatActions=document.createElement('div');chatActions.className='wiz-chat-actions';
+  const copyBtn=document.createElement('button');copyBtn.className='wiz-copy-btn';copyBtn.innerHTML='📋 העתק הודעה';
+  copyBtn.addEventListener('click',function(e){e.stopPropagation();copyWizMsg(bubble,copyBtn)});
+  chatActions.appendChild(copyBtn);
+  const editBtn=document.createElement('button');editBtn.className='wiz-edit-btn';editBtn.textContent='✏️ עריכה';
+  editBtn.addEventListener('click',function(e){e.stopPropagation();startWizEdit(bubble,tid,chatActions)});
+  chatActions.appendChild(editBtn);
+  if(getMsgEdits()[tid]){
+    const resetBtn=document.createElement('button');resetBtn.className='wiz-reset-btn';resetBtn.textContent='↺ שחזור';
+    resetBtn.addEventListener('click',function(e){e.stopPropagation();resetWizMsg(tid,bubble,clone,chatActions)});
+    chatActions.appendChild(resetBtn);
+  }
+  chatContainer.appendChild(chatActions);
+  body.appendChild(chatContainer);
   // Add fill indicator
   addFillIndicator(clone);
   updateFillIndicator(clone);
@@ -1868,8 +1910,104 @@ function renderWizardTemplate(tid){
     if(AUDIENCE_VARIANTS[tNum])renderAudienceToggle(clone,tNum);
     if(TIP_ROTATION[tNum])renderTipSelector(clone,tNum);
   }
-  // Also scroll wizard into view
-  container.scrollIntoView({behavior:'smooth',block:'nearest'});
+  // Scroll wizard into view
+  container.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+// Wizard-specific copy: copies from the bubble, shows feedback on the big button
+function copyWizMsg(bubble,btn){
+  const c=bubble.cloneNode(true);
+  c.querySelectorAll('.wiz-chat-time,.wiz-copy-btn,.wiz-edit-btn,.wiz-reset-btn,.wiz-chat-actions,.save-edit-btn').forEach(b=>b.remove());
+  c.querySelectorAll('.manual-placeholder').forEach(s=>s.replaceWith(s.textContent));
+  const unfilled=c.querySelectorAll('.placeholder');
+  unfilled.forEach(s=>s.replaceWith(s.textContent));
+  const txt=c.innerText.trim();
+  if(unfilled.length>0){doCopy(txt,btn,unfilled.length)}else{doCopy(txt,btn)}
+}
+
+// Wizard-specific edit
+function startWizEdit(bubble,cardId,actionsDiv){
+  if(editingMsg)finishMsgEdit(false);
+  editingMsg=bubble;
+  bubble.classList.add('editing');
+  bubble.dataset.cardId=cardId;
+  bubble._preEdit=bubble.innerHTML;
+  // Hide action buttons, show save button
+  actionsDiv.style.display='none';
+  const saveBtn=document.createElement('button');
+  saveBtn.className='save-edit-btn';saveBtn.style.cssText='position:static;margin:12px auto;display:block;padding:10px 28px;font-size:14px;border-radius:24px;';
+  saveBtn.textContent='💾 שמור שינויים';
+  saveBtn.onclick=function(e){e.stopPropagation();finishWizEdit(true,bubble,cardId,actionsDiv,saveBtn)};
+  bubble.parentNode.parentNode.appendChild(saveBtn);
+  bubble.contentEditable='true';
+  bubble.querySelectorAll('.wiz-chat-time').forEach(b=>{b.contentEditable='false'});
+  bubble.addEventListener('paste',handlePaste);
+  bubble._boldHandler=function(ev){
+    if((ev.ctrlKey||ev.metaKey)&&ev.key.toLowerCase()==='b'){
+      ev.preventDefault();ev.stopPropagation();
+      const sel=window.getSelection();if(!sel.rangeCount)return;
+      const txt=sel.getRangeAt(0).toString();
+      document.execCommand('insertText',false,'*'+txt+'*');
+    }
+  };
+  bubble.addEventListener('keydown',bubble._boldHandler);
+  // Escape handler
+  bubble._escHandler=function(ev){if(ev.key==='Escape')finishWizEdit(false,bubble,cardId,actionsDiv,saveBtn)};
+  document.addEventListener('keydown',bubble._escHandler);
+  const r=document.createRange();r.selectNodeContents(bubble);r.collapse(false);
+  const s=window.getSelection();s.removeAllRanges();s.addRange(r);
+}
+
+function finishWizEdit(save,bubble,cardId,actionsDiv,saveBtn){
+  bubble.contentEditable='false';
+  bubble.classList.remove('editing');
+  bubble.removeEventListener('paste',handlePaste);
+  if(bubble._boldHandler){bubble.removeEventListener('keydown',bubble._boldHandler);delete bubble._boldHandler}
+  if(bubble._escHandler){document.removeEventListener('keydown',bubble._escHandler);delete bubble._escHandler}
+  saveBtn.remove();
+  actionsDiv.style.display='';
+  if(save){
+    // Save: extract bubble content minus UI elements
+    const cl=bubble.cloneNode(true);
+    cl.querySelectorAll('.wiz-chat-time,.save-edit-btn').forEach(b=>b.remove());
+    const edits=getMsgEdits();
+    edits[cardId]=cl.innerHTML;
+    try{localStorage.setItem(TK,JSON.stringify(edits))}catch(e){}
+    toast('תבנית נשמרה ✏️');
+    // Add reset button if not present
+    if(!actionsDiv.querySelector('.wiz-reset-btn')){
+      const rb=document.createElement('button');rb.className='wiz-reset-btn';rb.textContent='↺ שחזור';
+      rb.addEventListener('click',function(e){e.stopPropagation();resetWizMsg(cardId,bubble,bubble.closest('.template-card'),actionsDiv)});
+      actionsDiv.appendChild(rb);
+    }
+    // Sync to original card
+    document.dispatchEvent(new CustomEvent('tpl-edit',{detail:{cardId,html:edits[cardId],source:bubble}}));
+  } else {
+    if(bubble._preEdit)bubble.innerHTML=bubble._preEdit;
+  }
+  delete bubble._preEdit;
+  editingMsg=null;
+}
+
+function resetWizMsg(cardId,bubble,card,actionsDiv){
+  if(!confirm('לשחזר את ההודעה למקור? השינויים שלך יימחקו.'))return;
+  const orig=origMessages[cardId];if(!orig)return;
+  // Restore original content into bubble
+  const tempDiv=document.createElement('div');tempDiv.innerHTML=orig;
+  // Remove any buttons from original content
+  tempDiv.querySelectorAll('.cbtn,.msg-actions,.edit-btn,.reset-btn').forEach(b=>b.remove());
+  bubble.innerHTML=tempDiv.innerHTML;
+  // Re-add timestamp
+  const ts=document.createElement('div');ts.className='wiz-chat-time';ts.textContent='עכשיו ✓✓';
+  bubble.appendChild(ts);
+  // Clear from localStorage
+  const edits=getMsgEdits();delete edits[cardId];
+  try{localStorage.setItem(TK,JSON.stringify(edits))}catch(e){}
+  // Remove reset button
+  const rb=actionsDiv.querySelector('.wiz-reset-btn');if(rb)rb.remove();
+  toast('שוחזר למקור ↺');
+  // Sync to original card
+  document.dispatchEvent(new CustomEvent('tpl-edit',{detail:{cardId,html:orig,source:bubble}}));
 }
 
 function applyWizVars(card){
@@ -1919,7 +2057,7 @@ function initMsgEditing(){
     if(!msg)return;
     const actions=document.createElement('div');actions.className='msg-actions';
     const copyBtn=msg.querySelector('.cbtn');
-    if(copyBtn){actions.appendChild(copyBtn)}
+    if(copyBtn){actions.appendChild(copyBtn);copyBtn.addEventListener('click',function(e){e.stopPropagation();copyMsg(msg)})}
     const editBtn=document.createElement('button');
     editBtn.className='edit-btn';
     editBtn.textContent='✏️ עריכה';
@@ -1941,6 +2079,58 @@ function initMsgEditing(){
       copyMsg(msg);
     });
   });
+  // Two-way sync listener: when an edit/reset is saved in one location, update the counterpart
+  document.addEventListener('tpl-edit',function(e){
+    const{cardId,html,source}=e.detail;
+    // Update original card if it wasn't the source
+    const origCard=document.getElementById(cardId);
+    if(origCard){
+      const origMsg=origCard.querySelector('.message');
+      if(origMsg&&origMsg!==source){origMsg.innerHTML=html;reattachMsgButtons(origMsg,cardId)}
+    }
+    // Update wizard clone if open and wasn't the source
+    const wizClone=document.getElementById('wiz_'+cardId);
+    if(wizClone){
+      const wizBubble=wizClone.querySelector('.wiz-chat-bubble');
+      const wizMsg=wizClone.querySelector('.message');
+      if(wizBubble&&wizBubble!==source){
+        // Strip buttons/UI from html before inserting into bubble
+        const tmp=document.createElement('div');tmp.innerHTML=html;
+        tmp.querySelectorAll('.cbtn,.msg-actions,.edit-btn,.reset-btn').forEach(b=>b.remove());
+        wizBubble.innerHTML=tmp.innerHTML;
+        // Re-add timestamp
+        const ts=document.createElement('div');ts.className='wiz-chat-time';ts.textContent='עכשיו ✓✓';
+        wizBubble.appendChild(ts);
+        // Rebuild action buttons below bubble
+        reattachWizButtons(wizBubble,cardId,wizClone)
+      } else if(wizMsg&&wizMsg!==source&&!wizBubble){
+        wizMsg.innerHTML=html;reattachWizButtons(wizMsg,cardId,wizClone)
+      }
+    }
+  });
+  // Escape key cancels edit
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape'&&editingMsg)finishMsgEdit(false);
+  });
+}
+
+// Re-attach buttons in wizard clone after sync
+function reattachWizButtons(bubble,cardId,wizCard){
+  const container=bubble.closest('.wiz-chat-container')||bubble.parentNode;
+  let actions=container.parentNode.querySelector('.wiz-chat-actions');
+  if(!actions){actions=document.createElement('div');actions.className='wiz-chat-actions';container.parentNode.appendChild(actions)}
+  actions.innerHTML='';
+  const cb=document.createElement('button');cb.className='wiz-copy-btn';cb.textContent='📋 העתק הודעה';
+  cb.addEventListener('click',function(e){e.stopPropagation();copyWizMsg(bubble,cb)});
+  actions.appendChild(cb);
+  const eb=document.createElement('button');eb.className='wiz-edit-btn';eb.textContent='✏️ עריכה';
+  eb.addEventListener('click',function(e){e.stopPropagation();startWizEdit(bubble,cardId,actions)});
+  actions.appendChild(eb);
+  if(getMsgEdits()[cardId]){
+    const rb=document.createElement('button');rb.className='wiz-reset-btn';rb.textContent='↺ שחזור';
+    rb.addEventListener('click',function(e){e.stopPropagation();resetWizMsg(cardId,bubble,wizCard,actions)});
+    actions.appendChild(rb);
+  }
 }
 
 function startMsgEdit(msgEl,cardId){
@@ -2007,9 +2197,11 @@ function finishMsgEdit(save){
 function saveMsgEdit(cardId,msgEl){
   const edits=getMsgEdits();
   const cl=msgEl.cloneNode(true);
-  cl.querySelectorAll('.cbtn,.edit-btn,.reset-btn,.save-edit-btn').forEach(b=>b.remove());
+  cl.querySelectorAll('.cbtn,.edit-btn,.reset-btn,.save-edit-btn,.msg-actions,.wiz-chat-actions').forEach(b=>b.remove());
   edits[cardId]=cl.innerHTML;
   try{localStorage.setItem(TK,JSON.stringify(edits))}catch(e){}
+  // Sync to counterpart (original ↔ wizard)
+  document.dispatchEvent(new CustomEvent('tpl-edit',{detail:{cardId,html:edits[cardId],source:msgEl}}));
 }
 
 function getMsgEdits(){try{return JSON.parse(localStorage.getItem(TK))||{}}catch(e){return{}}}
@@ -2037,23 +2229,38 @@ function resetMsg(cardId,msgEl){
   try{localStorage.setItem(TK,JSON.stringify(edits))}catch(e){}
   reattachMsgButtons(msgEl,cardId);
   toast('שוחזר למקור ↺');
+  // Sync reset to counterpart
+  document.dispatchEvent(new CustomEvent('tpl-edit',{detail:{cardId,html:orig,source:msgEl}}));
 }
 
 function reattachMsgButtons(msgEl,cardId){
-  // Re-inject edit button after innerHTML replacement
-  if(!msgEl.querySelector('.edit-btn')){
+  // Re-inject action buttons after innerHTML replacement
+  let actions=msgEl.querySelector('.msg-actions');
+  if(!actions){actions=document.createElement('div');actions.className='msg-actions';msgEl.appendChild(actions)}
+  // Copy button
+  let cb=actions.querySelector('.cbtn');
+  if(!cb){cb=document.createElement('button');cb.className='cbtn';cb.textContent='📋 העתק הודעה';actions.insertBefore(cb,actions.firstChild)}
+  cb.onclick=null;cb.addEventListener('click',function(e){e.stopPropagation();copyMsg(msgEl)});
+  // Edit button
+  if(!actions.querySelector('.edit-btn')){
     const eb=document.createElement('button');
     eb.className='edit-btn';
     eb.textContent='✏️ עריכה';
     eb.onclick=function(e){e.stopPropagation();startMsgEdit(msgEl,cardId)};
-    msgEl.appendChild(eb);
+    actions.appendChild(eb);
+  }
+  // Reset button if edits exist
+  if(getMsgEdits()[cardId]&&!actions.querySelector('.reset-btn')){
+    const rb=document.createElement('button');rb.className='reset-btn';rb.textContent='↺ שחזור';
+    rb.onclick=function(e){e.stopPropagation();resetMsg(cardId,msgEl)};
+    actions.appendChild(rb);
   }
   // Re-attach click listener
   msgEl.removeAttribute('onclick');
   msgEl.onclick=null;
   msgEl.addEventListener('click',function handler(e){
     if(editingMsg===msgEl)return;
-    if(e.target.closest('.edit-btn,.reset-btn,.save-edit-btn'))return;
+    if(e.target.closest('.msg-actions,.save-edit-btn,.wiz-chat-actions'))return;
     copyMsg(msgEl);
   });
 }
