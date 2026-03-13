@@ -1578,6 +1578,7 @@ function renderSwapSelector(card,tNum){
     chip.addEventListener('click',function(){
       div.querySelectorAll('.swap-chip').forEach(c=>c.classList.remove('active'));
       chip.classList.add('active');
+      sessionData.groupName=gk;
       injectSwapContent(card,tNum,gk);
     });
     div.appendChild(chip);
