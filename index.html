@@ -1609,8 +1609,8 @@ function injectSwapContent(card,tNum,groupKey){
     let html='';
     if(blk.emoji)html+=blk.emoji+' ';
     if(blk.title)html+='<strong>'+blk.title+'</strong>';
-    if(blk.schedLine)html+='<br>'+blk.schedLine;
-    if(blk.extra)html+='<br>'+blk.extra;
+    if(blk.schedLine)html+='\n'+blk.schedLine;
+    if(blk.extra)html+='\n'+blk.extra;
     slot.innerHTML=html;
   } else if(tNum===6){
     // Template #6 — "what to bring" block: find matching category for groupKey
@@ -1620,8 +1620,8 @@ function injectSwapContent(card,tNum,groupKey){
     }
     if(!blk){slot.innerHTML='';return}
     let html='';
-    if(blk.title)html+=blk.title+'<br>';
-    if(blk.items&&blk.items.length){blk.items.forEach(item=>{html+=item+'<br>'})}
+    if(blk.title)html+=blk.title+'\n';
+    if(blk.items&&blk.items.length){blk.items.forEach(item=>{html+=item+'\n'})}
     // Add adult-only extra line for combat adults when audience is adult
     const audience=sessionData.audienceMode||'adult';
     if(blk.adultExtra&&audience==='adult'&&groupKey==='combat-adults'){
@@ -1633,8 +1633,8 @@ function injectSwapContent(card,tNum,groupKey){
     const blk=blocks[groupKey];
     if(!blk){slot.innerHTML='';return}
     let html='';
-    if(blk.title)html+='<strong>'+blk.title+'</strong><br>';
-    if(blk.items&&blk.items.length){blk.items.forEach(item=>{html+=item+'<br>'})}
+    if(blk.title)html+='<strong>'+blk.title+'</strong>\n';
+    if(blk.items&&blk.items.length){blk.items.forEach(item=>{html+=item+'\n'})}
     slot.innerHTML=html;
   } else {
     // Generic fallback
@@ -1643,7 +1643,7 @@ function injectSwapContent(card,tNum,groupKey){
     let html='';
     if(blk.emoji)html+=blk.emoji+' ';
     if(blk.title)html+='<strong>'+blk.title+'</strong>';
-    if(blk.items&&blk.items.length){html+='<br>';blk.items.forEach(item=>{html+='• '+item+'<br>'})}
+    if(blk.items&&blk.items.length){html+='\n';blk.items.forEach(item=>{html+='• '+item+'\n'})}
     slot.innerHTML=html;
   }
   // Re-apply vars after swap
