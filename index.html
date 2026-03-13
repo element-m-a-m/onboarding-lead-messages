@@ -281,9 +281,18 @@ h2 { font-size: 18px; font-weight: 800; color: var(--hdr); margin-top: 32px; mar
 .wizard-panel.collapsed .wizard-collapse-icon { transform: rotate(180deg); }
 .wizard-panel.collapsed .wizard-body { display: none; }
 .wizard-body { padding: 20px; }
-.wizard-breadcrumb { display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 500; color: var(--text2); margin-bottom: 16px; flex-wrap: wrap; }
-.wizard-breadcrumb .crumb { color: var(--accent2); font-weight: 700; }
-.wizard-breadcrumb .crumb-sep { color: #cbd5e1; }
+.wizard-breadcrumb { display: none; }
+.wizard-progress { display: flex; align-items: center; justify-content: center; margin-bottom: 20px; direction: ltr; }
+.wizard-progress .prog-step { display: flex; flex-direction: column; align-items: center; gap: 4px; position: relative; z-index: 1; }
+.wizard-progress .prog-circle { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800; border: 2.5px solid #cbd5e1; background: #fff; color: #94a3b8; transition: all 0.3s; }
+.wizard-progress .prog-step.completed .prog-circle { background: var(--accent); border-color: var(--accent); color: #fff; }
+.wizard-progress .prog-step.active .prog-circle { border-color: var(--accent); color: var(--accent); box-shadow: 0 0 0 4px rgba(37,211,102,0.15); animation: progPulse 2s ease-in-out infinite; }
+@keyframes progPulse { 0%,100%{box-shadow:0 0 0 4px rgba(37,211,102,0.15)} 50%{box-shadow:0 0 0 8px rgba(37,211,102,0.08)} }
+.wizard-progress .prog-label { font-size: 10px; font-weight: 600; color: #94a3b8; white-space: nowrap; transition: color 0.3s; }
+.wizard-progress .prog-step.completed .prog-label { color: var(--accent2); }
+.wizard-progress .prog-step.active .prog-label { color: var(--accent2); font-weight: 700; }
+.wizard-progress .prog-line { flex: 1; height: 2.5px; background: #cbd5e1; margin: 0 8px; margin-bottom: 18px; min-width: 30px; max-width: 80px; transition: background 0.3s; }
+.wizard-progress .prog-line.done { background: var(--accent); }
 .wizard-back-btn { background: #f1f5f9; border: 1px solid var(--border); border-radius: 8px; padding: 6px 14px; font-size: 12px; font-weight: 700; font-family: 'Heebo', sans-serif; cursor: pointer; color: var(--text); display: inline-flex; align-items: center; gap: 4px; transition: all 0.2s; }
 .wizard-back-btn:hover { background: #e2e8f0; }
 .wizard-steps { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
@@ -575,13 +584,13 @@ h2 { font-size: 18px; font-weight: 800; color: var(--hdr); margin-top: 32px; mar
 
 <div class="swap-slot"></div>
 
-📍 אולם "המגינים", רח׳ חזית חמש 2, חולון
+📍 אולם בית ספר "המגינים", רחוב "חזית חמש" 2, חולון
 💰 שיעור בודד: <span class="placeholder">[מחיר היכרות בודד]</span>₪ | כרטיסיית 3 שיעורים: 99₪
 
 🔗 לצפייה בלוח השיעורים ורישום:
 https://element-m-a-m.github.io/book-first-classes/
 
-מומלץ להגיע 5-10 דק׳ לפני. מחכים! 🙏</div>
+מומלץ להגיע 10 דקות לפני. מחכים! 🙏</div>
   </div></div>
 
   <div class="template-card" id="t6" data-search="אישור תשלום הכוונה להביא payment confirmation swap"><div class="template-header"><span class="tnum-badge">#6</span><span class="ttitle">אישור תשלום + הכוונה לשיעור</span><span class="tbadge">🟢</span></div><div class="template-meta"><span>⏰ מיד אחרי שהתקבל תשלום</span><span>📋 קליקאפ: PURCHASED FIRST CLASSES</span></div><div class="template-body">
@@ -593,9 +602,9 @@ https://element-m-a-m.github.io/book-first-classes/
 
 <div class="swap-slot"></div>
 
-📍 אולם "המגינים", רח׳ חזית חמש 2, חולון
+📍 אולם בית ספר "המגינים", רחוב "חזית חמש" 2, חולון
 
-הגיעו 5-10 דקות לפני תחילת השיעור להתארגנות 🙏</div>
+הגיעו 10 דקות לפני תחילת השיעור להתארגנות 🙏</div>
   </div></div>
 
   <div class="template-card" id="t7" data-search="טופס בריאות הצהרה health"><div class="template-header"><span class="tnum-badge">#7</span><span class="ttitle">הצהרת בריאות</span><span class="tbadge">🟢</span></div><div class="template-meta"><span>⏰ הודעה נפרדת, מיד אחרי #6</span><span>📋 קליקאפ: PURCHASED FIRST CLASSES</span></div><div class="template-body">
@@ -618,11 +627,11 @@ https://element-m-a-m.github.io/book-first-classes/
 תזכורת קטנה — מחר יש לכם שיעור! 🥋
 
 🗓️ <span class="placeholder">[יום ותאריך]</span>, בשעה <span class="placeholder">[שעה]</span>
-📍 אולם "המגינים", רח׳ חזית חמש 2, חולון
+📍 אולם בית ספר "המגינים", רחוב "חזית חמש" 2, חולון
 
 זכרו להביא: בגדי אימון, בקבוק מים, ולהסיר תכשיטים.
 
-הגיעו 5-10 דקות לפני. נתראה! 💪</div>
+הגיעו 10 דקות לפני. נתראה! 💪</div>
   </div></div>
 
   <div class="template-card" id="t9" data-search="מעקב שיעור ראשון 1 first"><div class="template-header"><span class="tnum-badge">#9</span><span class="ttitle">מעקב לאחר שיעור 1</span><span class="tbadge">🟡</span></div><div class="template-meta"><span>⏰ למחרת השיעור הראשון (09:00-11:00)</span><span>📋 קליקאפ: MADE 1ST CLASS</span></div><div class="template-body">
@@ -712,7 +721,7 @@ https://element-m-a-m.github.io/book-first-classes/
 
 📱 הורידו את אפליקציית BoostApp Business — לרישום לשיעורים מראש
 📋 שאלון רקע ומטרות: https://forms.gle/piXKhuJLkjBAV8mM6
-📍 אולם "המגינים", רח׳ חזית חמש 2, חולון
+📍 אולם בית ספר "המגינים", רחוב "חזית חמש" 2, חולון
 
 💳 המנוי מתחדש אוטומטית כל 30 יום
 🔒 3 חודשי יסודות — תקופה שמאפשרת לבנות בסיס ולהרגיש את הערך האמיתי
@@ -731,7 +740,7 @@ https://element-m-a-m.github.io/book-first-classes/
 
 📱 הורידו את אפליקציית BoostApp Business — לוח שיעורים ועדכונים
 📋 שאלון רקע: https://forms.gle/piXKhuJLkjBAV8mM6
-📍 אולם "המגינים", רח׳ חזית חמש 2, חולון
+📍 אולם בית ספר "המגינים", רחוב "חזית חמש" 2, חולון
 
 💳 המנוי מתחדש אוטומטית כל 30 יום
 🔒 3 חודשי יסודות
@@ -931,10 +940,10 @@ https://element-m-a-m.github.io/book-first-classes/</div></div></div>
 ועוד תוכן באינסטגרם:
 📸 https://www.instagram.com/element.holon</div></div></div>
 
-  <div class="faq-card" onclick="toggleFaq(this)"><div class="faq-q">איך מגיעים? / יש חניה?</div><div class="faq-a"><div class="message" onclick="event.stopPropagation();copyMsg(this)"><button class="cbtn">📋 העתק</button>📍 אולם "המגינים", רח׳ חזית חמש 2, חולון
+  <div class="faq-card" onclick="toggleFaq(this)"><div class="faq-q">איך מגיעים? / יש חניה?</div><div class="faq-a"><div class="message" onclick="event.stopPropagation();copyMsg(this)"><button class="cbtn">📋 העתק</button>📍 אולם בית ספר "המגינים", רחוב "חזית חמש" 2, חולון
 📌 https://maps.app.goo.gl/Ru3awL6neiGsfMky5
 
-יש חניה ברחוב. מומלץ להגיע 5-10 דקות לפני.</div></div></div>
+יש חניה ברחוב. מומלץ להגיע 10 דקות לפני.</div></div></div>
 
   <div class="faq-card" onclick="toggleFaq(this)"><div class="faq-q">יש שיעור היום?</div><div class="faq-a"><div class="message" onclick="event.stopPropagation();copyMsg(this)"><button class="cbtn">📋 העתק</button>בדקו באפליקציית BoostApp — שם תמיד מעודכן לוח השיעורים.</div></div></div>
 
@@ -994,11 +1003,10 @@ const SWAP_BLOCKS = {
     'movement':     {emoji:'🤸',title:'קבוצת מובמנט',schedLine:'📅 שלישי *19:45* עד 21:00 | שישי *14:30* עד 15:45',extra:'שיעורי תנועה המשלבים ניידות, קואורדינציה ושליטה בגוף — מתאים לכל רמה.'},
     'strength-mobility':{emoji:'🏋️',title:'קבוצת כוח וגמישות',schedLine:'📅 שלישי *18:30* עד 19:45 | שישי *15:45* עד 17:00',extra:'אימוני כוח פונקציונליים בשילוב עבודת גמישות — מתאים לכל רמה.'}
   },
-  6: { // template #6 — payment confirmation: 4 "what to bring" blocks
-    combat:   {applies:['kids-6-8','kids-9-11','teens-12-15','combat-adults'],title:'מה חשוב להביא?',items:['👕 חולצה שחורה + מכנסיים ארוכים (טרנינג/טייץ)','💧 בקבוק מים אישי','💍 חשוב להסיר שעונים ותכשיטים לפני האימון'],adultExtra:'🩹 אם יש בעיות רפואיות או פציעות — ספרו למדריך לפני תחילת השיעור'},
-    fitness38:{applies:['fitness-38'],title:'מה חשוב להביא?',items:['👕 בגדי אימון נוחים','💧 בקבוק מים אישי','🧘 מגבת קטנה (אופציונלי)','🩹 אם יש מגבלות רפואיות — ספרו למדריך לפני תחילת השיעור']},
-    movement: {applies:['movement'],title:'מה חשוב להביא?',items:['👕 בגדי אימון נוחים ומאפשרים תנועה חופשית','💧 בקבוק מים אישי','🧦 גרביים (עובדים יחפים / בגרביים)']},
-    strength: {applies:['strength-mobility'],title:'מה חשוב להביא?',items:['👕 בגדי אימון נוחים','💧 בקבוק מים אישי','🩹 אם יש מגבלות רפואיות — ספרו למדריך. הכל מותאם לרמה שלכם']}
+  6: { // template #6 — payment confirmation: 3 "what to bring" blocks
+    combat:   {applies:['kids-6-8','kids-9-11','teens-12-15','combat-adults','fitness-38'],title:'מה חשוב להביא?',items:['👕 בגדי אימון נוחים ונעלי ספורט (חולצה שחורה עדיפה)','💧 בקבוק מים אישי','💍 חשוב להסיר שעונים ותכשיטים לפני האימון','🩹 אם יש מגבלות לפעילות גופנית או כאבים — ספרו למדריך לפני תחילת השיעור']},
+    movement: {applies:['movement'],title:'מה חשוב להביא?',items:['👕 בגדי אימון נוחים ונעלי ספורט','💧 בקבוק מים אישי','🧦 חלק מהתרגילים יחפים או בגרביים','🩹 אם יש מגבלות לפעילות גופנית או כאבים — ספרו למדריך לפני תחילת השיעור']},
+    strength: {applies:['strength-mobility'],title:'מה חשוב להביא?',items:['👕 בגדי אימון נוחים ונעלי ספורט','💧 בקבוק מים אישי','🩹 אם יש מגבלות לפעילות גופנית או כאבים — ספרו למדריך לפני תחילת השיעור']}
   },
   19: { // template #19 — equipment recommendation per group
     'combat-adults':{title:'ציוד מומלץ:',items:['🥊 כפפות אגרוף: 250₪','🦷 מגן שיניים: 60₪','📦 חבילה (כפפות + מגן): 290₪ במקום 310₪']},
@@ -1018,8 +1026,8 @@ const AUDIENCE_VARIANTS = {
   5: {type:'opening',adult:{opening:'מעולה, נשמח לראות אותך אצלנו! 🙏'},parent:{opening:'מעולה, נשמח לראות את <span class="placeholder">[שם הילד/ה]</span> אצלנו! 🙏'}},
   6: {type:'opening',adult:{opening:'שמחים שאתם מצטרפים לשיעור היכרות!'},parent:{opening:'שמחים ש-<span class="placeholder">[שם הילד/ה]</span> מצטרף/ת לשיעור!'}},
   8: {type:'full',
-    adult:{content:'<button class="cbtn">📋 העתק</button>היי <span class="placeholder">[שם]</span> 👋\n\nתזכורת קטנה — מחר יש לכם שיעור! 🥋\n\n🗓️ <span class="placeholder">[יום ותאריך]</span>, בשעה <span class="placeholder">[שעה]</span>\n📍 אולם "המגינים", רח׳ חזית חמש 2, חולון\n\nזכרו להביא: בגדי אימון, בקבוק מים, ולהסיר תכשיטים.\n\nהגיעו 5-10 דקות לפני. נתראה! 💪'},
-    parent:{content:'<button class="cbtn">📋 העתק</button>היי <span class="placeholder">[שם ההורה]</span> 👋\n\nתזכורת — מחר <span class="placeholder">[שם הילד/ה]</span> מגיע/ה לשיעור! 🥋\n\n🗓️ <span class="placeholder">[יום ותאריך]</span>, בשעה <span class="placeholder">[שעה]</span>\n📍 אולם "המגינים", רח׳ חזית חמש 2, חולון\n\nזכרו להביא: בגדי אימון, בקבוק מים, ולהסיר תכשיטים.\n\nהגיעו 5-10 דקות לפני. מחכים! 💪'}},
+    adult:{content:'<button class="cbtn">📋 העתק</button>היי <span class="placeholder">[שם]</span> 👋\n\nתזכורת קטנה — מחר יש לכם שיעור! 🥋\n\n🗓️ <span class="placeholder">[יום ותאריך]</span>, בשעה <span class="placeholder">[שעה]</span>\n📍 אולם בית ספר "המגינים", רחוב "חזית חמש" 2, חולון\n\nזכרו להביא: בגדי אימון, בקבוק מים, ולהסיר תכשיטים.\n\nהגיעו 10 דקות לפני. נתראה! 💪'},
+    parent:{content:'<button class="cbtn">📋 העתק</button>היי <span class="placeholder">[שם ההורה]</span> 👋\n\nתזכורת — מחר <span class="placeholder">[שם הילד/ה]</span> מגיע/ה לשיעור! 🥋\n\n🗓️ <span class="placeholder">[יום ותאריך]</span>, בשעה <span class="placeholder">[שעה]</span>\n📍 אולם בית ספר "המגינים", רחוב "חזית חמש" 2, חולון\n\nזכרו להביא: בגדי אימון, בקבוק מים, ולהסיר תכשיטים.\n\nהגיעו 10 דקות לפני. מחכים! 💪'}},
   9: {type:'full',
     adult:{content:'<button class="cbtn">📋 העתק</button>היי <span class="placeholder">[שם]</span> 👋\n\nאיך הרגשתם אחרי השיעור הראשון אתמול?\n\nהשיעורים הראשונים תמיד מאתגרים את הגוף — סימן מצוין שיש לאן לגדול 💪\n\nשאלות, תחושות מיוחדות או כאבי שרירים שחשוב שנדע עליהם?\n\nהבא: <span class="placeholder">[יום ותאריך]</span>, בשעה <span class="placeholder">[שעה]</span> — מחכים! 🙏'},
     parent:{content:'<button class="cbtn">📋 העתק</button>היי <span class="placeholder">[שם ההורה]</span> 👋\n\nאיך <span class="placeholder">[שם הילד/ה]</span> הרגיש/ה אחרי השיעור הראשון?\n\nאתגר פיזי וחברתי — חלק מהתהליך 💪\nמשהו שחשוב שנדע? אנחנו כאן.\n\nהבא: <span class="placeholder">[יום ותאריך]</span>, בשעה <span class="placeholder">[שעה]</span> — מחכים! 🙏'}},
@@ -1743,12 +1751,19 @@ function toggleWizard(){document.getElementById('wizardPanel').classList.toggle(
 function renderWizard(){
   const body=document.getElementById('wizardBody');
   let html='';
-  // Breadcrumb
-  const crumbs=[];
-  crumbs.push('<span class="crumb">אשף הודעות</span>');
-  if(wizState.stage){const s=WIZARD_STAGES.find(s=>s.id===wizState.stage);crumbs.push('<span class="crumb-sep">←</span><span class="crumb">'+s.label+'</span>')}
-  if(wizState.action){const a=WIZARD_ACTIONS[wizState.stage].find(a=>a.id===wizState.action);crumbs.push('<span class="crumb-sep">←</span><span class="crumb">'+a.label+'</span>')}
-  html+='<div class="wizard-breadcrumb">'+crumbs.join('')+'</div>';
+  // Progress bar
+  const stepLabels=['בחרו שלב','בחרו פעולה','הודעה מוכנה'];
+  let currentStep=0;
+  if(wizState.stage&&!wizState.action)currentStep=1;
+  else if(wizState.stage&&wizState.action)currentStep=2;
+  html+='<div class="wizard-progress">';
+  for(let i=0;i<3;i++){
+    if(i>0)html+='<div class="prog-line'+(i<=currentStep?' done':'')+'"></div>';
+    const cls=i<currentStep?'completed':i===currentStep?'active':'';
+    const icon=i<currentStep?'✓':(i+1);
+    html+='<div class="prog-step '+cls+'"><div class="prog-circle">'+icon+'</div><div class="prog-label">'+stepLabels[i]+'</div></div>';
+  }
+  html+='</div>';
 
   if(!wizState.stage){
     // Step 1: pick stage
