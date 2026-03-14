@@ -980,7 +980,7 @@ https://element-m-a-m.github.io/book-first-classes/</div></div></div>
 // ================================================================
 
 // UI Utilities
-function copyMsg(el){const c=el.cloneNode(true);c.querySelectorAll('.cbtn,.edit-btn,.reset-btn,.save-edit-btn,.msg-actions').forEach(b=>b.remove());c.querySelectorAll('.manual-placeholder').forEach(s=>s.replaceWith(s.textContent));const unfilled=c.querySelectorAll('.placeholder');unfilled.forEach(s=>s.replaceWith(s.textContent));const txt=c.innerText.trim();const btn=el.querySelector('.cbtn');if(unfilled.length>0){doCopy(txt,btn,unfilled.length)}else{doCopy(txt,btn)}}
+function copyMsg(el){const c=el.cloneNode(true);c.querySelectorAll('.cbtn,.edit-btn,.reset-btn,.save-edit-btn,.msg-actions').forEach(b=>b.remove());c.querySelectorAll('.manual-placeholder').forEach(s=>s.replaceWith(s.textContent));const unfilled=c.querySelectorAll('.placeholder');unfilled.forEach(s=>s.replaceWith(s.textContent));const txt=c.innerText.trim();const btn=el.querySelector('.cbtn');if(unfilled.length>0){doCopy(txt,btn,unfilled.length)}else{doCopy(txt,btn)};const _cid=el.closest('.template-card');if(_cid)trackEvent('copy',_cid.id,'card',{group:_trGrp(el),audience:_trAud(el)})}
 function doCopy(t,btn,unfilledCount){try{navigator.clipboard.writeText(t).then(()=>flash(btn,unfilledCount)).catch(()=>fb(t,btn,unfilledCount))}catch(e){fb(t,btn,unfilledCount)}}
 function fb(t,btn,unfilledCount){const a=document.createElement('textarea');a.value=t;a.style.cssText='position:fixed;left:-9999px';document.body.appendChild(a);a.select();try{document.execCommand('copy');flash(btn,unfilledCount)}catch(e){}document.body.removeChild(a)}
 function flash(btn,unfilledCount){if(!btn)return;const orig=btn.textContent;if(unfilledCount>0){btn.textContent='⚠️ הועתק עם '+unfilledCount+' שדות ריקים';btn.style.color='#d97706';btn.classList.add('copied');setTimeout(()=>{btn.textContent=orig;btn.style.color='';btn.classList.remove('copied')},2500)}else{btn.textContent='✅ הועתק';btn.classList.add('copied');setTimeout(()=>{btn.textContent=orig;btn.classList.remove('copied')},1500)}}
@@ -2508,6 +2508,8 @@ function copyWizMsg(bubble,btn){
   unfilled.forEach(s=>s.replaceWith(s.textContent));
   const txt=c.innerText.trim();
   if(unfilled.length>0){doCopy(txt,btn,unfilled.length)}else{doCopy(txt,btn)}
+  const _wc=bubble.closest('.template-card');const _wtid=_wc?_wc.id.replace('wiz_',''):'';
+  if(_wtid)trackEvent('copy',_wtid,'wizard',{group:_trGrp(bubble),audience:_trAud(bubble)});
 }
 
 // Wizard-specific edit
@@ -2559,6 +2561,7 @@ function finishWizEdit(save,bubble,cardId,actionsDiv,saveBtn){
     edits[cardId]=cl.innerHTML;
     try{localStorage.setItem(TK,JSON.stringify(edits))}catch(e){}
     toast('תבנית נשמרה ✏️');
+    trackEvent('edit_save',cardId,'wizard');
     // Add reset button if not present
     if(!actionsDiv.querySelector('.wiz-reset-btn')){
       const rb=document.createElement('button');rb.className='wiz-reset-btn';rb.textContent='↺ שחזור';
@@ -2591,6 +2594,7 @@ function resetWizMsg(cardId,bubble,card,actionsDiv){
   // Remove reset button
   const rb=actionsDiv.querySelector('.wiz-reset-btn');if(rb)rb.remove();
   toast('שוחזר למקור ↺');
+  trackEvent('reset',cardId,'wizard');
   // Sync to original card
   document.dispatchEvent(new CustomEvent('tpl-edit',{detail:{cardId,html:orig,source:bubble}}));
 }
@@ -2624,6 +2628,38 @@ function initWizard(){renderWizard()}
 // ================================================================
 // === Template Message Editing ===
 const TK='element-tpl-v80';
+
+// ── Tracking module ──
+const TRACK_URL='https://script.google.com/macros/s/AKfycbyglCREv6EE6qnFWu2wr1XaT47saETrds7UEXRQcpiKNVYncsO4HLqK8XLlVjSMTMd52A/exec';
+const TRACK_SID=(Math.random().toString(36)+'00000000').slice(2,10);
+const _tdb={};
+const _TQK='element-track-q-v1';
+function trackEvent(evt,tid,src,extras){
+  const now=Date.now();const dk=tid+':'+evt;
+  const thresh=(evt==='copy'&&_tdb[dk])?5000:2000;
+  if(_tdb[dk]&&now-_tdb[dk]<thresh)return;
+  _tdb[dk]=now;
+  const ev={event:evt,template_id:tid,source:src||'',group:(extras&&extras.group)||'',audience:(extras&&extras.audience)||'',session_id:TRACK_SID,client_ts:now};
+  const q=_gtq();q.push(ev);
+  try{localStorage.setItem(_TQK,JSON.stringify(q))}catch(e){}
+  _ftq();
+}
+function _gtq(){try{return JSON.parse(localStorage.getItem(_TQK))||[]}catch(e){return[]}}
+function _ftq(){
+  const q=_gtq();if(!q.length)return;
+  try{localStorage.removeItem(_TQK)}catch(e){}
+  fetch(TRACK_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},body:JSON.stringify({events:q})}).catch(function(){
+    // Re-queue on failure
+    const cur=_gtq();
+    try{localStorage.setItem(_TQK,JSON.stringify(cur.concat(q)))}catch(e){}
+  });
+}
+function _trGrp(el){const c=el&&el.closest('.template-card');if(!c)return '';const ch=c.querySelector('.swap-chip.active');return ch?ch.dataset.group||ch.textContent.trim():''}
+function _trAud(el){const c=el&&el.closest('.template-card');if(!c)return '';const ab=c.querySelector('.aud-btn.active');return ab?ab.dataset.aud||'':''}
+window.addEventListener('online',_ftq);
+window.addEventListener('load',function(){setTimeout(_ftq,3000)});
+// ── End tracking module ──
+
 let editingMsg=null;
 const origMessages={};
 
@@ -2793,6 +2829,7 @@ function saveMsgEdit(cardId,msgEl){
   try{localStorage.setItem(TK,JSON.stringify(edits))}catch(e){}
   // Sync to counterpart (original ↔ wizard)
   document.dispatchEvent(new CustomEvent('tpl-edit',{detail:{cardId,html:edits[cardId],source:msgEl}}));
+  trackEvent('edit_save',cardId,'card');
 }
 
 function getMsgEdits(){try{return JSON.parse(localStorage.getItem(TK))||{}}catch(e){return{}}}
@@ -2820,6 +2857,7 @@ function resetMsg(cardId,msgEl){
   try{localStorage.setItem(TK,JSON.stringify(edits))}catch(e){}
   reattachMsgButtons(msgEl,cardId);
   toast('שוחזר למקור ↺');
+  trackEvent('reset',cardId,'card');
   // Sync reset to counterpart
   document.dispatchEvent(new CustomEvent('tpl-edit',{detail:{cardId,html:orig,source:msgEl}}));
 }
