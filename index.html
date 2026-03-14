@@ -1138,6 +1138,27 @@ function applySheetAudienceVariants() {
   });
   // Merge with existing (Sheet takes priority)
   Object.keys(newAV).forEach(k => { AUDIENCE_VARIANTS[k] = newAV[k]; });
+
+  // Also update card .message innerHTML for full-type variants (default = adult)
+  // This ensures cards and flowchart tooltips show Sheet content
+  Object.keys(newAV).forEach(k => {
+    const av = newAV[k];
+    if (av.type !== 'full' || !av.adult) return;
+    const card = document.getElementById('t' + k);
+    if (!card) return;
+    const msg = card.querySelector('.message');
+    if (msg) msg.innerHTML = av.adult.content;
+  });
+  // Update card titles from Sheet data
+  sheetData.TEMPLATES.forEach(row => {
+    if (row.template_type !== 'audience_variant' || row.audience !== 'adult') return;
+    if (!row.template_name_he) return;
+    const card = document.getElementById(row.template_id);
+    if (!card) return;
+    const ttitle = card.querySelector('.ttitle');
+    if (ttitle) ttitle.textContent = row.template_name_he.replace(/^\u200F/, '');
+  });
+
   console.log('[Sheet] Applied AUDIENCE_VARIANTS:', Object.keys(newAV).join(','));
 }
 
@@ -1160,6 +1181,26 @@ function applySheetTipRotation() {
   });
   // Merge with existing (Sheet takes priority)
   Object.keys(newTR).forEach(k => { TIP_ROTATION[k] = newTR[k]; });
+
+  // Also update card .message innerHTML with first variant (default view)
+  // This ensures cards and flowchart tooltips show Sheet content
+  Object.keys(newTR).forEach(k => {
+    if (!newTR[k].length) return;
+    const card = document.getElementById('t' + k);
+    if (!card) return;
+    const msg = card.querySelector('.message');
+    if (msg) msg.innerHTML = newTR[k][0].body;
+  });
+  // Update card titles from Sheet data
+  sheetData.TEMPLATES.forEach(row => {
+    if (row.template_type !== 'tip_rotation') return;
+    if (!row.template_name_he) return;
+    const card = document.getElementById(row.template_id);
+    if (!card) return;
+    const ttitle = card.querySelector('.ttitle');
+    if (ttitle) ttitle.textContent = row.template_name_he.replace(/^\u200F/, '');
+  });
+
   console.log('[Sheet] Applied TIP_ROTATION:', Object.keys(newTR).join(','));
 }
 
