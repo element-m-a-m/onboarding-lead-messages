@@ -363,6 +363,23 @@ h2 { font-size: 18px; font-weight: 800; color: var(--hdr); margin-top: 32px; mar
 .faq-card.open .faq-a { display:block; }
 .faq-card.open .faq-q { border-bottom-color:#93c5fd; }
 
+/* === Wizard UX Improvements === */
+.wiz-chat-actions { position: sticky; bottom: 0; z-index: 10; background: #fff; border-top: 1px solid #e5e7eb; flex-wrap: wrap; }
+.wizard-breadcrumb { font-size: 13px; font-weight: 600; color: var(--hdr); padding: 8px 0 4px; display: flex; align-items: center; gap: 6px; }
+.wizard-breadcrumb .bc-sep { color: var(--text2); font-size: 11px; }
+.wizard-btn.compact { min-width: 100%; padding: 10px 16px; text-align: right; display: flex; align-items: center; gap: 10px; border-radius: 8px; }
+.wizard-btn.compact .btn-icon { display: inline; font-size: 16px; margin-bottom: 0; }
+@keyframes pulse-warn { 0%{box-shadow:0 0 0 0 rgba(251,191,36,0.5)} 50%{box-shadow:0 0 0 8px rgba(251,191,36,0)} 100%{box-shadow:0 0 0 0 rgba(251,191,36,0)} }
+.var-form.pulse-warn { animation: pulse-warn 0.6s ease 2; border-color: #f59e0b; }
+.wiz-fill-progress { font-size: 10px; font-weight: 600; padding: 3px 10px; color: #92400e; background: #fefce8; border: 1px solid #fde68a; border-radius: 0 0 8px 8px; margin-top: -5px; margin-bottom: 4px; text-align: center; }
+.wiz-fill-progress.complete { color: #065f46; background: #ecfdf5; border-color: #86efac; }
+@media (max-width: 500px) {
+  .var-field { min-width: 100%; }
+  .var-field input, .var-field select { min-width: 0; flex: 1; }
+  .wizard-btn { min-width: 100px; font-size: 11px; }
+  .wizard-btn .btn-icon { font-size: 16px; }
+}
+
 @media print {
   .top-bar, .messages-search-bar, .back-top, .cbtn, .edit-btn, .reset-btn, .clear-card-btn, .save-edit-btn, #tooltip, .canvas-toolbar, .minimap, .canvas-info, .save-toast, .arrow-toolbar, .ctx-menu, #settingsPanel, .var-form, .settings-toggle, #wizard, .audience-toggle, .swap-selector, .tip-selector { display: none !important; }
   .template-card { break-inside: avoid; }
@@ -994,15 +1011,20 @@ const SHEET_CACHE_TTL = 3600000; // 1 hour
 let sheetData = {}; // Raw parsed rows keyed by sheet name
 
 function parseGvizResponse(text) {
-  const json = JSON.parse(text.substring(47).slice(0, -2));
-  const cols = json.table.cols.map(c => c.label);
-  return json.table.rows.map(r => {
-    const obj = {};
-    r.c.forEach((cell, i) => {
-      if (cols[i]) obj[cols[i]] = cell ? (cell.v != null ? String(cell.v) : '') : '';
+  try {
+    const json = JSON.parse(text.substring(47).slice(0, -2));
+    const cols = json.table.cols.map(c => c.label);
+    return json.table.rows.map(r => {
+      const obj = {};
+      r.c.forEach((cell, i) => {
+        if (cols[i]) obj[cols[i]] = cell ? (cell.v != null ? String(cell.v) : '') : '';
+      });
+      return obj;
     });
-    return obj;
-  });
+  } catch(e) {
+    console.warn('[Sheet] Failed to parse gviz response:', e.message);
+    return [];
+  }
 }
 
 async function fetchSheet(sheetName) {
@@ -1387,6 +1409,9 @@ function createSheetOnlyCards() {
 
     card.innerHTML = headerHtml + metaHtml + bodyHtml;
     container.appendChild(card);
+    // Register original content so reset works for Sheet-created cards
+    const msg = card.querySelector('.message');
+    if (msg) origMessages[card.id] = msg.innerHTML;
     created++;
   });
 
@@ -2056,6 +2081,18 @@ function updateFillIndicator(card){
 
 function updateAllIndicators(){document.querySelectorAll('.template-card').forEach(card=>updateFillIndicator(card))}
 
+function updateWizFillProgress(el,card){
+  if(!el)el=document.getElementById('wiz-fill-prog');
+  if(!el)return;
+  if(!card)card=el.closest('.template-body')||el.parentNode;
+  const msg=card.querySelector('.message')||card.querySelector('.wiz-chat-bubble');if(!msg)return;
+  const all=msg.querySelectorAll('.placeholder, .var-filled');
+  const total=all.length;if(!total){el.textContent='';return}
+  const filled=[...all].filter(e=>e.classList.contains('var-filled')).length;
+  el.textContent=filled===total?'✓ כל השדות מולאו':'✎ '+filled+'/'+total+' שדות מולאו';
+  el.classList.toggle('complete',filled===total);
+}
+
 function refreshAllForms(){
   // Refresh dropdown options after settings change
   document.querySelectorAll('.var-field select[data-var-key]').forEach(sel=>{
@@ -2341,9 +2378,13 @@ function renderWizard(){
   } else if(!wizState.action){
     // Step 2: pick action
     html+=`<button class="wizard-back-btn" onclick="wizBack()">→ חזרה</button>`;
+    const stg=WIZARD_STAGES.find(s=>s.id===wizState.stage);
+    if(stg)html+=`<div class="wizard-breadcrumb"><span>${stg.icon} ${stg.label}</span><span class="bc-sep">›</span><span>בחרו פעולה</span></div>`;
+    const acts=WIZARD_ACTIONS[wizState.stage]||[];
+    const compactMode=acts.length>4;
     html+='<div class="wizard-steps">';
-    WIZARD_ACTIONS[wizState.stage].forEach(a=>{
-      html+=`<button class="wizard-btn small" onclick="wizSetAction('${a.id}')"><span class="btn-icon">${a.icon}</span>${a.label}</button>`;
+    acts.forEach(a=>{
+      html+=`<button class="wizard-btn small${compactMode?' compact':''}" onclick="wizSetAction('${a.id}')"><span class="btn-icon">${a.icon}</span>${a.label}</button>`;
     });
     html+='</div>';
   } else {
@@ -2451,6 +2492,10 @@ function renderWizardTemplate(tid){
       form.appendChild(f);
     });
     body.insertBefore(form,msg);
+    // Fill progress indicator
+    const fprog=document.createElement('div');fprog.className='wiz-fill-progress';fprog.id='wiz-fill-prog';
+    updateWizFillProgress(fprog,clone);
+    body.insertBefore(fprog,msg);
   }
   // Remove old copy button and msg-actions from cloned message
   msg.removeAttribute('onclick');
@@ -2507,6 +2552,12 @@ function copyWizMsg(bubble,btn){
   const unfilled=c.querySelectorAll('.placeholder');
   unfilled.forEach(s=>s.replaceWith(s.textContent));
   const txt=c.innerText.trim();
+  // Pre-copy warning: pulse var-form if unfilled fields exist
+  if(unfilled.length>0){
+    const wizCard=bubble.closest('.template-card');
+    if(wizCard){const vf=wizCard.querySelector('.var-form');if(vf){vf.classList.remove('pulse-warn');void vf.offsetWidth;vf.classList.add('pulse-warn');setTimeout(()=>vf.classList.remove('pulse-warn'),1300)}}
+    const firstPh=bubble.querySelector('.placeholder');if(firstPh)firstPh.scrollIntoView({behavior:'smooth',block:'center'});
+  }
   if(unfilled.length>0){doCopy(txt,btn,unfilled.length)}else{doCopy(txt,btn)}
   const _wc=bubble.closest('.template-card');const _wtid=_wc?_wc.id.replace('wiz_',''):'';
   if(_wtid)trackEvent('copy',_wtid,'wizard',{group:_trGrp(bubble),audience:_trAud(bubble)});
@@ -2618,6 +2669,7 @@ function applyWizVars(card){
     else{ph.textContent=orig;ph.classList.add('placeholder');ph.classList.remove('var-filled')}
   });
   updateFillIndicator(card);
+  updateWizFillProgress(null,card);
 }
 
 function wizSetStage(id){wizState.stage=id;wizState.action=null;renderWizard()}
@@ -2645,14 +2697,16 @@ function trackEvent(evt,tid,src,extras){
   _ftq();
 }
 function _gtq(){try{return JSON.parse(localStorage.getItem(_TQK))||[]}catch(e){return[]}}
+let _flushing=false;
 function _ftq(){
+  if(_flushing)return;
   const q=_gtq();if(!q.length)return;
+  _flushing=true;
   try{localStorage.removeItem(_TQK)}catch(e){}
   fetch(TRACK_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},body:JSON.stringify({events:q})}).catch(function(){
-    // Re-queue on failure
     const cur=_gtq();
     try{localStorage.setItem(_TQK,JSON.stringify(cur.concat(q)))}catch(e){}
-  });
+  }).finally(function(){_flushing=false});
 }
 function _trGrp(el){const c=el&&el.closest('.template-card');if(!c)return '';const ch=c.querySelector('.swap-chip.active');return ch?ch.dataset.group||ch.textContent.trim():''}
 function _trAud(el){const c=el&&el.closest('.template-card');if(!c)return '';const ab=c.querySelector('.aud-btn.active');return ab?ab.dataset.aud||'':''}
