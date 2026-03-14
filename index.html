@@ -1850,12 +1850,13 @@ function initVarForms(){
   document.querySelectorAll('.template-card').forEach(card=>{
     const msg=card.querySelector('.message');if(!msg)return;
     const body=card.querySelector('.template-body');
-    const phs=msg.querySelectorAll('.placeholder');
+    const phs=msg.querySelectorAll('.placeholder, .var-filled');
     if(!phs.length)return;
-    // Collect unique vars for this card
+    // Collect unique vars for this card (include already-filled vars so user can change them)
     const seen=new Set();const vars=[];
     phs.forEach(ph=>{
-      const txt=ph.textContent;
+      if(ph.classList.contains('manual-placeholder'))return;
+      const txt=ph.dataset.varOriginal||ph.textContent;
       const reg=VAR_REGISTRY[txt];
       if(!reg||reg.type==='static')return;
       const ukey=reg.key+'_'+txt;
@@ -2436,10 +2437,11 @@ function renderWizardTemplate(tid){
     if(val){ph.textContent=val;ph.classList.remove('placeholder');ph.classList.add('var-filled')}
     else{ph.textContent=origText;ph.classList.add('placeholder');ph.classList.remove('var-filled')}
   });
-  // Build var form
-  const phs=msg.querySelectorAll('.placeholder');
+  // Build var form (include both unfilled and already-filled vars)
+  const phs=msg.querySelectorAll('.placeholder, .var-filled');
   const seen=new Set();const vars=[];
   phs.forEach(ph=>{
+    if(ph.classList.contains('manual-placeholder'))return;
     const txt=ph.dataset.varOriginal||ph.textContent;
     const reg=VAR_REGISTRY[txt];if(!reg||reg.type==='static'||reg.type==='derived')return;
     const ukey=reg.key+'_'+txt;if(seen.has(ukey))return;seen.add(ukey);
