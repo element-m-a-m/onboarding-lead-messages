@@ -1736,6 +1736,7 @@ const VAR_REGISTRY={
   '[הטבה / הנחה / בונוס]':{type:'text',key:'benefit',label:'הטבה'},
   '[הטבה — הנחה / שיעור נוסף / מתנה]':{type:'text',key:'benefitVariant',label:'הטבה'},
   '[שם הקבוצה]':{type:'dropdown',key:'groupName',label:'קבוצה',optionsFn:()=>Object.values(GROUP_LABELS)},
+  '[קבוצה]':{type:'dropdown',key:'groupName',label:'קבוצה',optionsFn:()=>Object.values(GROUP_LABELS)},
   '[ימים ושעות]':{type:'dropdown',key:'schedule',label:'ימים ושעות',optionsFn:(cardId)=>{const gk=CARD_GROUP_MAP[cardId]||getSessionGroupKey();return gk&&appSettings.schedules[gk]?appSettings.schedules[gk]:Object.values(appSettings.schedules).flat()},contextual:true},
   '[לינק פייבוקס/אשראי]':{type:'dropdown',key:'trialLink',label:'לינק תשלום',optionsFn:()=>appSettings.paymentLinks.filter(l=>l.type==='trial').map(l=>({label:l.label,value:l.url}))},
   '[לינק תשלום מנוי]':{type:'dropdown',key:'subLink',label:'לינק מנוי',optionsFn:()=>appSettings.paymentLinks.filter(l=>l.type==='subscription').map(l=>({label:l.label,value:l.url}))},
@@ -1790,9 +1791,9 @@ function clearCardSession(cardId){
   card.querySelectorAll('.aud-btn').forEach(b=>b.classList.toggle('active',b.dataset.aud==='adult'));
   card.querySelectorAll('.swap-chip.active').forEach(c=>c.classList.remove('active'));
   card.querySelectorAll('.tip-chip').forEach((c,i)=>c.classList.toggle('active',i===0));
-  // Re-apply to refresh placeholders
-  applyVarsToMessage(card);
-  updateFillIndicator(card);
+  // Re-apply to refresh placeholders across all cards (shared variables)
+  applyAllVarsToMessages();
+  updateAllIndicators();
   toast('נוקה 🗑️');
 }
 
@@ -1800,16 +1801,13 @@ function clearCardSession(cardId){
 function clearWizardSession(){
   const wr=document.getElementById('wizardResult');
   if(!wr)return;
-  // Collect keys from wizard var-form
+  // Collect keys from wizard inputs (data-var-key is on input/select, not on .var-field div)
   const keysUsed=new Set();
-  wr.querySelectorAll('.var-field').forEach(f=>{
-    const key=f.dataset.varKey;
-    if(key)keysUsed.add(key);
-    const rawKey=f.dataset.varRawKey;
-    if(rawKey)keysUsed.add(rawKey);
-  });
+  wr.querySelectorAll('[data-var-key]').forEach(el=>{keysUsed.add(el.dataset.varKey)});
+  wr.querySelectorAll('[data-var-raw-key]').forEach(el=>{keysUsed.add(el.dataset.varRawKey)});
   keysUsed.forEach(k=>{delete sessionData[k]});
   saveSession();
+  // Reset UI inputs
   wr.querySelectorAll('.var-field input, .var-field select').forEach(el=>{
     if(el.tagName==='INPUT')el.value='';
     if(el.tagName==='SELECT')el.selectedIndex=0;
@@ -1823,6 +1821,12 @@ function clearWizardSession(){
   wr.querySelectorAll('.aud-btn').forEach(b=>b.classList.toggle('active',b.dataset.aud==='adult'));
   wr.querySelectorAll('.swap-chip.active').forEach(c=>c.classList.remove('active'));
   wr.querySelectorAll('.tip-chip').forEach((c,i)=>c.classList.toggle('active',i===0));
+  // Re-apply vars to wizard message (revert placeholders)
+  const wizCard=wr.querySelector('.template-card');
+  if(wizCard)applyWizVars(wizCard);
+  // Propagate cleared values to all cards
+  applyAllVarsToMessages();
+  updateWizFillProgress(null,wizCard);
   toast('נוקה 🗑️');
 }
 
