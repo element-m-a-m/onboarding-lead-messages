@@ -29,14 +29,17 @@ body { font-family: 'Heebo', sans-serif; background: var(--bg); color: var(--tex
 .page-header .sub { font-size: 13px; font-weight: 300; opacity: 0.85; margin-top: 4px; }
 .page-header .ver { font-size: 10px; opacity: 0.5; margin-top: 6px; letter-spacing: 1px; }
 
-.search-bar { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,0.95); backdrop-filter: blur(8px); border-bottom: 1px solid var(--border); padding: 12px 24px; display: flex; align-items: center; gap: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
-.search-bar input { flex: 1; max-width: 400px; font-family: 'Heebo', sans-serif; font-size: 13px; padding: 8px 16px; border: 1.5px solid var(--border); border-radius: 8px; outline: none; transition: all 0.2s; }
-.search-bar input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(37,211,102,0.15); }
-#searchCount { font-size: 11px; color: var(--text2); font-weight: 500; }
-
-.nav-tabs { display: flex; gap: 6px; padding: 10px 24px; background: #f8fafc; border-bottom: 1px solid var(--border); overflow-x: auto; }
-.nav-tabs a { text-decoration: none; padding: 6px 14px; border-radius: 6px; font-size: 12px; font-weight: 600; color: var(--text2); white-space: nowrap; background: #fff; border: 1px solid var(--border); transition: all 0.2s; }
+.top-bar { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,0.97); backdrop-filter: blur(8px); border-bottom: 1px solid var(--border); padding: 8px 24px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+.nav-tabs { display: flex; gap: 6px; align-items: center; overflow-x: auto; }
+.nav-tabs a { text-decoration: none; padding: 7px 16px; border-radius: 8px; font-size: 12.5px; font-weight: 600; color: var(--text2); white-space: nowrap; background: #fff; border: 1px solid var(--border); transition: all 0.2s; }
 .nav-tabs a:hover { background: var(--accent); color: #fff; border-color: var(--accent); transform: translateY(-1px); box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+.nav-tabs a.nav-active { background: var(--accent); color: #fff; border-color: var(--accent); }
+.nav-sep { color: #cbd5e1; font-size: 14px; margin: 0 2px; user-select: none; }
+
+.messages-search-bar { position: sticky; top: 42px; z-index: 99; background: rgba(255,255,255,0.95); backdrop-filter: blur(8px); border: 1px solid var(--border); border-radius: 10px; padding: 10px 20px; margin: 24px 0 8px; display: flex; align-items: center; gap: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+.messages-search-bar input { flex: 1; max-width: 500px; font-family: 'Heebo', sans-serif; font-size: 13px; padding: 8px 16px; border: 1.5px solid var(--border); border-radius: 8px; outline: none; transition: all 0.2s; }
+.messages-search-bar input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(37,211,102,0.15); }
+#searchCount { font-size: 11px; color: var(--text2); font-weight: 500; }
 
 .container { max-width: 1200px; margin: 0 auto; padding: 24px; }
 h2 { font-size: 18px; font-weight: 800; color: var(--hdr); margin-top: 32px; margin-bottom: 16px; padding-bottom: 6px; border-bottom: 3px solid var(--accent); display: inline-block; }
@@ -197,6 +200,8 @@ h2 { font-size: 18px; font-weight: 800; color: var(--hdr); margin-top: 32px; mar
 .message.editing .msg-actions { display: none; }
 .edit-btn { background: #fff; color: #64748b; border: 1px solid var(--border); border-radius: 6px; padding: 4px 10px; font-size: 11px; font-weight: 700; font-family: 'Heebo', sans-serif; cursor: pointer; transition: all 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.05); white-space: nowrap; }
 .edit-btn:hover { background: #f1f5f9; color: var(--hdr); }
+.clear-card-btn { background: #fff; color: #ef4444; border: 1px solid #fca5a5; border-radius: 6px; padding: 4px 10px; font-size: 11px; font-weight: 700; font-family: 'Heebo', sans-serif; cursor: pointer; transition: all 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.05); white-space: nowrap; }
+.clear-card-btn:hover { background: #fef2f2; border-color: #ef4444; }
 .save-edit-btn { position: absolute; top: 8px; left: 8px; background: var(--accent); color: #fff; border: none; border-radius: 6px; padding: 4px 14px; font-size: 11px; font-weight: 700; font-family: 'Heebo', sans-serif; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.1); transition: background 0.2s; z-index: 5; }
 .save-edit-btn:hover { background: #16a34a; }
 .reset-btn { background: #fff; color: #ef4444; border: 1px solid #fca5a5; border-radius: 6px; padding: 4px 10px; font-size: 11px; font-weight: 700; font-family: 'Heebo', sans-serif; cursor: pointer; transition: all 0.2s; white-space: nowrap; }
@@ -256,9 +261,6 @@ h2 { font-size: 18px; font-weight: 800; color: var(--hdr); margin-top: 32px; mar
 .sched-group { margin: 4px 0; padding: 6px 8px; background: #f8fafc; border-radius: 6px; border: 1px solid #e2e8f0; }
 .sched-group .sched-label { font-size: 12px; font-weight: 700; color: var(--hdr); margin-bottom: 4px; }
 .sched-group input { font-family: 'Heebo', sans-serif; font-size: 11px; padding: 4px 8px; border: 1px solid var(--border); border-radius: 4px; width: 100%; margin: 2px 0; }
-.session-clear-btn { background: #fff; border: 1px solid #fca5a5; color: #ef4444; border-radius: 6px; padding: 6px 14px; font-size: 12px; font-weight: 600; font-family: 'Heebo', sans-serif; cursor: pointer; margin-top: 8px; }
-.session-clear-btn:hover { background: #fef2f2; }
-
 /* === VARIABLE FORMS === */
 .var-form { display: flex; flex-wrap: wrap; gap: 6px; padding: 8px 12px; margin: 0 0 4px; background: #fefce8; border: 1px solid #fde68a; border-radius: 8px 8px 0 0; align-items: center; }
 .var-field { display: inline-flex; align-items: center; gap: 4px; background: #fff; border: 1px solid #e2e8f0; border-radius: 20px; padding: 3px 4px 3px 10px; font-size: 11px; white-space: nowrap; }
@@ -362,7 +364,7 @@ h2 { font-size: 18px; font-weight: 800; color: var(--hdr); margin-top: 32px; mar
 .faq-card.open .faq-q { border-bottom-color:#93c5fd; }
 
 @media print {
-  .search-bar, .nav-tabs, .back-top, .cbtn, .edit-btn, .reset-btn, .save-edit-btn, #tooltip, .canvas-toolbar, .minimap, .canvas-info, .save-toast, .arrow-toolbar, .ctx-menu, #settingsPanel, .var-form, .settings-toggle, #wizard, .audience-toggle, .swap-selector, .tip-selector { display: none !important; }
+  .top-bar, .messages-search-bar, .back-top, .cbtn, .edit-btn, .reset-btn, .clear-card-btn, .save-edit-btn, #tooltip, .canvas-toolbar, .minimap, .canvas-info, .save-toast, .arrow-toolbar, .ctx-menu, #settingsPanel, .var-form, .settings-toggle, #wizard, .audience-toggle, .swap-selector, .tip-selector { display: none !important; }
   .template-card { break-inside: avoid; }
 }
 </style>
@@ -375,24 +377,21 @@ h2 { font-size: 18px; font-weight: 800; color: var(--hdr); margin-top: 32px; mar
   <div class="ver">גרסה 8.0 | מנוע חכם + בלוקים מתחלפים + מתג קהל + סיבוב טיפים</div>
 </div>
 
-<div class="search-bar">
-  <span style="font-size: 16px;">🔍</span>
-  <input type="text" id="searchInput" placeholder="חיפוש תבניות, הודעות או מילות מפתח..." oninput="filterTemplates()">
-  <span id="searchCount"></span>
-  <button class="settings-toggle" onclick="toggleSettings()">⚙️ הגדרות</button>
-  <button class="session-clear-btn" onclick="clearSession()" style="font-size:11px;padding:4px 10px;">🗑️ נקה סשן</button>
-</div>
-
-<div class="nav-tabs">
-  <a href="#wizard" style="background:var(--accent);color:#fff;border-color:var(--accent);">🧙 אשף</a>
-  <a href="#flowcharts">📊 תרשים</a>
-  <a href="#stage1">1️⃣ פנייה</a>
-  <a href="#stage2">2️⃣ תיאום</a>
-  <a href="#stage3">3️⃣ ניסיון</a>
-  <a href="#stage4">4️⃣ הרשמה</a>
-  <a href="#stage5">5️⃣ מיוחדים</a>
-  <a href="#faq-section">❓ FAQ</a>
-  <a href="#ref-section">📎 עזר</a>
+<div class="top-bar">
+  <div class="nav-tabs">
+    <a href="#wizard" class="nav-active">🧙 אשף</a>
+    <a href="#faq-section">❓ FAQ</a>
+    <a href="#flowcharts">📊 תרשים</a>
+    <span class="nav-sep">|</span>
+    <a href="#stage1">1️⃣ פנייה</a>
+    <a href="#stage2">2️⃣ תיאום</a>
+    <a href="#stage3">3️⃣ ניסיון</a>
+    <a href="#stage4">4️⃣ הרשמה</a>
+    <a href="#stage5">5️⃣ מצבים</a>
+    <span class="nav-sep">|</span>
+    <a href="#ref-section">📎 עזר</a>
+    <a href="#" onclick="event.preventDefault();toggleSettings()">⚙️ הגדרות</a>
+  </div>
 </div>
 
 <div id="tooltip">
@@ -496,6 +495,13 @@ h2 { font-size: 18px; font-weight: 800; color: var(--hdr); margin-top: 32px; mar
   <div class="no-results" id="noResults" style="display:none; text-align:center; padding: 40px; color: var(--text2);">
     <div style="font-size:48px; margin-bottom: 10px;">🔍</div>
     <p style="font-size: 16px; font-weight: 500;">לא נמצאו תבניות תואמות לחיפוש.</p>
+  </div>
+
+  <!-- SEARCH BAR — between flowchart and messages -->
+  <div class="messages-search-bar" id="messagesSearchBar">
+    <span style="font-size: 16px;">🔍</span>
+    <input type="text" id="searchInput" placeholder="חיפוש תבניות, הודעות או מילות מפתח..." oninput="filterTemplates()">
+    <span id="searchCount"></span>
   </div>
 
   <!-- TEXT TEMPLATES SECTION -->
@@ -1686,16 +1692,8 @@ function getSessionGroupKey(){
   const entry=Object.entries(GROUP_LABELS).find(([k,v])=>v===gn);
   return entry?entry[0]:null;
 }
-// Update session badge count
-function updateSessionBadge(){
-  const btn=document.querySelector('.session-clear-btn');if(!btn)return;
-  const count=Object.keys(sessionData).filter(k=>sessionData[k]).length;
-  const badge=btn.querySelector('.session-badge');
-  if(count>0){
-    if(badge){badge.textContent=count}
-    else{const b=document.createElement('span');b.className='session-badge';b.textContent=count;btn.appendChild(b)}
-  } else { if(badge)badge.remove() }
-}
+// Update session badge count (no-op — global badge removed, per-card clears instead)
+function updateSessionBadge(){}
 
 const VAR_REGISTRY={
   '[שם]':{type:'text',key:'name',label:'שם'},
@@ -1736,6 +1734,72 @@ function clearSession(){sessionData={};saveSession();document.querySelectorAll('
   // Reset tip selectors
   document.querySelectorAll('.tip-chip').forEach((c,i)=>c.classList.toggle('active',i===0));
   applyAllVarsToMessages();updateAllIndicators();updateSessionBadge();toast('סשן נוקה 🗑️')}
+
+// Per-card session clear — resets only the var-form fields on a specific card
+function clearCardSession(cardId){
+  const card=document.getElementById(cardId);
+  if(!card)return;
+  // Collect the VAR_REGISTRY keys used by this card's inputs
+  const keysUsed=new Set();
+  card.querySelectorAll('[data-var-key]').forEach(el=>{
+    keysUsed.add(el.dataset.varKey);
+  });
+  card.querySelectorAll('[data-var-raw-key]').forEach(el=>{
+    keysUsed.add(el.dataset.varRawKey);
+  });
+  // Clear those keys from sessionData
+  keysUsed.forEach(k=>{delete sessionData[k]});
+  saveSession();
+  // Reset the card's var-form inputs
+  card.querySelectorAll('.var-field input, .var-field select').forEach(el=>{
+    if(el.tagName==='INPUT')el.value='';
+    if(el.tagName==='SELECT')el.selectedIndex=0;
+    el.classList.remove('filled');
+  });
+  card.querySelectorAll('.var-field.warning').forEach(f=>{
+    f.classList.remove('warning');
+    const h=f.querySelector('.field-hint');
+    if(h)h.textContent='';
+  });
+  // Reset audience/swap/tip on this card only
+  card.querySelectorAll('.aud-btn').forEach(b=>b.classList.toggle('active',b.dataset.aud==='adult'));
+  card.querySelectorAll('.swap-chip.active').forEach(c=>c.classList.remove('active'));
+  card.querySelectorAll('.tip-chip').forEach((c,i)=>c.classList.toggle('active',i===0));
+  // Re-apply to refresh placeholders
+  applyVarsToMessage(card);
+  updateFillIndicator(card);
+  toast('נוקה 🗑️');
+}
+
+// Per-wizard session clear
+function clearWizardSession(){
+  const wr=document.getElementById('wizardResult');
+  if(!wr)return;
+  // Collect keys from wizard var-form
+  const keysUsed=new Set();
+  wr.querySelectorAll('.var-field').forEach(f=>{
+    const key=f.dataset.varKey;
+    if(key)keysUsed.add(key);
+    const rawKey=f.dataset.varRawKey;
+    if(rawKey)keysUsed.add(rawKey);
+  });
+  keysUsed.forEach(k=>{delete sessionData[k]});
+  saveSession();
+  wr.querySelectorAll('.var-field input, .var-field select').forEach(el=>{
+    if(el.tagName==='INPUT')el.value='';
+    if(el.tagName==='SELECT')el.selectedIndex=0;
+    el.classList.remove('filled');
+  });
+  wr.querySelectorAll('.var-field.warning').forEach(f=>{
+    f.classList.remove('warning');
+    const h=f.querySelector('.field-hint');
+    if(h)h.textContent='';
+  });
+  wr.querySelectorAll('.aud-btn').forEach(b=>b.classList.toggle('active',b.dataset.aud==='adult'));
+  wr.querySelectorAll('.swap-chip.active').forEach(c=>c.classList.remove('active'));
+  wr.querySelectorAll('.tip-chip').forEach((c,i)=>c.classList.toggle('active',i===0));
+  toast('נוקה 🗑️');
+}
 
 function applyStaticVars(){
   document.querySelectorAll('.template-card').forEach(card=>{
@@ -2415,6 +2479,10 @@ function renderWizardTemplate(tid){
     resetBtn.addEventListener('click',function(e){e.stopPropagation();resetWizMsg(tid,bubble,clone,chatActions)});
     chatActions.appendChild(resetBtn);
   }
+  // Wizard clear session button
+  const wizClrBtn=document.createElement('button');wizClrBtn.className='wiz-edit-btn';wizClrBtn.textContent='🗑️ נקה שדות';
+  wizClrBtn.addEventListener('click',function(e){e.stopPropagation();clearWizardSession()});
+  chatActions.appendChild(wizClrBtn);
   chatContainer.appendChild(chatActions);
   body.appendChild(chatContainer);
   // Add fill indicator
@@ -2587,6 +2655,12 @@ function initMsgEditing(){
       rb.onclick=function(e){e.stopPropagation();resetMsg(card.id,msg)};
       actions.appendChild(rb);
     }
+    // Per-card clear session button
+    const clrBtn=document.createElement('button');
+    clrBtn.className='clear-card-btn';
+    clrBtn.textContent='🗑️ נקה';
+    clrBtn.onclick=function(e){e.stopPropagation();clearCardSession(card.id)};
+    actions.appendChild(clrBtn);
     msg.appendChild(actions);
     // Replace inline onclick with listener that respects edit mode
     msg.removeAttribute('onclick');
