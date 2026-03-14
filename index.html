@@ -980,6 +980,463 @@ function fb(t,btn,unfilledCount){const a=document.createElement('textarea');a.va
 function flash(btn,unfilledCount){if(!btn)return;const orig=btn.textContent;if(unfilledCount>0){btn.textContent='⚠️ הועתק עם '+unfilledCount+' שדות ריקים';btn.style.color='#d97706';btn.classList.add('copied');setTimeout(()=>{btn.textContent=orig;btn.style.color='';btn.classList.remove('copied')},2500)}else{btn.textContent='✅ הועתק';btn.classList.add('copied');setTimeout(()=>{btn.textContent=orig;btn.classList.remove('copied')},1500)}}
 
 // ================================================================
+// GOOGLE SHEET DATA LAYER v9.0
+// ================================================================
+const SHEET_ID = '1oemch5gHlmRTbEf3zqJqwJOI6OdL6nC_ZbRCKHfJtgA';
+const SHEET_CACHE_KEY = 'element-sheet-cache-v1';
+const SHEET_CACHE_TTL = 3600000; // 1 hour
+let sheetData = {}; // Raw parsed rows keyed by sheet name
+
+function parseGvizResponse(text) {
+  const json = JSON.parse(text.substring(47).slice(0, -2));
+  const cols = json.table.cols.map(c => c.label);
+  return json.table.rows.map(r => {
+    const obj = {};
+    r.c.forEach((cell, i) => {
+      if (cols[i]) obj[cols[i]] = cell ? (cell.v != null ? String(cell.v) : '') : '';
+    });
+    return obj;
+  });
+}
+
+async function fetchSheet(sheetName) {
+  const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&headers=1&sheet=${encodeURIComponent(sheetName)}`;
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`Sheet fetch ${res.status}`);
+  return parseGvizResponse(await res.text());
+}
+
+async function getSheetData(sheetName) {
+  const cache = JSON.parse(localStorage.getItem(SHEET_CACHE_KEY) || '{}');
+  if (cache[sheetName] && Date.now() - cache[sheetName].timestamp < SHEET_CACHE_TTL) {
+    return cache[sheetName].data;
+  }
+  try {
+    const data = await fetchSheet(sheetName);
+    cache[sheetName] = { data, timestamp: Date.now() };
+    localStorage.setItem(SHEET_CACHE_KEY, JSON.stringify(cache));
+    return data;
+  } catch (err) {
+    console.warn(`Sheet fetch failed for ${sheetName}:`, err.message);
+    if (cache[sheetName]) return cache[sheetName].data;
+    return null;
+  }
+}
+
+async function loadAllSheets() {
+  const names = ['TEMPLATES', 'SWAP_BLOCKS', 'GROUPS', 'VARIABLES', 'CONFIG'];
+  const results = await Promise.allSettled(names.map(n => getSheetData(n)));
+  names.forEach((n, i) => {
+    if (results[i].status === 'fulfilled' && results[i].value) sheetData[n] = results[i].value;
+  });
+  const count = Object.keys(sheetData).length;
+  console.log(`[Sheet] Loaded ${count}/${names.length} sheets`);
+  return count > 0;
+}
+
+// Step 2: Apply GROUPS + CONFIG sheet data to appSettings
+function applySheetSettings() {
+  if (!appSettings) return;
+  // GROUPS → schedules + pricing + group labels
+  if (sheetData.GROUPS) {
+    sheetData.GROUPS.forEach(g => {
+      const k = g.group_key;
+      if (!k) return;
+      // Schedules — use schedule_display from Sheet
+      if (g.schedule_display) {
+        // Split on | for groups with split schedules (movement, strength-mobility)
+        appSettings.schedules[k] = g.schedule_display.split('|').map(s => s.trim());
+      }
+      // Pricing
+      if (g.trial_single_price) {
+        if (!appSettings.pricing.trialSingle) appSettings.pricing.trialSingle = {};
+        appSettings.pricing.trialSingle[k] = parseInt(g.trial_single_price);
+      }
+      // Group labels
+      if (g.group_label_he) GROUP_LABELS[k] = g.group_label_he;
+    });
+    if (sheetData.GROUPS[0] && sheetData.GROUPS[0].trial_3pack_price) {
+      appSettings.pricing.trial3Card = parseInt(sheetData.GROUPS[0].trial_3pack_price);
+    }
+  }
+  // CONFIG → semiStatic + paymentLinks
+  if (sheetData.CONFIG) {
+    const cfg = {};
+    sheetData.CONFIG.forEach(r => { if (r.config_key && r.config_value) cfg[r.config_key] = r.config_value; });
+    // Map config keys to semiStatic fields
+    if (cfg.health_form_link) appSettings.semiStatic.healthFormLink = cfg.health_form_link;
+    if (cfg.goals_questionnaire_link) appSettings.semiStatic.goalsFormLink = cfg.goals_questionnaire_link;
+    if (cfg.intro_video_link) appSettings.semiStatic.videoLink = cfg.intro_video_link;
+    if (cfg.referral_link) appSettings.semiStatic.referralLink = cfg.referral_link;
+    if (cfg.trial_payment_link) appSettings.semiStatic.widgetLink = cfg.trial_payment_link;
+    if (cfg.landing_page_link) appSettings.semiStatic.landingPageLink = cfg.landing_page_link;
+    if (cfg.linktree_link) appSettings.semiStatic.linktreeLink = cfg.linktree_link;
+    if (cfg.address_full) appSettings.semiStatic.address = cfg.address_full;
+    // Store full config for template variable resolution
+    appSettings._sheetConfig = cfg;
+  }
+  saveSettings();
+  console.log('[Sheet] Applied GROUPS+CONFIG to appSettings');
+}
+
+// Step 3: Build SWAP_BLOCKS from Sheet data
+function applySheetSwapBlocks() {
+  if (!sheetData.SWAP_BLOCKS) return;
+  const newBlocks = {};
+  sheetData.SWAP_BLOCKS.forEach(row => {
+    if (!row.template_id || !row.group_key) return;
+    const tNum = parseInt(row.template_id.replace('t', ''));
+    if (isNaN(tNum)) return;
+    if (!newBlocks[tNum]) newBlocks[tNum] = {};
+    // Store raw content string from Sheet
+    newBlocks[tNum][row.group_key] = { content: row.block_content || '' };
+  });
+  // Merge with existing SWAP_BLOCKS (Sheet takes priority)
+  Object.keys(newBlocks).forEach(tNum => {
+    SWAP_BLOCKS[tNum] = newBlocks[tNum];
+  });
+  console.log('[Sheet] Applied SWAP_BLOCKS:', Object.keys(newBlocks).join(','));
+}
+
+function sheetTextToDisplayHtml(text) {
+  if (!text) return '';
+  // Strip leading RTL mark for processing, re-add after
+  let s = text.replace(/^\u200F/, '');
+  // Convert [varName] → placeholder spans
+  s = s.replace(/\[([^\]]+)\]/g, '<span class="placeholder">[$1]</span>');
+  // Convert *bold* → <strong> for display
+  s = s.replace(/\*(.*?)\*/g, '<strong>$1</strong>');
+  // Prepend copy button
+  return '<button class="cbtn">📋 העתק</button>' + s;
+}
+
+function applySheetAudienceVariants() {
+  if (!sheetData.TEMPLATES) return;
+  const newAV = {};
+  sheetData.TEMPLATES.forEach(row => {
+    if (!row.template_id) return;
+    const tNum = parseInt(row.template_id.replace('t', ''));
+    if (isNaN(tNum)) return;
+
+    if (row.template_type === 'audience_variant') {
+      // Full message swap — t8, t9, t11, t12, t17
+      if (!newAV[tNum]) newAV[tNum] = { type: 'full' };
+      const aud = row.audience; // 'adult' or 'parent'
+      if (aud === 'adult' || aud === 'parent') {
+        newAV[tNum][aud] = { content: sheetTextToDisplayHtml(row.message_text) };
+      }
+    } else if (row.template_type === 'swap_block' && (row.audience === 'adult' || row.audience === 'parent')) {
+      // Opening swap — t5, t6 (swap_block with adult/parent variants)
+      if (!newAV[tNum]) newAV[tNum] = { type: 'opening' };
+      // Extract opening: text before first [SWAP marker or first double-newline
+      let msgText = (row.message_text || '').replace(/^\u200F/, '');
+      let opening = msgText.split('\n\n')[0].trim();
+      // Convert [var] to placeholder spans in opening
+      opening = opening.replace(/\[([^\]]+)\]/g, '<span class="placeholder">[$1]</span>');
+      newAV[tNum][row.audience] = { opening };
+    }
+  });
+  // Merge with existing (Sheet takes priority)
+  Object.keys(newAV).forEach(k => { AUDIENCE_VARIANTS[k] = newAV[k]; });
+  console.log('[Sheet] Applied AUDIENCE_VARIANTS:', Object.keys(newAV).join(','));
+}
+
+function applySheetTipRotation() {
+  if (!sheetData.TEMPLATES) return;
+  const tipLabels = {hydration:'טיפ: שתייה',doms:'טיפ: כאבי שרירים',soreness:'טיפ: כאבי שרירים',parent:'גרסת הורה',communication:'תקשורת',persistence:'התמדה',openMind:'ראש פתוח'};
+  const newTR = {};
+  sheetData.TEMPLATES.forEach(row => {
+    if (row.template_type !== 'tip_rotation' || !row.template_id) return;
+    const tNum = parseInt(row.template_id.replace('t', ''));
+    if (isNaN(tNum)) return;
+    if (!newTR[tNum]) newTR[tNum] = [];
+    const tipId = row.tip_variant_id || row.variant_id || ('tip' + newTR[tNum].length);
+    newTR[tNum].push({
+      id: tipId,
+      label: tipLabels[tipId] || tipId,
+      audience: row.audience || 'adult',
+      body: sheetTextToDisplayHtml(row.message_text)
+    });
+  });
+  // Merge with existing (Sheet takes priority)
+  Object.keys(newTR).forEach(k => { TIP_ROTATION[k] = newTR[k]; });
+  console.log('[Sheet] Applied TIP_ROTATION:', Object.keys(newTR).join(','));
+}
+
+// Step 5: Replace template card message content with Sheet data
+function sheetTextToCardHtml(text, hasAudience) {
+  if (!text) return '';
+  let s = text.replace(/^\u200F/, '');
+  // 1. Protect [SWAP — ...] markers from generic [var] conversion
+  s = s.replace(/\[SWAP\s*—\s*[^\]]+\]/g, '\x00SWAP_SLOT\x00');
+  // 2. Convert [var] → placeholder spans
+  s = s.replace(/\[([^\]]+)\]/g, '<span class="placeholder">[$1]</span>');
+  // 3. Restore SWAP markers → swap-slot divs
+  s = s.replace(/\x00SWAP_SLOT\x00/g, '<div class="swap-slot"></div>');
+  // 4. Convert *bold* → <strong> for display
+  s = s.replace(/\*(.*?)\*/g, '<strong>$1</strong>');
+  // 5. If audience-variant (opening type), wrap first paragraph in .aud-opening
+  if (hasAudience) {
+    const firstBreak = s.indexOf('\n\n');
+    if (firstBreak > 0) {
+      s = '<span class="aud-opening">' + s.substring(0, firstBreak) + '</span>' + s.substring(firstBreak);
+    }
+  }
+  // 6. Prepend copy button
+  return '<button class="cbtn">📋 העתק</button>' + s;
+}
+
+function applySheetTemplateContent() {
+  if (!sheetData.TEMPLATES) return;
+
+  // Build card map: cardId → { messages: [{order, text}], type, hasAudience }
+  const cardMap = {};
+
+  sheetData.TEMPLATES.forEach(row => {
+    if (!row.template_id || !row.message_text) return;
+    const type = row.template_type;
+    // Skip audience_variant and tip_rotation — handled by Step 4
+    if (type === 'audience_variant' || type === 'tip_rotation') return;
+
+    const tid = row.template_id;
+    const vid = row.variant_id || tid;
+
+    // Determine card ID:
+    // - Multi-message (-msg1/-msg2) → use template_id
+    // - Swap block adult/parent → use template_id
+    // - Otherwise → use variant_id (allows new sub-variants like t5-multi-child)
+    let cardId;
+    if (/-msg\d+$/.test(vid)) {
+      cardId = tid;
+    } else if (type === 'swap_block' && (row.audience === 'adult' || row.audience === 'parent')) {
+      cardId = tid;
+    } else {
+      cardId = vid;
+    }
+
+    if (!cardMap[cardId]) cardMap[cardId] = { messages: [], type: type, hasAudience: false, row: row };
+
+    // For swap_block, skip parent variant (handled by audience toggle)
+    if (type === 'swap_block') {
+      if (row.audience === 'parent') return;
+      cardMap[cardId].hasAudience = (row.audience === 'adult');
+    }
+
+    // Determine message order for multi-message templates
+    const msgMatch = vid.match(/-msg(\d+)$/);
+    const order = msgMatch ? parseInt(msgMatch[1]) : 1;
+
+    cardMap[cardId].messages.push({ order: order, text: row.message_text });
+  });
+
+  // Sort messages by order within each card
+  Object.values(cardMap).forEach(t => t.messages.sort((a, b) => a.order - b.order));
+
+  let applied = 0;
+  Object.entries(cardMap).forEach(([cardId, tpl]) => {
+    if (!tpl.messages.length) return;
+
+    const card = document.getElementById(cardId);
+    if (!card) return; // New cards (tP1-tP6, t5-multi-*) handled in Step 7
+
+    const msgs = card.querySelectorAll('.message');
+
+    tpl.messages.forEach((m, idx) => {
+      let targetMsg = msgs[idx];
+
+      // Create additional .message divs if needed (shouldn't normally happen for existing cards)
+      if (!targetMsg) {
+        const body = card.querySelector('.template-body');
+        if (!body) return;
+        targetMsg = document.createElement('div');
+        targetMsg.className = 'message';
+        targetMsg.setAttribute('onclick', 'copyMsg(this)');
+        body.appendChild(targetMsg);
+      }
+
+      // Only apply aud-opening wrapper to the first message of swap_block templates
+      const hasAud = tpl.hasAudience && idx === 0;
+      targetMsg.innerHTML = sheetTextToCardHtml(m.text, hasAud);
+    });
+
+    // Update header/meta from Sheet if available
+    const row = tpl.row;
+    if (row.template_name_he) {
+      const ttitle = card.querySelector('.ttitle');
+      if (ttitle) ttitle.textContent = row.template_name_he.replace(/^\u200F/, '');
+    }
+
+    applied++;
+  });
+
+  console.log('[Sheet] Applied template content to ' + applied + ' cards');
+}
+
+// Step 7: Create DOM cards for Sheet-only templates (tP1-tP6, t5-multi-*)
+function createSheetOnlyCards() {
+  if (!sheetData.TEMPLATES) return;
+
+  // Collect templates that should have their own cards but don't exist in DOM
+  // Group by card ID (same logic as applySheetTemplateContent)
+  const cardMap = {};
+  sheetData.TEMPLATES.forEach(row => {
+    if (!row.template_id || !row.message_text) return;
+    const type = row.template_type;
+    if (type === 'audience_variant' || type === 'tip_rotation') return;
+
+    const tid = row.template_id;
+    const vid = row.variant_id || tid;
+    let cardId;
+    if (/-msg\d+$/.test(vid)) cardId = tid;
+    else if (type === 'swap_block' && (row.audience === 'adult' || row.audience === 'parent')) cardId = tid;
+    else cardId = vid;
+
+    // Only care about cards not already in DOM
+    if (document.getElementById(cardId)) return;
+
+    if (!cardMap[cardId]) cardMap[cardId] = { messages: [], row: row };
+    if (type === 'swap_block' && row.audience === 'parent') return;
+    const msgMatch = vid.match(/-msg(\d+)$/);
+    const order = msgMatch ? parseInt(msgMatch[1]) : 1;
+    cardMap[cardId].messages.push({ order: order, text: row.message_text });
+  });
+
+  Object.values(cardMap).forEach(t => t.messages.sort((a, b) => a.order - b.order));
+
+  const container = document.querySelector('.container');
+  if (!container) return;
+
+  let created = 0;
+  Object.entries(cardMap).forEach(([cardId, tpl]) => {
+    if (!tpl.messages.length) return;
+    const row = tpl.row;
+    const name = (row.template_name_he || '').replace(/^\u200F/, '');
+    const num = cardId.replace('t', '');
+    const searchTerms = [cardId, row.action_id || '', name].join(' ');
+
+    // Build card HTML
+    const card = document.createElement('div');
+    card.className = 'template-card';
+    card.id = cardId;
+    card.setAttribute('data-search', searchTerms);
+
+    let headerHtml = '<div class="template-header">';
+    headerHtml += '<span class="tnum-badge">#' + num + '</span>';
+    headerHtml += '<span class="ttitle">' + name + '</span>';
+    headerHtml += '<span class="tbadge">⚪</span>';
+    headerHtml += '</div>';
+
+    let metaHtml = '<div class="template-meta">';
+    metaHtml += '<span>📋 שלב ' + (row.stage_id || '') + '</span>';
+    metaHtml += '</div>';
+
+    let bodyHtml = '<div class="template-body">';
+    tpl.messages.forEach(m => {
+      bodyHtml += '<div class="message" onclick="copyMsg(this)">';
+      bodyHtml += sheetTextToCardHtml(m.text, false);
+      bodyHtml += '</div>';
+    });
+    bodyHtml += '</div>';
+
+    card.innerHTML = headerHtml + metaHtml + bodyHtml;
+    container.appendChild(card);
+    created++;
+  });
+
+  if (created > 0) {
+    console.log('[Sheet] Created ' + created + ' new template cards from Sheet');
+  }
+}
+
+// Step 6: Replace WIZARD_STAGES + WIZARD_ACTIONS with Sheet data
+function applySheetWizardData() {
+  if (!sheetData.TEMPLATES) return;
+
+  // Determine which template_ids have swap_block or tip_rotation rows
+  const swapTemplates = new Set();
+  const tipTemplates = new Set();
+  sheetData.TEMPLATES.forEach(row => {
+    if (row.template_type === 'swap_block') swapTemplates.add(row.template_id);
+    if (row.template_type === 'tip_rotation') tipTemplates.add(row.template_id);
+  });
+
+  // Stage icon fallback map (Sheet doesn't have stage_icon column)
+  const STAGE_ICONS = { '1':'📞', '2':'📅', '3':'🥋', '4':'✅', '5':'⚡', '6':'🎓' };
+
+  // Collect unique stages and actions from template rows
+  const stageMap = {};  // stageId → { id, label, icon, actions: { actionId → actionObj } }
+  const stageOrder = []; // preserve first-seen order
+
+  sheetData.TEMPLATES.forEach(row => {
+    const sid = row.stage_id;
+    const aid = row.action_id;
+    if (!sid || !aid) return;
+
+    if (!stageMap[sid]) {
+      stageMap[sid] = {
+        id: sid,
+        label: (row.stage_label || '').replace(/^\u200F/, ''),
+        actions: {},
+        actionOrder: [],
+        templateIds: []
+      };
+      stageOrder.push(sid);
+    }
+
+    const stage = stageMap[sid];
+    if (!stage.templateIds.includes(row.template_id)) {
+      stage.templateIds.push(row.template_id);
+    }
+
+    if (!stage.actions[aid]) {
+      const target = row.template_id;
+      stage.actions[aid] = {
+        id: aid,
+        label: (row.action_label || '').replace(/^\u200F/, ''),
+        icon: row.action_icon || '',
+        target: target,
+        hasSwap: swapTemplates.has(target) || undefined,
+        hasTips: tipTemplates.has(target) || undefined
+      };
+      stage.actionOrder.push(aid);
+    }
+  });
+
+  // Build WIZARD_STAGES array
+  const newStages = stageOrder.map(sid => {
+    const s = stageMap[sid];
+    // Build sub label from action targets (preserving Sheet order)
+    const targets = s.actionOrder.map(aid => s.actions[aid].target);
+    const first = targets[0] || '';
+    const last = targets[targets.length - 1] || '';
+    const sub = first ? '#' + first.replace('t','') + '-#' + last.replace('t','') : '';
+    return {
+      id: s.id,
+      icon: STAGE_ICONS[s.id] || '📌',
+      label: s.label,
+      sub: sub
+    };
+  });
+
+  // Build WIZARD_ACTIONS object
+  const newActions = {};
+  stageOrder.forEach(sid => {
+    const s = stageMap[sid];
+    newActions[sid] = s.actionOrder.map(aid => {
+      const a = s.actions[aid];
+      const obj = { id: a.id, label: a.label, icon: a.icon, target: a.target };
+      if (a.hasSwap) obj.hasSwap = true;
+      if (a.hasTips) obj.hasTips = true;
+      return obj;
+    });
+  });
+
+  WIZARD_STAGES = newStages;
+  WIZARD_ACTIONS = newActions;
+  console.log('[Sheet] Applied wizard stages (' + newStages.length + ') and actions from Sheet');
+}
+
+// ================================================================
 // SETTINGS PANEL v7.0
 // ================================================================
 const SETTINGS_KEY='element-settings-v80';
@@ -995,7 +1452,7 @@ const CARD_GROUP_MAP={};
 // ================================================================
 // v8.0 — SWAP BLOCKS (group-dependent content injected per template)
 // ================================================================
-const SWAP_BLOCKS = {
+let SWAP_BLOCKS = {
   5: { // template #5 — trial details: 7 group blocks
     'kids-6-8':     {emoji:'🥋',title:'קבוצת ילדים 6-8',schedLine:'📅 ראשון + רביעי, *17:00* עד 17:45',extra:''},
     'kids-9-11':    {emoji:'🥋',title:'קבוצת ילדים 9-11',schedLine:'📅 ראשון + רביעי, *17:45* עד 18:45',extra:''},
@@ -1024,7 +1481,7 @@ const SWAP_BLOCKS = {
 // ================================================================
 // v8.0 — AUDIENCE VARIANTS (adult / parent branching per template)
 // ================================================================
-const AUDIENCE_VARIANTS = {
+let AUDIENCE_VARIANTS = {
   5: {type:'opening',adult:{opening:'מעולה, נשמח לראות אותך אצלנו! 🙏'},parent:{opening:'מעולה, נשמח לראות את <span class="placeholder">[שם הילד/ה]</span> אצלנו! 🙏'}},
   6: {type:'opening',adult:{opening:'שמחים שאתם מצטרפים לשיעור היכרות!'},parent:{opening:'שמחים ש-<span class="placeholder">[שם הילד/ה]</span> מצטרף/ת לשיעור!'}},
   8: {type:'full',
@@ -1047,7 +1504,7 @@ const AUDIENCE_VARIANTS = {
 // ================================================================
 // v8.0 — TIP ROTATION (rotating message variants)
 // ================================================================
-const TIP_ROTATION = {
+let TIP_ROTATION = {
   10: [
     {id:'hydration',label:'טיפ: שתייה',audience:'adult',body:'<button class="cbtn">📋 העתק</button>היי <span class="placeholder">[שם]</span> 👋\n\nשיעור שני מאחורי — יפה! 💪\n\nטיפ קטן: הקפידו לשתות לפחות ליטר וחצי מים ב-3 השעות שלפני האימון. זה הדבר שהכי משפיע על ההרגשה באימון.\n\n<span class="placeholder">[יום ותאריך]</span>, בשעה <span class="placeholder">[שעה]</span> — מחכים! 🙏'},
     {id:'soreness',label:'טיפ: כאבי שרירים',audience:'adult',body:'<button class="cbtn">📋 העתק</button>היי <span class="placeholder">[שם]</span> 👋\n\nשיעור שני מאחורי — יפה! 💪\n\nאם יש כאבי שרירים — זו תופעה טבעית בהתחלה. חולפת תוך כמה ימים, ומשתפרת עם כל אימון.\n\n<span class="placeholder">[יום ותאריך]</span>, בשעה <span class="placeholder">[שעה]</span> — מחכים! 🙏'},
@@ -1602,9 +2059,16 @@ function injectSwapContent(card,tNum,groupKey){
   if(!slot){slot=document.createElement('div');slot.className='swap-slot';msg.appendChild(slot)}
   const blocks=SWAP_BLOCKS[tNum];if(!blocks)return;
 
+  // Sheet-driven: block has .content (raw string) — render directly
+  const blk=blocks[groupKey];
+  if(blk && blk.content){
+    // Convert *bold* to <strong> for display, preserve \n via white-space:pre-wrap
+    slot.innerHTML=blk.content.replace(/\*(.*?)\*/g,'<strong>$1</strong>');
+    applyVarsToMessage(card); updateFillIndicator(card); return;
+  }
+
+  // Legacy structured format fallback (old hardcoded data)
   if(tNum===5){
-    // Template #5 — group block: emoji + title + schedLine + extra
-    const blk=blocks[groupKey];
     if(!blk){slot.innerHTML='';return}
     let html='';
     if(blk.emoji)html+=blk.emoji+' ';
@@ -1614,31 +2078,26 @@ function injectSwapContent(card,tNum,groupKey){
     slot.innerHTML=html;
   } else if(tNum===6){
     // Template #6 — "what to bring" block: find matching category for groupKey
-    let blk=null;
+    let blk6=null;
     for(const cat of Object.values(blocks)){
-      if(cat.applies&&cat.applies.includes(groupKey)){blk=cat;break}
+      if(cat.applies&&cat.applies.includes(groupKey)){blk6=cat;break}
     }
-    if(!blk){slot.innerHTML='';return}
+    if(!blk6){slot.innerHTML='';return}
     let html='';
-    if(blk.title)html+=blk.title+'\n';
-    if(blk.items&&blk.items.length){blk.items.forEach(item=>{html+=item+'\n'})}
-    // Add adult-only extra line for combat adults when audience is adult
+    if(blk6.title)html+=blk6.title+'\n';
+    if(blk6.items&&blk6.items.length){blk6.items.forEach(item=>{html+=item+'\n'})}
     const audience=sessionData.audienceMode||'adult';
-    if(blk.adultExtra&&audience==='adult'&&groupKey==='combat-adults'){
-      html+=blk.adultExtra;
+    if(blk6.adultExtra&&audience==='adult'&&groupKey==='combat-adults'){
+      html+=blk6.adultExtra;
     }
     slot.innerHTML=html;
   } else if(tNum===19){
-    // Template #19 — equipment block
-    const blk=blocks[groupKey];
     if(!blk){slot.innerHTML='';return}
     let html='';
     if(blk.title)html+='<strong>'+blk.title+'</strong>\n';
     if(blk.items&&blk.items.length){blk.items.forEach(item=>{html+=item+'\n'})}
     slot.innerHTML=html;
   } else {
-    // Generic fallback
-    const blk=blocks[groupKey];
     if(!blk){slot.innerHTML='';return}
     let html='';
     if(blk.emoji)html+=blk.emoji+' ';
@@ -1646,7 +2105,6 @@ function injectSwapContent(card,tNum,groupKey){
     if(blk.items&&blk.items.length){html+='\n';blk.items.forEach(item=>{html+='• '+item+'\n'})}
     slot.innerHTML=html;
   }
-  // Re-apply vars after swap
   applyVarsToMessage(card);
   updateFillIndicator(card);
 }
@@ -1696,14 +2154,14 @@ function toggleFaq(el){
 // ================================================================
 // WIZARD v8.0 — 5-Stage, Direct Actions (no variant step)
 // ================================================================
-const WIZARD_STAGES=[
+let WIZARD_STAGES=[
   {id:'1',icon:'📞',label:'פנייה ראשונה',sub:'#0-#4'},
   {id:'2',icon:'📅',label:'תיאום שיעור',sub:'#5-#8'},
   {id:'3',icon:'🥋',label:'תקופת ניסיון',sub:'#9-#12'},
   {id:'4',icon:'✅',label:'הרשמה ושימור',sub:'#13-#21'},
   {id:'5',icon:'⚡',label:'מצבים מיוחדים',sub:'#22-#28'}
 ];
-const WIZARD_ACTIONS={
+let WIZARD_ACTIONS={
   '1':[
     {id:'away',label:'מענה מחוץ לשעות',icon:'🌙',target:'t0'},
     {id:'direct-adult',label:'פנייה ישירה — מבוגר',icon:'💬',target:'t1'},
@@ -2913,8 +3371,26 @@ function uMM(){const W=180, H=110; mmC.width=W; mmC.height=H; mmX.clearRect(0,0,
 scr.addEventListener('scroll',uMM);
 
 // Initialization — fit tree width to canvas so no horizontal scroll needed
-(function(){
-  NODES.forEach(n=>NM[n.id]=n); ldPhases(); ld(); renderAll(); initSettings(); initVarForms(); initWizard(); initMsgEditing(); updateSessionBadge();
+(async function(){
+  // Load Google Sheet data (with 5s timeout, falls back to hardcoded defaults)
+  await Promise.race([
+    loadAllSheets(),
+    new Promise(resolve => setTimeout(resolve, 5000))
+  ]).catch(e => console.warn('[Sheet] Load timeout/error:', e));
+
+  NODES.forEach(n=>NM[n.id]=n); ldPhases(); ld(); renderAll(); initSettings();
+
+  // Apply Sheet data over defaults (after initSettings loads/creates appSettings)
+  applySheetSettings();
+  applySheetSwapBlocks();
+  applySheetAudienceVariants();
+  applySheetTipRotation();
+  applySheetTemplateContent();
+  createSheetOnlyCards();
+  applySheetWizardData();
+  renderSettingsUI(); // Re-render settings UI with Sheet values
+
+  initVarForms(); initWizard(); initMsgEditing(); updateSessionBadge();
   // Calculate tree width and zoom to fit horizontally
   let mx=0; NODES.forEach(n=>{mx=Math.max(mx,n.x+(n._w||160))});
   mx+=120; // padding
